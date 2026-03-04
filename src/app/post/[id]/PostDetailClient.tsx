@@ -116,8 +116,8 @@ export function PostDetailClient({ post, comments, morePosts }: Props) {
             )}
 
             {/* Main Content */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr', maxWidth: '1100px', margin: '0 auto', padding: '0 24px', gap: '40px' }}>
-                <article style={{ maxWidth: '720px', margin: '0 auto', width: '100%', paddingTop: '40px' }}>
+            <div className="post-detail-layout" style={{ display: 'grid', gridTemplateColumns: '1fr' }}>
+                <article className="post-detail-article" style={{ maxWidth: '720px', margin: '0 auto', width: '100%' }}>
                     {/* Tags */}
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '20px' }}>
                         {post.tags.map(tag => (
@@ -143,7 +143,7 @@ export function PostDetailClient({ post, comments, morePosts }: Props) {
                     )}
 
                     {/* Author Byline */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '18px 0', borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)', marginBottom: '36px' }}>
+                    <div className="post-detail-author-row" style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '18px 0', borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)', marginBottom: '36px' }}>
                         <Link href={post.source ? `/source/${post.source}` : `/u/${post.author.username}`}>
                             <img src={post.author.avatar_url} alt={post.author.display_name} className="avatar" style={{ width: '48px', height: '48px', border: '2px solid var(--color-border)' }} />
                         </Link>
@@ -151,7 +151,7 @@ export function PostDetailClient({ post, comments, morePosts }: Props) {
                             <Link href={post.source ? `/source/${post.source}` : `/u/${post.author.username}`} className="author-name" style={{ fontSize: '15px', display: 'block' }}>
                                 {post.source ? (post.source === 'devto' ? 'Dev.to' : post.source === 'hashnode' ? 'Hashnode' : post.source === 'wikinews' ? 'Wikinews' : post.author.display_name) : post.author.display_name}
                             </Link>
-                            <div style={{ display: 'flex', gap: '12px', marginTop: '3px' }}>
+                            <div className="post-detail-author-meta" style={{ display: 'flex', gap: '12px', marginTop: '3px' }}>
                                 <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--color-muted)', fontSize: '12px' }}>
                                     <Clock size={11} /> {post.read_time_minutes} min read
                                 </span>
@@ -165,6 +165,7 @@ export function PostDetailClient({ post, comments, morePosts }: Props) {
                         <button
                             onClick={() => setFollowing(!following)}
                             className={`btn btn-sm ${following ? 'btn-ghost' : 'btn-secondary'}`}
+                            data-post-detail-follow-btn="true"
                             style={{ border: following ? '1.5px solid var(--color-border)' : undefined }}
                         >
                             {following ? '✓ Following' : '+ Follow'}
@@ -173,8 +174,8 @@ export function PostDetailClient({ post, comments, morePosts }: Props) {
 
                     {/* Attribution Bar (if ingested external content) */}
                     {post.source && post.source_url && (
-                        <div style={{ padding: '16px 20px', background: 'var(--color-surface)', borderRadius: '12px', border: '1px solid var(--color-border)', marginBottom: '32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <span style={{ fontSize: '13px', color: 'var(--color-muted)', fontFamily: 'var(--font-ui)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <div className="post-detail-attribution" style={{ padding: '16px 20px', background: 'var(--color-surface)', borderRadius: '12px', border: '1px solid var(--color-border)', marginBottom: '32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <span className="post-detail-attribution-text" style={{ fontSize: '13px', color: 'var(--color-muted)', fontFamily: 'var(--font-ui)', display: 'flex', alignItems: 'center', gap: '8px' }}>
                                 <span style={{ fontWeight: 600, color: 'var(--color-primary)' }}>
                                     {post.source === 'devto' ? 'Dev.to' : post.source === 'hashnode' ? 'Hashnode' : post.source === 'wikinews' ? 'Wikinews' : 'The Guardian'}
                                 </span>
@@ -183,7 +184,7 @@ export function PostDetailClient({ post, comments, morePosts }: Props) {
                                     <span>• CC BY</span>
                                 )}
                             </span>
-                            <a href={post.source_url} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                            <a href={post.source_url} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm post-detail-attribution-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                                 Read Original ↗
                             </a>
                         </div>
@@ -227,7 +228,7 @@ const reading = (text) => {
                     </div>
 
                     {/* Engagement Bar */}
-                    <div style={{
+                    <div className="post-detail-engagement" style={{
                         display: 'flex', alignItems: 'center', gap: '20px',
                         padding: '24px 0', borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)',
                         marginTop: '40px', marginBottom: '48px',
@@ -254,6 +255,7 @@ const reading = (text) => {
                         </span>
 
                         <button onClick={handleShare}
+                            className="post-detail-share-btn"
                             style={{
                                 display: 'flex', alignItems: 'center', gap: '8px',
                                 background: 'transparent', border: '1.5px solid var(--color-border)',
@@ -273,7 +275,7 @@ const reading = (text) => {
                         </h2>
 
                         {/* Comment Input */}
-                        <form onSubmit={handleComment} style={{ display: 'flex', gap: '12px', marginBottom: '32px', alignItems: 'flex-start' }}>
+                        <form className="post-detail-comment-form" onSubmit={handleComment} style={{ display: 'flex', gap: '12px', marginBottom: '32px', alignItems: 'flex-start' }}>
                             <img src="https://i.pravatar.cc/150?img=70" alt="You" className="avatar" style={{ width: '40px', height: '40px', flexShrink: 0, marginTop: '4px' }} />
                             <div style={{ flex: 1 }}>
                                 <textarea
@@ -302,8 +304,8 @@ const reading = (text) => {
 
             {/* More from author */}
             {morePosts.length > 0 && (
-                <div style={{ padding: '48px 24px', borderTop: '1px solid var(--color-border)', background: 'var(--color-surface)', marginTop: '48px' }}>
-                    <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+                <div className="more-from-section">
+                    <div className="more-from-inner">
                         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
                             <img src={post.author.avatar_url} alt={post.author.display_name}
                                 className="avatar" style={{ width: '40px', height: '40px' }} />

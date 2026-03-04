@@ -1,7 +1,7 @@
-import { getMockComments } from '@/lib/mockData';
 import { postRepository } from '@/lib/postRepository';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import type { Comment } from '@/types';
 import { PostDetailClient } from './PostDetailClient';
 
 export const runtime = 'nodejs';
@@ -39,7 +39,7 @@ export default async function PostPage(props: { params: Promise<{ id: string }> 
             </div>
         );
     }
-    const comments = getMockComments(id);
+    const comments: Comment[] = [];
     const allPosts = await postRepository.getAll();
     const morePosts = allPosts.filter(p => p.author_id === post.author_id && p.id !== post.id).slice(0, 4);
 

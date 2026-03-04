@@ -19,6 +19,7 @@ function buildUserFromEmail(email: string): User {
         role: 'USER',
         is_verified: false,
         is_suspended: false,
+        is_business: false,
         created_at: new Date().toISOString(),
         follower_count: 0,
         following_count: 0,

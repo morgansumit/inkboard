@@ -78,18 +78,22 @@ export function PostDetailClient({ post, comments, morePosts }: Props) {
     const handleComment = (e: React.FormEvent) => {
         e.preventDefault();
         if (!newComment.trim()) return;
-        setCommentList(c => [{
-            id: `c${Date.now()}`, post_id: post.id,
+        const optimisticComment: Comment = {
+            id: `c${Date.now()}`,
+            post_id: post.id,
             author: {
                 id: 'u0', email: '', username: 'you', display_name: 'You',
                 avatar_url: 'https://i.pravatar.cc/150?img=70',
-                role: 'USER', is_verified: false, is_suspended: false,
+                role: 'USER', is_verified: false, is_suspended: false, is_business: false,
                 created_at: new Date().toISOString(), follower_count: 0,
                 following_count: 0, total_likes: 0, post_count: 0,
             },
-            content: newComment, is_hidden: false,
-            created_at: new Date().toISOString(), replies: [],
-        }, ...c]);
+            content: newComment,
+            is_hidden: false,
+            created_at: new Date().toISOString(),
+            replies: [],
+        };
+        setCommentList(c => [optimisticComment, ...c]);
         setNewComment('');
     };
 

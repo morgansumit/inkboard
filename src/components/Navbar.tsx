@@ -59,15 +59,13 @@ export function Navbar() {
     };
 
     return (
-        <header
-            style={{
-                position: 'sticky', top: 0, zIndex: 40,
-                background: scrolled ? 'rgba(247,245,242,0.92)' : 'rgba(247,245,242,0.98)',
-                backdropFilter: 'blur(12px)',
-                borderBottom: '1px solid #E8E8EE',
-                transition: 'all 200ms',
-            }}
-        >
+        <nav className="navbar" style={{
+            position: 'sticky', top: 0, zIndex: 40,
+            background: 'rgba(247,245,242,0.95)',
+            backdropFilter: 'blur(12px)',
+            borderBottom: '1px solid var(--color-border)',
+            padding: '16px 32px', display: 'flex', alignItems: 'center', gap: '16px'
+        }}>
             <nav style={{
                 display: 'flex', alignItems: 'center', gap: '16px',
                 padding: '0 24px', height: '64px', maxWidth: '1600px', margin: '0 auto',
@@ -219,6 +217,6 @@ export function Navbar() {
                     </Link>
                 ))}
             </div>
-        </header>
+        </nav>
     );
 }

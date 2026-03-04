@@ -1,13 +1,14 @@
 'use client';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
-import { Flame } from 'lucide-react';
+import { Flame, Megaphone } from 'lucide-react';
 import { PostCard } from './PostCard';
 import { PostCardSkeleton } from './PostCardSkeleton';
 import { MOCK_POSTS, MOCK_INTERESTS } from '@/lib/mockData';
 import type { Post } from '@/types';
 import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { createClient } from '@/lib/supabase/client';
 
 const INTERESTS_STRIP = MOCK_INTERESTS.slice(0, 12);
 
@@ -20,7 +21,7 @@ function useColumnCount(): number {
     useEffect(() => {
         function update() {
             const w = window.innerWidth;
-            if (w < 640) setCols(2);
+            if (w < 640) setCols(3);
             else if (w < 1024) setCols(3);
             else if (w < 1440) setCols(4);
             else setCols(5);
@@ -32,27 +33,81 @@ function useColumnCount(): number {
     return cols;
 }
 
-function MasonryColumns({ posts }: { posts: Post[] }) {
+function MasonryAdCard({ ad, index }: { ad: any, index: number }) {
+    const images = ad.image_urls && ad.image_urls.length > 0 ? ad.image_urls : [ad.image_url];
+    const [currentImg, setCurrentImg] = useState(0);
+
+    useEffect(() => {
+        if (images.length <= 1) return;
+        const interval = setInterval(() => {
+            setCurrentImg(curr => (curr + 1) % images.length);
+        }, 3000);
+        return () => clearInterval(interval);
+    }, [images.length]);
+
+    const dynamicPaddingBottom = '150%';
+
+    return (
+        <div className="masonry-item fade-up" style={{ animationDelay: `${index * 60}ms` }}>
+            <article className="post-card" style={{ border: '2px solid var(--color-accent)', background: 'var(--color-surface)', position: 'relative' }}>
+                <a href={ad.target_url} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} style={{ position: 'absolute', inset: 0, zIndex: 10 }} aria-label={`View ${ad.title}`} />
+                <div style={{ position: 'relative', paddingBottom: dynamicPaddingBottom, height: 0, overflow: 'hidden' }}>
+                    <div className="trending-badge" style={{ background: 'var(--color-primary)', color: 'var(--color-surface)', top: 12, left: 12, right: 'auto', bottom: 'auto', zIndex: 20 }}>
+                        <Megaphone size={10} /> Sponsored
+                    </div>
+                    {images.map((src: string, i: number) => {
+                        const isVideo = src.match(/\.(mp4|webm|mov|ogg)$/i) || src.includes('/video/upload/');
+                        const style = {
+                            position: 'absolute' as const, top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' as const,
+                            opacity: currentImg === i ? 1 : 0, transition: 'opacity 0.6s ease-in-out'
+                        };
+                        return isVideo ? (
+                            <video key={i} src={src} style={style} muted autoPlay loop playsInline />
+                        ) : (
+                            <img key={i} src={src} alt={ad.title} className="post-card-image" style={style} />
+                        )
+                    })}
+                    <div className="mobile-overlay-banner" style={{ zIndex: 20 }}>
+                        <h2 className="mobile-overlay-title">{ad.title}</h2>
+                        <div className="mobile-overlay-author">
+                            <span>Sponsored</span>
+                        </div>
+                    </div>
+                </div>
+                <div className="post-card-body" style={{ padding: '16px', zIndex: 20, position: 'relative' }}>
+                    <h2 className="post-card-title">{ad.title}</h2>
+                    {ad.description && <p className="post-card-excerpt" style={{ marginTop: '8px' }}>{ad.description}</p>}
+                </div>
+            </article>
+        </div>
+    );
+}
+
+function MasonryColumns({ items }: { items: any[] }) {
     const numCols = useColumnCount();
 
     // Build column arrays — each post goes to col = index % numCols
     const columns = useMemo(() => {
-        const cols: Post[][] = Array.from({ length: numCols }, () => []);
-        posts.forEach((post, i) => cols[i % numCols].push(post));
+        const cols: any[][] = Array.from({ length: numCols }, () => []);
+        items.forEach((item, i) => cols[i % numCols].push(item));
         return cols;
-    }, [posts, numCols]);
+    }, [items, numCols]);
 
     return (
         <div className="masonry-columns-container">
-            {columns.map((colPosts, colIdx) => (
+            {columns.map((colItems, colIdx) => (
                 <div key={colIdx} className="masonry-column">
-                    {colPosts.map((post, rowIdx) => (
-                        <PostCard
-                            key={post.id}
-                            post={post}
-                            index={colIdx + rowIdx * numCols}
-                        />
-                    ))}
+                    {colItems.map((item, rowIdx) => {
+                        const index = colIdx + rowIdx * numCols;
+                        if (item.target_url) {
+                            return <MasonryAdCard key={`ad-${item.id}`} ad={item} index={index} />;
+                        }
+                        return <PostCard
+                            key={item.id}
+                            post={item as Post}
+                            index={index}
+                        />;
+                    })}
                 </div>
             ))}
         </div>
@@ -70,9 +125,11 @@ function FeedInner({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
     const [page, setPage] = useState(1);
     const [activeInterest, setActiveInterest] = useState<string | null>(null);
     const [hasMore, setHasMore] = useState(true);
+    const [ads, setAds] = useState<any[]>([]);
     const loaderRef = useRef<HTMLDivElement>(null);
+    const supabase = createClient();
 
-    // Initial load from Edge Function
+    // Initial load from Edge Function & fetch ads
     useEffect(() => {
         setLoading(true);
         setPosts([]);
@@ -85,7 +142,15 @@ function FeedInner({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                 setLoading(false);
             })
             .catch(() => setLoading(false));
-    }, [currentTopic]);
+
+        supabase.from('ads')
+            .select('*')
+            .in('status', ['APPROVED', 'ACTIVE'])
+            .limit(5)
+            .then(({ data }: any) => {
+                if (data) setAds(data);
+            });
+    }, [currentTopic, supabase]);
 
     // Infinite scroll via IntersectionObserver
     useEffect(() => {
@@ -128,6 +193,23 @@ function FeedInner({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
         ? posts.filter(p => p.tags.some(t => t.name === activeInterest.toLowerCase()) || p.author.bio?.toLowerCase().includes(activeInterest.toLowerCase()))
         : posts;
 
+    const feedItems = useMemo(() => {
+        const items = [...displayPosts];
+        if (ads.length > 0) {
+            let adCounter = 0;
+            // Inject an ad every 6 items (index 4, 11, etc.)
+            for (let i = 4; i < items.length; i += 7) {
+                if (adCounter < ads.length) {
+                    items.splice(i, 0, ads[adCounter]);
+                    adCounter++;
+                } else {
+                    break;
+                }
+            }
+        }
+        return items;
+    }, [displayPosts, ads]);
+
     const trendingPosts = displayPosts.filter(p => p.is_trending).slice(0, 6);
 
     return (
@@ -154,7 +236,7 @@ function FeedInner({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
             )}
 
             {/* Trending Strip (authenticated users) */}
-            {isLoggedIn && !activeInterest && (
+            {isLoggedIn && !activeInterest && trendingPosts.length > 0 && (
                 <div style={{ padding: '20px 24px 0' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
                         <Flame size={18} style={{ color: 'var(--color-trending)' }} />
@@ -163,6 +245,7 @@ function FeedInner({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                         </h2>
                     </div>
                     <div className="trending-strip">
+                        {/* Render Trending Posts */}
                         {trendingPosts.map(post => (
                             <Link key={post.id} href={`/post/${post.id}`} style={{ textDecoration: 'none' }}>
                                 <div className="trending-card">
@@ -208,7 +291,7 @@ function FeedInner({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                     {Array.from({ length: 8 }).map((_, i) => <PostCardSkeleton key={i} index={i} />)}
                 </div>
             ) : (
-                <MasonryColumns posts={displayPosts} />
+                <MasonryColumns items={feedItems} />
             )}
 
             {/* Load More Skeletons — appended BELOW existing content, not replacing it */}

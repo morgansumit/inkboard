@@ -23,9 +23,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <div style={{ display: 'flex', minHeight: '100vh', width: '100%' }}>
+        <div style={{ display: 'flex', minHeight: '100svh', width: '100%' }}>
           <Sidebar />
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, marginLeft: '72px' }}>
+          <div className="layout-main" style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
             <Navbar />
             <main>{children}</main>
           </div>

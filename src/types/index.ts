@@ -11,6 +11,7 @@ export interface User {
     role: 'USER' | 'MODERATOR' | 'ADMIN';
     is_verified: boolean;
     is_suspended: boolean;
+    is_business: boolean;
     created_at: string;
     follower_count: number;
     following_count: number;

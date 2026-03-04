@@ -7,20 +7,33 @@ function getSourceAuthor(sourceName: string, role: User['role'] = 'USER'): User 
     const slug = sourceName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
     const id = `source-${slug || 'unknown'}`;
     return {
-        id,
-        email: `${id}@inkboard.eu`,
-        username: id,
-        display_name: sourceName,
-        avatar_url: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(sourceName)}`,
-        role,
-        is_verified: true,
-        is_suspended: false,
-        created_at: new Date().toISOString(),
-        follower_count: 0,
-        following_count: 0,
-        total_likes: 0,
-        post_count: 0,
-    };
+    id,
+    email: `${id}@inkboard.eu`,
+    username: id,
+    display_name: sourceName,
+    avatar_url: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(sourceName)}`,
+    role,
+    is_verified: true,
+    is_suspended: false,
+    created_at: new Date().toISOString(),
+    follower_count: 0,
+    following_count: 0,
+    total_likes: 0,
+    post_count: 0,
+    id: '',
+    email: '',
+    username: '',
+    display_name: '',
+    role: 'USER',
+    is_verified: false,
+    is_suspended: false,
+    is_business: false,
+    created_at: '',
+    follower_count: 0,
+    following_count: 0,
+    total_likes: 0,
+    post_count: 0
+};
 }
 
 export class ContentIngestionService {

@@ -1,11 +1,14 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { LayoutDashboard, FileText, Users, Flag, BarChart3, Globe, LogOut, ChevronRight, Trash2, CheckCircle, XCircle, Eye } from 'lucide-react';
 import { MOCK_POSTS, MOCK_USERS } from '@/lib/mockData';
 import Link from 'next/link';
+import { createClient } from '@/lib/supabase/client';
 
 const NAV = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'business', label: 'Business Accounts', icon: Users },
+    { id: 'ads', label: 'Ads Management', icon: BarChart3 },
     { id: 'posts', label: 'Post Management', icon: FileText },
     { id: 'users', label: 'User Management', icon: Users },
     { id: 'reports', label: 'Reported Content', icon: Flag },
@@ -251,6 +254,130 @@ function ReportsView() {
     );
 }
 
+function BusinessRequestsView() {
+    const supabase = createClient();
+    const [requests, setRequests] = useState<any[]>([]);
+
+    useEffect(() => {
+        const fetchRequests = async () => {
+            const { data } = await supabase.from('business_requests').select(`*, users(display_name, email)`).order('created_at', { ascending: false });
+            if (data) setRequests(data);
+        };
+        fetchRequests();
+    }, [supabase]);
+
+    const handleUpdateStatus = async (id: string, userId: string, newStatus: string) => {
+        await supabase.from('business_requests').update({ status: newStatus }).eq('id', id);
+
+        if (newStatus === 'APPROVED') {
+            await supabase.from('users').update({ is_business: true }).eq('id', userId);
+        }
+
+        setRequests(prev => prev.map(r => r.id === id ? { ...r, status: newStatus } : r));
+    };
+
+    return (
+        <div>
+            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '22px', fontWeight: 700, marginBottom: '20px' }}>Business Partner Applications</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {requests.map(req => (
+                    <div key={req.id} style={{ background: 'var(--color-surface)', borderRadius: '12px', padding: '18px 20px', boxShadow: 'var(--shadow-card)', borderLeft: `4px solid ${req.status === 'PENDING' ? 'var(--color-accent)' : req.status === 'APPROVED' ? '#10B981' : 'var(--color-border)'}` }}>
+                        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px' }}>
+                            <div style={{ flex: 1 }}>
+                                <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px' }}>
+                                    <span style={{ fontSize: '11px', fontWeight: 700, padding: '2px 8px', borderRadius: '20px', background: req.status === 'APPROVED' ? '#D1FAE5' : req.status === 'PENDING' ? '#FEF3C7' : '#FEE2E2', color: req.status === 'APPROVED' ? '#065F46' : req.status === 'PENDING' ? '#92400E' : '#991B1B', fontFamily: 'var(--font-ui)' }}>
+                                        {req.status}
+                                    </span>
+                                    <span style={{ fontSize: '12px', color: 'var(--color-muted)', fontFamily: 'var(--font-ui)' }}>{new Date(req.created_at).toLocaleDateString()}</span>
+                                </div>
+                                <p style={{ fontFamily: 'var(--font-ui)', fontWeight: 600, fontSize: '18px', color: 'var(--color-primary)' }}>{req.business_name}</p>
+                                <p style={{ fontSize: '13px', color: 'var(--color-muted)', marginBottom: '4px' }}><strong>User:</strong> {req.users?.display_name} ({req.users?.email})</p>
+                                {req.website_url && <p style={{ fontSize: '13px', color: 'var(--color-muted)', marginBottom: '8px' }}><strong>URL:</strong> <a href={req.website_url} target="_blank" style={{ color: 'var(--color-primary)' }}>{req.website_url}</a></p>}
+                                <div style={{ background: 'var(--color-bg)', padding: '12px', borderRadius: '8px', marginTop: '8px' }}>
+                                    <p style={{ fontSize: '14px', fontStyle: 'italic', color: 'var(--color-muted)', margin: 0 }}>"{req.description}"</p>
+                                </div>
+                            </div>
+                            {req.status === 'PENDING' && (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flexShrink: 0 }}>
+                                    <button onClick={() => handleUpdateStatus(req.id, req.user_id, 'APPROVED')} className="btn btn-sm" style={{ background: '#D1FAE5', color: '#065F46', border: 'none' }}>✓ Approve Account</button>
+                                    <button onClick={() => handleUpdateStatus(req.id, req.user_id, 'REJECTED')} className="btn btn-sm" style={{ background: '#FEE2E2', color: '#991B1B', border: 'none' }}>✕ Reject</button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                ))}
+                {requests.length === 0 && <p style={{ color: 'var(--color-muted)' }}>No business applications found.</p>}
+            </div>
+        </div>
+    );
+}
+
+function AdsView() {
+    const supabase = createClient();
+    const [ads, setAds] = useState<any[]>([]);
+
+    useEffect(() => {
+        const fetchAds = async () => {
+            const { data } = await supabase.from('ads').select('*').order('created_at', { ascending: false });
+            if (data) setAds(data);
+        };
+        fetchAds();
+    }, [supabase]);
+
+    const handleUpdateStatus = async (id: string, newStatus: string) => {
+        await supabase.from('ads').update({ status: newStatus }).eq('id', id);
+        setAds(prev => prev.map(a => a.id === id ? { ...a, status: newStatus } : a));
+    };
+
+    return (
+        <div>
+            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '22px', fontWeight: 700, marginBottom: '20px' }}>Sponsored Ads Management</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {ads.map(ad => (
+                    <div key={ad.id} style={{ background: 'var(--color-surface)', borderRadius: '12px', padding: '18px 20px', boxShadow: 'var(--shadow-card)', borderLeft: `4px solid ${ad.status === 'PENDING' ? 'var(--color-accent)' : ad.status === 'APPROVED' ? '#10B981' : 'var(--color-border)'}` }}>
+                        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px' }}>
+                            {ad.image_url.match(/\.(mp4|webm|mov|ogg)$/i) || ad.image_url.includes('/video/upload/') ? (
+                                <video src={ad.image_url} style={{ width: '64px', height: '64px', objectFit: 'cover', borderRadius: '8px' }} muted autoPlay loop playsInline />
+                            ) : (
+                                <img src={ad.image_url} alt="Ad" style={{ width: '64px', height: '64px', objectFit: 'cover', borderRadius: '8px' }} />
+                            )}
+                            <div style={{ flex: 1 }}>
+                                <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px' }}>
+                                    <span style={{ fontSize: '11px', fontWeight: 700, padding: '2px 8px', borderRadius: '20px', background: ad.status === 'ACTIVE' || ad.status === 'APPROVED' ? '#D1FAE5' : ad.status === 'PENDING' ? '#FEF3C7' : '#FEE2E2', color: ad.status === 'ACTIVE' || ad.status === 'APPROVED' ? '#065F46' : ad.status === 'PENDING' ? '#92400E' : '#991B1B', fontFamily: 'var(--font-ui)' }}>
+                                        {ad.status}
+                                    </span>
+                                    <span style={{ fontSize: '12px', color: 'var(--color-muted)', fontFamily: 'var(--font-ui)' }}>{new Date(ad.created_at).toLocaleDateString()}</span>
+                                </div>
+                                <p style={{ fontFamily: 'var(--font-ui)', fontWeight: 600, fontSize: '14px', marginBottom: '4px' }}>{ad.title}</p>
+                                <p style={{ fontSize: '13px', color: 'var(--color-muted)', marginBottom: '4px' }}>URL: <a href={ad.target_url} target="_blank" style={{ color: 'var(--color-primary)', textDecoration: 'underline' }}>{ad.target_url}</a></p>
+                                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '8px', fontSize: '11px', color: 'var(--color-muted)' }}>
+                                    {ad.daily_budget && <span style={{ background: '#F3F4F6', padding: '2px 6px', borderRadius: '4px' }}>Daily: ${ad.daily_budget}</span>}
+                                    {ad.total_budget && <span style={{ background: '#F3F4F6', padding: '2px 6px', borderRadius: '4px' }}>Total: ${ad.total_budget}</span>}
+                                    {ad.target_age_ranges?.length > 0 && <span style={{ background: '#F3F4F6', padding: '2px 6px', borderRadius: '4px' }}>Ages: {ad.target_age_ranges.join(', ')}</span>}
+                                    {ad.target_genders?.length > 0 && <span style={{ background: '#F3F4F6', padding: '2px 6px', borderRadius: '4px' }}>Genders: {ad.target_genders.join(', ')}</span>}
+                                    {ad.target_devices?.length > 0 && <span style={{ background: '#F3F4F6', padding: '2px 6px', borderRadius: '4px' }}>Devices: {ad.target_devices.join(', ')}</span>}
+                                </div>
+                            </div>
+                            {ad.status === 'PENDING' && (
+                                <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
+                                    <button onClick={() => handleUpdateStatus(ad.id, 'APPROVED')} className="btn btn-sm" style={{ background: '#D1FAE5', color: '#065F46', border: 'none' }}>✓ Approve</button>
+                                    <button onClick={() => handleUpdateStatus(ad.id, 'REJECTED')} className="btn btn-sm" style={{ background: '#FEE2E2', color: '#991B1B', border: 'none' }}>✕ Reject</button>
+                                </div>
+                            )}
+                            {(ad.status === 'APPROVED' || ad.status === 'ACTIVE') && (
+                                <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
+                                    <button onClick={() => handleUpdateStatus(ad.id, 'PAUSED')} className="btn btn-sm" style={{ background: '#FEE2E2', color: '#991B1B', border: 'none' }}>⏸ Pause</button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                ))}
+                {ads.length === 0 && <p style={{ color: 'var(--color-muted)' }}>No ad requests found.</p>}
+            </div>
+        </div>
+    );
+}
+
 function GeoLogsView() {
     const logs = [
         { ip: 'xxx.xxx.2.1', country: 'US', code: 'US', url: '/feed', time: '2026-02-25T11:42:00Z' },
@@ -302,9 +429,11 @@ export default function AdminPage() {
     const renderView = () => {
         switch (activeView) {
             case 'dashboard': return <DashboardView />;
+            case 'business': return <BusinessRequestsView />;
             case 'posts': return <PostsView />;
             case 'users': return <UsersView />;
             case 'reports': return <ReportsView />;
+            case 'ads': return <AdsView />;
             case 'geologs': return <GeoLogsView />;
             default: return <DashboardView />;
         }

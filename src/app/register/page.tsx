@@ -7,6 +7,7 @@ import { createClient } from '@/lib/supabase/client';
 export default function RegisterPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [dob, setDob] = useState('');
     const [showPw, setShowPw] = useState(false);
     const [step, setStep] = useState<'form' | 'verify'>('form');
     const [error, setError] = useState<string | null>(null);
@@ -18,9 +19,80 @@ export default function RegisterPage() {
         setError(null);
         setLoading(true);
 
+        let ip_address = '';
+        let location = '';
+        let income_level = 'Medium';
+        let os_family = 'Unknown';
+        let device_type = 'Desktop';
+
+        // Detect OS and Device for targeting & basic income inference
+        const ua = window.navigator.userAgent;
+        if (/iPad|iPhone|iPod/.test(ua)) {
+            os_family = 'iOS';
+            device_type = 'Mobile';
+            income_level = 'High'; // Simple heuristic: Apple mobile users often grouped in higher tier
+        } else if (/Android/.test(ua)) {
+            os_family = 'Android';
+            device_type = 'Mobile';
+        } else if (/Mac OS X/.test(ua)) {
+            os_family = 'macOS';
+            income_level = 'High'; // Simple heuristic: Mac users
+        } else if (/Windows/.test(ua)) {
+            os_family = 'Windows';
+        }
+
+        try {
+            // Fetch geo location to infer more precise demographics
+            const ipRes = await fetch('https://ipinfo.io/json');
+            const ipData = await ipRes.json();
+            ip_address = ipData.ip;
+            location = `${ipData.city || ''}, ${ipData.country || ''}`.trim();
+            const zip = ipData.postal || '';
+
+            // Zip & Country based heuristic for 'Very High' income targeting
+            const highIncomeZips = ['90210', '10001', '94027', '10013', '10007', 'SW1X', 'W1J', '75008'];
+            const highIncomeCountries = ['CH', 'NO', 'LU', 'SG', 'AE', 'MC', 'QA'];
+
+            if (highIncomeZips.some(z => zip.startsWith(z)) || highIncomeCountries.includes(ipData.country)) {
+                income_level = 'Very High';
+            }
+        } catch (err) {
+            console.error('Could not fetch IP and Location', err);
+        }
+
+        // Calculate Age Range from DOB
+        let age_range = 'Unknown';
+        if (dob) {
+            const dobDate = new Date(dob);
+            const age = new Date().getFullYear() - dobDate.getFullYear();
+            if (age < 13) {
+                setError("You must be at least 13 years old to use Inkboard.");
+                setLoading(false);
+                return;
+            }
+            if (age >= 13 && age <= 17) age_range = '13-17';
+            else if (age >= 18 && age <= 24) age_range = '18-24';
+            else if (age >= 25 && age <= 34) age_range = '25-34';
+            else if (age >= 35 && age <= 44) age_range = '35-44';
+            else if (age >= 45 && age <= 54) age_range = '45-54';
+            else if (age >= 55 && age <= 64) age_range = '55-64';
+            else if (age >= 65) age_range = '65+';
+        }
+
         const { error } = await supabase.auth.signUp({
             email,
             password,
+            options: {
+                data: {
+                    ip_address,
+                    location,
+                    dob,
+                    age_range,
+                    income_level,
+                    os_family,
+                    device_type
+                }
+            }
         });
 
         if (error) {
@@ -106,6 +178,10 @@ export default function RegisterPage() {
                         <div>
                             <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '6px' }}>Email address</label>
                             <input className="input" type="email" placeholder="you@example.com" required value={email} onChange={e => setEmail(e.target.value)} />
+                        </div>
+                        <div>
+                            <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '6px' }}>Date of Birth</label>
+                            <input className="input" type="date" required value={dob} onChange={e => setDob(e.target.value)} />
                         </div>
                         <div>
                             <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '6px' }}>Password</label>

@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Search, Bell, PenSquare, LogOut, Shield } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { createPortal } from 'react-dom';
@@ -23,6 +23,7 @@ type NavNotification = {
 
 export function Navbar() {
     const pathname = usePathname();
+    const router = useRouter();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userEmail, setUserEmail] = useState<string | null>(null);
     const [currentUser, setCurrentUser] = useState<{ display_name: string; avatar_url: string; role: string; is_business: boolean } | null>(null);
@@ -30,6 +31,7 @@ export function Navbar() {
     const [notifOpen, setNotifOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+    const [loggingOut, setLoggingOut] = useState(false);
     const [profileMenuPos, setProfileMenuPos] = useState<{ top: number; right: number } | null>(null);
     const [notifications, setNotifications] = useState<NavNotification[]>([]);
     const supabase = createClient();
@@ -290,8 +292,32 @@ export function Navbar() {
                                             )}
                                             {isAdmin && <Link href="/admin" onClick={() => setProfileMenuOpen(false)}><Shield size={14} style={{ marginRight: 6 }} />Admin Console</Link>}
                                             <Link href="/settings" onClick={() => setProfileMenuOpen(false)}>Settings</Link>
-                                            <button className="profile-menu-logout" onClick={async () => { await supabase.auth.signOut(); setProfileMenuOpen(false); }}>
-                                                <LogOut size={14} /> Sign out
+                                            <button
+                                                className="profile-menu-logout"
+                                                disabled={loggingOut}
+                                                onClick={async () => {
+                                                    if (loggingOut) return;
+                                                    try {
+                                                        setLoggingOut(true);
+                                                        await supabase.auth.signOut();
+                                                        setProfileMenuOpen(false);
+                                                        router.refresh();
+                                                        if (pathname.startsWith('/admin')) {
+                                                            router.replace('/login');
+                                                        }
+                                                    } catch (err) {
+                                                        console.error('[navbar] sign out failed', err);
+                                                    } finally {
+                                                        setLoggingOut(false);
+                                                    }
+                                                }}
+                                            >
+                                                {loggingOut ? (
+                                                    <span className="btn-spinner" aria-hidden="true" />
+                                                ) : (
+                                                    <LogOut size={14} />
+                                                )}
+                                                {loggingOut ? 'Signing out…' : 'Sign out'}
                                             </button>
                                         </div>
                                     </>

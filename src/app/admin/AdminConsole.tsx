@@ -2,7 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { BarChart3, ChevronRight, Eye, FileText, Flag, Globe, LayoutDashboard, LogOut, Trash2, Users, type LucideIcon } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
 
 type AdminView = 'dashboard' | 'business' | 'ads' | 'posts' | 'users' | 'reports' | 'geologs';
 
@@ -186,8 +188,10 @@ function getBusinessStatusStyles(status?: string | null) {
 }
 
 export function AdminClient() {
+    const router = useRouter();
+    const supabase = useMemo(() => createClient(), []);
     const [activeView, setActiveView] = useState<AdminView>('dashboard');
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     const [posts, setPosts] = useState<DbPost[]>([]);
@@ -201,6 +205,7 @@ export function AdminClient() {
     const [stale, setStale] = useState(false);
     const [manualRefreshPending, setManualRefreshPending] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+    const [loggingOut, setLoggingOut] = useState(false);
     const [businessActionPendingId, setBusinessActionPendingId] = useState<string | null>(null);
     const [openBusinessChatId, setOpenBusinessChatId] = useState<string | null>(null);
     const [businessChatLoadingId, setBusinessChatLoadingId] = useState<string | null>(null);
@@ -259,6 +264,21 @@ export function AdminClient() {
         };
     }, []);
 
+    const handleLogout = useCallback(async () => {
+        if (loggingOut) return;
+        setLoggingOut(true);
+        try {
+            await supabase.auth.signOut();
+            router.replace('/login');
+            router.refresh();
+        } catch (err) {
+            console.error('[admin] logout failed', err);
+            alert('Failed to sign out. Please try again.');
+        } finally {
+            setLoggingOut(false);
+        }
+    }, [loggingOut, router, supabase]);
+
     const loadOnce = useCallback(
         async ({ background = false, force = false }: { background?: boolean; force?: boolean } = {}) => {
             if (!force && editingRef.current) {
@@ -267,20 +287,17 @@ export function AdminClient() {
 
             if (!background) {
                 setError(null);
-                setLoading(true);
             } else {
                 setAuxLoading(true);
             }
 
             try {
-                const res = await withTimeout(fetch('/api/admin/console-data', { cache: 'no-store' }), 15000);
+                const res = await withTimeout(fetch('/api/admin/console-data', { cache: 'no-store' }), 8000);
                 const data = (await res.json()) as ConsoleDataResponse;
 
                 if (!res.ok) {
                     throw new Error(data?.error || 'Failed to load admin data');
                 }
-
-                if (!isMountedRef.current) return;
 
                 setPosts(data.posts ?? []);
                 setUsers(data.users ?? []);
@@ -291,14 +308,19 @@ export function AdminClient() {
                 setCachedAt(typeof data.cachedAt === 'string' ? data.cachedAt : null);
                 setStale(Boolean(data.stale));
             } catch (err: unknown) {
-                if (isMountedRef.current) {
-                    setError(getErrorMessage(err) || 'Failed to load admin data');
-                }
+                const errorMessage = getErrorMessage(err) || 'Failed to load admin data';
+                setError(errorMessage);
+                
+                // Set empty data on error so UI renders immediately
+                setPosts([]);
+                setUsers([]);
+                setBusinessRequests([]);
+                setAds([]);
+                setReports([]);
+                setGeoLogs([]);
+                setCachedAt(null);
+                setStale(true);
             } finally {
-                if (!isMountedRef.current) return;
-                if (!background) {
-                    setLoading(false);
-                }
                 setAuxLoading(false);
             }
         },
@@ -856,9 +878,23 @@ export function AdminClient() {
                     </button>
                 ))}
 
-                <div style={{ position: 'sticky', marginTop: 'auto', bottom: '24px', width: '240px' }}>
+                <div style={{ position: 'sticky', marginTop: 'auto', bottom: '24px', width: '240px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <button
+                        type="button"
+                        onClick={handleLogout}
+                        className="admin-nav-item"
+                        style={{ width: '100%', textAlign: 'left', background: 'rgba(255,255,255,0.08)', border: 'none', cursor: loggingOut ? 'wait' : 'pointer', position: 'relative', opacity: loggingOut ? 0.8 : 1 }}
+                        disabled={loggingOut}
+                    >
+                        {loggingOut ? (
+                            <span className="btn-spinner" aria-hidden="true" style={{ marginRight: 8 }} />
+                        ) : (
+                            <LogOut size={16} />
+                        )}
+                        {loggingOut ? 'Signing out…' : 'Sign out'}
+                    </button>
                     <Link href="/" className="admin-nav-item" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                        <LogOut size={16} /> Back to Site
+                        <ChevronRight size={16} /> Back to Site
                     </Link>
                 </div>
             </aside>

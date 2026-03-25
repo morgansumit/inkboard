@@ -1,8 +1,10 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Heart, MessageCircle, Share2, Flame, Clock } from 'lucide-react';
 import type { Post } from '@/types';
+import { createClient } from '@/lib/supabase/client';
 
 const LOCAL_ASPECT_RATIO_PADDING: Record<string, string> = {
     '3:4': '133.3%',
@@ -34,21 +36,88 @@ interface PostCardProps {
 }
 
 export function PostCard({ post, index = 0 }: PostCardProps) {
-    const [liked, setLiked] = useState(post.is_liked ?? false);
-    const [likeCount, setLikeCount] = useState(post.like_count);
+    const router = useRouter();
+    const [liked, setLiked] = useState(false);
+    const [likeCount, setLikeCount] = useState(0);
+    const [commentCount, setCommentCount] = useState(0);
     const [likeAnimating, setLikeAnimating] = useState(false);
+    const [engagementLoaded, setEngagementLoaded] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     // Use a pseudo-random aspect ratio based on the post ID so they are staggered
     // like Pinterest, preventing symmetric 'rows' if images happen to be the same ratio.
     const dynamicPaddingBottom = getPseudoRandomRatio(post.id);
 
-    const handleLike = (e: React.MouseEvent) => {
+    // Check authentication status
+    useEffect(() => {
+        const checkAuth = async () => {
+            const supabase = createClient();
+            const { data: { session } } = await supabase.auth.getSession();
+            setIsAuthenticated(!!session);
+        };
+        checkAuth();
+    }, []);
+
+    // Fetch engagement data from Supabase on mount
+    useEffect(() => {
+        const fetchEngagement = async () => {
+            try {
+                const response = await fetch(`/api/posts/${post.id}/engagement`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.engagement) {
+                        setLikeCount(data.engagement.like_count);
+                        setCommentCount(data.engagement.comment_count);
+                        setLiked(data.engagement.is_liked);
+                        setEngagementLoaded(true);
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to fetch engagement data:', error);
+            }
+        };
+
+        fetchEngagement();
+    }, [post.id]);
+
+    const handleLike = async (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
-        setLiked(!liked);
+        
+        // Check if user is authenticated
+        if (!isAuthenticated) {
+            router.push('/register');
+            return;
+        }
+        
+        // Optimistic UI update
+        const newLikedState = !liked;
+        setLiked(newLikedState);
         setLikeCount(c => liked ? c - 1 : c + 1);
         setLikeAnimating(true);
         setTimeout(() => setLikeAnimating(false), 400);
+        
+        // Persist to API
+        try {
+            const response = await fetch(`/api/posts/${post.id}/like`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            
+            if (!response.ok) {
+                // Revert optimistic update if API call fails
+                setLiked(!newLikedState);
+                setLikeCount(c => newLikedState ? c - 1 : c + 1);
+                console.error('Failed to toggle like');
+            }
+        } catch (error) {
+            // Revert optimistic update if network error
+            setLiked(!newLikedState);
+            setLikeCount(c => newLikedState ? c - 1 : c + 1);
+            console.error('Like API error:', error);
+        }
     };
 
     const handleShare = (e: React.MouseEvent) => {
@@ -182,7 +251,7 @@ export function PostCard({ post, index = 0 }: PostCardProps) {
 
                     <button className="engagement-btn" aria-label="Comments">
                         <MessageCircle size={14} />
-                        {formatNumber(post.comment_count || 0)}
+                        {formatNumber(commentCount || 0)}
                     </button>
 
                     <button className="engagement-btn" onClick={handleShare} aria-label="Share" style={{ marginLeft: 'auto' }}>

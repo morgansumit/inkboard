@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Navbar } from '@/components/Navbar';
 import { Sidebar } from '@/components/Sidebar';
+import { SupabaseErrorHandler } from '@/components/SupabaseErrorHandler';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://inkboard-writing.vercel.app'), // Replace with your actual domain later
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
+        <SupabaseErrorHandler />
         <div style={{ display: 'flex', minHeight: '100svh', width: '100%' }}>
           <Sidebar />
           <div className="layout-main" style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>

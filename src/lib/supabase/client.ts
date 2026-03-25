@@ -18,7 +18,31 @@ export function createClient() {
     }
 
     if (!browserClient) {
-        browserClient = createBrowserClient(supabaseUrl, supabaseAnonKey)
+        browserClient = createBrowserClient(supabaseUrl, supabaseAnonKey, {
+            auth: {
+                persistSession: true,
+                autoRefreshToken: true,
+                detectSessionInUrl: true,
+                flowType: 'pkce',
+                // Suppress refresh token errors in console
+                debug: false,
+            },
+            global: {
+                headers: {
+                    'x-client-info': 'inkboard-web',
+                },
+            },
+        })
+
+        // Handle auth errors globally to prevent console spam
+        browserClient.auth.onAuthStateChange((event, session) => {
+            if (event === 'TOKEN_REFRESHED') {
+                // Token successfully refreshed
+            } else if (event === 'SIGNED_OUT') {
+                // Clear any stale data
+                browserClient = null
+            }
+        })
     }
 
     return browserClient

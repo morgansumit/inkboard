@@ -1,9 +1,12 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Heart, MessageCircle, Share2, Flame, Clock, Calendar, Send, ChevronDown } from 'lucide-react';
 import type { Post, Comment } from '@/types';
 import { PostCard } from '@/components/PostCard';
+import { Comments } from '@/components/Comments';
+import { createClient } from '@/lib/supabase/client';
 import DOMPurify from 'isomorphic-dompurify';
 
 DOMPurify.addHook('afterSanitizeAttributes', function (node) {
@@ -64,37 +67,77 @@ function CommentItem({ comment, depth = 0 }: { comment: Comment; depth?: number 
 }
 
 export function PostDetailClient({ post, comments, morePosts }: Props) {
-    const [liked, setLiked] = useState(post.is_liked ?? false);
-    const [likeCount, setLikeCount] = useState(post.like_count);
-    const [newComment, setNewComment] = useState('');
-    const [commentList, setCommentList] = useState(comments);
+    const router = useRouter();
+    const [liked, setLiked] = useState(false);
+    const [likeCount, setLikeCount] = useState(0);
+    const [commentCount, setCommentCount] = useState(0);
     const [following, setFollowing] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    const handleLike = () => {
-        setLiked(!liked);
-        setLikeCount(c => liked ? c - 1 : c + 1);
-    };
-
-    const handleComment = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!newComment.trim()) return;
-        const optimisticComment: Comment = {
-            id: `c${Date.now()}`,
-            post_id: post.id,
-            author: {
-                id: 'u0', email: '', username: 'you', display_name: 'You',
-                avatar_url: 'https://i.pravatar.cc/150?img=70',
-                role: 'USER', is_verified: false, is_suspended: false, is_business: false,
-                created_at: new Date().toISOString(), follower_count: 0,
-                following_count: 0, total_likes: 0, post_count: 0,
-            },
-            content: newComment,
-            is_hidden: false,
-            created_at: new Date().toISOString(),
-            replies: [],
+    // Check authentication status
+    useEffect(() => {
+        const checkAuth = async () => {
+            const supabase = createClient();
+            const { data: { session } } = await supabase.auth.getSession();
+            setIsAuthenticated(!!session);
         };
-        setCommentList(c => [optimisticComment, ...c]);
-        setNewComment('');
+        checkAuth();
+    }, []);
+
+    // Fetch engagement data from Supabase on mount
+    useEffect(() => {
+        const fetchEngagement = async () => {
+            try {
+                const response = await fetch(`/api/posts/${post.id}/engagement`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.engagement) {
+                        setLikeCount(data.engagement.like_count);
+                        setCommentCount(data.engagement.comment_count);
+                        setLiked(data.engagement.is_liked);
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to fetch engagement data:', error);
+            }
+        };
+
+        fetchEngagement();
+    }, [post.id]);
+
+    const handleLike = async () => {
+        // Check if user is authenticated
+        if (!isAuthenticated) {
+            router.push('/register');
+            return;
+        }
+
+        // Optimistic UI update
+        const newLikedState = !liked;
+        setLiked(newLikedState);
+        setLikeCount(c => liked ? c - 1 : c + 1);
+        
+        // Persist to API
+        try {
+            const response = await fetch(`/api/posts/${post.id}/like`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            
+            if (!response.ok) {
+                // Revert optimistic update if API call fails
+                setLiked(!newLikedState);
+                setLikeCount(c => newLikedState ? c - 1 : c + 1);
+                console.error('Failed to toggle like');
+            }
+        } catch (error) {
+            // Revert optimistic update if network error
+            setLiked(!newLikedState);
+            setLikeCount(c => newLikedState ? c - 1 : c + 1);
+            console.error('Like API error:', error);
+        }
     };
 
     const handleShare = () => {
@@ -259,7 +302,7 @@ const reading = (text) => {
 
                         <span style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-muted)', fontSize: '14px', fontFamily: 'var(--font-ui)' }}>
                             <MessageCircle size={16} />
-                            {commentList.length} Comments
+                            {formatNumber(commentCount)} Comments
                         </span>
 
                         <button onClick={handleShare}
@@ -277,36 +320,7 @@ const reading = (text) => {
                     </div>
 
                     {/* Comments Section */}
-                    <section>
-                        <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '22px', fontWeight: 700, marginBottom: '24px' }}>
-                            Comments ({commentList.length})
-                        </h2>
-
-                        {/* Comment Input */}
-                        <form className="post-detail-comment-form" onSubmit={handleComment} style={{ display: 'flex', gap: '12px', marginBottom: '32px', alignItems: 'flex-start' }}>
-                            <img src="https://i.pravatar.cc/150?img=70" alt="You" className="avatar" style={{ width: '40px', height: '40px', flexShrink: 0, marginTop: '4px' }} />
-                            <div style={{ flex: 1 }}>
-                                <textarea
-                                    className="input"
-                                    placeholder="Share your thoughts…"
-                                    value={newComment}
-                                    onChange={e => setNewComment(e.target.value)}
-                                    rows={3}
-                                    style={{ resize: 'none', fontFamily: 'var(--font-ui)', marginBottom: '8px' }}
-                                />
-                                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                    <button type="submit" className="btn btn-primary btn-sm" disabled={!newComment.trim()}>
-                                        <Send size={13} /> Publish comment
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-
-                        {/* Comment List */}
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                            {commentList.map(c => <CommentItem key={c.id} comment={c} />)}
-                        </div>
-                    </section>
+                    <Comments postId={post.id} commentCount={commentCount} />
                 </article>
             </div>
 

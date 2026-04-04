@@ -15,20 +15,28 @@ function stripCycleSuffix(id: string): string {
 }
 
 function normalizeIdForMatch(id: string): string {
-    return id.replace(/\//g, '-');
+    // Strip source prefixes and replace slashes with dashes
+    // Matches: hashnode-xxx, devto-xxx, wikinews-xxx, guardian-xxx, user-xxx
+    return id.replace(/^(hashnode-|devto-|wikinews-|guardian-|user-)/, '').replace(/\//g, '-');
 }
 
 // Fetch posts from Supabase when cache is unavailable
 async function fetchFromSupabase(): Promise<Post[] | null> {
     try {
+        console.log('[fetchFromSupabase] Starting...');
+        console.log('[fetchFromSupabase] NETLIFY env:', process.env.NETLIFY);
+        console.log('[fetchFromSupabase] VERCEL env:', process.env.VERCEL);
+        
         // Use anon client for public data - doesn't require cookies
         const { createAnonClient } = await import('@/lib/supabase/anon');
         const supabase = createAnonClient();
         
         if (!supabase) {
-            console.error('[postRepository] Failed to create anon client');
+            console.error('[postRepository] Failed to create anon client - check env vars');
             return null;
         }
+        
+        console.log('[fetchFromSupabase] Anon client created');
         
         const { data: posts, error } = await supabase
             .from('posts')
@@ -41,6 +49,8 @@ async function fetchFromSupabase(): Promise<Post[] | null> {
             console.error('[postRepository] Supabase fetch error:', error);
             return null;
         }
+        
+        console.log('[fetchFromSupabase] Fetched', posts?.length || 0, 'posts');
         
         if (!posts || posts.length === 0) {
             return null;
@@ -165,8 +175,81 @@ export const postRepository = {
     async findById(id: string): Promise<Post | undefined> {
         const baseId = stripCycleSuffix(id);
         const normalizedId = normalizeIdForMatch(baseId);
+        
+        console.log('[findById] Looking for:', id, 'baseId:', baseId, 'normalized:', normalizedId);
 
+        // Try to get from cache first
         const all = await this.getAll();
-        return all.find(p => normalizeIdForMatch(p.id) === normalizedId);
+        const found = all.find(p => normalizeIdForMatch(p.id) === normalizedId);
+        if (found) {
+            console.log('[findById] Found in cache');
+            return found;
+        }
+        
+        // If not in cache, try direct Supabase lookup using normalized ID (no prefix)
+        console.log('[findById] Not in cache, trying Supabase directly with normalized ID:', normalizedId);
+        try {
+            const { createAnonClient } = await import('@/lib/supabase/anon');
+            const supabase = createAnonClient();
+            if (supabase) {
+                const { data: post, error } = await supabase
+                    .from('posts')
+                    .select('*')
+                    .eq('id', normalizedId)  // Use normalizedId (no prefix)
+                    .maybeSingle();
+                
+                if (error) {
+                    console.error('[findById] Supabase error:', error);
+                } else if (post) {
+                    console.log('[findById] Found in Supabase');
+                    return {
+                        id: post.id,
+                        title: post.title,
+                        subtitle: post.subtitle || '',
+                        content: typeof post.content === 'string' 
+                            ? post.content 
+                            : post.content?.html || post.content?.text || '',
+                        cover_image_url: post.cover_image_url,
+                        cover_aspect_ratio: post.cover_aspect_ratio || '16:9',
+                        author_id: post.author_id || 'system',
+                        author: {
+                            id: post.author_id || 'system',
+                            email: 'system@inkboard.local',
+                            username: 'system',
+                            display_name: post.source_platform || 'Inkboard',
+                            avatar_url: `https://api.dicebear.com/7.x/initials/svg?seed=${post.source_platform || 'Inkboard'}`,
+                            bio: '',
+                            location: '',
+                            role: 'USER',
+                            is_verified: true,
+                            is_suspended: false,
+                            is_business: false,
+                            created_at: post.created_at,
+                            follower_count: 0,
+                            following_count: 0,
+                            total_likes: 0,
+                            post_count: 0,
+                        },
+                        status: post.status,
+                        read_time_minutes: post.read_time_minutes || 1,
+                        engagement_score: post.engagement_score || 0,
+                        like_count: post.like_count || 0,
+                        comment_count: post.comment_count || 0,
+                        share_count: post.share_count || 0,
+                        is_trending: post.is_trending || false,
+                        source: post.source_platform || 'inkboard',
+                        source_url: post.source_url,
+                        created_at: post.created_at,
+                        published_at: post.published_at,
+                        tags: [],
+                    };
+                }
+            }
+        } catch (err) {
+            console.error('[findById] Direct lookup error:', err);
+        }
+        
+        console.log('[findById] Post not found');
+        return undefined;
     },
 };

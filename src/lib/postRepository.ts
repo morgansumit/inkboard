@@ -18,10 +18,91 @@ function normalizeIdForMatch(id: string): string {
     return id.replace(/\//g, '-');
 }
 
+// Fetch posts from Supabase when cache is unavailable
+async function fetchFromSupabase(): Promise<Post[] | null> {
+    try {
+        // Use regular server client instead of admin - posts are readable by all
+        const { createClient } = await import('@/lib/supabase/server');
+        const supabase = await createClient();
+        
+        const { data: posts, error } = await supabase
+            .from('posts')
+            .select('*')
+            .eq('status', 'PUBLISHED')
+            .order('published_at', { ascending: false })
+            .limit(100);
+        
+        if (error) {
+            console.error('[postRepository] Supabase fetch error:', error);
+            return null;
+        }
+        
+        if (!posts || posts.length === 0) {
+            return null;
+        }
+        
+        // Transform database posts to Post type
+        return posts.map((p: any): Post => ({
+            id: p.id,
+            title: p.title,
+            subtitle: p.subtitle || '',
+            content: typeof p.content === 'string' 
+                ? p.content 
+                : p.content?.html || p.content?.text || JSON.stringify(p.content) || '',
+            cover_image_url: p.cover_image_url,
+            cover_aspect_ratio: p.cover_aspect_ratio || '16:9',
+            author_id: p.author_id || 'system',
+            author: {
+                id: p.author_id || 'system',
+                email: 'system@inkboard.local',
+                username: 'system',
+                display_name: p.source_platform || 'Inkboard',
+                avatar_url: `https://api.dicebear.com/7.x/initials/svg?seed=${p.source_platform || 'Inkboard'}`,
+                bio: '',
+                location: '',
+                role: 'USER',
+                is_verified: true,
+                is_suspended: false,
+                is_business: false,
+                created_at: p.created_at,
+                follower_count: 0,
+                following_count: 0,
+                total_likes: 0,
+                post_count: 0,
+            },
+            status: p.status,
+            read_time_minutes: p.read_time_minutes || 1,
+            engagement_score: p.engagement_score || 0,
+            like_count: p.like_count || 0,
+            comment_count: p.comment_count || 0,
+            share_count: p.share_count || 0,
+            is_trending: p.is_trending || false,
+            source: p.source_platform || 'inkboard',
+            source_url: p.source_url,
+            created_at: p.created_at,
+            published_at: p.published_at,
+            tags: [],
+        }));
+    } catch (err) {
+        console.error('[postRepository] Failed to fetch from Supabase:', err);
+        return null;
+    }
+}
+
 async function readCacheFile(): Promise<Post[] | null> {
     // Skip filesystem operations in serverless environments
     if (process.env.NETLIFY === 'true' || process.env.VERCEL === '1') {
-        return memoryCache;
+        // On Netlify, try memory cache first, then Supabase
+        if (memoryCache && memoryCache.length > 0) {
+            return memoryCache;
+        }
+        // Try to fetch from Supabase
+        const fromDb = await fetchFromSupabase();
+        if (fromDb && fromDb.length > 0) {
+            memoryCache = fromDb;
+            return fromDb;
+        }
+        return null;
     }
     
     try {

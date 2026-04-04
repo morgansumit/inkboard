@@ -26,7 +26,9 @@ export async function GET(request: Request) {
     const feedSessionId = searchParams.get('session') || crypto.randomUUID();
 
     // Auto-ingest on first request (don't block response)
-    if (!hasAutoIngested) {
+    // Skip on Netlify - posts already in Supabase with UUID IDs
+    // Ingestion creates hashnode-xxx IDs that don't match DB UUIDs
+    if (!hasAutoIngested && process.env.NETLIFY !== 'true') {
         hasAutoIngested = true;
         contentIngestionService.ingestAll().catch(err => {
             console.error('Initial auto-ingestion failed', err);

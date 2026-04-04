@@ -56,48 +56,7 @@ async function fetchFromSupabase(): Promise<Post[] | null> {
             return null;
         }
         
-        // Transform database posts to Post type
-        return posts.map((p: any): Post => ({
-            id: p.id,
-            title: p.title,
-            subtitle: p.subtitle || '',
-            content: typeof p.content === 'string' 
-                ? p.content 
-                : p.content?.html || p.content?.text || JSON.stringify(p.content) || '',
-            cover_image_url: p.cover_image_url,
-            cover_aspect_ratio: p.cover_aspect_ratio || '16:9',
-            author_id: p.author_id || 'system',
-            author: {
-                id: p.author_id || 'system',
-                email: 'system@inkboard.local',
-                username: 'system',
-                display_name: p.source_platform || 'Inkboard',
-                avatar_url: `https://api.dicebear.com/7.x/initials/svg?seed=${p.source_platform || 'Inkboard'}`,
-                bio: '',
-                location: '',
-                role: 'USER',
-                is_verified: true,
-                is_suspended: false,
-                is_business: false,
-                created_at: p.created_at,
-                follower_count: 0,
-                following_count: 0,
-                total_likes: 0,
-                post_count: 0,
-            },
-            status: p.status,
-            read_time_minutes: p.read_time_minutes || 1,
-            engagement_score: p.engagement_score || 0,
-            like_count: p.like_count || 0,
-            comment_count: p.comment_count || 0,
-            share_count: p.share_count || 0,
-            is_trending: p.is_trending || false,
-            source: p.source_platform || 'inkboard',
-            source_url: p.source_url,
-            created_at: p.created_at,
-            published_at: p.published_at,
-            tags: [],
-        }));
+        return posts.map(transformDbPost);
     } catch (err) {
         console.error('[postRepository] Failed to fetch from Supabase:', err);
         return null;
@@ -105,16 +64,12 @@ async function fetchFromSupabase(): Promise<Post[] | null> {
 }
 
 async function readCacheFile(): Promise<Post[] | null> {
-    // Skip filesystem operations in serverless environments
-    if (process.env.NETLIFY === 'true' || process.env.VERCEL === '1') {
-        // On Netlify, try memory cache first, then Supabase
-        if (memoryCache && memoryCache.length > 0) {
-            return memoryCache;
-        }
-        // Try to fetch from Supabase
+    const isServerless = process.env.NETLIFY === 'true' || process.env.VERCEL === '1';
+    
+    if (isServerless) {
+        // On Netlify: always fetch from Supabase (source of truth with UUID IDs)
         const fromDb = await fetchFromSupabase();
         if (fromDb && fromDb.length > 0) {
-            memoryCache = fromDb;
             return fromDb;
         }
         return null;
@@ -144,6 +99,50 @@ async function writeCacheFile(posts: Post[]): Promise<void> {
         // Fallback to memory if fs fails
         memoryCache = posts;
     }
+}
+
+function transformDbPost(p: any): Post {
+    return {
+        id: p.id,
+        title: p.title,
+        subtitle: p.subtitle || '',
+        content: typeof p.content === 'string'
+            ? p.content
+            : p.content?.html || p.content?.text || JSON.stringify(p.content) || '',
+        cover_image_url: p.cover_image_url,
+        cover_aspect_ratio: p.cover_aspect_ratio || '16:9',
+        author_id: p.author_id || 'system',
+        author: {
+            id: p.author_id || 'system',
+            email: 'system@inkboard.local',
+            username: 'system',
+            display_name: p.source_platform || 'Inkboard',
+            avatar_url: `https://api.dicebear.com/7.x/initials/svg?seed=${p.source_platform || 'Inkboard'}`,
+            bio: '',
+            location: '',
+            role: 'USER',
+            is_verified: true,
+            is_suspended: false,
+            is_business: false,
+            created_at: p.created_at,
+            follower_count: 0,
+            following_count: 0,
+            total_likes: 0,
+            post_count: 0,
+        },
+        status: p.status,
+        read_time_minutes: p.read_time_minutes || 1,
+        engagement_score: p.engagement_score || 0,
+        like_count: p.like_count || 0,
+        comment_count: p.comment_count || 0,
+        share_count: p.share_count || 0,
+        is_trending: p.is_trending || false,
+        source: p.source_platform || 'inkboard',
+        source_url: p.source_url,
+        created_at: p.created_at,
+        published_at: p.published_at,
+        tags: [],
+    };
 }
 
 export const postRepository = {
@@ -176,80 +175,60 @@ export const postRepository = {
         const baseId = stripCycleSuffix(id);
         const normalizedId = normalizeIdForMatch(baseId);
         
-        console.log('[findById] Looking for:', id, 'baseId:', baseId, 'normalized:', normalizedId);
+        console.log('[findById] id:', id, 'normalized:', normalizedId);
 
-        // Try to get from cache first
-        const all = await this.getAll();
-        const found = all.find(p => normalizeIdForMatch(p.id) === normalizedId);
-        if (found) {
-            console.log('[findById] Found in cache');
-            return found;
-        }
-        
-        // If not in cache, try direct Supabase lookup using normalized ID (no prefix)
-        console.log('[findById] Not in cache, trying Supabase directly with normalized ID:', normalizedId);
+        // Try cache/Supabase list first
         try {
-            const { createAnonClient } = await import('@/lib/supabase/anon');
-            const supabase = createAnonClient();
-            if (supabase) {
-                const { data: post, error } = await supabase
-                    .from('posts')
-                    .select('*')
-                    .eq('id', normalizedId)  // Use normalizedId (no prefix)
-                    .maybeSingle();
-                
-                if (error) {
-                    console.error('[findById] Supabase error:', error);
-                } else if (post) {
-                    console.log('[findById] Found in Supabase');
-                    return {
-                        id: post.id,
-                        title: post.title,
-                        subtitle: post.subtitle || '',
-                        content: typeof post.content === 'string' 
-                            ? post.content 
-                            : post.content?.html || post.content?.text || '',
-                        cover_image_url: post.cover_image_url,
-                        cover_aspect_ratio: post.cover_aspect_ratio || '16:9',
-                        author_id: post.author_id || 'system',
-                        author: {
-                            id: post.author_id || 'system',
-                            email: 'system@inkboard.local',
-                            username: 'system',
-                            display_name: post.source_platform || 'Inkboard',
-                            avatar_url: `https://api.dicebear.com/7.x/initials/svg?seed=${post.source_platform || 'Inkboard'}`,
-                            bio: '',
-                            location: '',
-                            role: 'USER',
-                            is_verified: true,
-                            is_suspended: false,
-                            is_business: false,
-                            created_at: post.created_at,
-                            follower_count: 0,
-                            following_count: 0,
-                            total_likes: 0,
-                            post_count: 0,
-                        },
-                        status: post.status,
-                        read_time_minutes: post.read_time_minutes || 1,
-                        engagement_score: post.engagement_score || 0,
-                        like_count: post.like_count || 0,
-                        comment_count: post.comment_count || 0,
-                        share_count: post.share_count || 0,
-                        is_trending: post.is_trending || false,
-                        source: post.source_platform || 'inkboard',
-                        source_url: post.source_url,
-                        created_at: post.created_at,
-                        published_at: post.published_at,
-                        tags: [],
-                    };
-                }
+            const all = await this.getAll();
+            console.log('[findById] getAll returned', all.length, 'posts');
+            
+            // Try exact match on normalized IDs
+            const found = all.find(p => normalizeIdForMatch(p.id) === normalizedId);
+            if (found) {
+                console.log('[findById] Found by normalized match');
+                return found;
+            }
+            
+            // Try exact match on raw ID
+            const foundRaw = all.find(p => p.id === id || p.id === baseId);
+            if (foundRaw) {
+                console.log('[findById] Found by raw match');
+                return foundRaw;
             }
         } catch (err) {
-            console.error('[findById] Direct lookup error:', err);
+            console.error('[findById] getAll error:', err);
         }
         
-        console.log('[findById] Post not found');
+        // Direct Supabase lookup - only if normalizedId looks like a valid UUID
+        const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(normalizedId);
+        
+        if (isUUID) {
+            console.log('[findById] Trying Supabase UUID lookup:', normalizedId);
+            try {
+                const { createAnonClient } = await import('@/lib/supabase/anon');
+                const supabase = createAnonClient();
+                if (supabase) {
+                    const { data: post, error } = await supabase
+                        .from('posts')
+                        .select('*')
+                        .eq('id', normalizedId)
+                        .maybeSingle();
+                    
+                    if (error) {
+                        console.error('[findById] Supabase UUID lookup error:', error);
+                    } else if (post) {
+                        console.log('[findById] Found in Supabase by UUID');
+                        return transformDbPost(post);
+                    }
+                }
+            } catch (err) {
+                console.error('[findById] Supabase lookup error:', err);
+            }
+        } else {
+            console.log('[findById] Not a UUID, skipping direct DB lookup:', normalizedId);
+        }
+        
+        console.log('[findById] Post not found for id:', id);
         return undefined;
     },
 };

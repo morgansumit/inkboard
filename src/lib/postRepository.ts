@@ -21,9 +21,14 @@ function normalizeIdForMatch(id: string): string {
 // Fetch posts from Supabase when cache is unavailable
 async function fetchFromSupabase(): Promise<Post[] | null> {
     try {
-        // Use regular server client instead of admin - posts are readable by all
-        const { createClient } = await import('@/lib/supabase/server');
-        const supabase = await createClient();
+        // Use anon client for public data - doesn't require cookies
+        const { createAnonClient } = await import('@/lib/supabase/anon');
+        const supabase = createAnonClient();
+        
+        if (!supabase) {
+            console.error('[postRepository] Failed to create anon client');
+            return null;
+        }
         
         const { data: posts, error } = await supabase
             .from('posts')

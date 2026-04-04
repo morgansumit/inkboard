@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createAnonClient } from '@/lib/supabase/anon';
 import { createClient } from '@/lib/supabase/server';
 
 export async function GET(
@@ -7,44 +8,54 @@ export async function GET(
 ) {
   try {
     const { id: postId } = await params;
-    const supabase = await createClient();
     
-    // Get current user (optional - for checking if user liked the post)
-    const { data: { user } } = await supabase.auth.getUser();
+    // Use anon client for public data (doesn't require cookies)
+    const anonClient = createAnonClient();
+    if (!anonClient) {
+      throw new Error('Failed to create anon client');
+    }
     
-    // Get like count
-    const { count: likeCount, error: likeError } = await supabase
+    // Get like count (public data)
+    const { count: likeCount, error: likeError } = await anonClient
       .from('post_likes')
       .select('*', { count: 'exact', head: true })
       .eq('post_id', postId);
 
-    if (likeError && likeError.code !== 'PGRST116') {
-      console.error('Error fetching like count:', likeError);
+    if (likeError) {
+      console.error('[engagement] Like count error:', likeError);
     }
 
-    // Get comment count
-    const { count: commentCount, error: commentError } = await supabase
+    // Get comment count (public data)
+    const { count: commentCount, error: commentError } = await anonClient
       .from('post_comments')
       .select('*', { count: 'exact', head: true })
       .eq('post_id', postId);
 
-    if (commentError && commentError.code !== 'PGRST116') {
-      console.error('Error fetching comment count:', commentError);
+    if (commentError) {
+      console.error('[engagement] Comment count error:', commentError);
     }
 
-    // Check if current user liked this post
+    // Check if current user liked this post (requires auth)
     let isLiked = false;
-    if (user) {
-      const { data: userLike, error: userLikeError } = await supabase
-        .from('post_likes')
-        .select('id')
-        .eq('post_id', postId)
-        .eq('user_id', user.id)
-        .maybeSingle();
+    try {
+      const supabase = await createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (user) {
+        const { data: userLike, error: userLikeError } = await supabase
+          .from('post_likes')
+          .select('id')
+          .eq('post_id', postId)
+          .eq('user_id', user.id)
+          .maybeSingle();
 
-      if (!userLikeError) {
-        isLiked = !!userLike;
+        if (!userLikeError) {
+          isLiked = !!userLike;
+        }
       }
+    } catch (authError) {
+      // Auth not available, ignore
+      console.log('[engagement] Auth check skipped');
     }
 
     return NextResponse.json({

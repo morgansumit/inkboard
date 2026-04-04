@@ -3,6 +3,7 @@ import { postRepository } from '@/lib/postRepository';
 import type { Post, Tag, User } from '@/types';
 import { MOCK_USERS } from '@/lib/mockData';
 import crypto from 'crypto';
+import { createAnonClient } from '@/lib/supabase/anon';
 
 export const runtime = 'nodejs';
 
@@ -40,7 +41,8 @@ export async function POST(req: Request) {
 
         const now = new Date().toISOString();
         const author = getDemoAuthor();
-        const id = `user-${crypto.randomUUID()}`;
+        // Use UUID without user- prefix for database compatibility
+        const id = crypto.randomUUID();
 
         const post: Post = {
             id,
@@ -64,10 +66,42 @@ export async function POST(req: Request) {
             published_at: now,
         };
 
+        // Save to Supabase database (not just cache)
+        const supabase = createAnonClient();
+        if (supabase) {
+            const { error: dbError } = await supabase.from('posts').insert({
+                id: post.id,
+                title: post.title,
+                subtitle: post.subtitle,
+                content: { html: post.content },
+                cover_image_url: post.cover_image_url,
+                cover_aspect_ratio: post.cover_aspect_ratio,
+                author_id: null, // User posts don't have real author in auth.users
+                status: 'PUBLISHED',
+                read_time_minutes: post.read_time_minutes,
+                engagement_score: 0,
+                like_count: 0,
+                comment_count: 0,
+                share_count: 0,
+                is_trending: false,
+                source_platform: 'user',
+                created_at: now,
+                published_at: now,
+                updated_at: now,
+            });
+            
+            if (dbError) {
+                console.error('[posts] Failed to save to Supabase:', dbError);
+                // Continue to save to cache as fallback
+            }
+        }
+
+        // Also save to local cache for immediate availability
         await postRepository.upsertMany([post]);
 
         return NextResponse.json({ post });
-    } catch {
+    } catch (err) {
+        console.error('[posts] Error creating post:', err);
         return NextResponse.json({ error: 'Failed to create post' }, { status: 500 });
     }
 }

@@ -1,14 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createAnonClient } from '@/lib/supabase/anon';
 import { createClient } from '@/lib/supabase/server';
 
-// GET - Fetch comments for a post
+// GET - Fetch comments for a post (public data)
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id: postId } = await params;
-    const supabase = await createClient();
+    
+    // Use anon client for public data - doesn't require cookies
+    const supabase = createAnonClient();
+    if (!supabase) {
+      console.error('[comments] Failed to create anon client');
+      return NextResponse.json({ comments: [] });
+    }
 
     const { data: comments, error } = await supabase
       .from('post_comments')
@@ -20,15 +27,15 @@ export async function GET(
       .order('created_at', { ascending: true });
 
     if (error) {
-      console.error('Comments fetch error:', error);
-      return NextResponse.json({ error: 'Failed to fetch comments', details: error.message }, { status: 500 });
+      console.error('[comments] fetch error:', error);
+      return NextResponse.json({ comments: [] });
     }
 
     return NextResponse.json({ comments: comments || [] });
 
   } catch (error) {
-    console.error('Comments API error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error('[comments] API error:', error);
+    return NextResponse.json({ comments: [] });
   }
 }
 

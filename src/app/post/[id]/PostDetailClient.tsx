@@ -7,14 +7,27 @@ import type { Post, Comment } from '@/types';
 import { PostCard } from '@/components/PostCard';
 import { Comments } from '@/components/Comments';
 import { createClient } from '@/lib/supabase/client';
-import DOMPurify from 'isomorphic-dompurify';
-
-DOMPurify.addHook('afterSanitizeAttributes', function (node) {
-    if (node.tagName === 'A') {
-        node.setAttribute('target', '_blank');
-        node.setAttribute('rel', 'noopener noreferrer');
-    }
-});
+// Sanitize HTML - on server just pass through, on client use native DOM
+// (isomorphic-dompurify crashes on Netlify due to jsdom ESM incompatibility)
+function sanitizeHtml(html: string): string {
+    if (typeof window === 'undefined') return html;
+    // Basic client-side sanitization using native DOM
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    // Remove script tags
+    doc.querySelectorAll('script, iframe, object, embed, form').forEach(el => el.remove());
+    // Remove event handlers
+    doc.querySelectorAll('*').forEach(el => {
+        Array.from(el.attributes).forEach(attr => {
+            if (attr.name.startsWith('on')) el.removeAttribute(attr.name);
+        });
+    });
+    // Open links in new tab
+    doc.querySelectorAll('a').forEach((a: HTMLAnchorElement) => {
+        a.setAttribute('target', '_blank');
+        a.setAttribute('rel', 'noopener noreferrer');
+    });
+    return doc.body.innerHTML;
+}
 
 function formatDate(d: string) {
     return new Date(d).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -244,7 +257,7 @@ export function PostDetailClient({ post, comments, morePosts }: Props) {
                     {/* Article Content */}
                     <div className="prose">
                         {post.content ? (
-                            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }} />
+                            <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }} />
                         ) : (
                             <>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>

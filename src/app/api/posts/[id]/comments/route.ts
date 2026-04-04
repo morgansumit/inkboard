@@ -21,7 +21,7 @@ export async function GET(
 
     if (error) {
       console.error('Comments fetch error:', error);
-      return NextResponse.json({ error: 'Failed to fetch comments' }, { status: 500 });
+      return NextResponse.json({ error: 'Failed to fetch comments', details: error.message }, { status: 500 });
     }
 
     return NextResponse.json({ comments: comments || [] });

@@ -53,13 +53,14 @@ export async function GET(
         like_count: likeCount || 0,
         comment_count: commentCount || 0,
         is_liked: isLiked,
-        share_count: 0 // Placeholder for future implementation
+        share_count: 0
       }
     });
 
   } catch (error) {
     console.error('Engagement API error:', error);
     return NextResponse.json({ 
+      success: false,
       error: 'Failed to fetch engagement data',
       engagement: {
         like_count: 0,

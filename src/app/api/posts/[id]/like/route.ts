@@ -25,11 +25,10 @@ export async function POST(
       .maybeSingle();
 
     if (checkError && checkError.code !== 'PGRST116') {
-      return NextResponse.json({ error: 'Database error' }, { status: 500 });
+      return NextResponse.json({ error: 'Database error', details: checkError.message }, { status: 500 });
     }
 
     let isLiked = false;
-    let likeChange = 0;
 
     if (existingLike) {
       // Unlike the post
@@ -40,11 +39,10 @@ export async function POST(
         .eq('user_id', user.id);
 
       if (unlikeError) {
-        return NextResponse.json({ error: 'Failed to unlike' }, { status: 500 });
+        return NextResponse.json({ error: 'Failed to unlike', details: unlikeError.message }, { status: 500 });
       }
       
       isLiked = false;
-      likeChange = -1;
     } else {
       // Like the post
       const { error: likeError } = await supabase
@@ -56,44 +54,19 @@ export async function POST(
         });
 
       if (likeError) {
-        return NextResponse.json({ error: 'Failed to like' }, { status: 500 });
+        return NextResponse.json({ error: 'Failed to like', details: likeError.message }, { status: 500 });
       }
       
       isLiked = true;
-      likeChange = 1;
     }
-
-    // Update post like count in cache (temporarily disabled for testing)
-    /*
-    try {
-      const fs = require('fs/promises');
-      const path = require('path');
-      const cacheFile = path.join(process.cwd(), '.inkboard-cache', 'posts.json');
-      
-      const cacheData = await fs.readFile(cacheFile, 'utf8');
-      const posts = JSON.parse(cacheData);
-      
-      const postIndex = posts.findIndex((p: any) => p.id === postId);
-      if (postIndex !== -1) {
-        posts[postIndex].like_count = Math.max(0, posts[postIndex].like_count + likeChange);
-        posts[postIndex].is_liked = isLiked;
-        
-        await fs.writeFile(cacheFile, JSON.stringify(posts, null, 2));
-      }
-    } catch (cacheError) {
-      // Cache update failed but like was still recorded
-      console.error('Failed to update cache:', cacheError);
-    }
-    */
 
     return NextResponse.json({ 
       success: true, 
-      isLiked, 
-      likeChange 
+      isLiked
     });
 
   } catch (error) {
     console.error('Like API error:', error);
-    return NextResponse.json({ error: 'Failed to like', details: (error as Error).message }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to process like', details: (error as Error).message }, { status: 500 });
   }
 }

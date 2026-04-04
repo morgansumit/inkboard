@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { BarChart3, ChevronRight, Eye, FileText, Flag, Globe, LayoutDashboard, LogOut, Trash2, Users, type LucideIcon } from 'lucide-react';
+import { BarChart3, ChevronRight, Eye, FileText, Flag, Gift, Globe, LayoutDashboard, LogOut, Trash2, Users, type LucideIcon } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 
 type AdminView = 'dashboard' | 'business' | 'ads' | 'posts' | 'users' | 'reports' | 'geologs';
@@ -879,6 +879,13 @@ export function AdminClient() {
                 ))}
 
                 <div style={{ position: 'sticky', marginTop: 'auto', bottom: '24px', width: '240px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <Link 
+                        href="/admin/coupons" 
+                        className="admin-nav-item" 
+                        style={{ color: 'rgba(255,255,255,0.7)', display: 'flex', alignItems: 'center', gap: '8px' }}
+                    >
+                        <Gift size={16} /> Coupons & Deals
+                    </Link>
                     <button
                         type="button"
                         onClick={handleLogout}

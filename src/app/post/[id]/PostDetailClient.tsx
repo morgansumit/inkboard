@@ -163,8 +163,8 @@ export function PostDetailClient({ post, comments, morePosts }: Props) {
 
     return (
         <div style={{ background: 'var(--color-bg)' }}>
-            {/* Cover Image */}
-            {!post.source && (
+            {/* Cover Image - only show if no video_url */}
+            {!post.source && !post.video_url && (
                 <div style={{ width: '100%', maxHeight: '520px', overflow: 'hidden' }}>
                     <img src={post.cover_image_url} alt={post.title}
                         style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />

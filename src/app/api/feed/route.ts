@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { contentIngestionService } from '@/content-ingestion/content-ingestion.service';
 import { postRepository } from '@/lib/postRepository';
 import { createClient } from '@/lib/supabase/server';
+import { getCountryFromRequest } from '@/lib/geo';
 
 export const runtime = 'nodejs';
 
@@ -38,6 +39,10 @@ export async function GET(request: Request) {
     const start = (page - 1) * perPage;
     const end = start + perPage;
 
+    // Detect viewer's country for geoblocking
+    const viewerCountry = await getCountryFromRequest();
+    console.log('[feed] Viewer country:', viewerCountry);
+
     const allPosts = await postRepository.getAll();
 
     const validPosts = allPosts.filter(p => {
@@ -45,6 +50,8 @@ export async function GET(request: Request) {
         if (p.source === 'guardian') return false;
         if (p.id.includes('/')) return false;
         if (!p.content || p.content.trim().length === 0) return false;
+        // Geoblocking: only show posts from viewer's country or global posts (no country set)
+        if (p.country_code && viewerCountry && p.country_code !== viewerCountry) return false;
         return true;
     });
 
@@ -86,7 +93,8 @@ export async function GET(request: Request) {
                 const { data: auctionResults, error: auctionError } = await supabaseAdmin.rpc('run_ad_auction', {
                     p_user_id: user?.id || null,
                     p_available_slots: availableSlots,
-                    p_feed_session_id: feedSessionId
+                    p_feed_session_id: feedSessionId,
+                    p_viewer_country: viewerCountry
                 });
 
                 if (!auctionError && auctionResults && auctionResults.length > 0) {

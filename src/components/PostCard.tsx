@@ -2,9 +2,10 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Heart, MessageCircle, Share2, Flame, Clock } from 'lucide-react';
+import { Heart, MessageCircle, Share2, Flame, Clock, Play } from 'lucide-react';
 import type { Post } from '@/types';
 import { createClient } from '@/lib/supabase/client';
+import { parseVideoUrl } from '@/lib/video';
 
 const LOCAL_ASPECT_RATIO_PADDING: Record<string, string> = {
     '3:4': '133.3%',
@@ -18,6 +19,44 @@ const LOCAL_ASPECT_RATIO_PADDING: Record<string, string> = {
 function formatNumber(n: number) {
     if (n >= 1000) return `${(n / 1000).toFixed(1)}k`;
     return `${n}`;
+}
+
+interface VideoEmbedProps {
+    url: string;
+    title: string;
+}
+
+function VideoEmbed({ url, title }: VideoEmbedProps) {
+    const videoInfo = parseVideoUrl(url);
+    
+    if (!videoInfo.embedUrl) {
+        return (
+            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: '#1a1a1a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <span style={{ color: '#666', fontSize: '12px' }}>Invalid video URL</span>
+            </div>
+        );
+    }
+    
+    if (videoInfo.type === 'direct') {
+        return (
+            <video
+                src={videoInfo.embedUrl}
+                controls
+                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                poster={videoInfo.thumbnailUrl || undefined}
+            />
+        );
+    }
+    
+    return (
+        <iframe
+            src={videoInfo.embedUrl}
+            title={title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
+        />
+    );
 }
 
 
@@ -137,21 +176,38 @@ export function PostCard({ post, index = 0 }: PostCardProps) {
         >
             <article className="post-card">
                 <Link href={`/post/${post.id}`} style={{ position: 'absolute', inset: 0, zIndex: 10 }} aria-label={`View ${post.title}`} />
-                {/* Cover Image */}
-                <div style={{ position: 'relative', paddingBottom: dynamicPaddingBottom, height: 0, overflow: 'hidden' }}>
-                    <img
-                        src={post.cover_image_url || 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&q=80'}
-                        alt={post.title}
-                        className="post-card-image"
-                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
-                        loading={index < 4 ? 'eager' : 'lazy'}
-                    />
-                    {post.is_trending && (
-                        <div className="trending-badge">
-                            <Flame size={10} /> Trending
+                {/* Cover Image or Video */}
+                <div style={{ position: 'relative', paddingBottom: post.video_url ? '56.25%' : dynamicPaddingBottom, height: 0, overflow: 'hidden' }}>
+                    {post.video_url ? (
+                        // Video embed
+                        <VideoEmbed url={post.video_url} title={post.title} />
+                    ) : (
+                        // Cover image
+                        <>
+                            <img
+                                src={post.cover_image_url || 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&q=80'}
+                                alt={post.title}
+                                className="post-card-image"
+                                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                                loading={index < 4 ? 'eager' : 'lazy'}
+                            />
+                            {post.is_trending && (
+                                <div className="trending-badge">
+                                    <Flame size={10} /> Trending
+                                </div>
+                            )}
+                        </>
+                    )}
+                    {post.video_url && (
+                        <div style={{
+                            position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+                            background: 'rgba(0,0,0,0.6)', borderRadius: '50%', padding: '16px',
+                            pointerEvents: 'none', zIndex: 15,
+                        }}>
+                            <Play size={32} color="white" fill="white" />
                         </div>
                     )}
-                    {post.source && (
+                    {post.source && !post.video_url && (
                         <Link
                             href={`/source/${post.source}`}
                             onClick={e => e.stopPropagation()}

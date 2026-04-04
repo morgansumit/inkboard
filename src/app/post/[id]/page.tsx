@@ -3,6 +3,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import type { Comment } from '@/types';
 import { PostDetailClient } from './PostDetailClient';
+import { getCountryFromRequest } from '@/lib/geo';
 
 export const runtime = 'nodejs';
 
@@ -48,7 +49,26 @@ export default async function PostPage(props: { params: Promise<{ id: string }> 
                 </div>
             );
         }
-        
+
+        // Geoblocking: if post is country-restricted, check viewer's country
+        if (post.country_code) {
+            const viewerCountry = await getCountryFromRequest();
+            if (viewerCountry && post.country_code !== viewerCountry) {
+                return (
+                    <div style={{ padding: '48px', textAlign: 'center', maxWidth: '480px', margin: '0 auto' }}>
+                        <div style={{ fontSize: '72px', marginBottom: '16px' }}>🌍</div>
+                        <h1 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '12px' }}>
+                            Not available in your region
+                        </h1>
+                        <p style={{ color: 'rgba(255,255,255,0.6)', marginBottom: '24px', lineHeight: 1.6 }}>
+                            This post is only available to readers in the country where it was published.
+                        </p>
+                        <Link href="/" style={{ color: 'var(--color-accent)' }}>← Back to feed</Link>
+                    </div>
+                );
+            }
+        }
+
         const comments: Comment[] = [];
         const allPosts = await postRepository.getAll();
 

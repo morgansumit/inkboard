@@ -4,6 +4,7 @@ import type { Post, Tag, User } from '@/types';
 import { MOCK_USERS } from '@/lib/mockData';
 import crypto from 'crypto';
 import { createAnonClient } from '@/lib/supabase/anon';
+import { getCountryFromRequest } from '@/lib/geo';
 
 export const runtime = 'nodejs';
 
@@ -12,6 +13,7 @@ type CreatePostBody = {
     subtitle?: string;
     content: string;
     cover_image_url: string;
+    video_url?: string;
     cover_aspect_ratio?: Post['cover_aspect_ratio'];
     tags: string[];
 };
@@ -61,10 +63,15 @@ export async function POST(req: Request) {
             share_count: 0,
             is_trending: false,
             is_liked: false,
+            video_url: body.video_url || null,
             tags: body.tags.map(toTag),
             created_at: now,
             published_at: now,
         };
+
+        // Detect poster's country from IP for geoblocking
+        const countryCode = await getCountryFromRequest();
+        console.log('[posts] Detected country:', countryCode);
 
         // Save to Supabase database (not just cache)
         const supabase = createAnonClient();
@@ -75,6 +82,7 @@ export async function POST(req: Request) {
                 subtitle: post.subtitle,
                 content: { html: post.content },
                 cover_image_url: post.cover_image_url,
+                video_url: body.video_url || null,
                 cover_aspect_ratio: post.cover_aspect_ratio,
                 author_id: null, // User posts don't have real author in auth.users
                 status: 'PUBLISHED',
@@ -85,6 +93,7 @@ export async function POST(req: Request) {
                 share_count: 0,
                 is_trending: false,
                 source_platform: 'user',
+                country_code: countryCode,
                 created_at: now,
                 published_at: now,
                 updated_at: now,

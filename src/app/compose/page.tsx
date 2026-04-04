@@ -1,6 +1,6 @@
 'use client';
 import { useState, useRef } from 'react';
-import { Bold, Italic, Link as LinkIcon, Quote, Code, Image, X, Eye } from 'lucide-react';
+import { Bold, Italic, Link as LinkIcon, Quote, Code, Image, X, Eye, Video } from 'lucide-react';
 import { PostCard } from '@/components/PostCard';
 import type { Post } from '@/types';
 
@@ -12,6 +12,7 @@ export default function ComposePage() {
     const [content, setContent] = useState('');
     const [tags, setTags] = useState<string[]>([]);
     const [tagInput, setTagInput] = useState('');
+    const [videoUrl, setVideoUrl] = useState('');
     const [coverImage, setCoverImage] = useState('');
     const [isUploadingCover, setIsUploadingCover] = useState(false);
     const [showPreview, setShowPreview] = useState(false);
@@ -51,6 +52,7 @@ export default function ComposePage() {
                     subtitle,
                     content,
                     cover_image_url: coverImage,
+                    video_url: videoUrl,
                     cover_aspect_ratio: '4:3',
                     tags,
                 }),
@@ -112,6 +114,7 @@ export default function ComposePage() {
         title: title || 'Your Post Title',
         subtitle: subtitle || 'Your post subtitle or excerpt',
         cover_image_url: coverImage,
+        video_url: videoUrl,
         cover_aspect_ratio: '4:3',
         status: 'DRAFT', read_time_minutes: readTime,
         engagement_score: 0, like_count: 0, comment_count: 0, share_count: 0,
@@ -191,6 +194,29 @@ export default function ComposePage() {
                             {coverImage && (
                                 <div style={{ marginTop: '12px', borderRadius: '10px', overflow: 'hidden', height: '200px' }}>
                                     <img src={coverImage} alt="Cover preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Video URL */}
+                        <div>
+                            <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '8px' }}>
+                                <Video size={14} style={{ display: 'inline', marginRight: '6px', verticalAlign: 'middle' }} />
+                                Video URL <span style={{ color: 'var(--color-muted)', fontWeight: 400 }}>(YouTube, Vimeo, or direct video)</span>
+                            </label>
+                            <input
+                                className="input"
+                                placeholder="https://youtube.com/watch?v=... or https://vimeo.com/..."
+                                value={videoUrl}
+                                onChange={e => setVideoUrl(e.target.value)}
+                                style={{ width: '100%' }}
+                            />
+                            <div style={{ marginTop: '4px', fontSize: '12px', color: 'var(--color-muted)' }}>
+                                If video URL is provided, it will be shown as the main media on the card. Blog detail shows text only.
+                            </div>
+                            {videoUrl && (
+                                <div style={{ marginTop: '10px', padding: '10px', background: 'var(--color-bg)', borderRadius: '8px', fontSize: '12px' }}>
+                                    <span style={{ color: 'var(--color-accent)' }}>Video will be embedded from: {videoUrl.slice(0, 60)}...</span>
                                 </div>
                             )}
                         </div>

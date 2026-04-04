@@ -67,14 +67,11 @@ async function readCacheFile(): Promise<Post[] | null> {
     const isServerless = process.env.NETLIFY === 'true' || process.env.VERCEL === '1';
     
     if (isServerless) {
-        // On Netlify: always fetch from Supabase (source of truth with UUID IDs)
-        const fromDb = await fetchFromSupabase();
-        if (fromDb && fromDb.length > 0) {
-            return fromDb;
-        }
-        return null;
+        // On Netlify/Vercel: use memory cache (ephemeral filesystem)
+        return memoryCache;
     }
     
+    // Local dev: read from filesystem cache (like deployed site)
     try {
         const raw = await fs.readFile(CACHE_FILE, 'utf8');
         const parsed = JSON.parse(raw);
@@ -139,6 +136,7 @@ function transformDbPost(p: any): Post {
         is_trending: p.is_trending || false,
         source: p.source_platform || 'inkboard',
         source_url: p.source_url,
+        country_code: p.country_code || null,
         created_at: p.created_at,
         published_at: p.published_at,
         tags: [],

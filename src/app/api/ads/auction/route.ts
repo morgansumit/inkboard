@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
+import { getCountryFromRequest } from '@/lib/geo'
 
 export const runtime = 'nodejs'
 
@@ -22,11 +23,15 @@ export async function POST(req: Request) {
     } = body
 
     try {
+        // Detect viewer's country for geo-targeted ads
+        const viewerCountry = await getCountryFromRequest()
+
         // Run the auction
         const { data: auctionResults, error: auctionError } = await supabaseAdmin.rpc('run_ad_auction', {
             p_user_id: user.id,
             p_available_slots: availableSlots,
-            p_feed_session_id: feedSessionId
+            p_feed_session_id: feedSessionId,
+            p_viewer_country: viewerCountry
         })
 
         if (auctionError) {

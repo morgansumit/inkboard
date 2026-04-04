@@ -299,15 +299,13 @@ export function Navbar() {
                                                     if (loggingOut) return;
                                                     try {
                                                         setLoggingOut(true);
-                                                        await supabase.auth.signOut();
+                                                        const { error } = await supabase.auth.signOut();
+                                                        if (error) throw error;
                                                         setProfileMenuOpen(false);
-                                                        router.refresh();
-                                                        if (pathname.startsWith('/admin')) {
-                                                            router.replace('/login');
-                                                        }
+                                                        // Always redirect to login after sign out
+                                                        router.push('/login');
                                                     } catch (err) {
                                                         console.error('[navbar] sign out failed', err);
-                                                    } finally {
                                                         setLoggingOut(false);
                                                     }
                                                 }}

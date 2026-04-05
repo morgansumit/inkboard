@@ -76,7 +76,7 @@ export default function MessagesPage() {
 
   // Init: get current user
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
+    supabase.auth.getUser().then(({ data }: { data: { user: { id: string } | null } }) => {
       setCurrentUserId(data.user?.id || null);
     });
   }, [supabase]);

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import type { Session } from '@supabase/supabase-js';
 
 export default function AuthCallback() {
     const supabase = createClient();
@@ -10,11 +11,26 @@ export default function AuthCallback() {
     useEffect(() => {
         let redirected = false;
 
-        const doRedirect = () => {
+        const doRedirect = async () => {
             if (redirected) return;
             redirected = true;
-            // Send to home — the app handles onboarding routing from there
-            window.location.href = '/';
+
+            try {
+                const { data: { user } } = await supabase.auth.getUser();
+                if (!user) {
+                    window.location.href = '/login';
+                    return;
+                }
+                const { data: profile } = await supabase
+                    .from('users')
+                    .select('username')
+                    .eq('id', user.id)
+                    .maybeSingle();
+
+                window.location.href = profile?.username ? '/' : '/onboarding';
+            } catch {
+                window.location.href = '/';
+            }
         };
 
         // The browser client has detectSessionInUrl: true + flowType: 'pkce',
@@ -22,12 +38,12 @@ export default function AuthCallback() {
         // We just need to react to the resulting SIGNED_IN event.
 
         // Check if auto-exchange already finished before this listener was set up
-        supabase.auth.getSession().then(({ data: { session } }) => {
+        supabase.auth.getSession().then(({ data: { session } }: { data: { session: Session | null } }) => {
             if (session?.user) doRedirect();
         });
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
-            (event, session) => {
+            (event: string, session: Session | null) => {
                 console.log('[AuthCallback] auth event:', event);
                 if (event === 'SIGNED_IN' && session?.user) {
                     doRedirect();

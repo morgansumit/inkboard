@@ -779,13 +779,31 @@ body {
 
   .layout-main {
     margin-left: 0;
-    padding-top: calc(84px + env(safe-area-inset-top));
+    padding-top: calc(110px + env(safe-area-inset-top));
     padding-bottom: calc(96px + env(safe-area-inset-bottom) + var(--mobile-bottom-gap, 0px));
   }
 
   .more-from-section {
     padding: 24px 12px;
     margin-top: 24px;
+  }
+
+  /* Auth pages — remove forced 100vh centering so content isn't clipped by bottom nav */
+  .auth-page-outer {
+    min-height: unset !important;
+    align-items: flex-start !important;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+  }
+
+  .auth-register-outer {
+    min-height: unset !important;
+  }
+
+  .auth-register-left {
+    align-items: flex-start !important;
+    padding-top: 20px !important;
+    padding-bottom: 24px !important;
   }
 }
 

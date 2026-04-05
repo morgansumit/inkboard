@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Search, Bell, PenSquare, LogOut, Shield } from 'lucide-react';
-import { createClient } from '@/lib/supabase/client';
+import { createClient, resetClient } from '@/lib/supabase/client';
 import { createPortal } from 'react-dom';
 
 const TOPICS = [
@@ -167,12 +167,14 @@ export function Navbar() {
         if (loggingOut) return;
         try {
             setLoggingOut(true);
-            await supabase.auth.signOut({ scope: 'global' });
+            await supabase.auth.signOut({ scope: 'local' });
             setProfileMenuOpen(false);
             localStorage.removeItem('purseable:last-admin-view');
+            resetClient();
             window.location.href = '/login';
         } catch (err) {
             console.error('[navbar] sign out failed', err);
+            resetClient();
             window.location.href = '/login';
         }
     };
@@ -326,10 +328,10 @@ export function Navbar() {
                         </>
                     ) : (
                         <>
-                            <Link href="/login" className="btn btn-secondary btn-sm">
+                            <Link href="/login" className="btn btn-secondary btn-sm" style={{ whiteSpace: 'nowrap' }}>
                                 Log in
                             </Link>
-                            <Link href="/register" className="btn btn-primary btn-sm">
+                            <Link href="/register" className="btn btn-primary btn-sm" style={{ whiteSpace: 'nowrap' }}>
                                 Sign up
                             </Link>
                         </>

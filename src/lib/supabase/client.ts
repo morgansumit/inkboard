@@ -13,6 +13,7 @@ export function createClient() {
             auth: {
                 getSession: async () => ({ data: { session: null }, error: null }),
                 onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => { } } } }),
+                signOut: async () => ({ error: null }),
             }
         } as any
     }
@@ -24,7 +25,6 @@ export function createClient() {
                 autoRefreshToken: true,
                 detectSessionInUrl: true,
                 flowType: 'pkce',
-                // Suppress refresh token errors in console
                 debug: false,
             },
             global: {
@@ -33,16 +33,15 @@ export function createClient() {
                 },
             },
         })
-
-        // Handle auth errors globally to prevent console spam
-        browserClient.auth.onAuthStateChange((event, _session) => {
-            if (event === 'TOKEN_REFRESHED') {
-                // Token successfully refreshed
-            }
-            // Do NOT null out browserClient on SIGNED_OUT — that causes a race where the
-            // next createClient() creates a fresh instance that conflicts with stored cookies.
-        })
     }
 
     return browserClient
+}
+
+/**
+ * Reset the singleton so the next createClient() starts fresh.
+ * Call this after signOut completes, right before hard-navigating away.
+ */
+export function resetClient() {
+    browserClient = null
 }

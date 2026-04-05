@@ -105,7 +105,7 @@ export default function RegisterPage() {
 
     if (step === 'verify') {
         return (
-            <div style={{ minHeight: '100vh', background: 'var(--color-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 20px' }}>
+            <div className="auth-page-outer" style={{ minHeight: '100vh', background: 'var(--color-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 20px' }}>
                 <div style={{ maxWidth: '440px', width: '100%', textAlign: 'center' }}>
                     <div style={{ fontSize: '48px', marginBottom: '20px' }}>📬</div>
                     <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: '28px', fontWeight: 700, marginBottom: '12px' }}>
@@ -130,9 +130,9 @@ export default function RegisterPage() {
     }
 
     return (
-        <div style={{ minHeight: '100vh', background: 'var(--color-bg)', display: 'flex' }}>
+        <div className="auth-register-outer" style={{ minHeight: '100vh', background: 'var(--color-bg)', display: 'flex' }}>
             {/* Left pane — form */}
-            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '48px 24px' }}>
+            <div className="auth-register-left" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '48px 24px' }}>
                 <div style={{ width: '100%', maxWidth: '400px' }}>
                     <Link href="/" className="brand-wordmark" style={{ display: 'block', marginBottom: '36px' }}>
                         Ink<span>board</span>
@@ -200,7 +200,7 @@ export default function RegisterPage() {
                             </div>
                         </div>
 
-                        <button type="submit" className="btn btn-primary btn-lg" style={{ marginTop: '4px', opacity: loading ? 0.7 : 1 }} disabled={loading}>
+                        <button type="submit" className="btn btn-primary btn-lg" style={{ marginTop: '4px', opacity: loading ? 0.7 : 1, whiteSpace: 'nowrap' }} disabled={loading}>
                             {loading ? 'Creating...' : 'Create Account'}
                         </button>
 

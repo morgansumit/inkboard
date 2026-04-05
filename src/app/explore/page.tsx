@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Copy, Check, Gift, Percent, ExternalLink, Tag } from 'lucide-react';
+import { MasonryFeed } from '@/components/MasonryFeed';
+import { createClient } from '@/lib/supabase/client';
 
 interface Coupon {
     id: string;
@@ -34,7 +36,9 @@ function formatToday() {
 }
 
 export default function ExplorePage() {
-    const [posts, setPosts] = useState<Post[]>([]);
+    const [posts, setPosts] = useState<any[]>([]);
+    const [loadingPosts, setLoadingPosts] = useState(true);
+    const supabase = createClient();
     const [coupons, setCoupons] = useState<Coupon[]>([]);
     const [loading, setLoading] = useState(true);
     const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -54,8 +58,9 @@ export default function ExplorePage() {
                     const postsData = await postsRes.json();
                     const validPosts = (postsData.posts || [])
                         .filter((p: any) => !p.is_ad && p.status === 'PUBLISHED')
-                        .slice(0, 8);
+                        .slice(0, 16);
                     setPosts(validPosts);
+                    setLoadingPosts(false);
                 }
 
                 if (couponsRes.ok) {
@@ -82,17 +87,6 @@ export default function ExplorePage() {
     const filteredCoupons = activeCategory === 'All' 
         ? coupons 
         : coupons.filter(c => c.category === activeCategory);
-
-    const mixedItems = [];
-    const maxItems = Math.max(posts.length, filteredCoupons.length);
-    for (let i = 0; i < maxItems; i++) {
-        if (i < filteredCoupons.length) {
-            mixedItems.push({ type: 'coupon', data: filteredCoupons[i] });
-        }
-        if (i < posts.length) {
-            mixedItems.push({ type: 'post', data: posts[i] });
-        }
-    }
 
     if (loading) {
         return (
@@ -135,11 +129,12 @@ export default function ExplorePage() {
                     </div>
                 )}
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', justifyItems: 'center' }}>
-                    {mixedItems.map((item, index) => {
-                        if (item.type === 'coupon') {
-                            const coupon = item.data as Coupon;
-                            return (
+                {/* Coupons Section */}
+                {filteredCoupons.length > 0 && (
+                    <div style={{ marginBottom: '32px' }}>
+                        <h2 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '16px', color: '#111' }}>Exclusive Deals</h2>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', justifyItems: 'center' }}>
+                            {filteredCoupons.map((coupon) => (
                                 <div key={coupon.id} style={{ width: '100%', maxWidth: '380px', background: '#fff', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.08)' }}>
                                     <div style={{ position: 'relative', height: '180px' }}>
                                         <img src={coupon.coverImage} alt={coupon.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -170,23 +165,20 @@ export default function ExplorePage() {
                                         </a>
                                     </div>
                                 </div>
-                            );
-                        } else {
-                            const post = item.data as Post;
-                            return (
-                                <Link key={post.id} href={`/post/${post.id}`} style={{ width: '100%', maxWidth: '380px', borderRadius: '20px', overflow: 'hidden', position: 'relative', aspectRatio: '4 / 5', boxShadow: '0 10px 30px rgba(0,0,0,0.08)', textDecoration: 'none' }}>
-                                    <img src={post.cover_image_url || 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&q=80'} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(0deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 100%)', color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '18px', gap: '6px' }}>
-                                        <div style={{ fontSize: '12px', fontWeight: 700, opacity: 0.9 }}>{post.subtitle || post.tags?.[0]?.name || post.source?.toUpperCase() || 'Story'}</div>
-                                        <div style={{ fontSize: '17px', fontWeight: 800, lineHeight: 1.25 }}>{post.title}</div>
-                                    </div>
-                                </Link>
-                            );
-                        }
-                    })}
-                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
 
-                {mixedItems.length === 0 && !loading && (
+                {/* Posts Section - Masonry Feed */}
+                {posts.length > 0 && (
+                    <div>
+                        <h2 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '16px', color: '#111' }}>Discover Stories</h2>
+                        <MasonryFeed isLoggedIn={false} />
+                    </div>
+                )}
+
+                {filteredCoupons.length === 0 && posts.length === 0 && !loading && (
                     <div style={{ textAlign: 'center', padding: '60px 20px' }}>
                         <p style={{ color: '#666' }}>No items found</p>
                     </div>

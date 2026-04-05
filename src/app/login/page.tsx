@@ -106,7 +106,7 @@ export default function LoginPage() {
     const locked = attempts >= 5;
 
     return (
-        <div style={{ minHeight: '100vh', background: 'var(--color-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 20px' }}>
+        <div className="auth-page-outer" style={{ minHeight: '100vh', background: 'var(--color-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 20px' }}>
             <div style={{ width: '100%', maxWidth: '400px' }}>
                 <div style={{ textAlign: 'center', marginBottom: '36px' }}>
                     <Link href="/" className="brand-wordmark" style={{ display: 'inline-block', marginBottom: '24px' }}>
@@ -191,7 +191,7 @@ export default function LoginPage() {
                             <label htmlFor="remember" style={{ fontSize: '13px', color: 'var(--color-muted)' }}>Remember this device</label>
                         </div>
 
-                        <button type="submit" className="btn btn-primary btn-lg" disabled={locked || loading} style={{ opacity: (locked || loading) ? 0.5 : 1 }}>
+                        <button type="submit" className="btn btn-primary btn-lg" disabled={locked || loading} style={{ opacity: (locked || loading) ? 0.5 : 1, whiteSpace: 'nowrap' }}>
                             {loading ? 'Logging in...' : 'Log In'}
                         </button>
                     </form>

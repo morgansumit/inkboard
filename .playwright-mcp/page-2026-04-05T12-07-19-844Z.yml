@@ -1,0 +1,60 @@
+- generic [ref=e1]:
+  - main [ref=e29]:
+    - generic [ref=e1940]:
+      - complementary [ref=e1941]:
+        - generic [ref=e1942]:
+          - generic [ref=e1943]:
+            - img "Purseable" [ref=e1944]
+            - generic [ref=e1945]: Purseable
+          - generic [ref=e1946]: Admin Panel
+        - button "Dashboard" [ref=e1947] [cursor=pointer]:
+          - img [ref=e1948]
+          - text: Dashboard
+        - button "Business Accounts" [ref=e1955] [cursor=pointer]:
+          - img [ref=e1956]
+          - text: Business Accounts
+        - button "Ads Management" [ref=e1961] [cursor=pointer]:
+          - img [ref=e1962]
+          - text: Ads Management
+        - button "Post Management" [ref=e1964] [cursor=pointer]:
+          - img [ref=e1965]
+          - text: Post Management
+        - button "User Management" [ref=e1968] [cursor=pointer]:
+          - img [ref=e1969]
+          - text: User Management
+        - button "Reports" [ref=e1974] [cursor=pointer]:
+          - img [ref=e1975]
+          - text: Reports
+        - button "Geo Logs" [active] [ref=e1977] [cursor=pointer]:
+          - img [ref=e1978]
+          - text: Geo Logs
+          - img [ref=e2047]
+        - button "Broadcast Messages" [ref=e1981] [cursor=pointer]:
+          - img [ref=e1982]
+          - text: Broadcast Messages
+        - generic [ref=e1985]:
+          - link "Coupons & Deals" [ref=e1986] [cursor=pointer]:
+            - /url: /admin/coupons
+            - img [ref=e1987]
+            - text: Coupons & Deals
+          - link "Legal Policies" [ref=e1991] [cursor=pointer]:
+            - /url: /admin/policies
+            - img [ref=e1992]
+            - text: Legal Policies
+          - button "Sign out" [ref=e1994] [cursor=pointer]:
+            - img [ref=e1995]
+            - text: Sign out
+          - link "Back to Site" [ref=e1998] [cursor=pointer]:
+            - /url: /
+            - img [ref=e1999]
+            - text: Back to Site
+      - main [ref=e2001]:
+        - generic [ref=e2002]:
+          - button "Refresh now" [ref=e2003] [cursor=pointer]
+          - generic [ref=e2004]: Cached at 5:34:19 PM (stale)
+        - generic [ref=e2005]:
+          - heading "Geo Block Logs" [level=2] [ref=e2049]
+          - paragraph [ref=e2050]: No geo block logs found.
+  - button "Open Next.js Dev Tools" [ref=e71] [cursor=pointer]:
+    - img [ref=e72]
+  - alert [ref=e75]: Purseable — Discover Writing You Love

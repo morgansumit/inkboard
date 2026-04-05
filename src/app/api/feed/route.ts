@@ -6,6 +6,36 @@ import { getCountryFromRequest } from '@/lib/geo';
 
 export const runtime = 'nodejs';
 
+// Deterministic fake author from a post ID so every ingested post
+// always shows the same realistic name (no DB changes needed).
+function fakeAuthorFromId(id: string) {
+    const hash = id.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+    const firstNames = ['Alex', 'Jamie', 'Morgan', 'Taylor', 'Jordan', 'Casey', 'Riley', 'Devon', 'Avery', 'Quinn', 'Sam', 'Blake', 'Drew', 'Reese', 'Skyler', 'Logan', 'Cameron', 'Peyton', 'Charlie', 'Finley', 'Harper', 'Ellis', 'Sage', 'River', 'Rowan'];
+    const lastNames = ['Chen', 'Patel', 'Kim', 'Rodriguez', 'Williams', 'Johnson', 'Thompson', 'Anderson', 'Martinez', 'Garcia', 'Singh', 'Lee', 'Brown', 'Davis', 'Wilson', 'Moore', 'Taylor', 'Jackson', 'White', 'Harris', 'Nguyen', 'Walker', 'Hall', 'Allen', 'Young'];
+    const first = firstNames[hash % firstNames.length];
+    const last = lastNames[Math.floor(hash / firstNames.length) % lastNames.length];
+    const display_name = `${first} ${last}`;
+    const username = `${first.toLowerCase()}${last.toLowerCase()}`;
+    return {
+        id: `fake-${id.slice(0, 8)}`,
+        email: '',
+        username,
+        display_name,
+        bio: '',
+        avatar_url: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(display_name)}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`,
+        location: '',
+        role: 'USER' as const,
+        is_verified: false,
+        is_suspended: false,
+        is_business: false,
+        created_at: new Date().toISOString(),
+        follower_count: 0,
+        following_count: 0,
+        total_likes: 0,
+        post_count: 0,
+    };
+}
+
 let hasAutoIngested = false;
 
 // Ad slot positions (1 ad per 4 organic pins)
@@ -91,7 +121,7 @@ export async function GET(request: Request) {
                         following_count: p.author.following_count || 0,
                         total_likes: p.author.total_likes || 0,
                         post_count: p.author.post_count || 0,
-                    } : undefined,
+                    } : fakeAuthorFromId(p.id),
                     status: p.status,
                     read_time_minutes: p.read_time_minutes || 1,
                     engagement_score: p.engagement_score || 0,
@@ -126,8 +156,12 @@ export async function GET(request: Request) {
     const validPosts = allPosts.filter(p => {
         if (p.status !== 'PUBLISHED') return false;
         if (p.source === 'guardian') return false; // Guardian posts removed
+        if (p.source === 'wikinews') return false; // Wikinews posts removed
         if (p.id.includes('/')) return false;
         if (!p.content || p.content.trim().length === 0) return false;
+        // Exclude old cached post IDs that don't exist in Supabase
+        if (p.id.startsWith('hashnode-') || p.id.startsWith('devto-') || p.id.startsWith('wikinews-') || 
+            p.id.startsWith('guardian-') || /^p\d+$/.test(p.id) || p.id.startsWith('user-')) return false;
         // Geoblocking: only show posts from viewer's country or global posts (no country set)
         if (p.country_code && viewerCountry && p.country_code !== viewerCountry) return false;
         return true;

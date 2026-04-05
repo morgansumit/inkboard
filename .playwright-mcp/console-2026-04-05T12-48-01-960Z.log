@@ -1,0 +1,14 @@
+[     113ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ http://localhost:3000/login:0
+[     213ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[     242ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    4969ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    5027ms] [LOG] [Fast Refresh] done in 159ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    5273ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    5294ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    5529ms] [LOG] [AuthCallback] auth event: SIGNED_IN @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  171311ms] [ERROR] Access to fetch at 'https://iosqlvqthdoxzvdwliat.supabase.co/rest/v1/users?select=username&id=eq.ee3c512f-2c77-4d1b-a918-f1e3ce7e8a5e' from origin 'http://localhost:3000' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'. @ http://localhost:3000/auth/callback?code=f27e0aa0-90fc-4728-a6af-8e819406ed43:0
+[  171312ms] [ERROR] Failed to load resource: net::ERR_FAILED @ https://iosqlvqthdoxzvdwliat.supabase.co/rest/v1/users?select=username&id=eq.ee3c512f-2c77-4d1b-a918-f1e3ce7e8a5e:0
+[  298680ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  298708ms] [LOG] [Fast Refresh] done in 44ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  305325ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  305353ms] [LOG] [Fast Refresh] done in 43ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297

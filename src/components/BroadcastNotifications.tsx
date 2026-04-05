@@ -26,6 +26,12 @@ export function BroadcastNotifications() {
     useEffect(() => {
         const fetchBroadcasts = async () => {
             try {
+                const { data: { session } } = await supabase.auth.getSession();
+                if (!session) {
+                    setLoading(false);
+                    return;
+                }
+
                 const res = await fetch('/api/broadcasts/my');
                 const data = await res.json();
                 if (!res.ok) throw new Error(data?.error || 'Failed to fetch broadcasts');

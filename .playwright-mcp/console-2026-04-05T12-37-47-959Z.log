@@ -1,0 +1,47 @@
+[     242ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[     282ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[     545ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[     736ms] [LOG] [Fast Refresh] done in 291ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    7791ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    7838ms] [LOG] [Fast Refresh] done in 148ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   10939ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   10945ms] [LOG] [Fast Refresh] done in 108ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   32697ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   33133ms] [LOG] [Fast Refresh] done in 467ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   33952ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   33963ms] [LOG] [Fast Refresh] done in 112ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   34863ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   34875ms] [LOG] [Fast Refresh] done in 114ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   35607ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   35642ms] [LOG] [Fast Refresh] done in 135ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   36526ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   36559ms] [LOG] [Fast Refresh] done in 133ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   38194ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   38262ms] [LOG] [Fast Refresh] done in 170ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   39846ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   39850ms] [LOG] [Fast Refresh] done in 106ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   41360ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   41385ms] [LOG] [Fast Refresh] done in 127ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   41516ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   41525ms] [LOG] [Fast Refresh] done in 111ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   43572ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   43576ms] [LOG] [Fast Refresh] done in 103ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   44502ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   44503ms] [LOG] [Fast Refresh] done in 101ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   48298ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   48348ms] [LOG] [Fast Refresh] done in 151ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  126495ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  126570ms] [LOG] [Fast Refresh] done in 176ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  130777ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  130834ms] [LOG] [Fast Refresh] done in 159ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  146383ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ http://localhost:3000/login:0
+[  146463ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  146508ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  149067ms] [VERBOSE] [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o @ https://accounts.google.com/v3/signin/identifier?opparams=%253Fredirect_to%253Dhttp%25253A%25252F%25252Flocalhost%25253A3000%25252Fauth%25252Fcallback&dsh=S319944840%3A1775392816490632&client_id=257642245001-occlqrbqpfgdag4frnii71ssti12cr9u.apps.googleusercontent.com&o2v=2&redirect_uri=https%3A%2F%2Fiosqlvqthdoxzvdwliat.supabase.co%2Fauth%2Fv1%2Fcallback&response_type=code&scope=email+profile&service=lso&state=eb002464-ebf9-4e4c-b506-27c936b1668a&flowName=GeneralOAuthFlow&continue=https%3A%2F%2Faccounts.google.com%2Fsignin%2Foauth%2Fconsent%3Fauthuser%3Dunknown%26part%3DAJi8hANFQGona4jhj0sHopXN_zMcJNEnsALZe203vHQjfyDB8SLAyBXMpgd1AheVXQtL60nvcFNNQHunbPTDYXRYeiNO7ISUfO9Pa0RC6sZuNzTq6adOXsybyyimnACGI7GYFBJ6EIlBFx0w9POkIGvzJIlNXEX50H3mULJ8FuEgm4ixpZCOxBwvdlvCIoUlE6kIv3DTcukeus2x82xFVgsPcWlTTOl_3DdKHTZLA8TMyQWFwb5PvSVTZ1y1wrBPVDkQSzS5_aqjtdBi3QcOLKPalz8rcMBwY6V_khi16vz7Sg76BqY1hYIHcbZkkjS8EiC6ggzXZ_CL4SXRLSF3NAUN2zVy9HOdZJhn9vpUS1iKFwqfqx7s_4owfHEyYJyQ1x8bW7LhQGEX5vYpgRhFi9Tiq-0wl-NGjIZB1cw15Kbei1ObLMFrk2532tDHk-J_-hoAOSsHZ2zkjurbZ4SICInu8UznnZDHTcoKnTUg4kAqz1palK-kDQ4%26flowName%3DGeneralOAuthFlow%26as%3DS319944840%253A1775392816490632%26client_id%3D257642245001-occlqrbqpfgdag4frnii71ssti12cr9u.apps.googleusercontent.com%26requestPath%3D%252Fsignin%252Foauth%252Fconsent%23&app_domain=https%3A%2F%2Fiosqlvqthdoxzvdwliat.supabase.co&rart=ANgoxcdFEoQpsZBlllFuIx8gAh3jjCC4nVbsgWM4iQu6NHVVozrZ0FqTA1VFq7Gh19YfnzwvGQfyeIaQzEog5HPmdKbwxgwtww12Qlv46w0awD5Rwps_SVk:0
+[  149076ms] [LOG] %c%s color: red; background: yellow; font-size: 24px; WARNING! @ https://www.gstatic.com/_/mss/boq-identity/_/js/k=boq-identity.AccountsSignInUi.en_US.IWQQguuMG4M.es5.O/am=Kf8GAACiCCQD4P__DxkACIAgGrieBaAJRAYAAAAAAAAAAKwQACCN/d=1/excm=_b,_tp,identifierview/ed=1/dg=0/wt=2/ujg=1/rs=AOaEmlHKZM7fW8spO5sscxAkpM6tZsqPaw/dti=1/m=_b,_tp:467
+[  149077ms] [LOG] %c%s font-size: 18px; Using this console may allow attackers to impersonate you and steal your information using an attack called Self-XSS.
+Do not enter or paste code that you do not understand. @ https://www.gstatic.com/_/mss/boq-identity/_/js/k=boq-identity.AccountsSignInUi.en_US.IWQQguuMG4M.es5.O/am=Kf8GAACiCCQD4P__DxkACIAgGrieBaAJRAYAAAAAAAAAAKwQACCN/d=1/excm=_b,_tp,identifierview/ed=1/dg=0/wt=2/ujg=1/rs=AOaEmlHKZM7fW8spO5sscxAkpM6tZsqPaw/dti=1/m=_b,_tp:467
+[  166581ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  166697ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  166777ms] [LOG] [AuthCallback] Code: found @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  166778ms] [LOG] [AuthCallback] Exchanging code for session... @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297

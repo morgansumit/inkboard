@@ -27,6 +27,44 @@ export default function SettingsPage() {
   const [editValue, setEditValue] = useState('');
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
+
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setIsUploadingAvatar(true);
+    setSaveMessage(null);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || 'ml_default');
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'djxv1usyv'}/image/upload`, {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.secure_url) {
+        const saveRes = await fetch('/api/users/profile', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ avatar_url: data.secure_url }),
+        });
+        const saveData = await saveRes.json();
+        if (!saveRes.ok) {
+          setSaveMessage({ type: 'error', text: saveData.error || 'Failed to save avatar' });
+        } else {
+          setProfile(prev => prev ? { ...prev, avatar_url: data.secure_url } : prev);
+          setSaveMessage({ type: 'success', text: 'Avatar updated!' });
+          setTimeout(() => setSaveMessage(null), 2000);
+        }
+      }
+    } catch (err) {
+      console.error('Error uploading avatar', err);
+      setSaveMessage({ type: 'error', text: 'Failed to upload avatar. Please try again.' });
+    } finally {
+      setIsUploadingAvatar(false);
+    }
+  };
 
   useEffect(() => {
     const init = async () => {
@@ -93,12 +131,18 @@ export default function SettingsPage() {
     if (loggingOut) return;
     try {
       setLoggingOut(true);
-      const { error } = await supabase.auth.signOut();
-      if (error) throw error;
-      router.push('/login');
+      // Quick timeout to prevent hanging
+      const signOutPromise = supabase.auth.signOut();
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Sign out timeout')), 3000)
+      );
+      await Promise.race([signOutPromise, timeoutPromise]);
+      // Force redirect with window.location for reliability
+      window.location.href = '/login';
     } catch (err) {
       console.error('Sign out failed', err);
-      setLoggingOut(false);
+      // Still redirect even if sign out fails
+      window.location.href = '/login';
     }
   };
 
@@ -189,16 +233,33 @@ export default function SettingsPage() {
           <p style={{ color: 'var(--color-muted)', fontSize: '14px' }}>Loading profile...</p>
         ) : profile ? (
           <div>
-            {/* Avatar preview */}
+            {/* Avatar preview with upload */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '16px', padding: '12px 0', borderBottom: '1px solid var(--color-border, #eee)' }}>
               <img
                 src={profile.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(profile.display_name || 'User')}`}
                 alt={profile.display_name}
                 style={{ width: 56, height: 56, borderRadius: '50%', objectFit: 'cover' }}
               />
-              <div>
+              <div style={{ flex: 1 }}>
                 <div style={{ fontSize: '16px', fontWeight: 600 }}>{profile.display_name || profile.username}</div>
                 <div style={{ fontSize: '13px', color: 'var(--color-muted)' }}>@{profile.username}</div>
+              </div>
+              <div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleAvatarUpload}
+                  disabled={isUploadingAvatar}
+                  style={{ display: 'none' }}
+                  id="avatar-upload"
+                />
+                <label 
+                  htmlFor="avatar-upload" 
+                  className="btn btn-secondary btn-sm"
+                  style={{ cursor: 'pointer', fontSize: '13px', padding: '6px 12px' }}
+                >
+                  {isUploadingAvatar ? 'Uploading...' : 'Change Photo'}
+                </label>
               </div>
             </div>
 

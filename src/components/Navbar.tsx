@@ -163,6 +163,20 @@ export function Navbar() {
         if (searchQuery.trim()) window.location.href = `/search?q=${encodeURIComponent(searchQuery)}`;
     };
 
+    const handleSignOut = async () => {
+        if (loggingOut) return;
+        try {
+            setLoggingOut(true);
+            await supabase.auth.signOut({ scope: 'global' });
+            setProfileMenuOpen(false);
+            localStorage.removeItem('purseable:last-admin-view');
+            window.location.href = '/login';
+        } catch (err) {
+            console.error('[navbar] sign out failed', err);
+            window.location.href = '/login';
+        }
+    };
+
     const renderSearchForm = (extraClass: string) => (
         <form onSubmit={handleSearch} className={`navbar-search ${extraClass}`} style={{ position: 'relative' }}>
             <Search
@@ -295,20 +309,7 @@ export function Navbar() {
                                             <button
                                                 className="profile-menu-logout"
                                                 disabled={loggingOut}
-                                                onClick={async () => {
-                                                    if (loggingOut) return;
-                                                    try {
-                                                        setLoggingOut(true);
-                                                        const { error } = await supabase.auth.signOut();
-                                                        if (error) throw error;
-                                                        setProfileMenuOpen(false);
-                                                        // Always redirect to login after sign out
-                                                        router.push('/login');
-                                                    } catch (err) {
-                                                        console.error('[navbar] sign out failed', err);
-                                                        setLoggingOut(false);
-                                                    }
-                                                }}
+                                                onClick={handleSignOut}
                                             >
                                                 {loggingOut ? (
                                                     <span className="btn-spinner" aria-hidden="true" />

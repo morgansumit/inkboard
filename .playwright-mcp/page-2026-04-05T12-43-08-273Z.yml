@@ -1,0 +1,53 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - link "P" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]:
+        - link "Home" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+        - link "Explore" [ref=e11] [cursor=pointer]:
+          - /url: /explore
+          - img [ref=e13]
+        - link "Create" [ref=e16] [cursor=pointer]:
+          - /url: /compose
+          - img [ref=e18]
+        - link "Messages" [ref=e19] [cursor=pointer]:
+          - /url: /messages
+          - img [ref=e21]
+        - link "Alerts" [ref=e23] [cursor=pointer]:
+          - /url: /notifications
+          - img [ref=e25]
+        - link "Profile" [ref=e28] [cursor=pointer]:
+          - /url: /profile
+          - img [ref=e30]
+    - generic [ref=e33]:
+      - banner [ref=e34]:
+        - generic [ref=e35]:
+          - link "purseable home" [ref=e36] [cursor=pointer]:
+            - /url: /
+            - img "Purseable" [ref=e37]
+          - generic [ref=e38]:
+            - img [ref=e39]
+            - textbox "Search posts, authors, tags…" [ref=e42]
+          - generic [ref=e43]:
+            - link "Write" [ref=e44] [cursor=pointer]:
+              - /url: /compose
+              - img [ref=e45]
+              - text: Write
+            - button "Notifications" [ref=e49] [cursor=pointer]:
+              - img [ref=e50]
+            - button "User purseable User shipiologistics@gmail.com" [ref=e54] [cursor=pointer]:
+              - img "User" [ref=e55]
+              - generic [ref=e56]:
+                - generic [ref=e57]: purseable User
+                - generic [ref=e58]: shipiologistics@gmail.com
+      - main [ref=e59]:
+        - generic [ref=e61]:
+          - generic [ref=e62]: ⏳
+          - heading "Completing sign in..." [level=1] [ref=e63]
+          - paragraph [ref=e64]: Please wait while we verify your account
+  - button "Open Next.js Dev Tools" [ref=e70] [cursor=pointer]:
+    - img [ref=e71]
+  - alert [ref=e74]

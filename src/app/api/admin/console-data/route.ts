@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
-import { ADMIN_CONSOLE_CACHE_TTL_MS, adminConsoleCache } from '@/lib/admin/consoleCache'
+import { ADMIN_CONSOLE_CACHE_TTL_MS, adminConsoleCache, invalidateAdminConsoleCache } from '@/lib/admin/consoleCache'
 
 export const runtime = 'nodejs'
 
@@ -16,6 +16,8 @@ type DbPost = {
     is_trending: boolean | null
     cover_image_url?: string | null
     created_at?: string
+    country_code?: string | null
+    source_platform?: string | null
     users?: { display_name?: string | null; username?: string | null } | null
     post_tags?: { tags?: DbTag | DbTag[] | null }[] | null
 }
@@ -94,8 +96,8 @@ async function refreshCache(): Promise<AdminConsoleData> {
         supabaseAdmin
             .from('posts')
             .select(`
-                id, title, status, like_count, comment_count, is_trending, cover_image_url, created_at,
-                users:author_id(display_name, username),
+                id, title, status, is_trending, cover_image_url, created_at, country_code, source_platform,
+                users!author_id(display_name, username),
                 post_tags(tags(id, name))
             `)
             .order('created_at', { ascending: false })
@@ -122,6 +124,47 @@ async function refreshCache(): Promise<AdminConsoleData> {
     if (businessRes.error) throw businessRes.error
     if (adsRes.error) throw adsRes.error
 
+    // Fetch real-time like and comment counts from separate tables
+    const postIds = (postsRes.data ?? []).map(p => p.id)
+    
+    let likeCounts: Record<string, number> = {}
+    let commentCounts: Record<string, number> = {}
+    
+    if (postIds.length > 0) {
+        // Batch fetch like counts for all posts
+        const { data: likesData, error: likesError } = await supabaseAdmin
+            .from('post_likes')
+            .select('post_id')
+            .in('post_id', postIds)
+        
+        if (!likesError && likesData) {
+            likeCounts = likesData.reduce((acc, like) => {
+                acc[like.post_id] = (acc[like.post_id] || 0) + 1
+                return acc
+            }, {} as Record<string, number>)
+        }
+        
+        // Batch fetch comment counts for all posts
+        const { data: commentsData, error: commentsError } = await supabaseAdmin
+            .from('post_comments')
+            .select('post_id')
+            .in('post_id', postIds)
+        
+        if (!commentsError && commentsData) {
+            commentCounts = commentsData.reduce((acc, comment) => {
+                acc[comment.post_id] = (acc[comment.post_id] || 0) + 1
+                return acc
+            }, {} as Record<string, number>)
+        }
+    }
+
+    // Merge real-time counts into posts
+    const postsWithRealCounts = (postsRes.data ?? []).map(post => ({
+        ...post,
+        like_count: likeCounts[post.id] || 0,
+        comment_count: commentCounts[post.id] || 0,
+    }))
+
     const reportsRes = await supabaseAdmin
         .from('reports')
         .select('*')
@@ -143,7 +186,7 @@ async function refreshCache(): Promise<AdminConsoleData> {
     }
 
     return {
-        posts: (postsRes.data ?? []) as DbPost[],
+        posts: postsWithRealCounts as DbPost[],
         users: (usersRes.data ?? []) as DbUser[],
         businessRequests: (businessRes.data ?? []) as DbBusinessRequest[],
         ads: (adsRes.data ?? []) as DbAd[],
@@ -152,7 +195,7 @@ async function refreshCache(): Promise<AdminConsoleData> {
     }
 }
 
-export async function GET() {
+export async function GET(req: Request) {
     const supabase = await createClient()
     const {
         data: { user },
@@ -179,6 +222,12 @@ export async function GET() {
 
     if (profile?.role !== 'ADMIN') {
         return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    }
+
+    // ?bust=1 forces a full cache invalidation (e.g. after deleting posts)
+    const bust = new URL(req.url).searchParams.has('bust')
+    if (bust) {
+        invalidateAdminConsoleCache()
     }
 
     const now = Date.now()

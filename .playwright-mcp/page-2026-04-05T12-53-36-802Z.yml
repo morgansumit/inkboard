@@ -1,0 +1,992 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - link "P" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]:
+        - link "Home" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+        - link "Explore" [ref=e11] [cursor=pointer]:
+          - /url: /explore
+          - img [ref=e13]
+        - link "Create" [ref=e16] [cursor=pointer]:
+          - /url: /compose
+          - img [ref=e18]
+        - link "Messages" [ref=e19] [cursor=pointer]:
+          - /url: /messages
+          - img [ref=e21]
+        - link "Alerts" [ref=e23] [cursor=pointer]:
+          - /url: /notifications
+          - img [ref=e25]
+        - link "Profile" [ref=e28] [cursor=pointer]:
+          - /url: /profile
+          - img [ref=e30]
+    - generic [ref=e33]:
+      - banner [ref=e34]:
+        - generic [ref=e35]:
+          - link "purseable home" [ref=e36] [cursor=pointer]:
+            - /url: /
+            - img "Purseable" [ref=e37]
+          - generic [ref=e38]:
+            - img [ref=e39]
+            - textbox "Search posts, authors, tags…" [ref=e42]
+          - generic [ref=e43]:
+            - link "Write" [ref=e44] [cursor=pointer]:
+              - /url: /compose
+              - img [ref=e45]
+              - text: Write
+            - button "Notifications" [ref=e49] [cursor=pointer]:
+              - img [ref=e50]
+            - button "Shipio logistics Shipio logistics shipiologistics@gmail.com" [active] [ref=e54] [cursor=pointer]:
+              - img "Shipio logistics" [ref=e55]
+              - generic [ref=e56]:
+                - generic [ref=e57]: Shipio logistics
+                - generic [ref=e58]: shipiologistics@gmail.com
+      - main [ref=e59]:
+        - generic [ref=e60]:
+          - generic [ref=e61]:
+            - button "✨ For You" [ref=e62] [cursor=pointer]
+            - button "📚 Literature" [ref=e63] [cursor=pointer]
+            - button "✈️ Travel" [ref=e64] [cursor=pointer]
+            - button "💻 Technology" [ref=e65] [cursor=pointer]
+            - button "🍽️ Food & Drink" [ref=e66] [cursor=pointer]
+            - button "🏛️ Politics" [ref=e67] [cursor=pointer]
+            - button "🧠 Philosophy" [ref=e68] [cursor=pointer]
+            - button "✍️ Poetry" [ref=e69] [cursor=pointer]
+            - button "🌿 Health & Wellness" [ref=e70] [cursor=pointer]
+            - button "📷 Photography" [ref=e71] [cursor=pointer]
+            - button "🎵 Music" [ref=e72] [cursor=pointer]
+            - button "🎬 Cinema" [ref=e73] [cursor=pointer]
+            - button "🔬 Science" [ref=e74] [cursor=pointer]
+          - generic [ref=e224]:
+            - generic [ref=e225]:
+              - img [ref=e226]
+              - heading "Trending Today" [level=2] [ref=e228]
+            - generic [ref=e229]:
+              - 'link "From Failure to Flow: How I Used Polars to Conquer Memory Issues in Our Data Pipelines From Failure to Flow: How I Used Polars to Conquer Memory Issues in Our Data Pipelines Charlie Harris" [ref=e230] [cursor=pointer]':
+                - /url: /post/d02e6ea2-ec05-47e1-9b94-1a4ed5807451
+                - generic [ref=e231]:
+                  - 'img "From Failure to Flow: How I Used Polars to Conquer Memory Issues in Our Data Pipelines" [ref=e233]'
+                  - generic [ref=e234]:
+                    - paragraph [ref=e235]: "From Failure to Flow: How I Used Polars to Conquer Memory Issues in Our Data Pipelines"
+                    - paragraph [ref=e236]: Charlie Harris
+              - link "How to Set Up Full-Stack XM Cloud Local Development for Multiple Code Bases How to Set Up Full-Stack XM Cloud Local Development for Multiple Code Bases Blake Young" [ref=e237] [cursor=pointer]:
+                - /url: /post/698bce3b-dbfe-4e67-aa74-202a9485398e
+                - generic [ref=e238]:
+                  - img "How to Set Up Full-Stack XM Cloud Local Development for Multiple Code Bases" [ref=e240]
+                  - generic [ref=e241]:
+                    - paragraph [ref=e242]: How to Set Up Full-Stack XM Cloud Local Development for Multiple Code Bases
+                    - paragraph [ref=e243]: Blake Young
+              - link "Depth Over Trend Depth Over Trend Alex Young" [ref=e244] [cursor=pointer]:
+                - /url: /post/f74e5aae-af85-4f47-a987-e3a66b42021c
+                - generic [ref=e245]:
+                  - img "Depth Over Trend" [ref=e247]
+                  - generic [ref=e248]:
+                    - paragraph [ref=e249]: Depth Over Trend
+                    - paragraph [ref=e250]: Alex Young
+              - 'link "Preventing Denial of Service Attacks in Smart Contracts: Implementing the Withdrawal Pattern Preventing Denial of Service Attacks in Smart Contracts: Implementing the Withdrawal Pattern Skyler Rodriguez" [ref=e251] [cursor=pointer]':
+                - /url: /post/db250be2-20b6-45ab-ba0b-aed67ac4e839
+                - generic [ref=e252]:
+                  - 'img "Preventing Denial of Service Attacks in Smart Contracts: Implementing the Withdrawal Pattern" [ref=e254]'
+                  - generic [ref=e255]:
+                    - paragraph [ref=e256]: "Preventing Denial of Service Attacks in Smart Contracts: Implementing the Withdrawal Pattern"
+                    - paragraph [ref=e257]: Skyler Rodriguez
+              - 'link "The internals of TCP: A deep dive The internals of TCP: A deep dive Charlie Walker" [ref=e258] [cursor=pointer]':
+                - /url: /post/7d7ce03a-35c1-48e1-8a48-1d30dc3de765
+                - generic [ref=e259]:
+                  - 'img "The internals of TCP: A deep dive" [ref=e261]'
+                  - generic [ref=e262]:
+                    - paragraph [ref=e263]: "The internals of TCP: A deep dive"
+                    - paragraph [ref=e264]: Charlie Walker
+              - 'link "Beyond Lambda Functions: Mastering Serverless Development Beyond Lambda Functions: Mastering Serverless Development Casey Taylor" [ref=e265] [cursor=pointer]':
+                - /url: /post/99558a9f-526a-4978-9e7d-9ff435d06927
+                - generic [ref=e266]:
+                  - 'img "Beyond Lambda Functions: Mastering Serverless Development" [ref=e268]'
+                  - generic [ref=e269]:
+                    - paragraph [ref=e270]: "Beyond Lambda Functions: Mastering Serverless Development"
+                    - paragraph [ref=e271]: Casey Taylor
+          - generic [ref=e75]:
+            - heading "Your Feed" [level=2] [ref=e76]
+            - generic [ref=e272]: 30 stories
+          - generic [ref=e273]:
+            - generic [ref=e274]:
+              - article [ref=e276] [cursor=pointer]:
+                - link "View Admin Post - Germany Targeted" [ref=e277]:
+                  - /url: /post/e1e2cd70-36c7-4c55-b422-d861808abc55
+                - generic [ref=e278]:
+                  - img "Admin Post - Germany Targeted" [ref=e279]
+                  - link "via admin" [ref=e280]:
+                    - /url: /source/admin
+                - generic [ref=e281]:
+                  - link "Charlie Harris" [ref=e282]:
+                    - /url: /source/admin
+                    - img "Charlie Harris" [ref=e283]
+                  - link "Charlie Harris" [ref=e285]:
+                    - /url: /source/admin
+                  - generic [ref=e286]:
+                    - img [ref=e287]
+                    - text: 1m
+                - generic [ref=e290]:
+                  - heading "Admin Post - Germany Targeted" [level=2] [ref=e291]
+                  - paragraph [ref=e292]: Verifying country selection works end-to-end
+                - generic [ref=e293]:
+                  - button "Like" [ref=e294]:
+                    - img [ref=e295]
+                    - text: "0"
+                  - button "Comments" [ref=e297]:
+                    - img [ref=e298]
+                    - text: "0"
+                  - button "Share" [ref=e300]:
+                    - img [ref=e301]
+              - article [ref=e308] [cursor=pointer]:
+                - link "View Building a Knowledge Graph Locally with Neo4j & Ollama" [ref=e309]:
+                  - /url: /post/cf994b85-556e-4988-a5fd-54e8a93bb092
+                - generic [ref=e310]:
+                  - img "Building a Knowledge Graph Locally with Neo4j & Ollama" [ref=e311]
+                  - link "via Hashnode" [ref=e312]:
+                    - /url: /source/hashnode
+                - generic [ref=e313]:
+                  - link "Riley Walker" [ref=e314]:
+                    - /url: /source/hashnode
+                    - img "Riley Walker" [ref=e315]
+                  - link "Riley Walker" [ref=e317]:
+                    - /url: /source/hashnode
+                  - generic [ref=e318]:
+                    - img [ref=e319]
+                    - text: 16m
+                - generic [ref=e322]:
+                  - heading "Building a Knowledge Graph Locally with Neo4j & Ollama" [level=2] [ref=e323]
+                  - paragraph [ref=e324]: Knowledge graphs, also known as semantic networks, are a specialized application of graph databases used to store information about entities (person, location, organization, etc) and their relationships. They allow you to explore your data with an in...
+                - generic [ref=e325]:
+                  - button "Like" [ref=e326]:
+                    - img [ref=e327]
+                    - text: "0"
+                  - button "Comments" [ref=e329]:
+                    - img [ref=e330]
+                    - text: "0"
+                  - button "Share" [ref=e332]:
+                    - img [ref=e333]
+              - article [ref=e340] [cursor=pointer]:
+                - link "View Rules of Structured Concurrency" [ref=e341]:
+                  - /url: /post/3653b30e-880c-4232-8cf5-2e719cd91859
+                - generic [ref=e342]:
+                  - img "Rules of Structured Concurrency" [ref=e343]
+                  - link "via Hashnode" [ref=e344]:
+                    - /url: /source/hashnode
+                - generic [ref=e345]:
+                  - link "Peyton Wilson" [ref=e346]:
+                    - /url: /source/hashnode
+                    - img "Peyton Wilson" [ref=e347]
+                  - link "Peyton Wilson" [ref=e349]:
+                    - /url: /source/hashnode
+                  - generic [ref=e350]:
+                    - img [ref=e351]
+                    - text: 17m
+                - generic [ref=e354]:
+                  - heading "Rules of Structured Concurrency" [level=2] [ref=e355]
+                  - paragraph [ref=e356]: You can find video version of this article here. In the previous article, we covered the key aspects of Swift Concurrency to build a solid mental model of it. In this article, we will discuss structured and unstructured tasks. You’ll see that their ...
+                - generic [ref=e357]:
+                  - button "Like" [ref=e358]:
+                    - img [ref=e359]
+                    - text: "0"
+                  - button "Comments" [ref=e361]:
+                    - img [ref=e362]
+                    - text: "0"
+                  - button "Share" [ref=e364]:
+                    - img [ref=e365]
+              - article [ref=e372] [cursor=pointer]:
+                - 'link "View Understanding Build Tools: Maven, Gradle, and npm" [ref=e373]':
+                  - /url: /post/43f43b14-4d3f-4f45-b571-2faf12774a10
+                - generic [ref=e374]:
+                  - 'img "Understanding Build Tools: Maven, Gradle, and npm" [ref=e375]'
+                  - link "via Hashnode" [ref=e376]:
+                    - /url: /source/hashnode
+                - generic [ref=e377]:
+                  - link "Drew Jackson" [ref=e378]:
+                    - /url: /source/hashnode
+                    - img "Drew Jackson" [ref=e379]
+                  - link "Drew Jackson" [ref=e381]:
+                    - /url: /source/hashnode
+                  - generic [ref=e382]:
+                    - img [ref=e383]
+                    - text: 9m
+                - generic [ref=e386]:
+                  - 'heading "Understanding Build Tools: Maven, Gradle, and npm" [level=2] [ref=e387]'
+                  - paragraph [ref=e388]: In our last-blog we have already covered what Build Tools are, what are application artifacts, what is Maven and a thorough hands on demo to understand maven lifecycles so do check it out if you dont want to miss out. But in this Blog post lets get a...
+                - generic [ref=e389]:
+                  - button "Like" [ref=e390]:
+                    - img [ref=e391]
+                    - text: "0"
+                  - button "Comments" [ref=e393]:
+                    - img [ref=e394]
+                    - text: "0"
+                  - button "Share" [ref=e396]:
+                    - img [ref=e397]
+              - article [ref=e404] [cursor=pointer]:
+                - 'link "View Scrolling Against the Grain: Inverting User Experience with React" [ref=e405]':
+                  - /url: /post/5ee028c1-6b2f-4535-95b1-6216e4c60d23
+                - generic [ref=e406]:
+                  - 'img "Scrolling Against the Grain: Inverting User Experience with React" [ref=e407]'
+                  - link "via Hashnode" [ref=e408]:
+                    - /url: /source/hashnode
+                - generic [ref=e409]:
+                  - link "Finley Moore" [ref=e410]:
+                    - /url: /source/hashnode
+                    - img "Finley Moore" [ref=e411]
+                  - link "Finley Moore" [ref=e413]:
+                    - /url: /source/hashnode
+                  - generic [ref=e414]:
+                    - img [ref=e415]
+                    - text: 6m
+                - generic [ref=e418]:
+                  - 'heading "Scrolling Against the Grain: Inverting User Experience with React" [level=2] [ref=e419]'
+                  - paragraph [ref=e420]: As software engineers, we're constantly looking for ways to create unique and memorable user experiences. Today, I'm excited to share a component from a project I've been working on that completely inverts the traditional scrolling paradigm rendering...
+                - generic [ref=e421]:
+                  - button "Like" [ref=e422]:
+                    - img [ref=e423]
+                    - text: "0"
+                  - button "Comments" [ref=e425]:
+                    - img [ref=e426]
+                    - text: "0"
+                  - button "Share" [ref=e428]:
+                    - img [ref=e429]
+              - article [ref=e436] [cursor=pointer]:
+                - link "View Atomic Habits for Developers" [ref=e437]:
+                  - /url: /post/bb719037-e76f-4599-8266-4dee0a02f8e3
+                - generic [ref=e438]:
+                  - img "Atomic Habits for Developers" [ref=e439]
+                  - link "via Hashnode" [ref=e440]:
+                    - /url: /source/hashnode
+                - generic [ref=e441]:
+                  - link "Charlie White" [ref=e442]:
+                    - /url: /source/hashnode
+                    - img "Charlie White" [ref=e443]
+                  - link "Charlie White" [ref=e445]:
+                    - /url: /source/hashnode
+                  - generic [ref=e446]:
+                    - img [ref=e447]
+                    - text: 7m
+                - generic [ref=e450]:
+                  - heading "Atomic Habits for Developers" [level=2] [ref=e451]
+                  - paragraph [ref=e452]: As a developer, your journey to mastery is often shaped by the small, consistent actions you take every day. Whether you're debugging code, learning a new framework, or optimizing a system, the key to continual growth lies in your habits. This weeken...
+                - generic [ref=e453]:
+                  - button "Like" [ref=e454]:
+                    - img [ref=e455]
+                    - text: "0"
+                  - button "Comments" [ref=e457]:
+                    - img [ref=e458]
+                    - text: "0"
+                  - button "Share" [ref=e460]:
+                    - img [ref=e461]
+            - generic [ref=e467]:
+              - article [ref=e469] [cursor=pointer]:
+                - link "View Test Post from Admin - UK Only" [ref=e470]:
+                  - /url: /post/97ca05b5-5a97-4f0d-9674-8bc5df9d2fe8
+                - generic [ref=e471]:
+                  - img "Test Post from Admin - UK Only" [ref=e472]
+                  - link "via admin" [ref=e473]:
+                    - /url: /source/admin
+                - generic [ref=e474]:
+                  - link "Ellis Young" [ref=e475]:
+                    - /url: /source/admin
+                    - img "Ellis Young" [ref=e476]
+                  - link "Ellis Young" [ref=e478]:
+                    - /url: /source/admin
+                  - generic [ref=e479]:
+                    - img [ref=e480]
+                    - text: 1m
+                - generic [ref=e483]:
+                  - heading "Test Post from Admin - UK Only" [level=2] [ref=e484]
+                  - paragraph [ref=e485]: Testing country-targeted post creation
+                - generic [ref=e486]:
+                  - button "Like" [ref=e487]:
+                    - img [ref=e488]
+                    - text: "0"
+                  - button "Comments" [ref=e490]:
+                    - img [ref=e491]
+                    - text: "0"
+                  - button "Share" [ref=e493]:
+                    - img [ref=e494]
+              - article [ref=e501] [cursor=pointer]:
+                - link "View Why Your Node.js App Freezes (And How Worker Threads Can Save You)" [ref=e502]:
+                  - /url: /post/ced5f821-fda3-4efc-b139-f7762cff1ee3
+                - generic [ref=e503]:
+                  - img "Why Your Node.js App Freezes (And How Worker Threads Can Save You)" [ref=e504]
+                  - link "via Hashnode" [ref=e505]:
+                    - /url: /source/hashnode
+                - generic [ref=e506]:
+                  - link "Harper Thompson" [ref=e507]:
+                    - /url: /source/hashnode
+                    - img "Harper Thompson" [ref=e508]
+                  - link "Harper Thompson" [ref=e510]:
+                    - /url: /source/hashnode
+                  - generic [ref=e511]:
+                    - img [ref=e512]
+                    - text: 5m
+                - generic [ref=e515]:
+                  - heading "Why Your Node.js App Freezes (And How Worker Threads Can Save You)" [level=2] [ref=e516]
+                  - paragraph [ref=e517]: You've built an awesome Node.js app that your friends love using. Then disaster strikes - someone tries to generate a report and your entire application freezes. Everyone's experience grinds to a halt. This happens because Node.js runs on a single th...
+                - generic [ref=e518]:
+                  - button "Like" [ref=e519]:
+                    - img [ref=e520]
+                    - text: "0"
+                  - button "Comments" [ref=e522]:
+                    - img [ref=e523]
+                    - text: "0"
+                  - button "Share" [ref=e525]:
+                    - img [ref=e526]
+              - article [ref=e533] [cursor=pointer]:
+                - link "View Markdown Editor and Knowledge Graph Notes App with Vis.js in FileMaker Pro" [ref=e534]:
+                  - /url: /post/7208853b-3cf2-4f77-a788-3865dbb72218
+                - generic [ref=e535]:
+                  - img "Markdown Editor and Knowledge Graph Notes App with Vis.js in FileMaker Pro" [ref=e536]
+                  - link "via Hashnode" [ref=e537]:
+                    - /url: /source/hashnode
+                - generic [ref=e538]:
+                  - link "Sage Wilson" [ref=e539]:
+                    - /url: /source/hashnode
+                    - img "Sage Wilson" [ref=e540]
+                  - link "Sage Wilson" [ref=e542]:
+                    - /url: /source/hashnode
+                  - generic [ref=e543]:
+                    - img [ref=e544]
+                    - text: 22m
+                - generic [ref=e547]:
+                  - heading "Markdown Editor and Knowledge Graph Notes App with Vis.js in FileMaker Pro" [level=2] [ref=e548]
+                  - paragraph [ref=e549]: Markdown is used widely in programming, documentation, content creation, GitHub, and lots of other areas in tech. One of the most popular Markdown editors is Obsidian, a note taking app with an interesting graph view that shows how all of your notes ...
+                - generic [ref=e550]:
+                  - button "Like" [ref=e551]:
+                    - img [ref=e552]
+                    - text: "0"
+                  - button "Comments" [ref=e554]:
+                    - img [ref=e555]
+                    - text: "0"
+                  - button "Share" [ref=e557]:
+                    - img [ref=e558]
+              - article [ref=e565] [cursor=pointer]:
+                - 'link "View Amazon Bedrock: A Practical Guide for Developers and DevOps Engineers" [ref=e566]':
+                  - /url: /post/a770fb84-44ee-4fdd-80c5-d897a508cae8
+                - generic [ref=e567]:
+                  - 'img "Amazon Bedrock: A Practical Guide for Developers and DevOps Engineers" [ref=e568]'
+                  - link "via Hashnode" [ref=e569]:
+                    - /url: /source/hashnode
+                - generic [ref=e570]:
+                  - link "Quinn Patel" [ref=e571]:
+                    - /url: /source/hashnode
+                    - img "Quinn Patel" [ref=e572]
+                  - link "Quinn Patel" [ref=e574]:
+                    - /url: /source/hashnode
+                  - generic [ref=e575]:
+                    - img [ref=e576]
+                    - text: 15m
+                - generic [ref=e579]:
+                  - 'heading "Amazon Bedrock: A Practical Guide for Developers and DevOps Engineers" [level=2] [ref=e580]'
+                  - paragraph [ref=e581]: Once upon a time, building AI applications required deep experience with traditional technologies and some Machine Learning expertise. While that was the norm, developers had to configure models to their needs, provide GPUs, and manually optimize per...
+                - generic [ref=e582]:
+                  - button "Like" [ref=e583]:
+                    - img [ref=e584]
+                    - text: "0"
+                  - button "Comments" [ref=e586]:
+                    - img [ref=e587]
+                    - text: "0"
+                  - button "Share" [ref=e589]:
+                    - img [ref=e590]
+              - article [ref=e597] [cursor=pointer]:
+                - 'link "View Understanding AI Agents: An Overview" [ref=e598]':
+                  - /url: /post/4702078a-9578-480b-bf2e-6d60ac97e21b
+                - generic [ref=e599]:
+                  - 'img "Understanding AI Agents: An Overview" [ref=e600]'
+                  - link "via Hashnode" [ref=e601]:
+                    - /url: /source/hashnode
+                - generic [ref=e602]:
+                  - link "Jordan White" [ref=e603]:
+                    - /url: /source/hashnode
+                    - img "Jordan White" [ref=e604]
+                  - link "Jordan White" [ref=e606]:
+                    - /url: /source/hashnode
+                  - generic [ref=e607]:
+                    - img [ref=e608]
+                    - text: 6m
+                - generic [ref=e611]:
+                  - 'heading "Understanding AI Agents: An Overview" [level=2] [ref=e612]'
+                  - paragraph [ref=e613]: Artificial Intelligence (AI) has taken a central role in transforming how we interact with technology, from virtual assistants like Siri and Alexa to complex problem-solving systems. Among these advancements, AI Agents are rapidly becoming a critical...
+                - generic [ref=e614]:
+                  - button "Like" [ref=e615]:
+                    - img [ref=e616]
+                    - text: "0"
+                  - button "Comments" [ref=e618]:
+                    - img [ref=e619]
+                    - text: "0"
+                  - button "Share" [ref=e621]:
+                    - img [ref=e622]
+              - article [ref=e629] [cursor=pointer]:
+                - 'link "View Beyond Lambda Functions: Mastering Serverless Development" [ref=e630]':
+                  - /url: /post/99558a9f-526a-4978-9e7d-9ff435d06927
+                - generic [ref=e631]:
+                  - 'img "Beyond Lambda Functions: Mastering Serverless Development" [ref=e632]'
+                  - generic [ref=e633]:
+                    - img [ref=e634]
+                    - text: Trending
+                  - link "via Hashnode" [ref=e636]:
+                    - /url: /source/hashnode
+                - generic [ref=e637]:
+                  - link "Casey Taylor" [ref=e638]:
+                    - /url: /source/hashnode
+                    - img "Casey Taylor" [ref=e639]
+                  - link "Casey Taylor" [ref=e641]:
+                    - /url: /source/hashnode
+                  - generic [ref=e642]:
+                    - img [ref=e643]
+                    - text: 9m
+                - generic [ref=e646]:
+                  - 'heading "Beyond Lambda Functions: Mastering Serverless Development" [level=2] [ref=e647]'
+                  - paragraph [ref=e648]: Introduction AWS Lambda service is a critical component of serverless applications. It is one of the compute services for FaaS on AWS. When you deploy your functions to the cloud, AWS Lambda service is responsible for the execution. Knowing how to wr...
+                - generic [ref=e649]:
+                  - button "Like" [ref=e650]:
+                    - img [ref=e651]
+                    - text: "0"
+                  - button "Comments" [ref=e653]:
+                    - img [ref=e654]
+                    - text: "0"
+                  - button "Share" [ref=e656]:
+                    - img [ref=e657]
+            - generic [ref=e663]:
+              - article [ref=e665] [cursor=pointer]:
+                - link "View Test Post by Real User - Ojas Dixit" [ref=e666]:
+                  - /url: /post/a7ff2243-3a89-4677-833c-6c5348270875
+                - generic [ref=e667]:
+                  - img "Test Post by Real User - Ojas Dixit" [ref=e668]
+                  - link "via user" [ref=e669]:
+                    - /url: /source/user
+                - generic [ref=e670]:
+                  - link "Test User One" [ref=e671]:
+                    - /url: /source/user
+                    - img "Test User One" [ref=e672]
+                  - link "Test User One" [ref=e674]:
+                    - /url: /source/user
+                  - generic [ref=e675]:
+                    - img [ref=e676]
+                    - text: 1m
+                - generic [ref=e679]:
+                  - heading "Test Post by Real User - Ojas Dixit" [level=2] [ref=e680]
+                  - paragraph [ref=e681]: Verifying that real user posts show the correct username
+                - generic [ref=e682]:
+                  - button "Like" [ref=e683]:
+                    - img [ref=e684]
+                    - text: "1"
+                  - button "Comments" [ref=e686]:
+                    - img [ref=e687]
+                    - text: "0"
+                  - button "Share" [ref=e689]:
+                    - img [ref=e690]
+              - article [ref=e697] [cursor=pointer]:
+                - link "View Lessons Learned from Running Serverless Applications in Production on AWS" [ref=e698]:
+                  - /url: /post/8a1844d2-0868-4b97-a3ca-b5c2d34b154f
+                - generic [ref=e699]:
+                  - img "Lessons Learned from Running Serverless Applications in Production on AWS" [ref=e700]
+                  - link "via Hashnode" [ref=e701]:
+                    - /url: /source/hashnode
+                - generic [ref=e702]:
+                  - link "Finley Harris" [ref=e703]:
+                    - /url: /source/hashnode
+                    - img "Finley Harris" [ref=e704]
+                  - link "Finley Harris" [ref=e706]:
+                    - /url: /source/hashnode
+                  - generic [ref=e707]:
+                    - img [ref=e708]
+                    - text: 14m
+                - generic [ref=e711]:
+                  - heading "Lessons Learned from Running Serverless Applications in Production on AWS" [level=2] [ref=e712]
+                  - paragraph [ref=e713]: "Introduction Have you heard about serverless on AWS? It sounds amazing: your code scales up automatically, you only pay when it runs, and you don't have to worry about servers. Tools like AWS Lambda, API Gateway, and DynamoDB make this possible. Gett..."
+                - generic [ref=e714]:
+                  - button "Like" [ref=e715]:
+                    - img [ref=e716]
+                    - text: "0"
+                  - button "Comments" [ref=e718]:
+                    - img [ref=e719]
+                    - text: "0"
+                  - button "Share" [ref=e721]:
+                    - img [ref=e722]
+              - article [ref=e729] [cursor=pointer]:
+                - link "View Step-by-Step Approach to Use Onion Architecture in .NET" [ref=e730]:
+                  - /url: /post/79bce167-85fe-487a-8e6a-2580c72f7e0d
+                - generic [ref=e731]:
+                  - img "Step-by-Step Approach to Use Onion Architecture in .NET" [ref=e732]
+                  - link "via Hashnode" [ref=e733]:
+                    - /url: /source/hashnode
+                - generic [ref=e734]:
+                  - link "Harper Hall" [ref=e735]:
+                    - /url: /source/hashnode
+                    - img "Harper Hall" [ref=e736]
+                  - link "Harper Hall" [ref=e738]:
+                    - /url: /source/hashnode
+                  - generic [ref=e739]:
+                    - img [ref=e740]
+                    - text: 10m
+                - generic [ref=e743]:
+                  - heading "Step-by-Step Approach to Use Onion Architecture in .NET" [level=2] [ref=e744]
+                  - paragraph [ref=e745]: Alright, let's start coding! Before we dive into the code, let's quickly recap the core principles of Onion Architecture. If you want a more in-depth look, you can always check out my previous post on https://anilgurau.hashnode.dev/why-choose-onion-a...
+                - generic [ref=e746]:
+                  - button "Like" [ref=e747]:
+                    - img [ref=e748]
+                    - text: "0"
+                  - button "Comments" [ref=e750]:
+                    - img [ref=e751]
+                    - text: "0"
+                  - button "Share" [ref=e753]:
+                    - img [ref=e754]
+              - article [ref=e761] [cursor=pointer]:
+                - link "View Depth Over Trend" [ref=e762]:
+                  - /url: /post/f74e5aae-af85-4f47-a987-e3a66b42021c
+                - generic [ref=e763]:
+                  - img "Depth Over Trend" [ref=e764]
+                  - generic [ref=e765]:
+                    - img [ref=e766]
+                    - text: Trending
+                  - link "via Hashnode" [ref=e768]:
+                    - /url: /source/hashnode
+                - generic [ref=e769]:
+                  - link "Alex Young" [ref=e770]:
+                    - /url: /source/hashnode
+                    - img "Alex Young" [ref=e771]
+                  - link "Alex Young" [ref=e773]:
+                    - /url: /source/hashnode
+                  - generic [ref=e774]:
+                    - img [ref=e775]
+                    - text: 6m
+                - generic [ref=e778]:
+                  - heading "Depth Over Trend" [level=2] [ref=e779]
+                  - paragraph [ref=e780]: This isn't a typical blog I write, but I'm going to share some raw thoughts along with rhetorical questions that you might find useful and helpful. It's interesting to see how fast the ecosystem moves today, which has made me think a lot over the pa...
+                - generic [ref=e781]:
+                  - button "Like" [ref=e782]:
+                    - img [ref=e783]
+                    - text: "0"
+                  - button "Comments" [ref=e785]:
+                    - img [ref=e786]
+                    - text: "0"
+                  - button "Share" [ref=e788]:
+                    - img [ref=e789]
+              - article [ref=e796] [cursor=pointer]:
+                - link "View Using BigQuery in the Google Cloud Console - GSP406" [ref=e797]:
+                  - /url: /post/e572047d-4c37-4527-974b-750a66310b8c
+                - generic [ref=e798]:
+                  - img "Using BigQuery in the Google Cloud Console - GSP406" [ref=e799]
+                  - link "via Hashnode" [ref=e800]:
+                    - /url: /source/hashnode
+                - generic [ref=e801]:
+                  - link "Sam Brown" [ref=e802]:
+                    - /url: /source/hashnode
+                    - img "Sam Brown" [ref=e803]
+                  - link "Sam Brown" [ref=e805]:
+                    - /url: /source/hashnode
+                  - generic [ref=e806]:
+                    - img [ref=e807]
+                    - text: 8m
+                - generic [ref=e810]:
+                  - heading "Using BigQuery in the Google Cloud Console - GSP406" [level=2] [ref=e811]
+                  - paragraph [ref=e812]: Overview Storing and querying massive datasets can be time consuming and expensive without the right hardware and infrastructure. BigQuery is an enterprise data warehouse that solves this problem by enabling super-fast SQL queries using the processin...
+                - generic [ref=e813]:
+                  - button "Like" [ref=e814]:
+                    - img [ref=e815]
+                    - text: "0"
+                  - button "Comments" [ref=e817]:
+                    - img [ref=e818]
+                    - text: "0"
+                  - button "Share" [ref=e820]:
+                    - img [ref=e821]
+              - article [ref=e828] [cursor=pointer]:
+                - link "View The Latest JavaScript Security Vulnerabilities in NPM Packages" [ref=e829]:
+                  - /url: /post/1726a3f3-a428-4994-b37d-2aff1034c045
+                - generic [ref=e830]:
+                  - img "The Latest JavaScript Security Vulnerabilities in NPM Packages" [ref=e831]
+                  - link "via Hashnode" [ref=e832]:
+                    - /url: /source/hashnode
+                - generic [ref=e833]:
+                  - link "Finley Moore" [ref=e834]:
+                    - /url: /source/hashnode
+                    - img "Finley Moore" [ref=e835]
+                  - link "Finley Moore" [ref=e837]:
+                    - /url: /source/hashnode
+                  - generic [ref=e838]:
+                    - img [ref=e839]
+                    - text: 4m
+                - generic [ref=e842]:
+                  - heading "The Latest JavaScript Security Vulnerabilities in NPM Packages" [level=2] [ref=e843]
+                  - paragraph [ref=e844]: The Latest JavaScript Security Vulnerabilities in NPM Packages Hello and welcome to another edition of our ongoing series on JavaScript security! This week, Sandworm Monitor has identified several high-risk vulnerabilities in a wide array of NPM pack...
+                - generic [ref=e845]:
+                  - button "Like" [ref=e846]:
+                    - img [ref=e847]
+                    - text: "0"
+                  - button "Comments" [ref=e849]:
+                    - img [ref=e850]
+                    - text: "0"
+                  - button "Share" [ref=e852]:
+                    - img [ref=e853]
+            - generic [ref=e859]:
+              - article [ref=e861] [cursor=pointer]:
+                - link "View Real User Post Test - Ojas" [ref=e862]:
+                  - /url: /post/260d4729-d9b5-434d-9162-b6e340a3c13a
+                - generic [ref=e863]:
+                  - img "Real User Post Test - Ojas" [ref=e864]
+                  - link "via user" [ref=e865]:
+                    - /url: /source/user
+                - generic [ref=e866]:
+                  - link "ojas" [ref=e867]:
+                    - /url: /source/user
+                    - img "ojas" [ref=e868]
+                  - link "ojas" [ref=e870]:
+                    - /url: /source/user
+                  - generic [ref=e871]:
+                    - img [ref=e872]
+                    - text: 1m
+                - generic [ref=e875]:
+                  - heading "Real User Post Test - Ojas" [level=2] [ref=e876]
+                  - paragraph [ref=e877]: Testing real user post creation
+                - generic [ref=e878]:
+                  - button "Like" [ref=e879]:
+                    - img [ref=e880]
+                    - text: "1"
+                  - button "Comments" [ref=e882]:
+                    - img [ref=e883]
+                    - text: "0"
+                  - button "Share" [ref=e885]:
+                    - img [ref=e886]
+              - article [ref=e893] [cursor=pointer]:
+                - link "View Advanced Patterns & Integration with Frameworks" [ref=e894]:
+                  - /url: /post/df523d49-8134-4984-8d65-c3b9563f9826
+                - generic [ref=e895]:
+                  - img "Advanced Patterns & Integration with Frameworks" [ref=e896]
+                  - link "via Hashnode" [ref=e897]:
+                    - /url: /source/hashnode
+                - generic [ref=e898]:
+                  - link "Logan Davis" [ref=e899]:
+                    - /url: /source/hashnode
+                    - img "Logan Davis" [ref=e900]
+                  - link "Logan Davis" [ref=e902]:
+                    - /url: /source/hashnode
+                  - generic [ref=e903]:
+                    - img [ref=e904]
+                    - text: 8m
+                - generic [ref=e907]:
+                  - heading "Advanced Patterns & Integration with Frameworks" [level=2] [ref=e908]
+                  - paragraph [ref=e909]: "Web Components promise the holy grail of front-end development: truly reusable, framework-agnostic components that work anywhere. Yet many developers struggle to integrate these universal building blocks with popular frameworks like React, Angular, o..."
+                - generic [ref=e910]:
+                  - button "Like" [ref=e911]:
+                    - img [ref=e912]
+                    - text: "0"
+                  - button "Comments" [ref=e914]:
+                    - img [ref=e915]
+                    - text: "0"
+                  - button "Share" [ref=e917]:
+                    - img [ref=e918]
+              - article [ref=e925] [cursor=pointer]:
+                - 'link "View A Deep Dive into AWS Load Balancers: CLB, ALB, NLB, and GWLB" [ref=e926]':
+                  - /url: /post/92c30263-7842-41d0-9e46-5a8f843227e0
+                - generic [ref=e927]:
+                  - 'img "A Deep Dive into AWS Load Balancers: CLB, ALB, NLB, and GWLB" [ref=e928]'
+                  - link "via Hashnode" [ref=e929]:
+                    - /url: /source/hashnode
+                - generic [ref=e930]:
+                  - link "Drew Singh" [ref=e931]:
+                    - /url: /source/hashnode
+                    - img "Drew Singh" [ref=e932]
+                  - link "Drew Singh" [ref=e934]:
+                    - /url: /source/hashnode
+                  - generic [ref=e935]:
+                    - img [ref=e936]
+                    - text: 5m
+                - generic [ref=e939]:
+                  - 'heading "A Deep Dive into AWS Load Balancers: CLB, ALB, NLB, and GWLB" [level=2] [ref=e940]'
+                  - paragraph [ref=e941]: Listen up, because this is important. If you're running anything on AWS—or hell, even thinking about it—you need to understand load balancing. You can't just throw traffic at a single server and hope for the best. That’s amateur hour. AWS gives you f...
+                - generic [ref=e942]:
+                  - button "Like" [ref=e943]:
+                    - img [ref=e944]
+                    - text: "0"
+                  - button "Comments" [ref=e946]:
+                    - img [ref=e947]
+                    - text: "0"
+                  - button "Share" [ref=e949]:
+                    - img [ref=e950]
+              - article [ref=e957] [cursor=pointer]:
+                - 'link "View Preventing Denial of Service Attacks in Smart Contracts: Implementing the Withdrawal Pattern" [ref=e958]':
+                  - /url: /post/db250be2-20b6-45ab-ba0b-aed67ac4e839
+                - generic [ref=e959]:
+                  - 'img "Preventing Denial of Service Attacks in Smart Contracts: Implementing the Withdrawal Pattern" [ref=e960]'
+                  - generic [ref=e961]:
+                    - img [ref=e962]
+                    - text: Trending
+                  - link "via Hashnode" [ref=e964]:
+                    - /url: /source/hashnode
+                - generic [ref=e965]:
+                  - link "Skyler Rodriguez" [ref=e966]:
+                    - /url: /source/hashnode
+                    - img "Skyler Rodriguez" [ref=e967]
+                  - link "Skyler Rodriguez" [ref=e969]:
+                    - /url: /source/hashnode
+                  - generic [ref=e970]:
+                    - img [ref=e971]
+                    - text: 7m
+                - generic [ref=e974]:
+                  - 'heading "Preventing Denial of Service Attacks in Smart Contracts: Implementing the Withdrawal Pattern" [level=2] [ref=e975]'
+                  - paragraph [ref=e976]: There is a hidden danger that can shut down a smart contract. Picture yourself trying to withdraw money from your bank, but nothing happens every time you press the button. The bank isn’t out of money—it just refuses to process your transaction. Now ...
+                - generic [ref=e977]:
+                  - button "Like" [ref=e978]:
+                    - img [ref=e979]
+                    - text: "0"
+                  - button "Comments" [ref=e981]:
+                    - img [ref=e982]
+                    - text: "0"
+                  - button "Share" [ref=e984]:
+                    - img [ref=e985]
+              - article [ref=e992] [cursor=pointer]:
+                - 'link "View Building Your Own React State Management: A Deep Dive into Custom Stores" [ref=e993]':
+                  - /url: /post/3a7b5597-bfe0-44e1-906d-33b62f6d854d
+                - generic [ref=e994]:
+                  - 'img "Building Your Own React State Management: A Deep Dive into Custom Stores" [ref=e995]'
+                  - link "via Hashnode" [ref=e996]:
+                    - /url: /source/hashnode
+                - generic [ref=e997]:
+                  - link "Devon Nguyen" [ref=e998]:
+                    - /url: /source/hashnode
+                    - img "Devon Nguyen" [ref=e999]
+                  - link "Devon Nguyen" [ref=e1001]:
+                    - /url: /source/hashnode
+                  - generic [ref=e1002]:
+                    - img [ref=e1003]
+                    - text: 8m
+                - generic [ref=e1006]:
+                  - 'heading "Building Your Own React State Management: A Deep Dive into Custom Stores" [level=2] [ref=e1007]'
+                  - paragraph [ref=e1008]: In the ever-evolving React ecosystem, state management remains one of the most discussed and reimagined aspects of frontend development. While popular libraries like Redux, Zustand, and Jotai offer robust solutions, there's significant value in under...
+                - generic [ref=e1009]:
+                  - button "Like" [ref=e1010]:
+                    - img [ref=e1011]
+                    - text: "0"
+                  - button "Comments" [ref=e1013]:
+                    - img [ref=e1014]
+                    - text: "0"
+                  - button "Share" [ref=e1016]:
+                    - img [ref=e1017]
+              - article [ref=e1024] [cursor=pointer]:
+                - link "View What Text Area Popovers Taught Me About Browser APIs" [ref=e1025]:
+                  - /url: /post/1c9bc145-f8ef-4d16-9ce0-c0e360b64dad
+                - generic [ref=e1026]:
+                  - img "What Text Area Popovers Taught Me About Browser APIs" [ref=e1027]
+                  - link "via Hashnode" [ref=e1028]:
+                    - /url: /source/hashnode
+                - generic [ref=e1029]:
+                  - link "Quinn Kim" [ref=e1030]:
+                    - /url: /source/hashnode
+                    - img "Quinn Kim" [ref=e1031]
+                  - link "Quinn Kim" [ref=e1033]:
+                    - /url: /source/hashnode
+                  - generic [ref=e1034]:
+                    - img [ref=e1035]
+                    - text: 5m
+                - generic [ref=e1038]:
+                  - heading "What Text Area Popovers Taught Me About Browser APIs" [level=2] [ref=e1039]
+                  - paragraph [ref=e1040]: I recently went down several rabbit holes about building WYSIWYG editors and popovers. While on maternity leave, I finally have time to deeply explore random technical problems without deadlines - a rare opportunity. Thus far, I've focused on contrib...
+                - generic [ref=e1041]:
+                  - button "Like" [ref=e1042]:
+                    - img [ref=e1043]
+                    - text: "0"
+                  - button "Comments" [ref=e1045]:
+                    - img [ref=e1046]
+                    - text: "0"
+                  - button "Share" [ref=e1048]:
+                    - img [ref=e1049]
+            - generic [ref=e1055]:
+              - article [ref=e1057] [cursor=pointer]:
+                - 'link "View From Failure to Flow: How I Used Polars to Conquer Memory Issues in Our Data Pipelines" [ref=e1058]':
+                  - /url: /post/d02e6ea2-ec05-47e1-9b94-1a4ed5807451
+                - generic [ref=e1059]:
+                  - 'img "From Failure to Flow: How I Used Polars to Conquer Memory Issues in Our Data Pipelines" [ref=e1060]'
+                  - generic [ref=e1061]:
+                    - img [ref=e1062]
+                    - text: Trending
+                  - link "via Hashnode" [ref=e1064]:
+                    - /url: /source/hashnode
+                - generic [ref=e1065]:
+                  - link "Charlie Harris" [ref=e1066]:
+                    - /url: /source/hashnode
+                    - img "Charlie Harris" [ref=e1067]
+                  - link "Charlie Harris" [ref=e1069]:
+                    - /url: /source/hashnode
+                  - generic [ref=e1070]:
+                    - img [ref=e1071]
+                    - text: 8m
+                - generic [ref=e1074]:
+                  - 'heading "From Failure to Flow: How I Used Polars to Conquer Memory Issues in Our Data Pipelines" [level=2] [ref=e1075]'
+                  - paragraph [ref=e1076]: Ever been bogged down by data pipelines crashing due to memory issues? It's a frustratingly common problem in data engineering projects. This post chronicles my experience of identifying and resolving memory bottlenecks in our data processing using t...
+                - generic [ref=e1077]:
+                  - button "Like" [ref=e1078]:
+                    - img [ref=e1079]
+                    - text: "0"
+                  - button "Comments" [ref=e1081]:
+                    - img [ref=e1082]
+                    - text: "0"
+                  - button "Share" [ref=e1084]:
+                    - img [ref=e1085]
+              - article [ref=e1092] [cursor=pointer]:
+                - link "View The Truth about Vibe Coding (feat. GitHub Copilot Agent Mode)" [ref=e1093]:
+                  - /url: /post/1ac30cca-a1dc-479e-b2a6-daffc89df671
+                - generic [ref=e1094]:
+                  - img "The Truth about Vibe Coding (feat. GitHub Copilot Agent Mode)" [ref=e1095]
+                  - link "via Hashnode" [ref=e1096]:
+                    - /url: /source/hashnode
+                - generic [ref=e1097]:
+                  - link "Jamie Martinez" [ref=e1098]:
+                    - /url: /source/hashnode
+                    - img "Jamie Martinez" [ref=e1099]
+                  - link "Jamie Martinez" [ref=e1101]:
+                    - /url: /source/hashnode
+                  - generic [ref=e1102]:
+                    - img [ref=e1103]
+                    - text: 8m
+                - generic [ref=e1106]:
+                  - heading "The Truth about Vibe Coding (feat. GitHub Copilot Agent Mode)" [level=2] [ref=e1107]
+                  - paragraph [ref=e1108]: Hello and welcome to another Articles by Victoria! This weekend, my friends and I have been talking a lot about the revolutionary AI tools we see emerging. We came across the term "vibe coding," which apparently describes the art of coding without ac...
+                - generic [ref=e1109]:
+                  - button "Like" [ref=e1110]:
+                    - img [ref=e1111]
+                    - text: "0"
+                  - button "Comments" [ref=e1113]:
+                    - img [ref=e1114]
+                    - text: "0"
+                  - button "Share" [ref=e1116]:
+                    - img [ref=e1117]
+              - article [ref=e1124] [cursor=pointer]:
+                - link "View How to Set Up Full-Stack XM Cloud Local Development for Multiple Code Bases" [ref=e1125]:
+                  - /url: /post/698bce3b-dbfe-4e67-aa74-202a9485398e
+                - generic [ref=e1126]:
+                  - img "How to Set Up Full-Stack XM Cloud Local Development for Multiple Code Bases" [ref=e1127]
+                  - generic [ref=e1128]:
+                    - img [ref=e1129]
+                    - text: Trending
+                  - link "via Hashnode" [ref=e1131]:
+                    - /url: /source/hashnode
+                - generic [ref=e1132]:
+                  - link "Blake Young" [ref=e1133]:
+                    - /url: /source/hashnode
+                    - img "Blake Young" [ref=e1134]
+                  - link "Blake Young" [ref=e1136]:
+                    - /url: /source/hashnode
+                  - generic [ref=e1137]:
+                    - img [ref=e1138]
+                    - text: 13m
+                - generic [ref=e1141]:
+                  - heading "How to Set Up Full-Stack XM Cloud Local Development for Multiple Code Bases" [level=2] [ref=e1142]
+                  - paragraph [ref=e1143]: 🤔Introduction to XM Cloud Local Development XM Cloud is a powerful platform for managing and delivering personalized digital experiences. However, when working with multiple websites, each with its own codebase and hostname, setting up a local devel...
+                - generic [ref=e1144]:
+                  - button "Like" [ref=e1145]:
+                    - img [ref=e1146]
+                    - text: "0"
+                  - button "Comments" [ref=e1148]:
+                    - img [ref=e1149]
+                    - text: "0"
+                  - button "Share" [ref=e1151]:
+                    - img [ref=e1152]
+              - article [ref=e1159] [cursor=pointer]:
+                - link "View How to Use the CUDO Compute CLI for Virtual Machine Lifecycle Management" [ref=e1160]:
+                  - /url: /post/057143f6-addd-4917-aa2d-cbc783cc1e5c
+                - generic [ref=e1161]:
+                  - img "How to Use the CUDO Compute CLI for Virtual Machine Lifecycle Management" [ref=e1162]
+                  - link "via Hashnode" [ref=e1163]:
+                    - /url: /source/hashnode
+                - generic [ref=e1164]:
+                  - link "Riley Kim" [ref=e1165]:
+                    - /url: /source/hashnode
+                    - img "Riley Kim" [ref=e1166]
+                  - link "Riley Kim" [ref=e1168]:
+                    - /url: /source/hashnode
+                  - generic [ref=e1169]:
+                    - img [ref=e1170]
+                    - text: 7m
+                - generic [ref=e1173]:
+                  - heading "How to Use the CUDO Compute CLI for Virtual Machine Lifecycle Management" [level=2] [ref=e1174]
+                  - paragraph [ref=e1175]: CUDO Compute is a decentralised cloud computing platform that provides scalable and cost-effective computing power by utilising underutilised hardware resources from data centers, enterprises, and individual contributors. It allows users to deploy an...
+                - generic [ref=e1176]:
+                  - button "Like" [ref=e1177]:
+                    - img [ref=e1178]
+                    - text: "0"
+                  - button "Comments" [ref=e1180]:
+                    - img [ref=e1181]
+                    - text: "0"
+                  - button "Share" [ref=e1183]:
+                    - img [ref=e1184]
+              - article [ref=e1191] [cursor=pointer]:
+                - 'link "View The internals of TCP: A deep dive" [ref=e1192]':
+                  - /url: /post/7d7ce03a-35c1-48e1-8a48-1d30dc3de765
+                - generic [ref=e1193]:
+                  - 'img "The internals of TCP: A deep dive" [ref=e1194]'
+                  - generic [ref=e1195]:
+                    - img [ref=e1196]
+                    - text: Trending
+                  - link "via Hashnode" [ref=e1198]:
+                    - /url: /source/hashnode
+                - generic [ref=e1199]:
+                  - link "Charlie Walker" [ref=e1200]:
+                    - /url: /source/hashnode
+                    - img "Charlie Walker" [ref=e1201]
+                  - link "Charlie Walker" [ref=e1203]:
+                    - /url: /source/hashnode
+                  - generic [ref=e1204]:
+                    - img [ref=e1205]
+                    - text: 13m
+                - generic [ref=e1208]:
+                  - 'heading "The internals of TCP: A deep dive" [level=2] [ref=e1209]'
+                  - paragraph [ref=e1210]: Introduction TCP has been the foundational protocol for numerous higher-level protocols, such as HTTP and WebSockets, due to its guarantee of data integrity. Imagine querying a database table and missing a few rows of data—that would be catastrophic....
+                - generic [ref=e1211]:
+                  - button "Like" [ref=e1212]:
+                    - img [ref=e1213]
+                    - text: "0"
+                  - button "Comments" [ref=e1215]:
+                    - img [ref=e1216]
+                    - text: "0"
+                  - button "Share" [ref=e1218]:
+                    - img [ref=e1219]
+              - article [ref=e1226] [cursor=pointer]:
+                - link "View Run Deepseek-R1 Locally with Ollama & Open WebUI in Docker — Access It Anywhere!" [ref=e1227]:
+                  - /url: /post/b08ccd84-c449-4154-86c4-5111dd78533d
+                - generic [ref=e1228]:
+                  - img "Run Deepseek-R1 Locally with Ollama & Open WebUI in Docker — Access It Anywhere!" [ref=e1229]
+                  - link "via Hashnode" [ref=e1230]:
+                    - /url: /source/hashnode
+                - generic [ref=e1231]:
+                  - link "Riley Taylor" [ref=e1232]:
+                    - /url: /source/hashnode
+                    - img "Riley Taylor" [ref=e1233]
+                  - link "Riley Taylor" [ref=e1235]:
+                    - /url: /source/hashnode
+                  - generic [ref=e1236]:
+                    - img [ref=e1237]
+                    - text: 3m
+                - generic [ref=e1240]:
+                  - heading "Run Deepseek-R1 Locally with Ollama & Open WebUI in Docker — Access It Anywhere!" [level=2] [ref=e1241]
+                  - paragraph [ref=e1242]: "Introduction: The groundbreaking Chinese reasoning model, Deepseek-R1, has stunned the world with its exceptional performance across benchmarks. While its capabilities are exciting, some users may feel uneasy about running it directly through the off..."
+                - generic [ref=e1243]:
+                  - button "Like" [ref=e1244]:
+                    - img [ref=e1245]
+                    - text: "0"
+                  - button "Comments" [ref=e1247]:
+                    - img [ref=e1248]
+                    - text: "0"
+                  - button "Share" [ref=e1250]:
+                    - img [ref=e1251]
+  - button "Open Next.js Dev Tools" [ref=e219] [cursor=pointer]:
+    - img [ref=e220]
+  - alert [ref=e223]
+  - generic [ref=e1259]:
+    - link "My profile" [ref=e1260] [cursor=pointer]:
+      - /url: /profile
+    - link "Messages" [ref=e1261] [cursor=pointer]:
+      - /url: /messages
+    - link "Notifications" [ref=e1262] [cursor=pointer]:
+      - /url: /notifications
+    - link "Become a business partner" [ref=e1263] [cursor=pointer]:
+      - /url: /business/request
+    - link "Settings" [ref=e1264] [cursor=pointer]:
+      - /url: /settings
+    - button "Sign out" [ref=e1265] [cursor=pointer]:
+      - img [ref=e1266]
+      - text: Sign out

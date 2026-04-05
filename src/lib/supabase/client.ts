@@ -35,13 +35,12 @@ export function createClient() {
         })
 
         // Handle auth errors globally to prevent console spam
-        browserClient.auth.onAuthStateChange((event, session) => {
+        browserClient.auth.onAuthStateChange((event, _session) => {
             if (event === 'TOKEN_REFRESHED') {
                 // Token successfully refreshed
-            } else if (event === 'SIGNED_OUT') {
-                // Clear any stale data
-                browserClient = null
             }
+            // Do NOT null out browserClient on SIGNED_OUT — that causes a race where the
+            // next createClient() creates a fresh instance that conflicts with stored cookies.
         })
     }
 

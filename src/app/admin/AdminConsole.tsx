@@ -18,6 +18,8 @@ type DbPost = {
     is_trending: boolean | null;
     cover_image_url?: string | null;
     created_at?: string;
+    country_code?: string | null;
+    source_platform?: string | null;
     users?: { display_name?: string | null; username?: string | null } | null;
     post_tags?: { tags?: DbTag | DbTag[] | null }[] | null;
 };
@@ -232,6 +234,19 @@ export function AdminClient() {
     const [businessDrafts, setBusinessDrafts] = useState<Record<string, string>>({});
     const [broadcastForm, setBroadcastForm] = useState({ title: '', body: '', message_type: 'ANNOUNCEMENT' as const, priority: 'NORMAL' as const, scheduled_at: '', expires_at: '' });
     const [broadcastSubmitting, setBroadcastSubmitting] = useState(false);
+    
+    // Admin post creation form state
+    const [postForm, setPostForm] = useState({ 
+        title: '', 
+        subtitle: '', 
+        content: '', 
+        cover_image_url: '', 
+        tags: '',
+        country_code: '',
+        isUploading: false 
+    });
+    const [postSubmitting, setPostSubmitting] = useState(false);
+    const [showCreatePost, setShowCreatePost] = useState(false);
 
     const isMountedRef = useRef(true);
     const editingRef = useRef(false);
@@ -287,16 +302,20 @@ export function AdminClient() {
         if (loggingOut) return;
         setLoggingOut(true);
         try {
-            await supabase.auth.signOut();
-            router.replace('/login');
-            router.refresh();
+            // Quick timeout to prevent hanging
+            const signOutPromise = supabase.auth.signOut();
+            const timeoutPromise = new Promise((_, reject) => 
+                setTimeout(() => reject(new Error('Sign out timeout')), 3000)
+            );
+            await Promise.race([signOutPromise, timeoutPromise]);
+            // Force redirect with window.location for reliability
+            window.location.href = '/login';
         } catch (err) {
             console.error('[admin] logout failed', err);
-            alert('Failed to sign out. Please try again.');
-        } finally {
-            setLoggingOut(false);
+            // Still redirect even if sign out fails
+            window.location.href = '/login';
         }
-    }, [loggingOut, router, supabase]);
+    }, [loggingOut, supabase]);
 
     const loadOnce = useCallback(
         async ({ background = false, force = false }: { background?: boolean; force?: boolean } = {}) => {
@@ -311,7 +330,8 @@ export function AdminClient() {
             }
 
             try {
-                const res = await withTimeout(fetch('/api/admin/console-data', { cache: 'no-store' }), 8000);
+                const url = force ? '/api/admin/console-data?bust=1' : '/api/admin/console-data';
+                const res = await withTimeout(fetch(url, { cache: 'no-store' }), 8000);
                 const data = (await res.json()) as ConsoleDataResponse;
 
                 if (!res.ok) {
@@ -613,6 +633,62 @@ const handleUpdateBusinessStatus = async (id: string, userId: string, status: st
         }
     };
 
+    const handleCreatePost = async () => {
+        if (!postForm.title.trim() || !postForm.content.trim() || !postForm.cover_image_url.trim()) {
+            setError('Title, content, and cover image are required');
+            return;
+        }
+        setPostSubmitting(true);
+        setError(null);
+        try {
+            const res = await fetch('/api/admin/posts', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title: postForm.title.trim(),
+                    subtitle: postForm.subtitle.trim(),
+                    content: postForm.content.trim(),
+                    cover_image_url: postForm.cover_image_url.trim(),
+                    tags: postForm.tags.split(',').map(t => t.trim()).filter(Boolean),
+                    country_code: postForm.country_code || null,
+                }),
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data?.error || 'Failed to create post');
+            
+            // Reset form and reload posts
+            setPostForm({ title: '', subtitle: '', content: '', cover_image_url: '', tags: '', country_code: '', isUploading: false });
+            setShowCreatePost(false);
+            await loadOnce({ force: true });
+        } catch (err: unknown) {
+            setError(getErrorMessage(err));
+        } finally {
+            setPostSubmitting(false);
+        }
+    };
+
+    const handleCoverUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        setPostForm(prev => ({ ...prev, isUploading: true }));
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || 'ml_default');
+            const res = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'djxv1usyv'}/image/upload`, {
+                method: 'POST',
+                body: formData,
+            });
+            const data = await res.json();
+            setPostForm(prev => ({ ...prev, cover_image_url: data.secure_url }));
+        } catch (error) {
+            console.error('Error uploading image', error);
+            setError('Failed to upload image. Please try again.');
+        } finally {
+            setPostForm(prev => ({ ...prev, isUploading: false }));
+        }
+    };
+
     const renderView = () => {
         if (loading) {
             return <p style={{ color: 'var(--color-muted)' }}>Loading admin data…</p>;
@@ -650,12 +726,159 @@ const handleUpdateBusinessStatus = async (id: string, userId: string, status: st
             case 'posts':
                 return (
                     <div>
-                        <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '22px', fontWeight: 700, marginBottom: '20px' }}>Post Management</h2>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '22px', fontWeight: 700 }}>Post Management</h2>
+                            <button 
+                                onClick={() => setShowCreatePost(!showCreatePost)}
+                                className="btn btn-primary"
+                                style={{ fontSize: '13px', padding: '8px 16px' }}
+                            >
+                                {showCreatePost ? 'Cancel' : '+ Create Post'}
+                            </button>
+                        </div>
+
+                        {/* Create Post Form */}
+                        {showCreatePost && (
+                            <div style={{ background: 'var(--color-surface)', borderRadius: '12px', padding: '24px', marginBottom: '24px', boxShadow: 'var(--shadow-card)', border: '2px solid var(--color-accent)' }}>
+                                <h3 style={{ fontWeight: 700, fontSize: '16px', marginBottom: '20px' }}>Create New Post</h3>
+                                
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                                    {/* Title */}
+                                    <div>
+                                        <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '6px' }}>Title *</label>
+                                        <input 
+                                            className="input" 
+                                            style={{ width: '100%' }}
+                                            placeholder="Post title..."
+                                            value={postForm.title}
+                                            onChange={e => setPostForm(prev => ({ ...prev, title: e.target.value }))}
+                                        />
+                                    </div>
+
+                                    {/* Subtitle */}
+                                    <div>
+                                        <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '6px' }}>Subtitle</label>
+                                        <input 
+                                            className="input" 
+                                            style={{ width: '100%' }}
+                                            placeholder="Optional subtitle..."
+                                            value={postForm.subtitle}
+                                            onChange={e => setPostForm(prev => ({ ...prev, subtitle: e.target.value }))}
+                                        />
+                                    </div>
+
+                                    {/* Cover Image */}
+                                    <div>
+                                        <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '6px' }}>Cover Image *</label>
+                                        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                                            <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={handleCoverUpload}
+                                                disabled={postForm.isUploading}
+                                                style={{ display: 'none' }}
+                                                id="admin-cover-upload"
+                                            />
+                                            <label htmlFor="admin-cover-upload" className="btn btn-secondary btn-sm" style={{ cursor: 'pointer' }}>
+                                                {postForm.isUploading ? 'Uploading...' : 'Upload Image'}
+                                            </label>
+                                            <span style={{ fontSize: '12px', color: 'var(--color-muted)' }}>OR</span>
+                                            <input 
+                                                className="input" 
+                                                style={{ flex: 1 }}
+                                                placeholder="Paste image URL..."
+                                                value={postForm.cover_image_url}
+                                                onChange={e => setPostForm(prev => ({ ...prev, cover_image_url: e.target.value }))}
+                                            />
+                                        </div>
+                                        {postForm.cover_image_url && (
+                                            <img src={postForm.cover_image_url} alt="Preview" style={{ width: '120px', height: '80px', objectFit: 'cover', borderRadius: '6px', marginTop: '10px' }} />
+                                        )}
+                                    </div>
+
+                                    {/* Country Selection */}
+                                    <div>
+                                        <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '6px' }}>
+                                            Target Country (Optional)
+                                        </label>
+                                        <select 
+                                            className="input"
+                                            style={{ width: '100%' }}
+                                            value={postForm.country_code}
+                                            onChange={e => setPostForm(prev => ({ ...prev, country_code: e.target.value }))}
+                                        >
+                                            <option value="">Global (All Countries)</option>
+                                            <option value="US">United States</option>
+                                            <option value="GB">United Kingdom</option>
+                                            <option value="CA">Canada</option>
+                                            <option value="AU">Australia</option>
+                                            <option value="IN">India</option>
+                                            <option value="DE">Germany</option>
+                                            <option value="FR">France</option>
+                                            <option value="JP">Japan</option>
+                                            <option value="BR">Brazil</option>
+                                            <option value="MX">Mexico</option>
+                                            <option value="ES">Spain</option>
+                                            <option value="IT">Italy</option>
+                                            <option value="NL">Netherlands</option>
+                                            <option value="SG">Singapore</option>
+                                            <option value="AE">UAE</option>
+                                        </select>
+                                        <p style={{ fontSize: '12px', color: 'var(--color-muted)', marginTop: '4px' }}>
+                                            Select a country to show this post only to users from that country. Leave empty for global visibility.
+                                        </p>
+                                    </div>
+
+                                    {/* Tags */}
+                                    <div>
+                                        <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '6px' }}>Tags</label>
+                                        <input 
+                                            className="input" 
+                                            style={{ width: '100%' }}
+                                            placeholder="Enter tags separated by commas (e.g. tech, news, featured)"
+                                            value={postForm.tags}
+                                            onChange={e => setPostForm(prev => ({ ...prev, tags: e.target.value }))}
+                                        />
+                                    </div>
+
+                                    {/* Content */}
+                                    <div>
+                                        <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '6px' }}>Content *</label>
+                                        <textarea 
+                                            className="input" 
+                                            style={{ width: '100%', minHeight: '200px', resize: 'vertical' }}
+                                            placeholder="Write your post content here..."
+                                            value={postForm.content}
+                                            onChange={e => setPostForm(prev => ({ ...prev, content: e.target.value }))}
+                                        />
+                                    </div>
+
+                                    {/* Submit Button */}
+                                    <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+                                        <button 
+                                            onClick={handleCreatePost}
+                                            disabled={postSubmitting || !postForm.title || !postForm.content || !postForm.cover_image_url}
+                                            className="btn btn-primary"
+                                            style={{ opacity: (postSubmitting || !postForm.title || !postForm.content || !postForm.cover_image_url) ? 0.6 : 1 }}
+                                        >
+                                            {postSubmitting ? 'Publishing...' : 'Publish Post'}
+                                        </button>
+                                        <button 
+                                            onClick={() => setShowCreatePost(false)}
+                                            className="btn btn-secondary"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
                         <div style={{ background: 'var(--color-surface)', borderRadius: '12px', overflow: 'hidden', boxShadow: 'var(--shadow-card)' }}>
                             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                                 <thead>
                                     <tr style={{ borderBottom: '1px solid var(--color-border)', background: 'var(--color-bg)' }}>
-                                        {['Title', 'Author', 'Tags', 'Status', 'Likes', 'Actions'].map(h => (
+                                        {['Title', 'Author', 'Tags', 'Country', 'Status', 'Likes', 'Actions'].map(h => (
                                             <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontSize: '12px', fontWeight: 700, color: 'var(--color-muted)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>{h}</th>
                                         ))}
                                     </tr>
@@ -664,7 +887,13 @@ const handleUpdateBusinessStatus = async (id: string, userId: string, status: st
                                     {filteredPosts.map(post => (
                                         <tr key={post.id} style={{ borderBottom: '1px solid var(--color-border)' }}>
                                             <td style={{ padding: '12px 16px', fontSize: '13px', fontWeight: 600 }}>{post.title}</td>
-                                            <td style={{ padding: '12px 16px', fontSize: '13px', color: 'var(--color-muted)' }}>{post.users?.display_name || post.users?.username || 'Unknown'}</td>
+                                            <td style={{ padding: '12px 16px', fontSize: '13px', color: 'var(--color-muted)' }}>
+                                                {post.users?.display_name || post.users?.username || (
+                                                    <span style={{ fontStyle: 'italic', opacity: 0.6 }}>
+                                                        {post.source_platform && post.source_platform !== 'user' ? post.source_platform : 'Unknown'}
+                                                    </span>
+                                                )}
+                                            </td>
                                             <td style={{ padding: '12px 16px' }}>
                                                 <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                                                     {normalizeTags(post).slice(0, 3).map(tag => (
@@ -672,6 +901,7 @@ const handleUpdateBusinessStatus = async (id: string, userId: string, status: st
                                                     ))}
                                                 </div>
                                             </td>
+                                            <td style={{ padding: '12px 16px', fontSize: '12px' }}>{post.country_code || 'Global'}</td>
                                             <td style={{ padding: '12px 16px', fontSize: '12px', fontWeight: 700 }}>{post.status}</td>
                                             <td style={{ padding: '12px 16px', fontSize: '13px' }}>❤️ {formatK(post.like_count)}</td>
                                             <td style={{ padding: '12px 16px' }}>

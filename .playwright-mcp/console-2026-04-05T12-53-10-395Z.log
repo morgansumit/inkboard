@@ -1,0 +1,30 @@
+[     136ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[     220ms] [LOG] [Fast Refresh] done in 185ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[     321ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[     382ms] [LOG] [Fast Refresh] done in 162ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[     411ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ http://localhost:3000/login:0
+[     506ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[     533ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    3954ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    4012ms] [LOG] [Fast Refresh] done in 159ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    4400ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    4424ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    4719ms] [LOG] [AuthCallback] auth event: SIGNED_IN @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    4839ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    4981ms] [LOG] [Fast Refresh] done in 243ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    5294ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    5322ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    5502ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    5585ms] [LOG] [Fast Refresh] done in 183ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   39449ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ http://localhost:3000/login:0
+[   39551ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   39591ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   70190ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   70214ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   70473ms] [LOG] [AuthCallback] auth event: SIGNED_IN @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   70716ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   70746ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   94153ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=5DCvoyx4iiC9r-k6d--vr' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/79846_next_dist_client_4bcedf17._.js:10878
+[   95156ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=5DCvoyx4iiC9r-k6d--vr' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/79846_next_dist_client_4bcedf17._.js:10878
+[   96159ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=5DCvoyx4iiC9r-k6d--vr' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/79846_next_dist_client_4bcedf17._.js:10878
+[   97161ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=5DCvoyx4iiC9r-k6d--vr' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/79846_next_dist_client_4bcedf17._.js:10878

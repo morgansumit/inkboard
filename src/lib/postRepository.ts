@@ -3,7 +3,7 @@ import { MOCK_POSTS } from '@/lib/mockData';
 import fs from 'fs/promises';
 import path from 'path';
 
-const CACHE_DIR = path.join(process.cwd(), '.inkboard-cache');
+const CACHE_DIR = path.join(process.cwd(), '.purseable-cache');
 const CACHE_FILE = path.join(CACHE_DIR, 'posts.json');
 
 // In-memory fallback for serverless environments where fs isn't available
@@ -99,6 +99,44 @@ async function writeCacheFile(posts: Post[]): Promise<void> {
 }
 
 function transformDbPost(p: any): Post {
+    // Handle joined author data from Supabase (real user posts)
+    const author = p.author ? {
+        id: p.author.id,
+        email: p.author.email || '',
+        username: p.author.username || 'unknown',
+        display_name: p.author.display_name || p.author.username || 'Unknown User',
+        bio: p.author.bio || '',
+        avatar_url: p.author.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${p.author.username || 'user'}`,
+        location: p.author.location || '',
+        role: p.author.role || 'USER',
+        is_verified: p.author.is_verified || false,
+        is_suspended: p.author.is_suspended || false,
+        is_business: p.author.is_business || false,
+        created_at: p.author.created_at,
+        follower_count: p.author.follower_count || 0,
+        following_count: p.author.following_count || 0,
+        total_likes: p.author.total_likes || 0,
+        post_count: p.author.post_count || 0,
+    } : {
+        // Fallback for content ingestion posts without joined author
+        id: p.author_id || 'system',
+        email: 'system@purseable.local',
+        username: p.source_platform || 'system',
+        display_name: p.source_platform || 'purseable',
+        avatar_url: `https://api.dicebear.com/7.x/initials/svg?seed=${p.source_platform || 'purseable'}`,
+        bio: '',
+        location: '',
+        role: 'USER',
+        is_verified: true,
+        is_suspended: false,
+        is_business: false,
+        created_at: p.created_at,
+        follower_count: 0,
+        following_count: 0,
+        total_likes: 0,
+        post_count: 0,
+    };
+
     return {
         id: p.id,
         title: p.title,
@@ -108,25 +146,8 @@ function transformDbPost(p: any): Post {
             : p.content?.html || p.content?.text || JSON.stringify(p.content) || '',
         cover_image_url: p.cover_image_url,
         cover_aspect_ratio: p.cover_aspect_ratio || '16:9',
-        author_id: p.author_id || 'system',
-        author: {
-            id: p.author_id || 'system',
-            email: 'system@inkboard.local',
-            username: 'system',
-            display_name: p.source_platform || 'Inkboard',
-            avatar_url: `https://api.dicebear.com/7.x/initials/svg?seed=${p.source_platform || 'Inkboard'}`,
-            bio: '',
-            location: '',
-            role: 'USER',
-            is_verified: true,
-            is_suspended: false,
-            is_business: false,
-            created_at: p.created_at,
-            follower_count: 0,
-            following_count: 0,
-            total_likes: 0,
-            post_count: 0,
-        },
+        author_id: p.author_id || p.author?.id || 'system',
+        author,
         status: p.status,
         read_time_minutes: p.read_time_minutes || 1,
         engagement_score: p.engagement_score || 0,
@@ -134,7 +155,7 @@ function transformDbPost(p: any): Post {
         comment_count: p.comment_count || 0,
         share_count: p.share_count || 0,
         is_trending: p.is_trending || false,
-        source: p.source_platform || 'inkboard',
+        source: p.source_platform || 'purseable',
         source_url: p.source_url,
         country_code: p.country_code || null,
         created_at: p.created_at,
@@ -175,7 +196,40 @@ export const postRepository = {
         
         console.log('[findById] id:', id, 'normalized:', normalizedId);
 
-        // Try cache/Supabase list first
+        // Check if this looks like a real user post (UUID format)
+        const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(normalizedId);
+        
+        if (isUUID) {
+            // For real user posts (UUIDs), ALWAYS try Supabase first
+            console.log('[findById] UUID detected - trying Supabase first for real user post');
+            try {
+                const { createAnonClient } = await import('@/lib/supabase/anon');
+                const supabase = createAnonClient();
+                if (supabase) {
+                    const { data: post, error } = await supabase
+                        .from('posts')
+                        .select(`
+                            *,
+                            author:users(id, username, display_name, bio, avatar_url, role, is_verified, is_business, created_at, follower_count, following_count)
+                        `)
+                        .eq('id', normalizedId)
+                        .maybeSingle();
+                    
+                    if (error) {
+                        console.error('[findById] Supabase lookup error:', error);
+                    } else if (post) {
+                        console.log('[findById] Found real user post in Supabase');
+                        return transformDbPost(post);
+                    }
+                }
+            } catch (err) {
+                console.error('[findById] Supabase lookup error:', err);
+            }
+            console.log('[findById] Real user post not found in Supabase');
+        }
+        
+        // For content ingestion posts (non-UUIDs) or as fallback, try cache
+        console.log('[findById] Trying cache for content/API posts');
         try {
             const all = await this.getAll();
             console.log('[findById] getAll returned', all.length, 'posts');
@@ -183,47 +237,18 @@ export const postRepository = {
             // Try exact match on normalized IDs
             const found = all.find(p => normalizeIdForMatch(p.id) === normalizedId);
             if (found) {
-                console.log('[findById] Found by normalized match');
+                console.log('[findById] Found by normalized match in cache');
                 return found;
             }
             
             // Try exact match on raw ID
             const foundRaw = all.find(p => p.id === id || p.id === baseId);
             if (foundRaw) {
-                console.log('[findById] Found by raw match');
+                console.log('[findById] Found by raw match in cache');
                 return foundRaw;
             }
         } catch (err) {
             console.error('[findById] getAll error:', err);
-        }
-        
-        // Direct Supabase lookup - only if normalizedId looks like a valid UUID
-        const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(normalizedId);
-        
-        if (isUUID) {
-            console.log('[findById] Trying Supabase UUID lookup:', normalizedId);
-            try {
-                const { createAnonClient } = await import('@/lib/supabase/anon');
-                const supabase = createAnonClient();
-                if (supabase) {
-                    const { data: post, error } = await supabase
-                        .from('posts')
-                        .select('*')
-                        .eq('id', normalizedId)
-                        .maybeSingle();
-                    
-                    if (error) {
-                        console.error('[findById] Supabase UUID lookup error:', error);
-                    } else if (post) {
-                        console.log('[findById] Found in Supabase by UUID');
-                        return transformDbPost(post);
-                    }
-                }
-            } catch (err) {
-                console.error('[findById] Supabase lookup error:', err);
-            }
-        } else {
-            console.log('[findById] Not a UUID, skipping direct DB lookup:', normalizedId);
         }
         
         console.log('[findById] Post not found for id:', id);

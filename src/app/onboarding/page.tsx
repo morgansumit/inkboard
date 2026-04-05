@@ -1,15 +1,20 @@
 'use client';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Check } from 'lucide-react';
 import { MOCK_INTERESTS } from '@/lib/mockData';
 import Link from 'next/link';
 
 export default function OnboardingPage() {
+    const router = useRouter();
     const [selected, setSelected] = useState<Set<string>>(new Set());
     const [step, setStep] = useState<'interests' | 'profile'>('interests');
     const [avatarUrl, setAvatarUrl] = useState('');
     const [username, setUsername] = useState('');
+    const [displayName, setDisplayName] = useState('');
     const [bio, setBio] = useState('');
+    const [saving, setSaving] = useState(false);
+    const [error, setError] = useState('');
 
     const toggle = (id: string) => {
         setSelected(prev => {
@@ -20,6 +25,43 @@ export default function OnboardingPage() {
     };
 
     const canContinue = selected.size >= 3;
+
+    const handleSaveProfile = async () => {
+        if (saving) return;
+        setSaving(true);
+        setError('');
+
+        try {
+            // First ensure the user record exists via sync
+            await fetch('/api/users/sync', { method: 'POST' });
+
+            // Then update profile fields if any were provided
+            const updates: Record<string, string> = {};
+            if (username.trim()) updates.username = username.trim();
+            if (displayName.trim()) updates.display_name = displayName.trim();
+            if (bio.trim()) updates.bio = bio.trim();
+
+            if (Object.keys(updates).length > 0) {
+                const res = await fetch('/api/users/profile', {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updates),
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    setError(data.error || 'Failed to save profile');
+                    setSaving(false);
+                    return;
+                }
+            }
+
+            router.push('/');
+        } catch {
+            setError('Something went wrong. Please try again.');
+        } finally {
+            setSaving(false);
+        }
+    };
 
     if (step === 'profile') {
         return (
@@ -36,11 +78,29 @@ export default function OnboardingPage() {
                             Complete your profile
                         </h1>
                         <p style={{ color: 'var(--color-muted)', fontSize: '14px' }}>
-                            This is optional — you can do it later.
+                            This is optional — you can do it later in Settings.
                         </p>
                     </div>
 
-                    <form style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                    {error && (
+                        <div style={{ padding: '10px 14px', borderRadius: '8px', background: 'rgba(239,68,68,0.1)', color: '#dc2626', fontSize: '13px', marginBottom: '16px' }}>
+                            {error}
+                        </div>
+                    )}
+
+                    <form onSubmit={e => { e.preventDefault(); handleSaveProfile(); }} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                        <div>
+                            <label style={{ fontFamily: 'var(--font-ui)', fontSize: '13px', fontWeight: 600, color: 'var(--color-primary)', display: 'block', marginBottom: '6px' }}>
+                                Display Name
+                            </label>
+                            <input
+                                className="input"
+                                placeholder="e.g. Sofia Andersson"
+                                value={displayName}
+                                onChange={e => setDisplayName(e.target.value.slice(0, 50))}
+                            />
+                        </div>
+
                         <div>
                             <label style={{ fontFamily: 'var(--font-ui)', fontSize: '13px', fontWeight: 600, color: 'var(--color-primary)', display: 'block', marginBottom: '6px' }}>
                                 Username
@@ -70,9 +130,14 @@ export default function OnboardingPage() {
                             </p>
                         </div>
 
-                        <Link href="/" className="btn btn-primary" style={{ textAlign: 'center', marginTop: '8px' }}>
-                            🎉 Enter Inkboard
-                        </Link>
+                        <button
+                            type="submit"
+                            className="btn btn-primary"
+                            disabled={saving}
+                            style={{ textAlign: 'center', marginTop: '8px', opacity: saving ? 0.7 : 1, cursor: saving ? 'not-allowed' : 'pointer' }}
+                        >
+                            {saving ? 'Saving...' : '🎉 Enter purseable'}
+                        </button>
                         <Link href="/" style={{ textAlign: 'center', fontSize: '13px', color: 'var(--color-muted)', textDecoration: 'none' }}>
                             Skip for now
                         </Link>

@@ -3,10 +3,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { BarChart3, ChevronRight, Eye, FileText, Flag, Gift, Globe, LayoutDashboard, LogOut, Trash2, Users, type LucideIcon } from 'lucide-react';
+import { BarChart3, ChevronRight, Eye, FileText, Flag, Gift, Globe, LayoutDashboard, LogOut, Megaphone, Shield, Trash2, Users, type LucideIcon } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 
-type AdminView = 'dashboard' | 'business' | 'ads' | 'posts' | 'users' | 'reports' | 'geologs';
+type AdminView = 'dashboard' | 'business' | 'ads' | 'posts' | 'users' | 'reports' | 'geologs' | 'broadcasts';
 
 type DbTag = { id: string; name: string };
 type DbPost = {
@@ -82,15 +82,30 @@ type DbReport = {
 };
 
 type DbGeoLog = {
-    id?: string | number | null;
-    ip_hash?: string | null;
+    id: string;
     ip?: string | null;
+    ip_hash?: string | null;
     country?: string | null;
     path?: string | null;
     url?: string | null;
-    created_at?: string | null;
     time?: string | null;
+    created_at?: string | null;
     [key: string]: unknown;
+};
+
+type DbBroadcast = {
+    id: string;
+    title: string;
+    body: string;
+    message_type: 'ANNOUNCEMENT' | 'OFFER' | 'UPDATE' | 'URGENT';
+    priority: 'LOW' | 'NORMAL' | 'HIGH' | 'URGENT';
+    is_active: boolean;
+    scheduled_at: string;
+    expires_at?: string | null;
+    created_at: string;
+    created_by?: string | null;
+    creator?: { id: string; username: string; display_name: string } | null;
+    delivery_stats?: { count: number } | null;
 };
 
 const NAV: { id: AdminView; label: string; icon: LucideIcon }[] = [
@@ -99,8 +114,9 @@ const NAV: { id: AdminView; label: string; icon: LucideIcon }[] = [
     { id: 'ads', label: 'Ads Management', icon: BarChart3 },
     { id: 'posts', label: 'Post Management', icon: FileText },
     { id: 'users', label: 'User Management', icon: Users },
-    { id: 'reports', label: 'Reported Content', icon: Flag },
-    { id: 'geologs', label: 'Geo Block Logs', icon: Globe },
+    { id: 'reports', label: 'Reports', icon: Flag },
+    { id: 'geologs', label: 'Geo Logs', icon: Globe },
+    { id: 'broadcasts', label: 'Broadcast Messages', icon: Megaphone },
 ];
 
 const EDITABLE_TAGS = new Set(['INPUT', 'TEXTAREA', 'SELECT']);
@@ -200,6 +216,7 @@ export function AdminClient() {
     const [ads, setAds] = useState<DbAd[]>([]);
     const [reports, setReports] = useState<DbReport[]>([]);
     const [geoLogs, setGeoLogs] = useState<DbGeoLog[]>([]);
+    const [broadcasts, setBroadcasts] = useState<DbBroadcast[]>([]);
     const [auxLoading, setAuxLoading] = useState(false);
     const [cachedAt, setCachedAt] = useState<string | null>(null);
     const [stale, setStale] = useState(false);
@@ -213,6 +230,8 @@ export function AdminClient() {
     const [userStatusUpdatingId, setUserStatusUpdatingId] = useState<string | null>(null);
     const [businessMessagesByRequest, setBusinessMessagesByRequest] = useState<Record<string, BusinessRequestMessage[]>>({});
     const [businessDrafts, setBusinessDrafts] = useState<Record<string, string>>({});
+    const [broadcastForm, setBroadcastForm] = useState({ title: '', body: '', message_type: 'ANNOUNCEMENT' as const, priority: 'NORMAL' as const, scheduled_at: '', expires_at: '' });
+    const [broadcastSubmitting, setBroadcastSubmitting] = useState(false);
 
     const isMountedRef = useRef(true);
     const editingRef = useRef(false);
@@ -225,7 +244,7 @@ export function AdminClient() {
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
-        const storedView = window.localStorage.getItem('inkboard:last-admin-view') as AdminView | null;
+        const storedView = window.localStorage.getItem('purseable:last-admin-view') as AdminView | null;
         const validViews = NAV.map(item => item.id);
         if (storedView && validViews.includes(storedView)) {
             setActiveView(storedView);
@@ -234,7 +253,7 @@ export function AdminClient() {
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
-        window.localStorage.setItem('inkboard:last-admin-view', activeView);
+        window.localStorage.setItem('purseable:last-admin-view', activeView);
     }, [activeView]);
 
     useEffect(() => {
@@ -499,7 +518,25 @@ export function AdminClient() {
         setPosts(prev => prev.map(p => (p.id === id ? { ...p, status: 'REMOVED' } : p)));
     };
 
-    const handleUpdateBusinessStatus = async (id: string, userId: string, status: string) => {
+    const loadBroadcasts = useCallback(async () => {
+    try {
+        const res = await fetch('/api/admin/broadcasts');
+        const data = await res.json();
+        if (!res.ok) throw new Error(data?.error || 'Failed to load broadcasts');
+        setBroadcasts(data.broadcasts || []);
+    } catch (err: unknown) {
+        console.error('[admin] failed to load broadcasts:', err);
+        setBroadcasts([]);
+    }
+}, []);
+
+    useEffect(() => {
+        if (activeView === 'broadcasts') {
+            void loadBroadcasts();
+        }
+    }, [activeView, loadBroadcasts]);
+
+const handleUpdateBusinessStatus = async (id: string, userId: string, status: string) => {
         setBusinessActionPendingId(id);
         setError(null);
         try {
@@ -541,6 +578,39 @@ export function AdminClient() {
             return;
         }
         setAds(prev => prev.map(ad => (ad.id === id ? { ...ad, status } : ad)));
+    };
+
+    const handleCreateBroadcast = async () => {
+        if (!broadcastForm.title.trim() || !broadcastForm.body.trim()) {
+            setError('Title and message are required');
+            return;
+        }
+        setBroadcastSubmitting(true);
+        setError(null);
+        try {
+            const res = await fetch('/api/admin/broadcasts', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title: broadcastForm.title.trim(),
+                    body: broadcastForm.body.trim(),
+                    message_type: broadcastForm.message_type,
+                    priority: broadcastForm.priority,
+                    scheduled_at: broadcastForm.scheduled_at || new Date().toISOString(),
+                    expires_at: broadcastForm.expires_at || null,
+                }),
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data?.error || 'Failed to create broadcast');
+            
+            // Reset form and reload broadcasts
+            setBroadcastForm({ title: '', body: '', message_type: 'ANNOUNCEMENT', priority: 'NORMAL', scheduled_at: '', expires_at: '' });
+            await loadBroadcasts();
+        } catch (err: unknown) {
+            setError(getErrorMessage(err));
+        } finally {
+            setBroadcastSubmitting(false);
+        }
     };
 
     const renderView = () => {
@@ -853,6 +923,185 @@ export function AdminClient() {
                         )}
                     </div>
                 );
+            case 'broadcasts':
+                return (
+                    <div>
+                        <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '22px', fontWeight: 700, marginBottom: '20px' }}>Broadcast Messages</h2>
+                        
+                        {/* Create New Broadcast Form */}
+                        <div style={{ background: 'var(--color-surface)', borderRadius: '12px', padding: '20px', marginBottom: '24px', boxShadow: 'var(--shadow-card)' }}>
+                            <h3 style={{ fontWeight: 700, fontSize: '15px', marginBottom: '16px' }}>Create New Broadcast</h3>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+                                <div>
+                                    <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '6px', color: 'var(--color-muted)' }}>Title</label>
+                                    <input
+                                        type="text"
+                                        value={broadcastForm.title}
+                                        onChange={e => setBroadcastForm(prev => ({ ...prev, title: e.target.value }))}
+                                        placeholder="Broadcast title..."
+                                        maxLength={200}
+                                        style={{ width: '100%', padding: '8px 12px', border: '1px solid var(--color-border)', borderRadius: '6px', fontSize: '13px' }}
+                                    />
+                                </div>
+                                <div>
+                                    <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '6px', color: 'var(--color-muted)' }}>Message Type</label>
+                                    <select
+                                        value={broadcastForm.message_type}
+                                        onChange={e => setBroadcastForm(prev => ({ ...prev, message_type: e.target.value as any }))}
+                                        style={{ width: '100%', padding: '8px 12px', border: '1px solid var(--color-border)', borderRadius: '6px', fontSize: '13px' }}
+                                    >
+                                        <option value="ANNOUNCEMENT">Announcement</option>
+                                        <option value="OFFER">Special Offer</option>
+                                        <option value="UPDATE">System Update</option>
+                                        <option value="URGENT">Urgent</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div style={{ marginBottom: '16px' }}>
+                                <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '6px', color: 'var(--color-muted)' }}>Message</label>
+                                <textarea
+                                    value={broadcastForm.body}
+                                    onChange={e => setBroadcastForm(prev => ({ ...prev, body: e.target.value }))}
+                                    placeholder="Your broadcast message..."
+                                    maxLength={5000}
+                                    rows={4}
+                                    style={{ width: '100%', padding: '8px 12px', border: '1px solid var(--color-border)', borderRadius: '6px', fontSize: '13px', resize: 'vertical' }}
+                                />
+                            </div>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+                                <div>
+                                    <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '6px', color: 'var(--color-muted)' }}>Priority</label>
+                                    <select
+                                        value={broadcastForm.priority}
+                                        onChange={e => setBroadcastForm(prev => ({ ...prev, priority: e.target.value as any }))}
+                                        style={{ width: '100%', padding: '8px 12px', border: '1px solid var(--color-border)', borderRadius: '6px', fontSize: '13px' }}
+                                    >
+                                        <option value="LOW">Low</option>
+                                        <option value="NORMAL">Normal</option>
+                                        <option value="HIGH">High</option>
+                                        <option value="URGENT">Urgent</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '6px', color: 'var(--color-muted)' }}>Schedule (optional)</label>
+                                    <input
+                                        type="datetime-local"
+                                        value={broadcastForm.scheduled_at}
+                                        onChange={e => setBroadcastForm(prev => ({ ...prev, scheduled_at: e.target.value }))}
+                                        style={{ width: '100%', padding: '8px 12px', border: '1px solid var(--color-border)', borderRadius: '6px', fontSize: '13px' }}
+                                    />
+                                </div>
+                                <div>
+                                    <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, marginBottom: '6px', color: 'var(--color-muted)' }}>Expires (optional)</label>
+                                    <input
+                                        type="datetime-local"
+                                        value={broadcastForm.expires_at}
+                                        onChange={e => setBroadcastForm(prev => ({ ...prev, expires_at: e.target.value }))}
+                                        style={{ width: '100%', padding: '8px 12px', border: '1px solid var(--color-border)', borderRadius: '6px', fontSize: '13px' }}
+                                    />
+                                </div>
+                            </div>
+                            <button
+                                onClick={handleCreateBroadcast}
+                                disabled={broadcastSubmitting || !broadcastForm.title.trim() || !broadcastForm.body.trim()}
+                                style={{ 
+                                    background: broadcastSubmitting ? 'var(--color-muted)' : 'var(--color-primary)', 
+                                    color: 'white', 
+                                    border: 'none', 
+                                    borderRadius: '6px', 
+                                    padding: '10px 20px', 
+                                    fontSize: '13px', 
+                                    fontWeight: 600, 
+                                    cursor: broadcastSubmitting ? 'not-allowed' : 'pointer',
+                                    opacity: (broadcastSubmitting || !broadcastForm.title.trim() || !broadcastForm.body.trim()) ? 0.6 : 1
+                                }}
+                            >
+                                {broadcastSubmitting ? 'Sending...' : 'Send Broadcast'}
+                            </button>
+                        </div>
+
+                        {/* Broadcast History */}
+                        <div style={{ background: 'var(--color-surface)', borderRadius: '12px', overflow: 'hidden', boxShadow: 'var(--shadow-card)' }}>
+                            <h3 style={{ fontWeight: 700, fontSize: '15px', padding: '20px 20px 0', marginBottom: '16px' }}>Broadcast History</h3>
+                            {broadcasts.length === 0 ? (
+                                <p style={{ color: 'var(--color-muted)', padding: '20px' }}>No broadcasts sent yet.</p>
+                            ) : (
+                                <div style={{ overflowX: 'auto' }}>
+                                    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                        <thead>
+                                            <tr style={{ borderBottom: '1px solid var(--color-border)', background: 'var(--color-bg)' }}>
+                                                {['Title', 'Type', 'Priority', 'Deliveries', 'Status', 'Created', 'Actions'].map(h => (
+                                                    <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontSize: '12px', fontWeight: 700, color: 'var(--color-muted)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>{h}</th>
+                                                ))}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {broadcasts.map(broadcast => (
+                                                <tr key={broadcast.id} style={{ borderBottom: '1px solid var(--color-border)' }}>
+                                                    <td style={{ padding: '12px 16px', fontSize: '13px', fontWeight: 600 }}>{broadcast.title}</td>
+                                                    <td style={{ padding: '12px 16px', fontSize: '13px' }}>
+                                                        <span style={{ 
+                                                            background: broadcast.message_type === 'URGENT' ? '#FEE2E2' : 
+                                                                       broadcast.message_type === 'OFFER' ? '#DBEAFE' : '#F3F4F6',
+                                                            color: broadcast.message_type === 'URGENT' ? '#991B1B' : 
+                                                                  broadcast.message_type === 'OFFER' ? '#1E40AF' : '#374151',
+                                                            padding: '2px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 600
+                                                        }}>
+                                                            {broadcast.message_type}
+                                                        </span>
+                                                    </td>
+                                                    <td style={{ padding: '12px 16px', fontSize: '13px' }}>
+                                                        <span style={{ 
+                                                            background: broadcast.priority === 'URGENT' ? '#FEE2E2' : 
+                                                                       broadcast.priority === 'HIGH' ? '#FEF3C7' : 
+                                                                       broadcast.priority === 'LOW' ? '#F3F4F6' : '#E0E7FF',
+                                                            color: broadcast.priority === 'URGENT' ? '#991B1B' : 
+                                                                  broadcast.priority === 'HIGH' ? '#92400E' : 
+                                                                  broadcast.priority === 'LOW' ? '#374151' : '#3730A3',
+                                                            padding: '2px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 600
+                                                        }}>
+                                                            {broadcast.priority}
+                                                        </span>
+                                                    </td>
+                                                    <td style={{ padding: '12px 16px', fontSize: '13px', color: 'var(--color-muted)' }}>
+                                                        {broadcast.delivery_stats?.count || 0} users
+                                                    </td>
+                                                    <td style={{ padding: '12px 16px', fontSize: '13px' }}>
+                                                        <span style={{ 
+                                                            background: broadcast.is_active ? '#DCFCE7' : '#F3F4F6',
+                                                            color: broadcast.is_active ? '#166534' : '#6B7280',
+                                                            padding: '2px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 600
+                                                        }}>
+                                                            {broadcast.is_active ? 'Active' : 'Inactive'}
+                                                        </span>
+                                                    </td>
+                                                    <td style={{ padding: '12px 16px', fontSize: '12px', color: 'var(--color-muted)' }}>
+                                                        {new Date(broadcast.created_at).toLocaleDateString()}
+                                                    </td>
+                                                    <td style={{ padding: '12px 16px' }}>
+                                                        <button
+                                                            onClick={() => {/* TODO: Add toggle active functionality */}}
+                                                            style={{ 
+                                                                background: 'var(--color-surface)', 
+                                                                border: '1px solid var(--color-border)', 
+                                                                borderRadius: '4px', 
+                                                                padding: '4px 8px', 
+                                                                fontSize: '11px', 
+                                                                cursor: 'pointer'
+                                                            }}
+                                                        >
+                                                            {broadcast.is_active ? 'Deactivate' : 'Activate'}
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                );
             default:
                 return null;
         }
@@ -862,10 +1111,11 @@ export function AdminClient() {
         <div className="admin-root-shell" style={{ display: 'flex', height: '100vh', background: 'var(--color-bg)', overflow: 'hidden' }}>
             <aside className="admin-sidebar">
                 <div style={{ padding: '0 24px 24px', borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: '8px' }}>
-                    <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 800, fontSize: '18px', color: 'white' }}>
-                        Ink<span style={{ color: '#E94560' }}>board</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <img src="/transparent-image.png" alt="Purseable" style={{ height: '40px', width: 'auto' }} />
+                        <span style={{ color: 'white', fontSize: '18px', fontWeight: 700 }}>Purseable</span>
                     </div>
-                    <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginTop: '4px', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                    <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginTop: '8px', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
                         Admin Panel
                     </div>
                 </div>
@@ -885,6 +1135,13 @@ export function AdminClient() {
                         style={{ color: 'rgba(255,255,255,0.7)', display: 'flex', alignItems: 'center', gap: '8px' }}
                     >
                         <Gift size={16} /> Coupons & Deals
+                    </Link>
+                    <Link 
+                        href="/admin/policies" 
+                        className="admin-nav-item" 
+                        style={{ color: 'rgba(255,255,255,0.7)', display: 'flex', alignItems: 'center', gap: '8px' }}
+                    >
+                        <Shield size={16} /> Legal Policies
                     </Link>
                     <button
                         type="button"

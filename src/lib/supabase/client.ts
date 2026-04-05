@@ -29,7 +29,7 @@ export function createClient() {
             },
             global: {
                 headers: {
-                    'x-client-info': 'inkboard-web',
+                    'x-client-info': 'purseable-web',
                 },
             },
         })

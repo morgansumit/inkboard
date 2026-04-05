@@ -20,7 +20,7 @@ export function ProfileClient({ user, posts, likedPosts, isOwnProfile = false }:
 
     const handleShare = () => {
         if (navigator.share) {
-            navigator.share({ title: `${user.display_name} on Inkboard`, url: window.location.href });
+            navigator.share({ title: `${user.display_name} on purseable`, url: window.location.href });
         } else {
             navigator.clipboard.writeText(window.location.href);
         }

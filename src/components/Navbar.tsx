@@ -69,7 +69,7 @@ export function Navbar() {
             }
 
             setCurrentUser({
-                display_name: profile?.display_name || 'Inkboard User',
+                display_name: profile?.display_name || 'Purseable User',
                 avatar_url: profile?.avatar_url || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=160&q=80',
                 role: profile?.role || 'USER',
                 is_business: Boolean(profile?.is_business),
@@ -189,8 +189,8 @@ export function Navbar() {
     return (
         <header className={`navbar-shell ${scrolled ? 'navbar-scrolled' : ''}`}>
             <div className="navbar-inner">
-                <Link href="/" className="navbar-brand" aria-label="Inkboard home">
-                    <span>Inkboard</span>
+                <Link href="/" className="navbar-brand" aria-label="purseable home" style={{ flexShrink: 0, marginRight: '80px' }}>
+                    <img src="/transparent-image.png" alt="Purseable" style={{ height: '56px', width: 'auto', display: 'block' }} />
                 </Link>
 
                 {renderSearchForm('desktop-only')}
@@ -269,7 +269,7 @@ export function Navbar() {
                                 >
                                     <img src={currentUser?.avatar_url || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=160&q=80'} alt={currentUser?.display_name || 'User'} className="avatar" />
                                     <div className="profile-meta hide-mobile">
-                                        <span>{currentUser?.display_name || 'Inkboard User'}</span>
+                                        <span>{currentUser?.display_name || 'purseable User'}</span>
                                         <small>{userEmail}</small>
                                     </div>
                                 </button>

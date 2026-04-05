@@ -1,0 +1,64 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - link "P" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]:
+        - link "Home" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+        - link "Explore" [ref=e11] [cursor=pointer]:
+          - /url: /explore
+          - img [ref=e13]
+    - generic [ref=e33]:
+      - banner [ref=e34]:
+        - generic [ref=e35]:
+          - link "purseable home" [ref=e36] [cursor=pointer]:
+            - /url: /
+            - img "Purseable" [ref=e37]
+          - generic [ref=e38]:
+            - img [ref=e39]
+            - textbox "Search posts, authors, tags…" [ref=e42]
+          - generic [ref=e43]:
+            - link "Log in" [ref=e91] [cursor=pointer]:
+              - /url: /login
+            - link "Sign up" [ref=e92] [cursor=pointer]:
+              - /url: /register
+      - main [ref=e46]:
+        - generic [ref=e94]:
+          - generic [ref=e95]:
+            - link "Purseable" [ref=e96] [cursor=pointer]:
+              - /url: /
+            - heading "Welcome back" [level=1] [ref=e97]
+            - paragraph [ref=e98]: Sign in to your account
+          - button "Continue with Google" [ref=e99] [cursor=pointer]:
+            - img [ref=e100]
+            - text: Continue with Google
+          - generic [ref=e107]: or
+          - generic [ref=e109]:
+            - generic [ref=e110]:
+              - generic [ref=e111]: Email
+              - textbox "you@example.com" [ref=e112]: ojas@gmail.com
+            - generic [ref=e113]:
+              - generic [ref=e114]:
+                - generic [ref=e115]: Password
+                - button "Forgot password?" [ref=e116] [cursor=pointer]
+              - generic [ref=e117]:
+                - textbox "Your password" [ref=e118]: Assasin@123
+                - button [ref=e119] [cursor=pointer]:
+                  - img [ref=e120]
+            - generic [ref=e123]:
+              - checkbox "Remember this device" [ref=e124]
+              - generic [ref=e125]: Remember this device
+            - button "Log In" [ref=e126] [cursor=pointer]
+          - paragraph [ref=e127]:
+            - text: Don't have an account?
+            - link "Sign up free" [ref=e128] [cursor=pointer]:
+              - /url: /register
+          - generic [ref=e129]:
+            - heading "Set up the first admin" [level=3] [ref=e130]
+            - paragraph [ref=e131]: No admin account exists yet. Generate a one-time setup link to create the first administrator. The link expires after 15 minutes or immediately once the admin is created.
+            - button "Generate admin setup link" [ref=e132] [cursor=pointer]
+  - button "Open Next.js Dev Tools" [ref=e71] [cursor=pointer]:
+    - img [ref=e72]
+  - alert [ref=e75]

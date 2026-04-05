@@ -114,7 +114,7 @@ export async function POST(
     try {
       const fs = require('fs/promises');
       const path = require('path');
-      const cacheFile = path.join(process.cwd(), '.inkboard-cache', 'posts.json');
+      const cacheFile = path.join(process.cwd(), '.purseable-cache', 'posts.json');
       
       const cacheData = await fs.readFile(cacheFile, 'utf8');
       const posts = JSON.parse(cacheData);
@@ -194,7 +194,7 @@ export async function DELETE(
     try {
       const fs = require('fs/promises');
       const path = require('path');
-      const cacheFile = path.join(process.cwd(), '.inkboard-cache', 'posts.json');
+      const cacheFile = path.join(process.cwd(), '.purseable-cache', 'posts.json');
       
       const cacheData = await fs.readFile(cacheFile, 'utf8');
       const posts = JSON.parse(cacheData);

@@ -5,8 +5,8 @@ import type { Metadata } from 'next';
 export async function generateMetadata({ params }: { params: Promise<{ name: string }> }): Promise<Metadata> {
     const { name } = await params;
     return {
-        title: `#${name} — Stories & Articles | Inkboard`,
-        description: `Explore all posts tagged with "${name}" on Inkboard — Europe's platform for long-form writing.`,
+        title: `#${name} — Stories & Articles | purseable`,
+        description: `Explore all posts tagged with "${name}" on purseable — Europe's platform for long-form writing.`,
     };
 }
 

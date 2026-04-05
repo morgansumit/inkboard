@@ -3,19 +3,20 @@ import './globals.css';
 import { Navbar } from '@/components/Navbar';
 import { Sidebar } from '@/components/Sidebar';
 import { SupabaseErrorHandler } from '@/components/SupabaseErrorHandler';
+import { BroadcastNotifications } from '@/components/BroadcastNotifications';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://inkboard-writing.vercel.app'), // Replace with your actual domain later
+  metadataBase: new URL('https://purseable.com'), // Replace with your actual domain later
   title: {
-    default: 'Inkboard — Discover Writing You Love',
-    template: '%s | Inkboard',
+    default: 'Purseable — Discover Writing You Love',
+    template: '%s | Purseable',
   },
   description:
-    'Inkboard is a visually-driven social platform for writers, bloggers, and readers across Europe. Discover rich, long-form content in a beautiful masonry feed.',
+    'Purseable is a visually-driven social platform for writers, bloggers, and readers across Europe. Discover rich, long-form content in a beautiful masonry feed.',
   keywords: ['writing', 'blogging', 'literature', 'reading', 'Europe', 'content discovery'],
   openGraph: {
     type: 'website',
-    siteName: 'Inkboard',
+    siteName: 'Purseable',
     images: ['/og-image.png'],
   },
 };
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body>
         <SupabaseErrorHandler />
+        <BroadcastNotifications />
         <div style={{ display: 'flex', minHeight: '100svh', width: '100%' }}>
           <Sidebar />
           <div className="layout-main" style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>

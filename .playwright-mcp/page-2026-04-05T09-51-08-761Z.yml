@@ -1,0 +1,145 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - link "P" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]:
+        - link "Home" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+        - link "Explore" [ref=e11] [cursor=pointer]:
+          - /url: /explore
+          - img [ref=e13]
+        - link "Create" [ref=e160] [cursor=pointer]:
+          - /url: /compose
+          - img [ref=e162]
+        - link "Messages" [ref=e163] [cursor=pointer]:
+          - /url: /messages
+          - img [ref=e165]
+        - link "Alerts" [ref=e167] [cursor=pointer]:
+          - /url: /notifications
+          - img [ref=e169]
+        - link "Profile" [ref=e172] [cursor=pointer]:
+          - /url: /profile
+          - img [ref=e174]
+    - generic [ref=e16]:
+      - banner [ref=e17]:
+        - generic [ref=e18]:
+          - link "purseable home" [ref=e19] [cursor=pointer]:
+            - /url: /
+            - img "Purseable" [ref=e20]
+          - generic [ref=e21]:
+            - img [ref=e22]
+            - textbox "Search posts, authors, tags…" [ref=e25]
+          - generic [ref=e26]:
+            - link "Write" [ref=e177] [cursor=pointer]:
+              - /url: /compose
+              - img [ref=e178]
+              - text: Write
+            - button "Notifications" [ref=e182] [cursor=pointer]:
+              - img [ref=e183]
+            - button "Purseable User Purseable User testuser1@inkboard-test.com" [ref=e187] [cursor=pointer]:
+              - img "Purseable User" [ref=e188]
+              - generic [ref=e189]:
+                - generic [ref=e190]: Purseable User
+                - generic [ref=e191]: testuser1@inkboard-test.com
+      - main [ref=e29]:
+        - generic [ref=e30]:
+          - generic [ref=e31]:
+            - link "Exit" [ref=e32] [cursor=pointer]:
+              - /url: /
+              - img [ref=e33]
+              - text: Exit
+            - generic [ref=e36]: "\"Playwright Test Post - Automat…\""
+            - generic [ref=e37]:
+              - button "Preview" [ref=e38] [cursor=pointer]:
+                - img [ref=e39]
+                - text: Preview
+              - button "Save Draft" [ref=e42] [cursor=pointer]
+              - button "Publish ✓" [disabled] [ref=e43] [cursor=pointer]
+          - generic [ref=e44]:
+            - generic [ref=e45]:
+              - generic [ref=e46]:
+                - generic [ref=e47]: Cover Image
+                - generic [ref=e48]:
+                  - generic [ref=e49] [cursor=pointer]: Upload Image
+                  - generic [ref=e50]: OR
+                  - textbox "Paste image URL..." [active] [ref=e51]: https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800
+                - img "Cover preview" [ref=e197]
+              - generic [ref=e52]:
+                - generic [ref=e53]:
+                  - img [ref=e54]
+                  - text: Video URL (YouTube, Vimeo, or direct video)
+                - textbox "https://youtube.com/watch?v=... or https://vimeo.com/..." [ref=e57]
+                - generic [ref=e58]: If video URL is provided, it will be shown as the main media on the card. Blog detail shows text only.
+              - textbox "Your post title…" [ref=e60]: Playwright Test Post - Automated Testing
+              - textbox "Subtitle or excerpt (optional)…" [ref=e62]: Testing the post creation flow with Playwright
+              - generic [ref=e63]:
+                - generic [ref=e64]:
+                  - button "Bold" [ref=e65] [cursor=pointer]:
+                    - img [ref=e66]
+                  - button "Italic" [ref=e68] [cursor=pointer]:
+                    - img [ref=e69]
+                  - button "Underline" [ref=e71] [cursor=pointer]: U
+                  - button "H2" [ref=e73] [cursor=pointer]
+                  - button "H3" [ref=e74] [cursor=pointer]
+                  - button "Blockquote" [ref=e76] [cursor=pointer]:
+                    - img [ref=e77]
+                  - button "Code Block" [ref=e80] [cursor=pointer]:
+                    - img [ref=e81]
+                  - button "Insert Link" [ref=e84] [cursor=pointer]:
+                    - img [ref=e85]
+                  - button "Insert Image" [ref=e88] [cursor=pointer]:
+                    - img [ref=e89]
+                - generic [ref=e94]: "Tip: paste images or use the toolbar to format."
+              - generic [ref=e95]:
+                - generic [ref=e96]: Body (quick text)
+                - textbox "Write your post content here..." [ref=e97]: This is a test post created by Playwright automated testing to verify the posting functionality of the Inkboard platform. The content should appear correctly when published.
+                - generic [ref=e98]: We’ll publish the formatted version if you used the rich text area above.
+              - generic [ref=e99]:
+                - generic [ref=e100]: Tags (max 10, at least 1 required)
+                - generic [ref=e101]:
+                  - textbox "Add a tag…" [ref=e102]
+                  - button "Add" [ref=e103] [cursor=pointer]
+                - generic [ref=e104]:
+                  - button "+literature" [ref=e105] [cursor=pointer]
+                  - button "+travel" [ref=e106] [cursor=pointer]
+                  - button "+food" [ref=e107] [cursor=pointer]
+                  - button "+tech" [ref=e108] [cursor=pointer]
+                  - button "+philosophy" [ref=e109] [cursor=pointer]
+                  - button "+poetry" [ref=e110] [cursor=pointer]
+                  - button "+culture" [ref=e111] [cursor=pointer]
+                  - button "+politics" [ref=e112] [cursor=pointer]
+                  - button "+health" [ref=e113] [cursor=pointer]
+                  - button "+fiction" [ref=e114] [cursor=pointer]
+            - generic [ref=e116]:
+              - heading "Feed Preview" [level=3] [ref=e117]
+              - article [ref=e120] [cursor=pointer]:
+                - link "View Playwright Test Post - Automated Testing" [ref=e193]:
+                  - /url: /post/preview
+                - img "Playwright Test Post - Automated Testing" [ref=e194]
+                - generic [ref=e124]:
+                  - link "You" [ref=e125]:
+                    - /url: /u/you
+                    - img "You" [ref=e126]
+                  - link "You" [ref=e128]:
+                    - /url: /u/you
+                  - generic [ref=e129]:
+                    - img [ref=e130]
+                    - text: 1m
+                - generic [ref=e133]:
+                  - heading "Playwright Test Post - Automated Testing" [level=2] [ref=e195]
+                  - paragraph [ref=e135]: Testing the post creation flow with Playwright
+                - generic [ref=e136]:
+                  - button "Like" [ref=e137]:
+                    - img [ref=e138]
+                    - text: "0"
+                  - button "Comments" [ref=e140]:
+                    - img [ref=e141]
+                    - text: "0"
+                  - button "Share" [ref=e143]:
+                    - img [ref=e144]
+              - paragraph [ref=e150]: ~1 min read
+  - button "Open Next.js Dev Tools" [ref=e156] [cursor=pointer]:
+    - img [ref=e157]
+  - alert [ref=e192]

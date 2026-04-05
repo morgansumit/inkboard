@@ -15,9 +15,9 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     try {
         const { id } = await params;
         const post = await postRepository.findById(id);
-        if (!post) return { title: 'Post Not Found | Inkboard' };
+        if (!post) return { title: 'Post Not Found | purseable' };
         return {
-            title: `${post.title} | Inkboard`,
+            title: `${post.title} | purseable`,
             description: post.subtitle,
             openGraph: {
                 title: post.title,
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
         };
     } catch (error) {
         console.error('[PostPage] Metadata error:', error);
-        return { title: 'Post | Inkboard' };
+        return { title: 'Post | purseable' };
     }
 }
 

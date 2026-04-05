@@ -149,10 +149,10 @@ export default function AdsDashboard() {
             <div style={{ padding: '60px 40px', maxWidth: '800px', margin: '0 auto', fontFamily: 'var(--font-ui)', textAlign: 'center' }}>
                 <Megaphone size={48} color="var(--color-accent)" style={{ margin: '0 auto 20px' }} />
                 <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: '32px', fontWeight: 700, color: 'var(--color-primary)', marginBottom: '12px' }}>
-                    Inkboard Ads Network
+                    purseable Ads Network
                 </h1>
                 <p style={{ color: 'var(--color-muted)', fontSize: '16px', marginBottom: '32px', maxWidth: '600px', margin: '0 auto 32px' }}>
-                    Access to the Ads Manager is strictly limited to verified business partners. If you would like to run sponsored content on Inkboard, you must apply for a Business Account.
+                    Access to the Ads Manager is strictly limited to verified business partners. If you would like to run sponsored content on purseable, you must apply for a Business Account.
                 </p>
 
                 {businessRequest ? (

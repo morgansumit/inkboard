@@ -106,7 +106,7 @@ export function BusinessRequestForm({ defaultBusinessName, defaultWebsite, exist
                     className="input business-textarea"
                     value={description}
                     onChange={e => setDescription(e.target.value)}
-                    placeholder="Tell us about your audience, campaign goals, and how you plan to use Inkboard ads."
+                    placeholder="Tell us about your audience, campaign goals, and how you plan to use purseable ads."
                     rows={5}
                     required
                     disabled={isPending || isApproved || submitting}
@@ -118,7 +118,7 @@ export function BusinessRequestForm({ defaultBusinessName, defaultWebsite, exist
                 <button type="submit" className="btn btn-primary btn-lg" disabled={submitting || isPending || isApproved}>
                     {isApproved ? 'Already approved' : isPending ? 'Awaiting review' : submitting ? 'Sending…' : 'Submit request'}
                 </button>
-                <p className="form-legal">We review every request to keep Inkboard spam-free. By submitting, you agree to our Ads Terms.</p>
+                <p className="form-legal">We review every request to keep purseable spam-free. By submitting, you agree to our Ads Terms.</p>
             </div>
 
             {message && <div className="business-callout success">{message}</div>}

@@ -4,6 +4,8 @@ import type { Post, Tag, User } from '@/types';
 import { MOCK_USERS } from '@/lib/mockData';
 import crypto from 'crypto';
 import { createAnonClient } from '@/lib/supabase/anon';
+import { createClient } from '@/lib/supabase/server';
+import { supabaseAdmin } from '@/lib/supabase/admin';
 import { getCountryFromRequest } from '@/lib/geo';
 
 export const runtime = 'nodejs';
@@ -29,8 +31,57 @@ function computeReadTimeMinutes(html: string): number {
     return Math.max(1, Math.ceil(words / 200));
 }
 
-function getDemoAuthor(): User {
+function getFallbackAuthor(): User {
     return MOCK_USERS[2] ?? MOCK_USERS[0];
+}
+
+async function getAuthenticatedAuthor(): Promise<{ user: User; authId: string } | null> {
+    try {
+        const supabase = await createClient();
+        const { data: { user: authUser } } = await supabase.auth.getUser();
+        if (!authUser) return null;
+
+        const { data: profile } = await supabaseAdmin
+            .from('users')
+            .select('id, username, display_name, bio, avatar_url, role, is_verified, is_business, created_at, follower_count, following_count')
+            .eq('id', authUser.id)
+            .maybeSingle();
+
+        if (profile) {
+            return {
+                authId: authUser.id,
+                user: {
+                    id: profile.id,
+                    username: profile.username,
+                    display_name: profile.display_name || profile.username,
+                    bio: profile.bio || '',
+                    avatar_url: profile.avatar_url,
+                    role: profile.role,
+                    is_verified: profile.is_verified,
+                    is_business: profile.is_business,
+                    created_at: profile.created_at,
+                    follower_count: profile.follower_count || 0,
+                    following_count: profile.following_count || 0,
+                },
+            };
+        }
+
+        // No profile row yet — build a minimal author from auth metadata
+        const email = authUser.email || 'unknown';
+        const username = email.split('@')[0];
+        return {
+            authId: authUser.id,
+            user: {
+                id: authUser.id,
+                username,
+                display_name: authUser.user_metadata?.display_name || username,
+                avatar_url: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(username)}`,
+                created_at: new Date().toISOString(),
+            },
+        };
+    } catch {
+        return null;
+    }
 }
 
 export async function POST(req: Request) {
@@ -41,9 +92,15 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
 
+        // Require authentication - no fallback to mock users
+        const authenticated = await getAuthenticatedAuthor();
+        if (!authenticated) {
+            return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+        }
+
         const now = new Date().toISOString();
-        const author = getDemoAuthor();
-        // Use UUID without user- prefix for database compatibility
+        const author = authenticated.user;
+        const authorId = authenticated.authId;
         const id = crypto.randomUUID();
 
         const post: Post = {
@@ -73,40 +130,39 @@ export async function POST(req: Request) {
         const countryCode = await getCountryFromRequest();
         console.log('[posts] Detected country:', countryCode);
 
-        // Save to Supabase database (not just cache)
+        // Save to Supabase database ONLY (not cache) for real user posts
         const supabase = createAnonClient();
-        if (supabase) {
-            const { error: dbError } = await supabase.from('posts').insert({
-                id: post.id,
-                title: post.title,
-                subtitle: post.subtitle,
-                content: { html: post.content },
-                cover_image_url: post.cover_image_url,
-                video_url: body.video_url || null,
-                cover_aspect_ratio: post.cover_aspect_ratio,
-                author_id: null, // User posts don't have real author in auth.users
-                status: 'PUBLISHED',
-                read_time_minutes: post.read_time_minutes,
-                engagement_score: 0,
-                like_count: 0,
-                comment_count: 0,
-                share_count: 0,
-                is_trending: false,
-                source_platform: 'user',
-                country_code: countryCode,
-                created_at: now,
-                published_at: now,
-                updated_at: now,
-            });
-            
-            if (dbError) {
-                console.error('[posts] Failed to save to Supabase:', dbError);
-                // Continue to save to cache as fallback
-            }
+        if (!supabase) {
+            return NextResponse.json({ error: 'Database connection failed' }, { status: 500 });
         }
-
-        // Also save to local cache for immediate availability
-        await postRepository.upsertMany([post]);
+        
+        const { error: dbError } = await supabase.from('posts').insert({
+            id: post.id,
+            title: post.title,
+            subtitle: post.subtitle,
+            content: { html: post.content },
+            cover_image_url: post.cover_image_url,
+            video_url: body.video_url || null,
+            cover_aspect_ratio: post.cover_aspect_ratio,
+            author_id: authorId,
+            status: 'PUBLISHED',
+            read_time_minutes: post.read_time_minutes,
+            engagement_score: 0,
+            like_count: 0,
+            comment_count: 0,
+            share_count: 0,
+            is_trending: false,
+            source_platform: 'user',
+            country_code: countryCode,
+            created_at: now,
+            published_at: now,
+            updated_at: now,
+        });
+        
+        if (dbError) {
+            console.error('[posts] Failed to save to Supabase:', dbError);
+            return NextResponse.json({ error: 'Failed to save post to database' }, { status: 500 });
+        }
 
         return NextResponse.json({ post });
     } catch (err) {

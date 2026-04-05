@@ -110,7 +110,7 @@ export function Sidebar() {
     return (
         <aside className="sidebar">
             <Link href="/" className="sidebar-logo">
-                I
+                P
             </Link>
 
             <div className={`sidebar-nav ${isMobile ? 'mobile-nav' : ''}`}>

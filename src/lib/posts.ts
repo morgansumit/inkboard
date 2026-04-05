@@ -101,7 +101,7 @@ function ensureUserFromSource(source: DbPost['external_sources'] | null): User {
   const slug = normalized?.slug || normalized?.id || 'external-source';
   return {
     id: normalized?.id || slug,
-    email: `${slug}@sources.inkboard`,
+    email: `${slug}@sources.purseable`,
     username: slug,
     display_name: display,
     bio: normalized?.metadata && typeof normalized.metadata === 'object' && 'bio' in normalized.metadata ? String(normalized.metadata.bio) : normalized?.name || '',
@@ -124,9 +124,9 @@ function ensureUser(record?: DbPost['users'], fallback?: DbPost['external_source
   if (normalizedRecord) {
     return {
       id: normalizedRecord.id,
-      email: normalizedRecord.email || `${normalizedRecord.id}@inkboard.local`,
+      email: normalizedRecord.email || `${normalizedRecord.id}@purseable.local`,
       username: normalizedRecord.username || normalizedRecord.id,
-      display_name: normalizedRecord.display_name || normalizedRecord.username || 'Inkboard Author',
+      display_name: normalizedRecord.display_name || normalizedRecord.username || 'purseable Author',
       bio: normalizedRecord.bio,
       avatar_url: normalizedRecord.avatar_url,
       location: normalizedRecord.location,

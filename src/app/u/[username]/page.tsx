@@ -13,10 +13,10 @@ export async function generateMetadata({ params }: { params: Promise<{ username:
         .eq('username', username)
         .single();
     
-    if (!user) return { title: 'User Not Found | Inkboard' };
+    if (!user) return { title: 'User Not Found | purseable' };
     
     return {
-        title: `${user.display_name} (@${username}) | Inkboard`,
+        title: `${user.display_name} (@${username}) | purseable`,
         description: user.bio,
         openGraph: { images: [user.avatar_url ?? ''] },
     };

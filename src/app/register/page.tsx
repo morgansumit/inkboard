@@ -66,7 +66,7 @@ export default function RegisterPage() {
             const dobDate = new Date(dob);
             const age = new Date().getFullYear() - dobDate.getFullYear();
             if (age < 13) {
-                setError("You must be at least 13 years old to use Inkboard.");
+                setError("You must be at least 13 years old to use purseable.");
                 setLoading(false);
                 return;
             }
@@ -229,7 +229,7 @@ export default function RegisterPage() {
                         "The best stories<br />find you when you're<br />ready to listen."
                     </div>
                     <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-ui)' }}>
-                        — 12,000+ writers on Inkboard
+                        — 12,000+ writers on purseable
                     </div>
                 </div>
             </div>

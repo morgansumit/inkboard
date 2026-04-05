@@ -1,0 +1,65 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - link "P" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]:
+        - link "Home" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+        - link "Explore" [ref=e11] [cursor=pointer]:
+          - /url: /explore
+          - img [ref=e13]
+        - link "Create" [ref=e16] [cursor=pointer]:
+          - /url: /compose
+          - img [ref=e18]
+        - link "Messages" [ref=e19] [cursor=pointer]:
+          - /url: /messages
+          - img [ref=e21]
+        - link "Alerts" [ref=e23] [cursor=pointer]:
+          - /url: /notifications
+          - img [ref=e25]
+        - link "Profile" [ref=e28] [cursor=pointer]:
+          - /url: /profile
+          - img [ref=e30]
+    - generic [ref=e33]:
+      - banner [ref=e34]:
+        - generic [ref=e35]:
+          - link "purseable home" [ref=e36] [cursor=pointer]:
+            - /url: /
+            - img "Purseable" [ref=e37]
+          - generic [ref=e38]:
+            - img [ref=e39]
+            - textbox "Search posts, authors, tags…" [ref=e42]
+          - generic [ref=e43]:
+            - link "Write" [ref=e78] [cursor=pointer]:
+              - /url: /compose
+              - img [ref=e79]
+              - text: Write
+            - button "Notifications" [ref=e83] [cursor=pointer]:
+              - img [ref=e84]
+            - button "Test User One Test User One testuser1@inkboard-test.com" [ref=e88] [cursor=pointer]:
+              - img "Test User One" [ref=e89]
+              - generic [ref=e90]:
+                - generic [ref=e91]: Test User One
+                - generic [ref=e92]: testuser1@inkboard-test.com
+      - main [ref=e46]:
+        - generic [ref=e47]:
+          - generic [ref=e48]:
+            - heading "Messages" [level=2] [ref=e50]
+            - button "New message" [ref=e52] [cursor=pointer]:
+              - img [ref=e54]
+              - generic [ref=e57]: New message
+            - generic [ref=e58]: Conversations
+            - generic [ref=e60]: No conversations yet. Click "New message" to start one.
+          - generic [ref=e62]:
+            - generic [ref=e93]:
+              - button [ref=e94] [cursor=pointer]:
+                - img [ref=e95]
+              - heading "New Message" [level=3] [ref=e97]
+            - generic [ref=e98]:
+              - textbox "Search by username or display name..." [active] [ref=e99]
+              - img [ref=e100]
+  - button "Open Next.js Dev Tools" [ref=e73] [cursor=pointer]:
+    - img [ref=e74]
+  - alert [ref=e77]

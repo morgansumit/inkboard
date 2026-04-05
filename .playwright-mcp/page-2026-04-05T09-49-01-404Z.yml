@@ -1,0 +1,1302 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - link "P" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]:
+        - link "Home" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+        - link "Explore" [ref=e11] [cursor=pointer]:
+          - /url: /explore
+          - img [ref=e13]
+        - link "Create" [ref=e82] [cursor=pointer]:
+          - /url: /compose
+          - img [ref=e84]
+        - link "Messages" [ref=e85] [cursor=pointer]:
+          - /url: /messages
+          - img [ref=e87]
+        - link "Alerts" [ref=e89] [cursor=pointer]:
+          - /url: /notifications
+          - img [ref=e91]
+        - link "Profile" [ref=e94] [cursor=pointer]:
+          - /url: /profile
+          - img [ref=e96]
+    - generic [ref=e16]:
+      - banner [ref=e17]:
+        - generic [ref=e18]:
+          - link "purseable home" [ref=e19] [cursor=pointer]:
+            - /url: /
+            - img "Purseable" [ref=e20]
+          - generic [ref=e21]:
+            - img [ref=e22]
+            - textbox "Search posts, authors, tags…" [ref=e25]
+          - generic [ref=e26]:
+            - link "Write" [ref=e99] [cursor=pointer]:
+              - /url: /compose
+              - img [ref=e100]
+              - text: Write
+            - button "Notifications" [ref=e104] [cursor=pointer]:
+              - img [ref=e105]
+            - button "Purseable User Purseable User testuser1@inkboard-test.com" [ref=e109] [cursor=pointer]:
+              - img "Purseable User" [ref=e110]
+              - generic [ref=e111]:
+                - generic [ref=e112]: Purseable User
+                - generic [ref=e113]: testuser1@inkboard-test.com
+      - main [ref=e29]:
+        - generic [ref=e213]:
+          - generic [ref=e214]:
+            - button "✨ For You" [ref=e215] [cursor=pointer]
+            - button "📚 Literature" [ref=e216] [cursor=pointer]
+            - button "✈️ Travel" [ref=e217] [cursor=pointer]
+            - button "💻 Technology" [ref=e218] [cursor=pointer]
+            - button "🍽️ Food & Drink" [ref=e219] [cursor=pointer]
+            - button "🏛️ Politics" [ref=e220] [cursor=pointer]
+            - button "🧠 Philosophy" [ref=e221] [cursor=pointer]
+            - button "✍️ Poetry" [ref=e222] [cursor=pointer]
+            - button "🌿 Health & Wellness" [ref=e223] [cursor=pointer]
+            - button "📷 Photography" [ref=e224] [cursor=pointer]
+            - button "🎵 Music" [ref=e225] [cursor=pointer]
+            - button "🎬 Cinema" [ref=e226] [cursor=pointer]
+            - button "🔬 Science" [ref=e227] [cursor=pointer]
+          - generic [ref=e228]:
+            - generic [ref=e229]:
+              - img [ref=e230]
+              - heading "Trending Today" [level=2] [ref=e232]
+            - generic [ref=e233]:
+              - 'link "The Silence Between Words: On Proust and the Art of Slow Reading The Silence Between Words: On Proust and the Art of Slow Reading Élise Dupont" [ref=e234] [cursor=pointer]':
+                - /url: /post/p1
+                - generic [ref=e235]:
+                  - 'img "The Silence Between Words: On Proust and the Art of Slow Reading" [ref=e237]'
+                  - generic [ref=e238]:
+                    - paragraph [ref=e239]: "The Silence Between Words: On Proust and the Art of Slow Reading"
+                    - paragraph [ref=e240]: Élise Dupont
+              - link "Carbonara Is Not What You Think It Is Carbonara Is Not What You Think It Is Marco Romano" [ref=e241] [cursor=pointer]:
+                - /url: /post/p2
+                - generic [ref=e242]:
+                  - img "Carbonara Is Not What You Think It Is" [ref=e244]
+                  - generic [ref=e245]:
+                    - paragraph [ref=e246]: Carbonara Is Not What You Think It Is
+                    - paragraph [ref=e247]: Marco Romano
+              - link "When the Algorithm Became the Editor When the Algorithm Became the Editor Kai Nordhavn" [ref=e248] [cursor=pointer]:
+                - /url: /post/p4
+                - generic [ref=e249]:
+                  - img "When the Algorithm Became the Editor" [ref=e251]
+                  - generic [ref=e252]:
+                    - paragraph [ref=e253]: When the Algorithm Became the Editor
+                    - paragraph [ref=e254]: Kai Nordhavn
+              - 'link "Between Two Worlds: A Memoir Fragment Between Two Worlds: A Memoir Fragment Amara Adeola" [ref=e255] [cursor=pointer]':
+                - /url: /post/p5
+                - generic [ref=e256]:
+                  - 'img "Between Two Worlds: A Memoir Fragment" [ref=e258]'
+                  - generic [ref=e259]:
+                    - paragraph [ref=e260]: "Between Two Worlds: A Memoir Fragment"
+                    - paragraph [ref=e261]: Amara Adeola
+              - 'link "On Grief and the Novel: How Fiction Helps Us Carry Sorrow On Grief and the Novel: How Fiction Helps Us Carry Sorrow Amara Adeola" [ref=e262] [cursor=pointer]':
+                - /url: /post/p10
+                - generic [ref=e263]:
+                  - 'img "On Grief and the Novel: How Fiction Helps Us Carry Sorrow" [ref=e265]'
+                  - generic [ref=e266]:
+                    - paragraph [ref=e267]: "On Grief and the Novel: How Fiction Helps Us Carry Sorrow"
+                    - paragraph [ref=e268]: Amara Adeola
+              - 'link "The Silence Between Words: On Proust and the Art of Slow Reading The Silence Between Words: On Proust and the Art of Slow Reading Élise Dupont" [ref=e269] [cursor=pointer]':
+                - /url: /post/p1-cycle-2
+                - generic [ref=e270]:
+                  - 'img "The Silence Between Words: On Proust and the Art of Slow Reading" [ref=e272]'
+                  - generic [ref=e273]:
+                    - paragraph [ref=e274]: "The Silence Between Words: On Proust and the Art of Slow Reading"
+                    - paragraph [ref=e275]: Élise Dupont
+          - generic [ref=e276]:
+            - heading "Your Feed" [level=2] [ref=e277]
+            - generic [ref=e278]: 36 stories
+          - generic [ref=e279]:
+            - generic [ref=e280]:
+              - article [ref=e282] [cursor=pointer]:
+                - 'link "View The Silence Between Words: On Proust and the Art of Slow Reading" [ref=e283]':
+                  - /url: /post/p1
+                - generic [ref=e284]:
+                  - 'img "The Silence Between Words: On Proust and the Art of Slow Reading" [ref=e285]'
+                  - generic [ref=e286]:
+                    - img [ref=e287]
+                    - text: Trending
+                - generic [ref=e289]:
+                  - link "Élise Dupont" [ref=e290]:
+                    - /url: /u/elise_page
+                    - img "Élise Dupont" [ref=e291]
+                  - link "Élise Dupont" [ref=e293]:
+                    - /url: /u/elise_page
+                  - generic [ref=e294]:
+                    - img [ref=e295]
+                    - text: 9m
+                - generic [ref=e298]:
+                  - 'heading "The Silence Between Words: On Proust and the Art of Slow Reading" [level=2] [ref=e299]'
+                  - paragraph [ref=e300]: Why Proust demands not just time, but a complete recalibration of how we encounter language.
+                  - generic [ref=e301]:
+                    - link "#literature" [ref=e302]:
+                      - /url: /tag/literature
+                    - link "#poetry" [ref=e303]:
+                      - /url: /tag/poetry
+                    - link "#culture" [ref=e304]:
+                      - /url: /tag/culture
+                - generic [ref=e305]:
+                  - button "Like" [ref=e306]:
+                    - img [ref=e307]
+                    - text: "1"
+                  - button "Comments" [ref=e309]:
+                    - img [ref=e310]
+                    - text: "0"
+                  - button "Share" [ref=e312]:
+                    - img [ref=e313]
+              - article [ref=e320] [cursor=pointer]:
+                - link "View On the Swedish Concept of Lagom and Why the World Needs It Now" [ref=e321]:
+                  - /url: /post/p6
+                - img "On the Swedish Concept of Lagom and Why the World Needs It Now" [ref=e323]
+                - generic [ref=e324]:
+                  - link "Sofia Andersson" [ref=e325]:
+                    - /url: /u/sofia_writes
+                    - img "Sofia Andersson" [ref=e326]
+                  - link "Sofia Andersson" [ref=e328]:
+                    - /url: /u/sofia_writes
+                  - generic [ref=e329]:
+                    - img [ref=e330]
+                    - text: 5m
+                - generic [ref=e333]:
+                  - heading "On the Swedish Concept of Lagom and Why the World Needs It Now" [level=2] [ref=e334]
+                  - paragraph [ref=e335]: "\"Not too much, not too little\" — a philosophy for an era of extremes."
+                  - generic [ref=e336]:
+                    - link "#philosophy" [ref=e337]:
+                      - /url: /tag/philosophy
+                    - link "#culture" [ref=e338]:
+                      - /url: /tag/culture
+                - generic [ref=e339]:
+                  - button "Like" [ref=e340]:
+                    - img [ref=e341]
+                    - text: "0"
+                  - button "Comments" [ref=e343]:
+                    - img [ref=e344]
+                    - text: "0"
+                  - button "Share" [ref=e346]:
+                    - img [ref=e347]
+              - article [ref=e354] [cursor=pointer]:
+                - 'link "View The Rebirth of European Sourdough: Beyond the Instagram Loaf" [ref=e355]':
+                  - /url: /post/p11
+                - 'img "The Rebirth of European Sourdough: Beyond the Instagram Loaf" [ref=e357]'
+                - generic [ref=e358]:
+                  - link "Marco Romano" [ref=e359]:
+                    - /url: /u/marco_romano
+                    - img "Marco Romano" [ref=e360]
+                  - link "Marco Romano" [ref=e362]:
+                    - /url: /u/marco_romano
+                  - generic [ref=e363]:
+                    - img [ref=e364]
+                    - text: 6m
+                - generic [ref=e367]:
+                  - 'heading "The Rebirth of European Sourdough: Beyond the Instagram Loaf" [level=2] [ref=e368]'
+                  - paragraph [ref=e369]: A journey through Berlin's wheat revolution — where ancient grains meet the modern kitchen.
+                  - generic [ref=e370]:
+                    - link "#food" [ref=e371]:
+                      - /url: /tag/food
+                    - link "#culture" [ref=e372]:
+                      - /url: /tag/culture
+                - generic [ref=e373]:
+                  - button "Like" [ref=e374]:
+                    - img [ref=e375]
+                    - text: "0"
+                  - button "Comments" [ref=e377]:
+                    - img [ref=e378]
+                    - text: "0"
+                  - button "Share" [ref=e380]:
+                    - img [ref=e381]
+              - article [ref=e388] [cursor=pointer]:
+                - link "View When the Algorithm Became the Editor" [ref=e389]:
+                  - /url: /post/p4-cycle-2
+                - generic [ref=e390]:
+                  - img "When the Algorithm Became the Editor" [ref=e391]
+                  - generic [ref=e392]:
+                    - img [ref=e393]
+                    - text: Trending
+                - generic [ref=e395]:
+                  - link "Kai Nordhavn" [ref=e396]:
+                    - /url: /u/kai_nordhavn
+                    - img "Kai Nordhavn" [ref=e397]
+                  - link "Kai Nordhavn" [ref=e399]:
+                    - /url: /u/kai_nordhavn
+                  - generic [ref=e400]:
+                    - img [ref=e401]
+                    - text: 8m
+                - generic [ref=e404]:
+                  - heading "When the Algorithm Became the Editor" [level=2] [ref=e405]
+                  - paragraph [ref=e406]: With AI writing tools flooding the internet, what happens to the editorial voice?
+                  - generic [ref=e407]:
+                    - link "#tech" [ref=e408]:
+                      - /url: /tag/tech
+                    - link "#philosophy" [ref=e409]:
+                      - /url: /tag/philosophy
+                    - link "#politics" [ref=e410]:
+                      - /url: /tag/politics
+                - generic [ref=e411]:
+                  - button "Like" [ref=e412]:
+                    - img [ref=e413]
+                    - text: "0"
+                  - button "Comments" [ref=e415]:
+                    - img [ref=e416]
+                    - text: "0"
+                  - button "Share" [ref=e418]:
+                    - img [ref=e419]
+              - article [ref=e426] [cursor=pointer]:
+                - 'link "View The Copenhagen School of Design: Why Function Is Never Enough" [ref=e427]':
+                  - /url: /post/p9-cycle-2
+                - 'img "The Copenhagen School of Design: Why Function Is Never Enough" [ref=e429]'
+                - generic [ref=e430]:
+                  - link "Kai Nordhavn" [ref=e431]:
+                    - /url: /u/kai_nordhavn
+                    - img "Kai Nordhavn" [ref=e432]
+                  - link "Kai Nordhavn" [ref=e434]:
+                    - /url: /u/kai_nordhavn
+                  - generic [ref=e435]:
+                    - img [ref=e436]
+                    - text: 8m
+                - generic [ref=e439]:
+                  - 'heading "The Copenhagen School of Design: Why Function Is Never Enough" [level=2] [ref=e440]'
+                  - paragraph [ref=e441]: Danish design philosophy goes far beyond clean lines — it is a moral position.
+                  - generic [ref=e442]:
+                    - link "#culture" [ref=e443]:
+                      - /url: /tag/culture
+                    - link "#tech" [ref=e444]:
+                      - /url: /tag/tech
+                - generic [ref=e445]:
+                  - button "Like" [ref=e446]:
+                    - img [ref=e447]
+                    - text: "0"
+                  - button "Comments" [ref=e449]:
+                    - img [ref=e450]
+                    - text: "0"
+                  - button "Share" [ref=e452]:
+                    - img [ref=e453]
+              - article [ref=e460] [cursor=pointer]:
+                - link "View Carbonara Is Not What You Think It Is" [ref=e461]:
+                  - /url: /post/p2-cycle-3
+                - generic [ref=e462]:
+                  - img "Carbonara Is Not What You Think It Is" [ref=e463]
+                  - generic [ref=e464]:
+                    - img [ref=e465]
+                    - text: Trending
+                - generic [ref=e467]:
+                  - link "Marco Romano" [ref=e468]:
+                    - /url: /u/marco_romano
+                    - img "Marco Romano" [ref=e469]
+                  - link "Marco Romano" [ref=e471]:
+                    - /url: /u/marco_romano
+                  - generic [ref=e472]:
+                    - img [ref=e473]
+                    - text: 6m
+                - generic [ref=e476]:
+                  - heading "Carbonara Is Not What You Think It Is" [level=2] [ref=e477]
+                  - paragraph [ref=e478]: A deep dive into the mythology, politics, and perfect technique of Rome's most contested dish.
+                  - generic [ref=e479]:
+                    - link "#food" [ref=e480]:
+                      - /url: /tag/food
+                    - link "#culture" [ref=e481]:
+                      - /url: /tag/culture
+                - generic [ref=e482]:
+                  - button "Like" [ref=e483]:
+                    - img [ref=e484]
+                    - text: "0"
+                  - button "Comments" [ref=e486]:
+                    - img [ref=e487]
+                    - text: "0"
+                  - button "Share" [ref=e489]:
+                    - img [ref=e490]
+              - article [ref=e497] [cursor=pointer]:
+                - 'link "View Simone de Beauvoir''s Paris: A Walking Guide to Existentialist Haunts" [ref=e498]':
+                  - /url: /post/p7-cycle-3
+                - 'img "Simone de Beauvoir''s Paris: A Walking Guide to Existentialist Haunts" [ref=e500]'
+                - generic [ref=e501]:
+                  - link "Élise Dupont" [ref=e502]:
+                    - /url: /u/elise_page
+                    - img "Élise Dupont" [ref=e503]
+                  - link "Élise Dupont" [ref=e505]:
+                    - /url: /u/elise_page
+                  - generic [ref=e506]:
+                    - img [ref=e507]
+                    - text: 7m
+                - generic [ref=e510]:
+                  - 'heading "Simone de Beauvoir''s Paris: A Walking Guide to Existentialist Haunts" [level=2] [ref=e511]'
+                  - paragraph [ref=e512]: From Café de Flore to the grave at Montparnasse — tracing a philosophy through streets.
+                  - generic [ref=e513]:
+                    - link "#travel" [ref=e514]:
+                      - /url: /tag/travel
+                    - link "#philosophy" [ref=e515]:
+                      - /url: /tag/philosophy
+                    - link "#literature" [ref=e516]:
+                      - /url: /tag/literature
+                - generic [ref=e517]:
+                  - button "Like" [ref=e518]:
+                    - img [ref=e519]
+                    - text: "0"
+                  - button "Comments" [ref=e521]:
+                    - img [ref=e522]
+                    - text: "0"
+                  - button "Share" [ref=e524]:
+                    - img [ref=e525]
+              - article [ref=e532] [cursor=pointer]:
+                - link "View Poetry in the Age of the Feed" [ref=e533]:
+                  - /url: /post/p12-cycle-3
+                - img "Poetry in the Age of the Feed" [ref=e535]
+                - generic [ref=e536]:
+                  - link "Élise Dupont" [ref=e537]:
+                    - /url: /u/elise_page
+                    - img "Élise Dupont" [ref=e538]
+                  - link "Élise Dupont" [ref=e540]:
+                    - /url: /u/elise_page
+                  - generic [ref=e541]:
+                    - img [ref=e542]
+                    - text: 4m
+                - generic [ref=e545]:
+                  - heading "Poetry in the Age of the Feed" [level=2] [ref=e546]
+                  - paragraph [ref=e547]: How poets are adapting to short attention spans, and whether we should resist.
+                  - generic [ref=e548]:
+                    - link "#poetry" [ref=e549]:
+                      - /url: /tag/poetry
+                    - link "#literature" [ref=e550]:
+                      - /url: /tag/literature
+                    - link "#tech" [ref=e551]:
+                      - /url: /tag/tech
+                - generic [ref=e552]:
+                  - button "Like" [ref=e553]:
+                    - img [ref=e554]
+                    - text: "0"
+                  - button "Comments" [ref=e556]:
+                    - img [ref=e557]
+                    - text: "0"
+                  - button "Share" [ref=e559]:
+                    - img [ref=e560]
+            - generic [ref=e566]:
+              - article [ref=e568] [cursor=pointer]:
+                - link "View Carbonara Is Not What You Think It Is" [ref=e569]:
+                  - /url: /post/p2
+                - generic [ref=e570]:
+                  - img "Carbonara Is Not What You Think It Is" [ref=e571]
+                  - generic [ref=e572]:
+                    - img [ref=e573]
+                    - text: Trending
+                - generic [ref=e575]:
+                  - link "Marco Romano" [ref=e576]:
+                    - /url: /u/marco_romano
+                    - img "Marco Romano" [ref=e577]
+                  - link "Marco Romano" [ref=e579]:
+                    - /url: /u/marco_romano
+                  - generic [ref=e580]:
+                    - img [ref=e581]
+                    - text: 6m
+                - generic [ref=e584]:
+                  - heading "Carbonara Is Not What You Think It Is" [level=2] [ref=e585]
+                  - paragraph [ref=e586]: A deep dive into the mythology, politics, and perfect technique of Rome's most contested dish.
+                  - generic [ref=e587]:
+                    - link "#food" [ref=e588]:
+                      - /url: /tag/food
+                    - link "#culture" [ref=e589]:
+                      - /url: /tag/culture
+                - generic [ref=e590]:
+                  - button "Like" [ref=e591]:
+                    - img [ref=e592]
+                    - text: "0"
+                  - button "Comments" [ref=e594]:
+                    - img [ref=e595]
+                    - text: "0"
+                  - button "Share" [ref=e597]:
+                    - img [ref=e598]
+              - article [ref=e605] [cursor=pointer]:
+                - 'link "View Simone de Beauvoir''s Paris: A Walking Guide to Existentialist Haunts" [ref=e606]':
+                  - /url: /post/p7
+                - 'img "Simone de Beauvoir''s Paris: A Walking Guide to Existentialist Haunts" [ref=e608]'
+                - generic [ref=e609]:
+                  - link "Élise Dupont" [ref=e610]:
+                    - /url: /u/elise_page
+                    - img "Élise Dupont" [ref=e611]
+                  - link "Élise Dupont" [ref=e613]:
+                    - /url: /u/elise_page
+                  - generic [ref=e614]:
+                    - img [ref=e615]
+                    - text: 7m
+                - generic [ref=e618]:
+                  - 'heading "Simone de Beauvoir''s Paris: A Walking Guide to Existentialist Haunts" [level=2] [ref=e619]'
+                  - paragraph [ref=e620]: From Café de Flore to the grave at Montparnasse — tracing a philosophy through streets.
+                  - generic [ref=e621]:
+                    - link "#travel" [ref=e622]:
+                      - /url: /tag/travel
+                    - link "#philosophy" [ref=e623]:
+                      - /url: /tag/philosophy
+                    - link "#literature" [ref=e624]:
+                      - /url: /tag/literature
+                - generic [ref=e625]:
+                  - button "Like" [ref=e626]:
+                    - img [ref=e627]
+                    - text: "0"
+                  - button "Comments" [ref=e629]:
+                    - img [ref=e630]
+                    - text: "0"
+                  - button "Share" [ref=e632]:
+                    - img [ref=e633]
+              - article [ref=e640] [cursor=pointer]:
+                - link "View Poetry in the Age of the Feed" [ref=e641]:
+                  - /url: /post/p12
+                - img "Poetry in the Age of the Feed" [ref=e643]
+                - generic [ref=e644]:
+                  - link "Élise Dupont" [ref=e645]:
+                    - /url: /u/elise_page
+                    - img "Élise Dupont" [ref=e646]
+                  - link "Élise Dupont" [ref=e648]:
+                    - /url: /u/elise_page
+                  - generic [ref=e649]:
+                    - img [ref=e650]
+                    - text: 4m
+                - generic [ref=e653]:
+                  - heading "Poetry in the Age of the Feed" [level=2] [ref=e654]
+                  - paragraph [ref=e655]: How poets are adapting to short attention spans, and whether we should resist.
+                  - generic [ref=e656]:
+                    - link "#poetry" [ref=e657]:
+                      - /url: /tag/poetry
+                    - link "#literature" [ref=e658]:
+                      - /url: /tag/literature
+                    - link "#tech" [ref=e659]:
+                      - /url: /tag/tech
+                - generic [ref=e660]:
+                  - button "Like" [ref=e661]:
+                    - img [ref=e662]
+                    - text: "0"
+                  - button "Comments" [ref=e664]:
+                    - img [ref=e665]
+                    - text: "0"
+                  - button "Share" [ref=e667]:
+                    - img [ref=e668]
+              - article [ref=e675] [cursor=pointer]:
+                - 'link "View Between Two Worlds: A Memoir Fragment" [ref=e676]':
+                  - /url: /post/p5-cycle-2
+                - generic [ref=e677]:
+                  - 'img "Between Two Worlds: A Memoir Fragment" [ref=e678]'
+                  - generic [ref=e679]:
+                    - img [ref=e680]
+                    - text: Trending
+                - generic [ref=e682]:
+                  - link "Amara Adeola" [ref=e683]:
+                    - /url: /u/amara_adeola
+                    - img "Amara Adeola" [ref=e684]
+                  - link "Amara Adeola" [ref=e686]:
+                    - /url: /u/amara_adeola
+                  - generic [ref=e687]:
+                    - img [ref=e688]
+                    - text: 14m
+                - generic [ref=e691]:
+                  - 'heading "Between Two Worlds: A Memoir Fragment" [level=2] [ref=e692]'
+                  - paragraph [ref=e693]: On the impossible geography of belonging when you are made of two homelands.
+                  - generic [ref=e694]:
+                    - link "#fiction" [ref=e695]:
+                      - /url: /tag/fiction
+                    - link "#literature" [ref=e696]:
+                      - /url: /tag/literature
+                    - link "#culture" [ref=e697]:
+                      - /url: /tag/culture
+                - generic [ref=e698]:
+                  - button "Like" [ref=e699]:
+                    - img [ref=e700]
+                    - text: "0"
+                  - button "Comments" [ref=e702]:
+                    - img [ref=e703]
+                    - text: "0"
+                  - button "Share" [ref=e705]:
+                    - img [ref=e706]
+              - article [ref=e713] [cursor=pointer]:
+                - 'link "View On Grief and the Novel: How Fiction Helps Us Carry Sorrow" [ref=e714]':
+                  - /url: /post/p10-cycle-2
+                - generic [ref=e715]:
+                  - 'img "On Grief and the Novel: How Fiction Helps Us Carry Sorrow" [ref=e716]'
+                  - generic [ref=e717]:
+                    - img [ref=e718]
+                    - text: Trending
+                - generic [ref=e720]:
+                  - link "Amara Adeola" [ref=e721]:
+                    - /url: /u/amara_adeola
+                    - img "Amara Adeola" [ref=e722]
+                  - link "Amara Adeola" [ref=e724]:
+                    - /url: /u/amara_adeola
+                  - generic [ref=e725]:
+                    - img [ref=e726]
+                    - text: 11m
+                - generic [ref=e729]:
+                  - 'heading "On Grief and the Novel: How Fiction Helps Us Carry Sorrow" [level=2] [ref=e730]'
+                  - paragraph [ref=e731]: A meditation on how writers from Woolf to Achebe have made grief into literature.
+                  - generic [ref=e732]:
+                    - link "#literature" [ref=e733]:
+                      - /url: /tag/literature
+                    - link "#fiction" [ref=e734]:
+                      - /url: /tag/fiction
+                    - link "#philosophy" [ref=e735]:
+                      - /url: /tag/philosophy
+                - generic [ref=e736]:
+                  - button "Like" [ref=e737]:
+                    - img [ref=e738]
+                    - text: "0"
+                  - button "Comments" [ref=e740]:
+                    - img [ref=e741]
+                    - text: "0"
+                  - button "Share" [ref=e743]:
+                    - img [ref=e744]
+              - article [ref=e751] [cursor=pointer]:
+                - 'link "View Midnight in Lapland: Following the Northern Lights Into Silence" [ref=e752]':
+                  - /url: /post/p3-cycle-3
+                - 'img "Midnight in Lapland: Following the Northern Lights Into Silence" [ref=e754]'
+                - generic [ref=e755]:
+                  - link "Sofia Andersson" [ref=e756]:
+                    - /url: /u/sofia_writes
+                    - img "Sofia Andersson" [ref=e757]
+                  - link "Sofia Andersson" [ref=e759]:
+                    - /url: /u/sofia_writes
+                  - generic [ref=e760]:
+                    - img [ref=e761]
+                    - text: 12m
+                - generic [ref=e764]:
+                  - 'heading "Midnight in Lapland: Following the Northern Lights Into Silence" [level=2] [ref=e765]'
+                  - paragraph [ref=e766]: Three weeks alone in the Finnish wilderness taught me something about time that no book could.
+                  - generic [ref=e767]:
+                    - link "#travel" [ref=e768]:
+                      - /url: /tag/travel
+                    - link "#culture" [ref=e769]:
+                      - /url: /tag/culture
+                - generic [ref=e770]:
+                  - button "Like" [ref=e771]:
+                    - img [ref=e772]
+                    - text: "0"
+                  - button "Comments" [ref=e774]:
+                    - img [ref=e775]
+                    - text: "0"
+                  - button "Share" [ref=e777]:
+                    - img [ref=e778]
+              - article [ref=e785] [cursor=pointer]:
+                - 'link "View The Italian Aperitivo: A Ceremony of Pleasure" [ref=e786]':
+                  - /url: /post/p8-cycle-3
+                - 'img "The Italian Aperitivo: A Ceremony of Pleasure" [ref=e788]'
+                - generic [ref=e789]:
+                  - link "Marco Romano" [ref=e790]:
+                    - /url: /u/marco_romano
+                    - img "Marco Romano" [ref=e791]
+                  - link "Marco Romano" [ref=e793]:
+                    - /url: /u/marco_romano
+                  - generic [ref=e794]:
+                    - img [ref=e795]
+                    - text: 5m
+                - generic [ref=e798]:
+                  - 'heading "The Italian Aperitivo: A Ceremony of Pleasure" [level=2] [ref=e799]'
+                  - paragraph [ref=e800]: Why the hour between 6 and 8pm is the most civilised institution in human history.
+                  - generic [ref=e801]:
+                    - link "#food" [ref=e802]:
+                      - /url: /tag/food
+                    - link "#culture" [ref=e803]:
+                      - /url: /tag/culture
+                    - link "#travel" [ref=e804]:
+                      - /url: /tag/travel
+                - generic [ref=e805]:
+                  - button "Like" [ref=e806]:
+                    - img [ref=e807]
+                    - text: "0"
+                  - button "Comments" [ref=e809]:
+                    - img [ref=e810]
+                    - text: "0"
+                  - button "Share" [ref=e812]:
+                    - img [ref=e813]
+            - generic [ref=e819]:
+              - article [ref=e821] [cursor=pointer]:
+                - 'link "View Midnight in Lapland: Following the Northern Lights Into Silence" [ref=e822]':
+                  - /url: /post/p3
+                - 'img "Midnight in Lapland: Following the Northern Lights Into Silence" [ref=e824]'
+                - generic [ref=e825]:
+                  - link "Sofia Andersson" [ref=e826]:
+                    - /url: /u/sofia_writes
+                    - img "Sofia Andersson" [ref=e827]
+                  - link "Sofia Andersson" [ref=e829]:
+                    - /url: /u/sofia_writes
+                  - generic [ref=e830]:
+                    - img [ref=e831]
+                    - text: 12m
+                - generic [ref=e834]:
+                  - 'heading "Midnight in Lapland: Following the Northern Lights Into Silence" [level=2] [ref=e835]'
+                  - paragraph [ref=e836]: Three weeks alone in the Finnish wilderness taught me something about time that no book could.
+                  - generic [ref=e837]:
+                    - link "#travel" [ref=e838]:
+                      - /url: /tag/travel
+                    - link "#culture" [ref=e839]:
+                      - /url: /tag/culture
+                - generic [ref=e840]:
+                  - button "Like" [ref=e841]:
+                    - img [ref=e842]
+                    - text: "0"
+                  - button "Comments" [ref=e844]:
+                    - img [ref=e845]
+                    - text: "0"
+                  - button "Share" [ref=e847]:
+                    - img [ref=e848]
+              - article [ref=e855] [cursor=pointer]:
+                - 'link "View The Italian Aperitivo: A Ceremony of Pleasure" [ref=e856]':
+                  - /url: /post/p8
+                - 'img "The Italian Aperitivo: A Ceremony of Pleasure" [ref=e858]'
+                - generic [ref=e859]:
+                  - link "Marco Romano" [ref=e860]:
+                    - /url: /u/marco_romano
+                    - img "Marco Romano" [ref=e861]
+                  - link "Marco Romano" [ref=e863]:
+                    - /url: /u/marco_romano
+                  - generic [ref=e864]:
+                    - img [ref=e865]
+                    - text: 5m
+                - generic [ref=e868]:
+                  - 'heading "The Italian Aperitivo: A Ceremony of Pleasure" [level=2] [ref=e869]'
+                  - paragraph [ref=e870]: Why the hour between 6 and 8pm is the most civilised institution in human history.
+                  - generic [ref=e871]:
+                    - link "#food" [ref=e872]:
+                      - /url: /tag/food
+                    - link "#culture" [ref=e873]:
+                      - /url: /tag/culture
+                    - link "#travel" [ref=e874]:
+                      - /url: /tag/travel
+                - generic [ref=e875]:
+                  - button "Like" [ref=e876]:
+                    - img [ref=e877]
+                    - text: "0"
+                  - button "Comments" [ref=e879]:
+                    - img [ref=e880]
+                    - text: "0"
+                  - button "Share" [ref=e882]:
+                    - img [ref=e883]
+              - article [ref=e890] [cursor=pointer]:
+                - 'link "View The Silence Between Words: On Proust and the Art of Slow Reading" [ref=e891]':
+                  - /url: /post/p1-cycle-2
+                - generic [ref=e892]:
+                  - 'img "The Silence Between Words: On Proust and the Art of Slow Reading" [ref=e893]'
+                  - generic [ref=e894]:
+                    - img [ref=e895]
+                    - text: Trending
+                - generic [ref=e897]:
+                  - link "Élise Dupont" [ref=e898]:
+                    - /url: /u/elise_page
+                    - img "Élise Dupont" [ref=e899]
+                  - link "Élise Dupont" [ref=e901]:
+                    - /url: /u/elise_page
+                  - generic [ref=e902]:
+                    - img [ref=e903]
+                    - text: 9m
+                - generic [ref=e906]:
+                  - 'heading "The Silence Between Words: On Proust and the Art of Slow Reading" [level=2] [ref=e907]'
+                  - paragraph [ref=e908]: Why Proust demands not just time, but a complete recalibration of how we encounter language.
+                  - generic [ref=e909]:
+                    - link "#literature" [ref=e910]:
+                      - /url: /tag/literature
+                    - link "#poetry" [ref=e911]:
+                      - /url: /tag/poetry
+                    - link "#culture" [ref=e912]:
+                      - /url: /tag/culture
+                - generic [ref=e913]:
+                  - button "Like" [ref=e914]:
+                    - img [ref=e915]
+                    - text: "0"
+                  - button "Comments" [ref=e917]:
+                    - img [ref=e918]
+                    - text: "0"
+                  - button "Share" [ref=e920]:
+                    - img [ref=e921]
+              - article [ref=e928] [cursor=pointer]:
+                - link "View On the Swedish Concept of Lagom and Why the World Needs It Now" [ref=e929]:
+                  - /url: /post/p6-cycle-2
+                - img "On the Swedish Concept of Lagom and Why the World Needs It Now" [ref=e931]
+                - generic [ref=e932]:
+                  - link "Sofia Andersson" [ref=e933]:
+                    - /url: /u/sofia_writes
+                    - img "Sofia Andersson" [ref=e934]
+                  - link "Sofia Andersson" [ref=e936]:
+                    - /url: /u/sofia_writes
+                  - generic [ref=e937]:
+                    - img [ref=e938]
+                    - text: 5m
+                - generic [ref=e941]:
+                  - heading "On the Swedish Concept of Lagom and Why the World Needs It Now" [level=2] [ref=e942]
+                  - paragraph [ref=e943]: "\"Not too much, not too little\" — a philosophy for an era of extremes."
+                  - generic [ref=e944]:
+                    - link "#philosophy" [ref=e945]:
+                      - /url: /tag/philosophy
+                    - link "#culture" [ref=e946]:
+                      - /url: /tag/culture
+                - generic [ref=e947]:
+                  - button "Like" [ref=e948]:
+                    - img [ref=e949]
+                    - text: "0"
+                  - button "Comments" [ref=e951]:
+                    - img [ref=e952]
+                    - text: "0"
+                  - button "Share" [ref=e954]:
+                    - img [ref=e955]
+              - article [ref=e962] [cursor=pointer]:
+                - 'link "View The Rebirth of European Sourdough: Beyond the Instagram Loaf" [ref=e963]':
+                  - /url: /post/p11-cycle-2
+                - 'img "The Rebirth of European Sourdough: Beyond the Instagram Loaf" [ref=e965]'
+                - generic [ref=e966]:
+                  - link "Marco Romano" [ref=e967]:
+                    - /url: /u/marco_romano
+                    - img "Marco Romano" [ref=e968]
+                  - link "Marco Romano" [ref=e970]:
+                    - /url: /u/marco_romano
+                  - generic [ref=e971]:
+                    - img [ref=e972]
+                    - text: 6m
+                - generic [ref=e975]:
+                  - 'heading "The Rebirth of European Sourdough: Beyond the Instagram Loaf" [level=2] [ref=e976]'
+                  - paragraph [ref=e977]: A journey through Berlin's wheat revolution — where ancient grains meet the modern kitchen.
+                  - generic [ref=e978]:
+                    - link "#food" [ref=e979]:
+                      - /url: /tag/food
+                    - link "#culture" [ref=e980]:
+                      - /url: /tag/culture
+                - generic [ref=e981]:
+                  - button "Like" [ref=e982]:
+                    - img [ref=e983]
+                    - text: "0"
+                  - button "Comments" [ref=e985]:
+                    - img [ref=e986]
+                    - text: "0"
+                  - button "Share" [ref=e988]:
+                    - img [ref=e989]
+              - article [ref=e996] [cursor=pointer]:
+                - link "View When the Algorithm Became the Editor" [ref=e997]:
+                  - /url: /post/p4-cycle-3
+                - generic [ref=e998]:
+                  - img "When the Algorithm Became the Editor" [ref=e999]
+                  - generic [ref=e1000]:
+                    - img [ref=e1001]
+                    - text: Trending
+                - generic [ref=e1003]:
+                  - link "Kai Nordhavn" [ref=e1004]:
+                    - /url: /u/kai_nordhavn
+                    - img "Kai Nordhavn" [ref=e1005]
+                  - link "Kai Nordhavn" [ref=e1007]:
+                    - /url: /u/kai_nordhavn
+                  - generic [ref=e1008]:
+                    - img [ref=e1009]
+                    - text: 8m
+                - generic [ref=e1012]:
+                  - heading "When the Algorithm Became the Editor" [level=2] [ref=e1013]
+                  - paragraph [ref=e1014]: With AI writing tools flooding the internet, what happens to the editorial voice?
+                  - generic [ref=e1015]:
+                    - link "#tech" [ref=e1016]:
+                      - /url: /tag/tech
+                    - link "#philosophy" [ref=e1017]:
+                      - /url: /tag/philosophy
+                    - link "#politics" [ref=e1018]:
+                      - /url: /tag/politics
+                - generic [ref=e1019]:
+                  - button "Like" [ref=e1020]:
+                    - img [ref=e1021]
+                    - text: "0"
+                  - button "Comments" [ref=e1023]:
+                    - img [ref=e1024]
+                    - text: "0"
+                  - button "Share" [ref=e1026]:
+                    - img [ref=e1027]
+              - article [ref=e1034] [cursor=pointer]:
+                - 'link "View The Copenhagen School of Design: Why Function Is Never Enough" [ref=e1035]':
+                  - /url: /post/p9-cycle-3
+                - 'img "The Copenhagen School of Design: Why Function Is Never Enough" [ref=e1037]'
+                - generic [ref=e1038]:
+                  - link "Kai Nordhavn" [ref=e1039]:
+                    - /url: /u/kai_nordhavn
+                    - img "Kai Nordhavn" [ref=e1040]
+                  - link "Kai Nordhavn" [ref=e1042]:
+                    - /url: /u/kai_nordhavn
+                  - generic [ref=e1043]:
+                    - img [ref=e1044]
+                    - text: 8m
+                - generic [ref=e1047]:
+                  - 'heading "The Copenhagen School of Design: Why Function Is Never Enough" [level=2] [ref=e1048]'
+                  - paragraph [ref=e1049]: Danish design philosophy goes far beyond clean lines — it is a moral position.
+                  - generic [ref=e1050]:
+                    - link "#culture" [ref=e1051]:
+                      - /url: /tag/culture
+                    - link "#tech" [ref=e1052]:
+                      - /url: /tag/tech
+                - generic [ref=e1053]:
+                  - button "Like" [ref=e1054]:
+                    - img [ref=e1055]
+                    - text: "0"
+                  - button "Comments" [ref=e1057]:
+                    - img [ref=e1058]
+                    - text: "0"
+                  - button "Share" [ref=e1060]:
+                    - img [ref=e1061]
+            - generic [ref=e1067]:
+              - article [ref=e1069] [cursor=pointer]:
+                - link "View When the Algorithm Became the Editor" [ref=e1070]:
+                  - /url: /post/p4
+                - generic [ref=e1071]:
+                  - img "When the Algorithm Became the Editor" [ref=e1072]
+                  - generic [ref=e1073]:
+                    - img [ref=e1074]
+                    - text: Trending
+                - generic [ref=e1076]:
+                  - link "Kai Nordhavn" [ref=e1077]:
+                    - /url: /u/kai_nordhavn
+                    - img "Kai Nordhavn" [ref=e1078]
+                  - link "Kai Nordhavn" [ref=e1080]:
+                    - /url: /u/kai_nordhavn
+                  - generic [ref=e1081]:
+                    - img [ref=e1082]
+                    - text: 8m
+                - generic [ref=e1085]:
+                  - heading "When the Algorithm Became the Editor" [level=2] [ref=e1086]
+                  - paragraph [ref=e1087]: With AI writing tools flooding the internet, what happens to the editorial voice?
+                  - generic [ref=e1088]:
+                    - link "#tech" [ref=e1089]:
+                      - /url: /tag/tech
+                    - link "#philosophy" [ref=e1090]:
+                      - /url: /tag/philosophy
+                    - link "#politics" [ref=e1091]:
+                      - /url: /tag/politics
+                - generic [ref=e1092]:
+                  - button "Like" [ref=e1093]:
+                    - img [ref=e1094]
+                    - text: "0"
+                  - button "Comments" [ref=e1096]:
+                    - img [ref=e1097]
+                    - text: "0"
+                  - button "Share" [ref=e1099]:
+                    - img [ref=e1100]
+              - article [ref=e1107] [cursor=pointer]:
+                - 'link "View The Copenhagen School of Design: Why Function Is Never Enough" [ref=e1108]':
+                  - /url: /post/p9
+                - 'img "The Copenhagen School of Design: Why Function Is Never Enough" [ref=e1110]'
+                - generic [ref=e1111]:
+                  - link "Kai Nordhavn" [ref=e1112]:
+                    - /url: /u/kai_nordhavn
+                    - img "Kai Nordhavn" [ref=e1113]
+                  - link "Kai Nordhavn" [ref=e1115]:
+                    - /url: /u/kai_nordhavn
+                  - generic [ref=e1116]:
+                    - img [ref=e1117]
+                    - text: 8m
+                - generic [ref=e1120]:
+                  - 'heading "The Copenhagen School of Design: Why Function Is Never Enough" [level=2] [ref=e1121]'
+                  - paragraph [ref=e1122]: Danish design philosophy goes far beyond clean lines — it is a moral position.
+                  - generic [ref=e1123]:
+                    - link "#culture" [ref=e1124]:
+                      - /url: /tag/culture
+                    - link "#tech" [ref=e1125]:
+                      - /url: /tag/tech
+                - generic [ref=e1126]:
+                  - button "Like" [ref=e1127]:
+                    - img [ref=e1128]
+                    - text: "0"
+                  - button "Comments" [ref=e1130]:
+                    - img [ref=e1131]
+                    - text: "0"
+                  - button "Share" [ref=e1133]:
+                    - img [ref=e1134]
+              - article [ref=e1141] [cursor=pointer]:
+                - link "View Carbonara Is Not What You Think It Is" [ref=e1142]:
+                  - /url: /post/p2-cycle-2
+                - generic [ref=e1143]:
+                  - img "Carbonara Is Not What You Think It Is" [ref=e1144]
+                  - generic [ref=e1145]:
+                    - img [ref=e1146]
+                    - text: Trending
+                - generic [ref=e1148]:
+                  - link "Marco Romano" [ref=e1149]:
+                    - /url: /u/marco_romano
+                    - img "Marco Romano" [ref=e1150]
+                  - link "Marco Romano" [ref=e1152]:
+                    - /url: /u/marco_romano
+                  - generic [ref=e1153]:
+                    - img [ref=e1154]
+                    - text: 6m
+                - generic [ref=e1157]:
+                  - heading "Carbonara Is Not What You Think It Is" [level=2] [ref=e1158]
+                  - paragraph [ref=e1159]: A deep dive into the mythology, politics, and perfect technique of Rome's most contested dish.
+                  - generic [ref=e1160]:
+                    - link "#food" [ref=e1161]:
+                      - /url: /tag/food
+                    - link "#culture" [ref=e1162]:
+                      - /url: /tag/culture
+                - generic [ref=e1163]:
+                  - button "Like" [ref=e1164]:
+                    - img [ref=e1165]
+                    - text: "0"
+                  - button "Comments" [ref=e1167]:
+                    - img [ref=e1168]
+                    - text: "0"
+                  - button "Share" [ref=e1170]:
+                    - img [ref=e1171]
+              - article [ref=e1178] [cursor=pointer]:
+                - 'link "View Simone de Beauvoir''s Paris: A Walking Guide to Existentialist Haunts" [ref=e1179]':
+                  - /url: /post/p7-cycle-2
+                - 'img "Simone de Beauvoir''s Paris: A Walking Guide to Existentialist Haunts" [ref=e1181]'
+                - generic [ref=e1182]:
+                  - link "Élise Dupont" [ref=e1183]:
+                    - /url: /u/elise_page
+                    - img "Élise Dupont" [ref=e1184]
+                  - link "Élise Dupont" [ref=e1186]:
+                    - /url: /u/elise_page
+                  - generic [ref=e1187]:
+                    - img [ref=e1188]
+                    - text: 7m
+                - generic [ref=e1191]:
+                  - 'heading "Simone de Beauvoir''s Paris: A Walking Guide to Existentialist Haunts" [level=2] [ref=e1192]'
+                  - paragraph [ref=e1193]: From Café de Flore to the grave at Montparnasse — tracing a philosophy through streets.
+                  - generic [ref=e1194]:
+                    - link "#travel" [ref=e1195]:
+                      - /url: /tag/travel
+                    - link "#philosophy" [ref=e1196]:
+                      - /url: /tag/philosophy
+                    - link "#literature" [ref=e1197]:
+                      - /url: /tag/literature
+                - generic [ref=e1198]:
+                  - button "Like" [ref=e1199]:
+                    - img [ref=e1200]
+                    - text: "0"
+                  - button "Comments" [ref=e1202]:
+                    - img [ref=e1203]
+                    - text: "0"
+                  - button "Share" [ref=e1205]:
+                    - img [ref=e1206]
+              - article [ref=e1213] [cursor=pointer]:
+                - link "View Poetry in the Age of the Feed" [ref=e1214]:
+                  - /url: /post/p12-cycle-2
+                - img "Poetry in the Age of the Feed" [ref=e1216]
+                - generic [ref=e1217]:
+                  - link "Élise Dupont" [ref=e1218]:
+                    - /url: /u/elise_page
+                    - img "Élise Dupont" [ref=e1219]
+                  - link "Élise Dupont" [ref=e1221]:
+                    - /url: /u/elise_page
+                  - generic [ref=e1222]:
+                    - img [ref=e1223]
+                    - text: 4m
+                - generic [ref=e1226]:
+                  - heading "Poetry in the Age of the Feed" [level=2] [ref=e1227]
+                  - paragraph [ref=e1228]: How poets are adapting to short attention spans, and whether we should resist.
+                  - generic [ref=e1229]:
+                    - link "#poetry" [ref=e1230]:
+                      - /url: /tag/poetry
+                    - link "#literature" [ref=e1231]:
+                      - /url: /tag/literature
+                    - link "#tech" [ref=e1232]:
+                      - /url: /tag/tech
+                - generic [ref=e1233]:
+                  - button "Like" [ref=e1234]:
+                    - img [ref=e1235]
+                    - text: "0"
+                  - button "Comments" [ref=e1237]:
+                    - img [ref=e1238]
+                    - text: "0"
+                  - button "Share" [ref=e1240]:
+                    - img [ref=e1241]
+              - article [ref=e1248] [cursor=pointer]:
+                - 'link "View Between Two Worlds: A Memoir Fragment" [ref=e1249]':
+                  - /url: /post/p5-cycle-3
+                - generic [ref=e1250]:
+                  - 'img "Between Two Worlds: A Memoir Fragment" [ref=e1251]'
+                  - generic [ref=e1252]:
+                    - img [ref=e1253]
+                    - text: Trending
+                - generic [ref=e1255]:
+                  - link "Amara Adeola" [ref=e1256]:
+                    - /url: /u/amara_adeola
+                    - img "Amara Adeola" [ref=e1257]
+                  - link "Amara Adeola" [ref=e1259]:
+                    - /url: /u/amara_adeola
+                  - generic [ref=e1260]:
+                    - img [ref=e1261]
+                    - text: 14m
+                - generic [ref=e1264]:
+                  - 'heading "Between Two Worlds: A Memoir Fragment" [level=2] [ref=e1265]'
+                  - paragraph [ref=e1266]: On the impossible geography of belonging when you are made of two homelands.
+                  - generic [ref=e1267]:
+                    - link "#fiction" [ref=e1268]:
+                      - /url: /tag/fiction
+                    - link "#literature" [ref=e1269]:
+                      - /url: /tag/literature
+                    - link "#culture" [ref=e1270]:
+                      - /url: /tag/culture
+                - generic [ref=e1271]:
+                  - button "Like" [ref=e1272]:
+                    - img [ref=e1273]
+                    - text: "0"
+                  - button "Comments" [ref=e1275]:
+                    - img [ref=e1276]
+                    - text: "0"
+                  - button "Share" [ref=e1278]:
+                    - img [ref=e1279]
+              - article [ref=e1286] [cursor=pointer]:
+                - 'link "View On Grief and the Novel: How Fiction Helps Us Carry Sorrow" [ref=e1287]':
+                  - /url: /post/p10-cycle-3
+                - generic [ref=e1288]:
+                  - 'img "On Grief and the Novel: How Fiction Helps Us Carry Sorrow" [ref=e1289]'
+                  - generic [ref=e1290]:
+                    - img [ref=e1291]
+                    - text: Trending
+                - generic [ref=e1293]:
+                  - link "Amara Adeola" [ref=e1294]:
+                    - /url: /u/amara_adeola
+                    - img "Amara Adeola" [ref=e1295]
+                  - link "Amara Adeola" [ref=e1297]:
+                    - /url: /u/amara_adeola
+                  - generic [ref=e1298]:
+                    - img [ref=e1299]
+                    - text: 11m
+                - generic [ref=e1302]:
+                  - 'heading "On Grief and the Novel: How Fiction Helps Us Carry Sorrow" [level=2] [ref=e1303]'
+                  - paragraph [ref=e1304]: A meditation on how writers from Woolf to Achebe have made grief into literature.
+                  - generic [ref=e1305]:
+                    - link "#literature" [ref=e1306]:
+                      - /url: /tag/literature
+                    - link "#fiction" [ref=e1307]:
+                      - /url: /tag/fiction
+                    - link "#philosophy" [ref=e1308]:
+                      - /url: /tag/philosophy
+                - generic [ref=e1309]:
+                  - button "Like" [ref=e1310]:
+                    - img [ref=e1311]
+                    - text: "0"
+                  - button "Comments" [ref=e1313]:
+                    - img [ref=e1314]
+                    - text: "0"
+                  - button "Share" [ref=e1316]:
+                    - img [ref=e1317]
+            - generic [ref=e1323]:
+              - article [ref=e1325] [cursor=pointer]:
+                - 'link "View Between Two Worlds: A Memoir Fragment" [ref=e1326]':
+                  - /url: /post/p5
+                - generic [ref=e1327]:
+                  - 'img "Between Two Worlds: A Memoir Fragment" [ref=e1328]'
+                  - generic [ref=e1329]:
+                    - img [ref=e1330]
+                    - text: Trending
+                - generic [ref=e1332]:
+                  - link "Amara Adeola" [ref=e1333]:
+                    - /url: /u/amara_adeola
+                    - img "Amara Adeola" [ref=e1334]
+                  - link "Amara Adeola" [ref=e1336]:
+                    - /url: /u/amara_adeola
+                  - generic [ref=e1337]:
+                    - img [ref=e1338]
+                    - text: 14m
+                - generic [ref=e1341]:
+                  - 'heading "Between Two Worlds: A Memoir Fragment" [level=2] [ref=e1342]'
+                  - paragraph [ref=e1343]: On the impossible geography of belonging when you are made of two homelands.
+                  - generic [ref=e1344]:
+                    - link "#fiction" [ref=e1345]:
+                      - /url: /tag/fiction
+                    - link "#literature" [ref=e1346]:
+                      - /url: /tag/literature
+                    - link "#culture" [ref=e1347]:
+                      - /url: /tag/culture
+                - generic [ref=e1348]:
+                  - button "Like" [ref=e1349]:
+                    - img [ref=e1350]
+                    - text: "0"
+                  - button "Comments" [ref=e1352]:
+                    - img [ref=e1353]
+                    - text: "0"
+                  - button "Share" [ref=e1355]:
+                    - img [ref=e1356]
+              - article [ref=e1363] [cursor=pointer]:
+                - 'link "View On Grief and the Novel: How Fiction Helps Us Carry Sorrow" [ref=e1364]':
+                  - /url: /post/p10
+                - generic [ref=e1365]:
+                  - 'img "On Grief and the Novel: How Fiction Helps Us Carry Sorrow" [ref=e1366]'
+                  - generic [ref=e1367]:
+                    - img [ref=e1368]
+                    - text: Trending
+                - generic [ref=e1370]:
+                  - link "Amara Adeola" [ref=e1371]:
+                    - /url: /u/amara_adeola
+                    - img "Amara Adeola" [ref=e1372]
+                  - link "Amara Adeola" [ref=e1374]:
+                    - /url: /u/amara_adeola
+                  - generic [ref=e1375]:
+                    - img [ref=e1376]
+                    - text: 11m
+                - generic [ref=e1379]:
+                  - 'heading "On Grief and the Novel: How Fiction Helps Us Carry Sorrow" [level=2] [ref=e1380]'
+                  - paragraph [ref=e1381]: A meditation on how writers from Woolf to Achebe have made grief into literature.
+                  - generic [ref=e1382]:
+                    - link "#literature" [ref=e1383]:
+                      - /url: /tag/literature
+                    - link "#fiction" [ref=e1384]:
+                      - /url: /tag/fiction
+                    - link "#philosophy" [ref=e1385]:
+                      - /url: /tag/philosophy
+                - generic [ref=e1386]:
+                  - button "Like" [ref=e1387]:
+                    - img [ref=e1388]
+                    - text: "0"
+                  - button "Comments" [ref=e1390]:
+                    - img [ref=e1391]
+                    - text: "0"
+                  - button "Share" [ref=e1393]:
+                    - img [ref=e1394]
+              - article [ref=e1401] [cursor=pointer]:
+                - 'link "View Midnight in Lapland: Following the Northern Lights Into Silence" [ref=e1402]':
+                  - /url: /post/p3-cycle-2
+                - 'img "Midnight in Lapland: Following the Northern Lights Into Silence" [ref=e1404]'
+                - generic [ref=e1405]:
+                  - link "Sofia Andersson" [ref=e1406]:
+                    - /url: /u/sofia_writes
+                    - img "Sofia Andersson" [ref=e1407]
+                  - link "Sofia Andersson" [ref=e1409]:
+                    - /url: /u/sofia_writes
+                  - generic [ref=e1410]:
+                    - img [ref=e1411]
+                    - text: 12m
+                - generic [ref=e1414]:
+                  - 'heading "Midnight in Lapland: Following the Northern Lights Into Silence" [level=2] [ref=e1415]'
+                  - paragraph [ref=e1416]: Three weeks alone in the Finnish wilderness taught me something about time that no book could.
+                  - generic [ref=e1417]:
+                    - link "#travel" [ref=e1418]:
+                      - /url: /tag/travel
+                    - link "#culture" [ref=e1419]:
+                      - /url: /tag/culture
+                - generic [ref=e1420]:
+                  - button "Like" [ref=e1421]:
+                    - img [ref=e1422]
+                    - text: "0"
+                  - button "Comments" [ref=e1424]:
+                    - img [ref=e1425]
+                    - text: "0"
+                  - button "Share" [ref=e1427]:
+                    - img [ref=e1428]
+              - article [ref=e1435] [cursor=pointer]:
+                - 'link "View The Italian Aperitivo: A Ceremony of Pleasure" [ref=e1436]':
+                  - /url: /post/p8-cycle-2
+                - 'img "The Italian Aperitivo: A Ceremony of Pleasure" [ref=e1438]'
+                - generic [ref=e1439]:
+                  - link "Marco Romano" [ref=e1440]:
+                    - /url: /u/marco_romano
+                    - img "Marco Romano" [ref=e1441]
+                  - link "Marco Romano" [ref=e1443]:
+                    - /url: /u/marco_romano
+                  - generic [ref=e1444]:
+                    - img [ref=e1445]
+                    - text: 5m
+                - generic [ref=e1448]:
+                  - 'heading "The Italian Aperitivo: A Ceremony of Pleasure" [level=2] [ref=e1449]'
+                  - paragraph [ref=e1450]: Why the hour between 6 and 8pm is the most civilised institution in human history.
+                  - generic [ref=e1451]:
+                    - link "#food" [ref=e1452]:
+                      - /url: /tag/food
+                    - link "#culture" [ref=e1453]:
+                      - /url: /tag/culture
+                    - link "#travel" [ref=e1454]:
+                      - /url: /tag/travel
+                - generic [ref=e1455]:
+                  - button "Like" [ref=e1456]:
+                    - img [ref=e1457]
+                    - text: "0"
+                  - button "Comments" [ref=e1459]:
+                    - img [ref=e1460]
+                    - text: "0"
+                  - button "Share" [ref=e1462]:
+                    - img [ref=e1463]
+              - article [ref=e1470] [cursor=pointer]:
+                - 'link "View The Silence Between Words: On Proust and the Art of Slow Reading" [ref=e1471]':
+                  - /url: /post/p1-cycle-3
+                - generic [ref=e1472]:
+                  - 'img "The Silence Between Words: On Proust and the Art of Slow Reading" [ref=e1473]'
+                  - generic [ref=e1474]:
+                    - img [ref=e1475]
+                    - text: Trending
+                - generic [ref=e1477]:
+                  - link "Élise Dupont" [ref=e1478]:
+                    - /url: /u/elise_page
+                    - img "Élise Dupont" [ref=e1479]
+                  - link "Élise Dupont" [ref=e1481]:
+                    - /url: /u/elise_page
+                  - generic [ref=e1482]:
+                    - img [ref=e1483]
+                    - text: 9m
+                - generic [ref=e1486]:
+                  - 'heading "The Silence Between Words: On Proust and the Art of Slow Reading" [level=2] [ref=e1487]'
+                  - paragraph [ref=e1488]: Why Proust demands not just time, but a complete recalibration of how we encounter language.
+                  - generic [ref=e1489]:
+                    - link "#literature" [ref=e1490]:
+                      - /url: /tag/literature
+                    - link "#poetry" [ref=e1491]:
+                      - /url: /tag/poetry
+                    - link "#culture" [ref=e1492]:
+                      - /url: /tag/culture
+                - generic [ref=e1493]:
+                  - button "Like" [ref=e1494]:
+                    - img [ref=e1495]
+                    - text: "0"
+                  - button "Comments" [ref=e1497]:
+                    - img [ref=e1498]
+                    - text: "0"
+                  - button "Share" [ref=e1500]:
+                    - img [ref=e1501]
+              - article [ref=e1508] [cursor=pointer]:
+                - link "View On the Swedish Concept of Lagom and Why the World Needs It Now" [ref=e1509]:
+                  - /url: /post/p6-cycle-3
+                - img "On the Swedish Concept of Lagom and Why the World Needs It Now" [ref=e1511]
+                - generic [ref=e1512]:
+                  - link "Sofia Andersson" [ref=e1513]:
+                    - /url: /u/sofia_writes
+                    - img "Sofia Andersson" [ref=e1514]
+                  - link "Sofia Andersson" [ref=e1516]:
+                    - /url: /u/sofia_writes
+                  - generic [ref=e1517]:
+                    - img [ref=e1518]
+                    - text: 5m
+                - generic [ref=e1521]:
+                  - heading "On the Swedish Concept of Lagom and Why the World Needs It Now" [level=2] [ref=e1522]
+                  - paragraph [ref=e1523]: "\"Not too much, not too little\" — a philosophy for an era of extremes."
+                  - generic [ref=e1524]:
+                    - link "#philosophy" [ref=e1525]:
+                      - /url: /tag/philosophy
+                    - link "#culture" [ref=e1526]:
+                      - /url: /tag/culture
+                - generic [ref=e1527]:
+                  - button "Like" [ref=e1528]:
+                    - img [ref=e1529]
+                    - text: "0"
+                  - button "Comments" [ref=e1531]:
+                    - img [ref=e1532]
+                    - text: "0"
+                  - button "Share" [ref=e1534]:
+                    - img [ref=e1535]
+              - article [ref=e1542] [cursor=pointer]:
+                - 'link "View The Rebirth of European Sourdough: Beyond the Instagram Loaf" [ref=e1543]':
+                  - /url: /post/p11-cycle-3
+                - 'img "The Rebirth of European Sourdough: Beyond the Instagram Loaf" [ref=e1545]'
+                - generic [ref=e1546]:
+                  - link "Marco Romano" [ref=e1547]:
+                    - /url: /u/marco_romano
+                    - img "Marco Romano" [ref=e1548]
+                  - link "Marco Romano" [ref=e1550]:
+                    - /url: /u/marco_romano
+                  - generic [ref=e1551]:
+                    - img [ref=e1552]
+                    - text: 6m
+                - generic [ref=e1555]:
+                  - 'heading "The Rebirth of European Sourdough: Beyond the Instagram Loaf" [level=2] [ref=e1556]'
+                  - paragraph [ref=e1557]: A journey through Berlin's wheat revolution — where ancient grains meet the modern kitchen.
+                  - generic [ref=e1558]:
+                    - link "#food" [ref=e1559]:
+                      - /url: /tag/food
+                    - link "#culture" [ref=e1560]:
+                      - /url: /tag/culture
+                - generic [ref=e1561]:
+                  - button "Like" [ref=e1562]:
+                    - img [ref=e1563]
+                    - text: "0"
+                  - button "Comments" [ref=e1565]:
+                    - img [ref=e1566]
+                    - text: "0"
+                  - button "Share" [ref=e1568]:
+                    - img [ref=e1569]
+  - button "Open Next.js Dev Tools" [ref=e77] [cursor=pointer]:
+    - img [ref=e78]
+  - alert [ref=e81]: purseable — Discover Writing You Love

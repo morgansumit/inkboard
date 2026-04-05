@@ -163,15 +163,7 @@ export function PostDetailClient({ post, comments, morePosts }: Props) {
 
     return (
         <div style={{ background: 'var(--color-bg)' }}>
-            {/* Cover Image - only show if no video_url */}
-            {!post.source && !post.video_url && (
-                <div style={{ width: '100%', maxHeight: '520px', overflow: 'hidden' }}>
-                    <img src={post.cover_image_url} alt={post.title}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                </div>
-            )}
-
-            {/* Main Content */}
+            {/* Main Content - NO hero image, text only */}
             <div className="post-detail-layout" style={{ display: 'grid', gridTemplateColumns: '1fr' }}>
                 <article className="post-detail-article" style={{ maxWidth: '720px', margin: '0 auto', width: '100%' }}>
                     {/* Tags */}

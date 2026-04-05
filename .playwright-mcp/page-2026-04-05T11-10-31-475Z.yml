@@ -1,0 +1,823 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - link "P" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]:
+        - link "Home" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+        - link "Explore" [ref=e11] [cursor=pointer]:
+          - /url: /explore
+          - img [ref=e13]
+        - link "Create" [ref=e194] [cursor=pointer]:
+          - /url: /compose
+          - img [ref=e196]
+        - link "Messages" [ref=e197] [cursor=pointer]:
+          - /url: /messages
+          - img [ref=e199]
+        - link "Alerts" [ref=e201] [cursor=pointer]:
+          - /url: /notifications
+          - img [ref=e203]
+        - link "Profile" [ref=e206] [cursor=pointer]:
+          - /url: /profile
+          - img [ref=e208]
+    - generic [ref=e16]:
+      - banner [ref=e17]:
+        - generic [ref=e18]:
+          - link "purseable home" [ref=e19] [cursor=pointer]:
+            - /url: /
+            - img "Purseable" [ref=e20]
+          - generic [ref=e21]:
+            - img [ref=e22]
+            - textbox "Search posts, authors, tags…" [ref=e25]
+          - generic [ref=e26]:
+            - link "Write" [ref=e211] [cursor=pointer]:
+              - /url: /compose
+              - img [ref=e212]
+              - text: Write
+            - button "Notifications" [ref=e216] [cursor=pointer]:
+              - img [ref=e217]
+            - button "Test User One Test User One testuser1@inkboard-test.com" [ref=e221] [cursor=pointer]:
+              - img "Test User One" [ref=e222]
+              - generic [ref=e223]:
+                - generic [ref=e224]: Test User One
+                - generic [ref=e225]: testuser1@inkboard-test.com
+      - main [ref=e29]:
+        - generic [ref=e30]:
+          - generic [ref=e31]:
+            - button "✨ For You" [ref=e32] [cursor=pointer]
+            - button "📚 Literature" [ref=e33] [cursor=pointer]
+            - button "✈️ Travel" [ref=e34] [cursor=pointer]
+            - button "💻 Technology" [ref=e35] [cursor=pointer]
+            - button "🍽️ Food & Drink" [ref=e36] [cursor=pointer]
+            - button "🏛️ Politics" [ref=e37] [cursor=pointer]
+            - button "🧠 Philosophy" [ref=e38] [cursor=pointer]
+            - button "✍️ Poetry" [ref=e39] [cursor=pointer]
+            - button "🌿 Health & Wellness" [ref=e40] [cursor=pointer]
+            - button "📷 Photography" [ref=e41] [cursor=pointer]
+            - button "🎵 Music" [ref=e42] [cursor=pointer]
+            - button "🎬 Cinema" [ref=e43] [cursor=pointer]
+            - button "🔬 Science" [ref=e44] [cursor=pointer]
+          - generic [ref=e226]:
+            - generic [ref=e227]:
+              - img [ref=e228]
+              - heading "Trending Today" [level=2] [ref=e230]
+            - generic [ref=e231]:
+              - 'link "The Silence Between Words: On Proust and the Art of Slow Reading The Silence Between Words: On Proust and the Art of Slow Reading Élise Dupont" [ref=e232] [cursor=pointer]':
+                - /url: /post/p1
+                - generic [ref=e233]:
+                  - 'img "The Silence Between Words: On Proust and the Art of Slow Reading" [ref=e235]'
+                  - generic [ref=e236]:
+                    - paragraph [ref=e237]: "The Silence Between Words: On Proust and the Art of Slow Reading"
+                    - paragraph [ref=e238]: Élise Dupont
+              - link "Carbonara Is Not What You Think It Is Carbonara Is Not What You Think It Is Marco Romano" [ref=e239] [cursor=pointer]:
+                - /url: /post/p2
+                - generic [ref=e240]:
+                  - img "Carbonara Is Not What You Think It Is" [ref=e242]
+                  - generic [ref=e243]:
+                    - paragraph [ref=e244]: Carbonara Is Not What You Think It Is
+                    - paragraph [ref=e245]: Marco Romano
+              - link "When the Algorithm Became the Editor When the Algorithm Became the Editor Kai Nordhavn" [ref=e246] [cursor=pointer]:
+                - /url: /post/p4
+                - generic [ref=e247]:
+                  - img "When the Algorithm Became the Editor" [ref=e249]
+                  - generic [ref=e250]:
+                    - paragraph [ref=e251]: When the Algorithm Became the Editor
+                    - paragraph [ref=e252]: Kai Nordhavn
+              - 'link "Between Two Worlds: A Memoir Fragment Between Two Worlds: A Memoir Fragment Amara Adeola" [ref=e253] [cursor=pointer]':
+                - /url: /post/p5
+                - generic [ref=e254]:
+                  - 'img "Between Two Worlds: A Memoir Fragment" [ref=e256]'
+                  - generic [ref=e257]:
+                    - paragraph [ref=e258]: "Between Two Worlds: A Memoir Fragment"
+                    - paragraph [ref=e259]: Amara Adeola
+              - 'link "On Grief and the Novel: How Fiction Helps Us Carry Sorrow On Grief and the Novel: How Fiction Helps Us Carry Sorrow Amara Adeola" [ref=e260] [cursor=pointer]':
+                - /url: /post/p10
+                - generic [ref=e261]:
+                  - 'img "On Grief and the Novel: How Fiction Helps Us Carry Sorrow" [ref=e263]'
+                  - generic [ref=e264]:
+                    - paragraph [ref=e265]: "On Grief and the Novel: How Fiction Helps Us Carry Sorrow"
+                    - paragraph [ref=e266]: Amara Adeola
+          - generic [ref=e45]:
+            - heading "Your Feed" [level=2] [ref=e46]
+            - generic [ref=e267]: 24 stories
+          - generic [ref=e268]:
+            - generic [ref=e269]:
+              - article [ref=e271] [cursor=pointer]:
+                - link "View Test Post by Real User - Ojas Dixit" [ref=e272]:
+                  - /url: /post/a7ff2243-3a89-4677-833c-6c5348270875
+                - generic [ref=e273]:
+                  - img "Test Post by Real User - Ojas Dixit" [ref=e274]
+                  - link "via The Guardian" [ref=e275]:
+                    - /url: /source/user
+                - generic [ref=e276]:
+                  - link "Test User One" [ref=e277]:
+                    - /url: /source/user
+                    - img "Test User One" [ref=e278]
+                  - link "Test User One" [ref=e280]:
+                    - /url: /source/user
+                  - generic [ref=e281]:
+                    - img [ref=e282]
+                    - text: 1m
+                - generic [ref=e285]:
+                  - heading "Test Post by Real User - Ojas Dixit" [level=2] [ref=e286]
+                  - paragraph [ref=e287]: Verifying that real user posts show the correct username
+                - generic [ref=e288]:
+                  - button "Like" [ref=e289]:
+                    - img [ref=e290]
+                    - text: "0"
+                  - button "Comments" [ref=e292]:
+                    - img [ref=e293]
+                    - text: "0"
+                  - button "Share" [ref=e295]:
+                    - img [ref=e296]
+              - article [ref=e303] [cursor=pointer]:
+                - link "View Fact" [ref=e304]:
+                  - /url: /post/e2196c1d-5cce-4242-9ce8-9092437a3d8f
+                - generic [ref=e305]:
+                  - img "Fact" [ref=e306]
+                  - link "via The Guardian" [ref=e307]:
+                    - /url: /source/Maya Rodriguez
+                - generic [ref=e308]:
+                  - link "User" [ref=e309]:
+                    - /url: /source/Maya Rodriguez
+                    - img "User" [ref=e310]
+                  - link "Unknown" [ref=e312]:
+                    - /url: /source/Maya Rodriguez
+                  - generic [ref=e313]:
+                    - img [ref=e314]
+                    - text: 6m
+                - heading "Fact" [level=2] [ref=e318]
+                - generic [ref=e319]:
+                  - button "Like" [ref=e320]:
+                    - img [ref=e321]
+                    - text: "0"
+                  - button "Comments" [ref=e323]:
+                    - img [ref=e324]
+                    - text: "0"
+                  - button "Share" [ref=e326]:
+                    - img [ref=e327]
+              - article [ref=e334] [cursor=pointer]:
+                - link "View Desa Bungko, Kotamobagu" [ref=e335]:
+                  - /url: /post/171d80c7-3c46-49ae-a6b4-2ea9c73ea3ff
+                - generic [ref=e336]:
+                  - img "Desa Bungko, Kotamobagu" [ref=e337]
+                  - link "via The Guardian" [ref=e338]:
+                    - /url: /source/Isabella Cruz
+                - generic [ref=e339]:
+                  - link "User" [ref=e340]:
+                    - /url: /source/Isabella Cruz
+                    - img "User" [ref=e341]
+                  - link "Unknown" [ref=e343]:
+                    - /url: /source/Isabella Cruz
+                  - generic [ref=e344]:
+                    - img [ref=e345]
+                    - text: 3m
+                - heading "Desa Bungko, Kotamobagu" [level=2] [ref=e349]
+                - generic [ref=e350]:
+                  - button "Like" [ref=e351]:
+                    - img [ref=e352]
+                    - text: "0"
+                  - button "Comments" [ref=e354]:
+                    - img [ref=e355]
+                    - text: "0"
+                  - button "Share" [ref=e357]:
+                    - img [ref=e358]
+              - article [ref=e365] [cursor=pointer]:
+                - link "View When the Algorithm Became the Editor" [ref=e366]:
+                  - /url: /post/p4
+                - generic [ref=e367]:
+                  - img "When the Algorithm Became the Editor" [ref=e368]
+                  - generic [ref=e369]:
+                    - img [ref=e370]
+                    - text: Trending
+                - generic [ref=e372]:
+                  - link "Kai Nordhavn" [ref=e373]:
+                    - /url: /u/kai_nordhavn
+                    - img "Kai Nordhavn" [ref=e374]
+                  - link "Kai Nordhavn" [ref=e376]:
+                    - /url: /u/kai_nordhavn
+                  - generic [ref=e377]:
+                    - img [ref=e378]
+                    - text: 8m
+                - generic [ref=e381]:
+                  - heading "When the Algorithm Became the Editor" [level=2] [ref=e382]
+                  - paragraph [ref=e383]: With AI writing tools flooding the internet, what happens to the editorial voice?
+                  - generic [ref=e384]:
+                    - link "#tech" [ref=e385]:
+                      - /url: /tag/tech
+                    - link "#philosophy" [ref=e386]:
+                      - /url: /tag/philosophy
+                    - link "#politics" [ref=e387]:
+                      - /url: /tag/politics
+                - generic [ref=e388]:
+                  - button "Like" [ref=e389]:
+                    - img [ref=e390]
+                    - text: "0"
+                  - button "Comments" [ref=e392]:
+                    - img [ref=e393]
+                    - text: "0"
+                  - button "Share" [ref=e395]:
+                    - img [ref=e396]
+              - article [ref=e403] [cursor=pointer]:
+                - 'link "View The Copenhagen School of Design: Why Function Is Never Enough" [ref=e404]':
+                  - /url: /post/p9
+                - 'img "The Copenhagen School of Design: Why Function Is Never Enough" [ref=e406]'
+                - generic [ref=e407]:
+                  - link "Kai Nordhavn" [ref=e408]:
+                    - /url: /u/kai_nordhavn
+                    - img "Kai Nordhavn" [ref=e409]
+                  - link "Kai Nordhavn" [ref=e411]:
+                    - /url: /u/kai_nordhavn
+                  - generic [ref=e412]:
+                    - img [ref=e413]
+                    - text: 8m
+                - generic [ref=e416]:
+                  - 'heading "The Copenhagen School of Design: Why Function Is Never Enough" [level=2] [ref=e417]'
+                  - paragraph [ref=e418]: Danish design philosophy goes far beyond clean lines — it is a moral position.
+                  - generic [ref=e419]:
+                    - link "#culture" [ref=e420]:
+                      - /url: /tag/culture
+                    - link "#tech" [ref=e421]:
+                      - /url: /tag/tech
+                - generic [ref=e422]:
+                  - button "Like" [ref=e423]:
+                    - img [ref=e424]
+                    - text: "0"
+                  - button "Comments" [ref=e426]:
+                    - img [ref=e427]
+                    - text: "0"
+                  - button "Share" [ref=e429]:
+                    - img [ref=e430]
+            - generic [ref=e436]:
+              - article [ref=e438] [cursor=pointer]:
+                - link "View Real User Post Test - Ojas" [ref=e439]:
+                  - /url: /post/260d4729-d9b5-434d-9162-b6e340a3c13a
+                - generic [ref=e440]:
+                  - img "Real User Post Test - Ojas" [ref=e441]
+                  - link "via The Guardian" [ref=e442]:
+                    - /url: /source/user
+                - generic [ref=e443]:
+                  - link "User" [ref=e444]:
+                    - /url: /source/user
+                    - img "User" [ref=e445]
+                  - link "Unknown" [ref=e447]:
+                    - /url: /source/user
+                  - generic [ref=e448]:
+                    - img [ref=e449]
+                    - text: 1m
+                - generic [ref=e452]:
+                  - heading "Real User Post Test - Ojas" [level=2] [ref=e453]
+                  - paragraph [ref=e454]: Testing real user post creation
+                - generic [ref=e455]:
+                  - button "Like" [ref=e456]:
+                    - img [ref=e457]
+                    - text: "0"
+                  - button "Comments" [ref=e459]:
+                    - img [ref=e460]
+                    - text: "0"
+                  - button "Share" [ref=e462]:
+                    - img [ref=e463]
+              - article [ref=e470] [cursor=pointer]:
+                - link "View Seemingly nice teacher gets revenge on former student from 15 years ago" [ref=e471]:
+                  - /url: /post/b2117877-573e-4297-9fed-0d4bc7ca8645
+                - generic [ref=e472]:
+                  - img "Seemingly nice teacher gets revenge on former student from 15 years ago" [ref=e473]
+                  - link "via The Guardian" [ref=e474]:
+                    - /url: /source/Caleb Wright
+                - generic [ref=e475]:
+                  - link "User" [ref=e476]:
+                    - /url: /source/Caleb Wright
+                    - img "User" [ref=e477]
+                  - link "Unknown" [ref=e479]:
+                    - /url: /source/Caleb Wright
+                  - generic [ref=e480]:
+                    - img [ref=e481]
+                    - text: 4m
+                - heading "Seemingly nice teacher gets revenge on former student from 15 years ago" [level=2] [ref=e485]
+                - generic [ref=e486]:
+                  - button "Like" [ref=e487]:
+                    - img [ref=e488]
+                    - text: "0"
+                  - button "Comments" [ref=e490]:
+                    - img [ref=e491]
+                    - text: "0"
+                  - button "Share" [ref=e493]:
+                    - img [ref=e494]
+              - article [ref=e501] [cursor=pointer]:
+                - link "View Anderson hights" [ref=e502]:
+                  - /url: /post/627a0810-9317-440d-9746-c6c1995183d1
+                - generic [ref=e503]:
+                  - img "Anderson hights" [ref=e504]
+                  - link "via The Guardian" [ref=e505]:
+                    - /url: /source/Zoe Campbell
+                - generic [ref=e506]:
+                  - link "User" [ref=e507]:
+                    - /url: /source/Zoe Campbell
+                    - img "User" [ref=e508]
+                  - link "Unknown" [ref=e510]:
+                    - /url: /source/Zoe Campbell
+                  - generic [ref=e511]:
+                    - img [ref=e512]
+                    - text: 2m
+                - heading "Anderson hights" [level=2] [ref=e516]
+                - generic [ref=e517]:
+                  - button "Like" [ref=e518]:
+                    - img [ref=e519]
+                    - text: "0"
+                  - button "Comments" [ref=e521]:
+                    - img [ref=e522]
+                    - text: "0"
+                  - button "Share" [ref=e524]:
+                    - img [ref=e525]
+              - article [ref=e532] [cursor=pointer]:
+                - 'link "View Between Two Worlds: A Memoir Fragment" [ref=e533]':
+                  - /url: /post/p5
+                - generic [ref=e534]:
+                  - 'img "Between Two Worlds: A Memoir Fragment" [ref=e535]'
+                  - generic [ref=e536]:
+                    - img [ref=e537]
+                    - text: Trending
+                - generic [ref=e539]:
+                  - link "Amara Adeola" [ref=e540]:
+                    - /url: /u/amara_adeola
+                    - img "Amara Adeola" [ref=e541]
+                  - link "Amara Adeola" [ref=e543]:
+                    - /url: /u/amara_adeola
+                  - generic [ref=e544]:
+                    - img [ref=e545]
+                    - text: 14m
+                - generic [ref=e548]:
+                  - 'heading "Between Two Worlds: A Memoir Fragment" [level=2] [ref=e549]'
+                  - paragraph [ref=e550]: On the impossible geography of belonging when you are made of two homelands.
+                  - generic [ref=e551]:
+                    - link "#fiction" [ref=e552]:
+                      - /url: /tag/fiction
+                    - link "#literature" [ref=e553]:
+                      - /url: /tag/literature
+                    - link "#culture" [ref=e554]:
+                      - /url: /tag/culture
+                - generic [ref=e555]:
+                  - button "Like" [ref=e556]:
+                    - img [ref=e557]
+                    - text: "0"
+                  - button "Comments" [ref=e559]:
+                    - img [ref=e560]
+                    - text: "0"
+                  - button "Share" [ref=e562]:
+                    - img [ref=e563]
+              - article [ref=e570] [cursor=pointer]:
+                - 'link "View On Grief and the Novel: How Fiction Helps Us Carry Sorrow" [ref=e571]':
+                  - /url: /post/p10
+                - generic [ref=e572]:
+                  - 'img "On Grief and the Novel: How Fiction Helps Us Carry Sorrow" [ref=e573]'
+                  - generic [ref=e574]:
+                    - img [ref=e575]
+                    - text: Trending
+                - generic [ref=e577]:
+                  - link "Amara Adeola" [ref=e578]:
+                    - /url: /u/amara_adeola
+                    - img "Amara Adeola" [ref=e579]
+                  - link "Amara Adeola" [ref=e581]:
+                    - /url: /u/amara_adeola
+                  - generic [ref=e582]:
+                    - img [ref=e583]
+                    - text: 11m
+                - generic [ref=e586]:
+                  - 'heading "On Grief and the Novel: How Fiction Helps Us Carry Sorrow" [level=2] [ref=e587]'
+                  - paragraph [ref=e588]: A meditation on how writers from Woolf to Achebe have made grief into literature.
+                  - generic [ref=e589]:
+                    - link "#literature" [ref=e590]:
+                      - /url: /tag/literature
+                    - link "#fiction" [ref=e591]:
+                      - /url: /tag/fiction
+                    - link "#philosophy" [ref=e592]:
+                      - /url: /tag/philosophy
+                - generic [ref=e593]:
+                  - button "Like" [ref=e594]:
+                    - img [ref=e595]
+                    - text: "0"
+                  - button "Comments" [ref=e597]:
+                    - img [ref=e598]
+                    - text: "0"
+                  - button "Share" [ref=e600]:
+                    - img [ref=e601]
+            - generic [ref=e607]:
+              - article [ref=e609] [cursor=pointer]:
+                - link "View Wikimedia Foundation announces the closure of Wikinews" [ref=e610]:
+                  - /url: /post/be2debc6-43e4-4127-a619-2660af28a926
+                - generic [ref=e611]:
+                  - img "Wikimedia Foundation announces the closure of Wikinews" [ref=e612]
+                  - link "via Wikinews" [ref=e613]:
+                    - /url: /source/wikinews
+                - generic [ref=e614]:
+                  - link "User" [ref=e615]:
+                    - /url: /source/wikinews
+                    - img "User" [ref=e616]
+                  - link "Unknown" [ref=e618]:
+                    - /url: /source/wikinews
+                  - generic [ref=e619]:
+                    - img [ref=e620]
+                    - text: 5m
+                - heading "Wikimedia Foundation announces the closure of Wikinews" [level=2] [ref=e624]
+                - generic [ref=e625]:
+                  - button "Like" [ref=e626]:
+                    - img [ref=e627]
+                    - text: "0"
+                  - button "Comments" [ref=e629]:
+                    - img [ref=e630]
+                    - text: "0"
+                  - button "Share" [ref=e632]:
+                    - img [ref=e633]
+              - article [ref=e640] [cursor=pointer]:
+                - link "View Growth of private label skincare manufacturing in the United States" [ref=e641]:
+                  - /url: /post/c9c3a402-baba-4914-8ed7-9dec75370c5d
+                - generic [ref=e642]:
+                  - img "Growth of private label skincare manufacturing in the United States" [ref=e643]
+                  - link "via The Guardian" [ref=e644]:
+                    - /url: /source/Owen Fischer
+                - generic [ref=e645]:
+                  - link "User" [ref=e646]:
+                    - /url: /source/Owen Fischer
+                    - img "User" [ref=e647]
+                  - link "Unknown" [ref=e649]:
+                    - /url: /source/Owen Fischer
+                  - generic [ref=e650]:
+                    - img [ref=e651]
+                    - text: 3m
+                - heading "Growth of private label skincare manufacturing in the United States" [level=2] [ref=e655]
+                - generic [ref=e656]:
+                  - button "Like" [ref=e657]:
+                    - img [ref=e658]
+                    - text: "0"
+                  - button "Comments" [ref=e660]:
+                    - img [ref=e661]
+                    - text: "0"
+                  - button "Share" [ref=e663]:
+                    - img [ref=e664]
+              - article [ref=e671] [cursor=pointer]:
+                - 'link "View The Silence Between Words: On Proust and the Art of Slow Reading" [ref=e672]':
+                  - /url: /post/p1
+                - generic [ref=e673]:
+                  - 'img "The Silence Between Words: On Proust and the Art of Slow Reading" [ref=e674]'
+                  - generic [ref=e675]:
+                    - img [ref=e676]
+                    - text: Trending
+                - generic [ref=e678]:
+                  - link "Élise Dupont" [ref=e679]:
+                    - /url: /u/elise_page
+                    - img "Élise Dupont" [ref=e680]
+                  - link "Élise Dupont" [ref=e682]:
+                    - /url: /u/elise_page
+                  - generic [ref=e683]:
+                    - img [ref=e684]
+                    - text: 9m
+                - generic [ref=e687]:
+                  - 'heading "The Silence Between Words: On Proust and the Art of Slow Reading" [level=2] [ref=e688]'
+                  - paragraph [ref=e689]: Why Proust demands not just time, but a complete recalibration of how we encounter language.
+                  - generic [ref=e690]:
+                    - link "#literature" [ref=e691]:
+                      - /url: /tag/literature
+                    - link "#poetry" [ref=e692]:
+                      - /url: /tag/poetry
+                    - link "#culture" [ref=e693]:
+                      - /url: /tag/culture
+                - generic [ref=e694]:
+                  - button "Like" [ref=e695]:
+                    - img [ref=e696]
+                    - text: "0"
+                  - button "Comments" [ref=e698]:
+                    - img [ref=e699]
+                    - text: "0"
+                  - button "Share" [ref=e701]:
+                    - img [ref=e702]
+              - article [ref=e709] [cursor=pointer]:
+                - link "View On the Swedish Concept of Lagom and Why the World Needs It Now" [ref=e710]:
+                  - /url: /post/p6
+                - img "On the Swedish Concept of Lagom and Why the World Needs It Now" [ref=e712]
+                - generic [ref=e713]:
+                  - link "Sofia Andersson" [ref=e714]:
+                    - /url: /u/sofia_writes
+                    - img "Sofia Andersson" [ref=e715]
+                  - link "Sofia Andersson" [ref=e717]:
+                    - /url: /u/sofia_writes
+                  - generic [ref=e718]:
+                    - img [ref=e719]
+                    - text: 5m
+                - generic [ref=e722]:
+                  - heading "On the Swedish Concept of Lagom and Why the World Needs It Now" [level=2] [ref=e723]
+                  - paragraph [ref=e724]: "\"Not too much, not too little\" — a philosophy for an era of extremes."
+                  - generic [ref=e725]:
+                    - link "#philosophy" [ref=e726]:
+                      - /url: /tag/philosophy
+                    - link "#culture" [ref=e727]:
+                      - /url: /tag/culture
+                - generic [ref=e728]:
+                  - button "Like" [ref=e729]:
+                    - img [ref=e730]
+                    - text: "0"
+                  - button "Comments" [ref=e732]:
+                    - img [ref=e733]
+                    - text: "0"
+                  - button "Share" [ref=e735]:
+                    - img [ref=e736]
+              - article [ref=e743] [cursor=pointer]:
+                - 'link "View The Rebirth of European Sourdough: Beyond the Instagram Loaf" [ref=e744]':
+                  - /url: /post/p11
+                - 'img "The Rebirth of European Sourdough: Beyond the Instagram Loaf" [ref=e746]'
+                - generic [ref=e747]:
+                  - link "Marco Romano" [ref=e748]:
+                    - /url: /u/marco_romano
+                    - img "Marco Romano" [ref=e749]
+                  - link "Marco Romano" [ref=e751]:
+                    - /url: /u/marco_romano
+                  - generic [ref=e752]:
+                    - img [ref=e753]
+                    - text: 6m
+                - generic [ref=e756]:
+                  - 'heading "The Rebirth of European Sourdough: Beyond the Instagram Loaf" [level=2] [ref=e757]'
+                  - paragraph [ref=e758]: A journey through Berlin's wheat revolution — where ancient grains meet the modern kitchen.
+                  - generic [ref=e759]:
+                    - link "#food" [ref=e760]:
+                      - /url: /tag/food
+                    - link "#culture" [ref=e761]:
+                      - /url: /tag/culture
+                - generic [ref=e762]:
+                  - button "Like" [ref=e763]:
+                    - img [ref=e764]
+                    - text: "0"
+                  - button "Comments" [ref=e766]:
+                    - img [ref=e767]
+                    - text: "0"
+                  - button "Share" [ref=e769]:
+                    - img [ref=e770]
+            - generic [ref=e776]:
+              - article [ref=e778] [cursor=pointer]:
+                - link "View Political edge tech" [ref=e779]:
+                  - /url: /post/f365e85a-f2a5-4f29-937c-9f3044c52b96
+                - generic [ref=e780]:
+                  - img "Political edge tech" [ref=e781]
+                  - link "via The Guardian" [ref=e782]:
+                    - /url: /source/Ryan O'Brien
+                - generic [ref=e783]:
+                  - link "User" [ref=e784]:
+                    - /url: /source/Ryan O'Brien
+                    - img "User" [ref=e785]
+                  - link "Unknown" [ref=e787]:
+                    - /url: /source/Ryan O'Brien
+                  - generic [ref=e788]:
+                    - img [ref=e789]
+                    - text: 2m
+                - heading "Political edge tech" [level=2] [ref=e793]
+                - generic [ref=e794]:
+                  - button "Like" [ref=e795]:
+                    - img [ref=e796]
+                    - text: "0"
+                  - button "Comments" [ref=e798]:
+                    - img [ref=e799]
+                    - text: "0"
+                  - button "Share" [ref=e801]:
+                    - img [ref=e802]
+              - article [ref=e809] [cursor=pointer]:
+                - link "View J" [ref=e810]:
+                  - /url: /post/d73ea02a-da4b-449a-a01a-211cd6f6084f
+                - generic [ref=e811]:
+                  - img "J" [ref=e812]
+                  - link "via The Guardian" [ref=e813]:
+                    - /url: /source/Matthew Singh
+                - generic [ref=e814]:
+                  - link "User" [ref=e815]:
+                    - /url: /source/Matthew Singh
+                    - img "User" [ref=e816]
+                  - link "Unknown" [ref=e818]:
+                    - /url: /source/Matthew Singh
+                  - generic [ref=e819]:
+                    - img [ref=e820]
+                    - text: 2m
+                - heading "J" [level=2] [ref=e824]
+                - generic [ref=e825]:
+                  - button "Like" [ref=e826]:
+                    - img [ref=e827]
+                    - text: "0"
+                  - button "Comments" [ref=e829]:
+                    - img [ref=e830]
+                    - text: "0"
+                  - button "Share" [ref=e832]:
+                    - img [ref=e833]
+              - article [ref=e840] [cursor=pointer]:
+                - link "View Carbonara Is Not What You Think It Is" [ref=e841]:
+                  - /url: /post/p2
+                - generic [ref=e842]:
+                  - img "Carbonara Is Not What You Think It Is" [ref=e843]
+                  - generic [ref=e844]:
+                    - img [ref=e845]
+                    - text: Trending
+                - generic [ref=e847]:
+                  - link "Marco Romano" [ref=e848]:
+                    - /url: /u/marco_romano
+                    - img "Marco Romano" [ref=e849]
+                  - link "Marco Romano" [ref=e851]:
+                    - /url: /u/marco_romano
+                  - generic [ref=e852]:
+                    - img [ref=e853]
+                    - text: 6m
+                - generic [ref=e856]:
+                  - heading "Carbonara Is Not What You Think It Is" [level=2] [ref=e857]
+                  - paragraph [ref=e858]: A deep dive into the mythology, politics, and perfect technique of Rome's most contested dish.
+                  - generic [ref=e859]:
+                    - link "#food" [ref=e860]:
+                      - /url: /tag/food
+                    - link "#culture" [ref=e861]:
+                      - /url: /tag/culture
+                - generic [ref=e862]:
+                  - button "Like" [ref=e863]:
+                    - img [ref=e864]
+                    - text: "0"
+                  - button "Comments" [ref=e866]:
+                    - img [ref=e867]
+                    - text: "0"
+                  - button "Share" [ref=e869]:
+                    - img [ref=e870]
+              - article [ref=e877] [cursor=pointer]:
+                - 'link "View Simone de Beauvoir''s Paris: A Walking Guide to Existentialist Haunts" [ref=e878]':
+                  - /url: /post/p7
+                - 'img "Simone de Beauvoir''s Paris: A Walking Guide to Existentialist Haunts" [ref=e880]'
+                - generic [ref=e881]:
+                  - link "Élise Dupont" [ref=e882]:
+                    - /url: /u/elise_page
+                    - img "Élise Dupont" [ref=e883]
+                  - link "Élise Dupont" [ref=e885]:
+                    - /url: /u/elise_page
+                  - generic [ref=e886]:
+                    - img [ref=e887]
+                    - text: 7m
+                - generic [ref=e890]:
+                  - 'heading "Simone de Beauvoir''s Paris: A Walking Guide to Existentialist Haunts" [level=2] [ref=e891]'
+                  - paragraph [ref=e892]: From Café de Flore to the grave at Montparnasse — tracing a philosophy through streets.
+                  - generic [ref=e893]:
+                    - link "#travel" [ref=e894]:
+                      - /url: /tag/travel
+                    - link "#philosophy" [ref=e895]:
+                      - /url: /tag/philosophy
+                    - link "#literature" [ref=e896]:
+                      - /url: /tag/literature
+                - generic [ref=e897]:
+                  - button "Like" [ref=e898]:
+                    - img [ref=e899]
+                    - text: "0"
+                  - button "Comments" [ref=e901]:
+                    - img [ref=e902]
+                    - text: "0"
+                  - button "Share" [ref=e904]:
+                    - img [ref=e905]
+              - article [ref=e912] [cursor=pointer]:
+                - link "View Poetry in the Age of the Feed" [ref=e913]:
+                  - /url: /post/p12
+                - img "Poetry in the Age of the Feed" [ref=e915]
+                - generic [ref=e916]:
+                  - link "Élise Dupont" [ref=e917]:
+                    - /url: /u/elise_page
+                    - img "Élise Dupont" [ref=e918]
+                  - link "Élise Dupont" [ref=e920]:
+                    - /url: /u/elise_page
+                  - generic [ref=e921]:
+                    - img [ref=e922]
+                    - text: 4m
+                - generic [ref=e925]:
+                  - heading "Poetry in the Age of the Feed" [level=2] [ref=e926]
+                  - paragraph [ref=e927]: How poets are adapting to short attention spans, and whether we should resist.
+                  - generic [ref=e928]:
+                    - link "#poetry" [ref=e929]:
+                      - /url: /tag/poetry
+                    - link "#literature" [ref=e930]:
+                      - /url: /tag/literature
+                    - link "#tech" [ref=e931]:
+                      - /url: /tag/tech
+                - generic [ref=e932]:
+                  - button "Like" [ref=e933]:
+                    - img [ref=e934]
+                    - text: "0"
+                  - button "Comments" [ref=e936]:
+                    - img [ref=e937]
+                    - text: "0"
+                  - button "Share" [ref=e939]:
+                    - img [ref=e940]
+            - generic [ref=e946]:
+              - article [ref=e948] [cursor=pointer]:
+                - link "View Believe" [ref=e949]:
+                  - /url: /post/5ecd4e76-3749-4972-8136-8efe7a38b3da
+                - generic [ref=e950]:
+                  - img "Believe" [ref=e951]
+                  - link "via The Guardian" [ref=e952]:
+                    - /url: /source/Grace Kim
+                - generic [ref=e953]:
+                  - link "User" [ref=e954]:
+                    - /url: /source/Grace Kim
+                    - img "User" [ref=e955]
+                  - link "Unknown" [ref=e957]:
+                    - /url: /source/Grace Kim
+                  - generic [ref=e958]:
+                    - img [ref=e959]
+                    - text: 6m
+                - heading "Believe" [level=2] [ref=e963]
+                - generic [ref=e964]:
+                  - button "Like" [ref=e965]:
+                    - img [ref=e966]
+                    - text: "0"
+                  - button "Comments" [ref=e968]:
+                    - img [ref=e969]
+                    - text: "0"
+                  - button "Share" [ref=e971]:
+                    - img [ref=e972]
+              - article [ref=e979] [cursor=pointer]:
+                - link "View শিশুমেলা বিদ্যানিকেতন" [ref=e980]:
+                  - /url: /post/efb7c70e-49e6-4030-9898-13919c693723
+                - generic [ref=e981]:
+                  - img "শিশুমেলা বিদ্যানিকেতন" [ref=e982]
+                  - link "via The Guardian" [ref=e983]:
+                    - /url: /source/Benjamin Lee
+                - generic [ref=e984]:
+                  - link "User" [ref=e985]:
+                    - /url: /source/Benjamin Lee
+                    - img "User" [ref=e986]
+                  - link "Unknown" [ref=e988]:
+                    - /url: /source/Benjamin Lee
+                  - generic [ref=e989]:
+                    - img [ref=e990]
+                    - text: 2m
+                - heading "শিশুমেলা বিদ্যানিকেতন" [level=2] [ref=e994]
+                - generic [ref=e995]:
+                  - button "Like" [ref=e996]:
+                    - img [ref=e997]
+                    - text: "0"
+                  - button "Comments" [ref=e999]:
+                    - img [ref=e1000]
+                    - text: "0"
+                  - button "Share" [ref=e1002]:
+                    - img [ref=e1003]
+              - article [ref=e1010] [cursor=pointer]:
+                - 'link "View Midnight in Lapland: Following the Northern Lights Into Silence" [ref=e1011]':
+                  - /url: /post/p3
+                - 'img "Midnight in Lapland: Following the Northern Lights Into Silence" [ref=e1013]'
+                - generic [ref=e1014]:
+                  - link "Sofia Andersson" [ref=e1015]:
+                    - /url: /u/sofia_writes
+                    - img "Sofia Andersson" [ref=e1016]
+                  - link "Sofia Andersson" [ref=e1018]:
+                    - /url: /u/sofia_writes
+                  - generic [ref=e1019]:
+                    - img [ref=e1020]
+                    - text: 12m
+                - generic [ref=e1023]:
+                  - 'heading "Midnight in Lapland: Following the Northern Lights Into Silence" [level=2] [ref=e1024]'
+                  - paragraph [ref=e1025]: Three weeks alone in the Finnish wilderness taught me something about time that no book could.
+                  - generic [ref=e1026]:
+                    - link "#travel" [ref=e1027]:
+                      - /url: /tag/travel
+                    - link "#culture" [ref=e1028]:
+                      - /url: /tag/culture
+                - generic [ref=e1029]:
+                  - button "Like" [ref=e1030]:
+                    - img [ref=e1031]
+                    - text: "0"
+                  - button "Comments" [ref=e1033]:
+                    - img [ref=e1034]
+                    - text: "0"
+                  - button "Share" [ref=e1036]:
+                    - img [ref=e1037]
+              - article [ref=e1044] [cursor=pointer]:
+                - 'link "View The Italian Aperitivo: A Ceremony of Pleasure" [ref=e1045]':
+                  - /url: /post/p8
+                - 'img "The Italian Aperitivo: A Ceremony of Pleasure" [ref=e1047]'
+                - generic [ref=e1048]:
+                  - link "Marco Romano" [ref=e1049]:
+                    - /url: /u/marco_romano
+                    - img "Marco Romano" [ref=e1050]
+                  - link "Marco Romano" [ref=e1052]:
+                    - /url: /u/marco_romano
+                  - generic [ref=e1053]:
+                    - img [ref=e1054]
+                    - text: 5m
+                - generic [ref=e1057]:
+                  - 'heading "The Italian Aperitivo: A Ceremony of Pleasure" [level=2] [ref=e1058]'
+                  - paragraph [ref=e1059]: Why the hour between 6 and 8pm is the most civilised institution in human history.
+                  - generic [ref=e1060]:
+                    - link "#food" [ref=e1061]:
+                      - /url: /tag/food
+                    - link "#culture" [ref=e1062]:
+                      - /url: /tag/culture
+                    - link "#travel" [ref=e1063]:
+                      - /url: /tag/travel
+                - generic [ref=e1064]:
+                  - button "Like" [ref=e1065]:
+                    - img [ref=e1066]
+                    - text: "0"
+                  - button "Comments" [ref=e1068]:
+                    - img [ref=e1069]
+                    - text: "0"
+                  - button "Share" [ref=e1071]:
+                    - img [ref=e1072]
+  - button "Open Next.js Dev Tools" [ref=e189] [cursor=pointer]:
+    - img [ref=e190]
+  - alert [ref=e193]

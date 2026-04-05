@@ -127,7 +127,7 @@ export default function ComposePage() {
             <div style={{ minHeight: '100vh', background: 'var(--color-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '16px', textAlign: 'center', padding: '40px' }}>
                 <div style={{ fontSize: '60px' }}>🎉</div>
                 <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: '32px', fontWeight: 800 }}>Your story is live!</h1>
-                <p style={{ color: 'var(--color-muted)', fontSize: '15px' }}>It's now appearing in the Inkboard feed for readers across Europe.</p>
+                <p style={{ color: 'var(--color-muted)', fontSize: '15px' }}>It's now appearing in the purseable feed for readers across Europe.</p>
                 <div style={{ display: 'flex', gap: '12px', marginTop: '8px' }}>
                     <a href="/post/p1" className="btn btn-primary">View your post →</a>
                     <a href="/compose" className="btn btn-secondary">Write another</a>
@@ -171,11 +171,18 @@ export default function ComposePage() {
                 {/* Editor Pane */}
                 {!showPreview && (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', overflowY: 'auto' }}>
-                        {/* Cover Image */}
-                        <div>
-                            <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '8px' }}>Cover Image</label>
-
-                            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                        {/* Cover Image - REQUIRED */}
+                        <div style={{ 
+                            border: coverImage ? '2px solid var(--color-accent)' : '2px dashed var(--color-error, #e94560)', 
+                            borderRadius: '12px', 
+                            padding: '20px',
+                            background: coverImage ? 'rgba(233, 69, 96, 0.05)' : 'rgba(233, 69, 96, 0.1)'
+                        }}>
+                            <label style={{ fontSize: '14px', fontWeight: 700, display: 'block', marginBottom: '12px', color: coverImage ? 'var(--color-accent)' : 'var(--color-error, #e94560)' }}>
+                                <Image size={16} style={{ display: 'inline', marginRight: '8px', verticalAlign: 'middle' }} />
+                                Cover Image (REQUIRED) {!coverImage && '⚠️'}
+                            </label>
+                            <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                                 <input
                                     type="file"
                                     accept="image/*"
@@ -184,16 +191,28 @@ export default function ComposePage() {
                                     style={{ display: 'none' }}
                                     id="cover-upload"
                                 />
-                                <label htmlFor="cover-upload" className="btn btn-secondary btn-sm" style={{ cursor: 'pointer', opacity: isUploadingCover ? 0.7 : 1 }}>
-                                    {isUploadingCover ? 'Uploading...' : 'Upload Image'}
+                                <label htmlFor="cover-upload" className="btn btn-primary" style={{ cursor: 'pointer', opacity: isUploadingCover ? 0.7 : 1, fontWeight: 600 }}>
+                                    {isUploadingCover ? 'Uploading...' : coverImage ? 'Change Image' : 'Upload Image *'}
                                 </label>
                                 <span style={{ fontSize: '13px', color: 'var(--color-muted)' }}>OR</span>
-                                <input className="input" style={{ flex: 1 }} placeholder="Paste image URL..." value={coverImage} onChange={e => setCoverImage(e.target.value)} />
+                                <input 
+                                    className="input" 
+                                    style={{ flex: 1, borderColor: coverImage ? 'var(--color-accent)' : 'var(--color-error, #e94560)' }} 
+                                    placeholder="Paste image URL... *" 
+                                    value={coverImage} 
+                                    onChange={e => setCoverImage(e.target.value)} 
+                                />
                             </div>
 
                             {coverImage && (
-                                <div style={{ marginTop: '12px', borderRadius: '10px', overflow: 'hidden', height: '200px' }}>
+                                <div style={{ marginTop: '16px', borderRadius: '10px', overflow: 'hidden', height: '200px', border: '3px solid var(--color-accent)' }}>
                                     <img src={coverImage} alt="Cover preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                </div>
+                            )}
+                            
+                            {!coverImage && (
+                                <div style={{ marginTop: '12px', fontSize: '13px', color: 'var(--color-error, #e94560)', fontWeight: 600 }}>
+                                    ⚠️ Cover image is required to publish your post
                                 </div>
                             )}
                         </div>
@@ -390,7 +409,7 @@ export default function ComposePage() {
                             Ready to publish?
                         </h2>
                         <p style={{ color: 'var(--color-muted)', fontSize: '14px', marginBottom: '24px' }}>
-                            Your post will immediately appear in the Inkboard feed across Europe.
+                            Your post will immediately appear in the purseable feed across Europe.
                         </p>
 
                         <div style={{ background: 'var(--color-bg)', borderRadius: '10px', padding: '16px', marginBottom: '20px' }}>

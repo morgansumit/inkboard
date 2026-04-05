@@ -9,7 +9,7 @@ function getSourceAuthor(sourceName: string, role: User['role'] = 'USER'): User 
     const id = `source-${slug || 'unknown'}`;
     return {
         id,
-        email: `${id}@inkboard.eu`,
+        email: `${id}@purseable.eu`,
         username: id,
         display_name: sourceName,
         avatar_url: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(sourceName)}`,
@@ -76,7 +76,7 @@ export class ContentIngestionService {
             const { data } = await axios.get('https://en.wikinews.org/w/api.php', {
                 timeout: 10000,
                 headers: {
-                    'User-Agent': 'InkboardBot/1.0 (+https://localhost; contact: admin@inkboard.local)',
+                    'User-Agent': 'purseableBot/1.0 (+https://localhost; contact: admin@purseable.local)',
                     'Accept': 'application/json,text/plain,*/*',
                 },
                 params: {
@@ -106,7 +106,7 @@ export class ContentIngestionService {
                     const htmlRes = await axios.get(`https://en.wikinews.org/api/rest_v1/page/html/${encodeURIComponent(titleSlug)}`, {
                         timeout: 10000,
                         headers: {
-                            'User-Agent': 'InkboardBot/1.0 (+https://localhost; contact: admin@inkboard.local)',
+                            'User-Agent': 'purseableBot/1.0 (+https://localhost; contact: admin@purseable.local)',
                             'Accept': 'text/html,application/xhtml+xml',
                         },
                     });

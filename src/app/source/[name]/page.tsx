@@ -22,9 +22,9 @@ function sourceLabel(name: SourceName): string {
 export async function generateMetadata({ params }: { params: Promise<{ name: string }> }): Promise<Metadata> {
     const { name } = await params;
     const normalized = normalizeSourceName(name);
-    if (!normalized) return { title: 'Source Not Found | Inkboard' };
+    if (!normalized) return { title: 'Source Not Found | purseable' };
     return {
-        title: `${sourceLabel(normalized)} | Inkboard`,
+        title: `${sourceLabel(normalized)} | purseable`,
         description: `All posts from ${sourceLabel(normalized)}.`,
     };
 }

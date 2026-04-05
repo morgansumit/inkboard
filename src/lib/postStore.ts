@@ -6,11 +6,11 @@ type PostStoreState = {
 };
 
 function getState(): PostStoreState {
-    const g = globalThis as unknown as { __inkboard_post_store__?: PostStoreState };
-    if (!g.__inkboard_post_store__) {
-        g.__inkboard_post_store__ = { posts: [...MOCK_POSTS] };
+    const g = globalThis as unknown as { __purseable_post_store__?: PostStoreState };
+    if (!g.__purseable_post_store__) {
+        g.__purseable_post_store__ = { posts: [...MOCK_POSTS] };
     }
-    return g.__inkboard_post_store__;
+    return g.__purseable_post_store__;
 }
 
 function stripCycleSuffix(id: string): string {

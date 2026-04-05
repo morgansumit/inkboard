@@ -4,7 +4,7 @@ import { supabaseAdmin } from '@/lib/supabase/admin'
 import { generateUniqueUsername } from '@/lib/admin/setup'
 
 function initialsAvatar(name: string) {
-    const seed = encodeURIComponent(name || 'Inkboard User')
+    const seed = encodeURIComponent(name || 'purseable User')
     return `https://api.dicebear.com/7.x/initials/svg?seed=${seed}`
 }
 
@@ -38,7 +38,7 @@ export async function POST() {
         return NextResponse.json({ synced: true, id: existing.id })
     }
 
-    const usernameSeed = (user.email?.split('@')[0] || user.user_metadata?.username || 'inkboard').toLowerCase()
+    const usernameSeed = (user.email?.split('@')[0] || user.user_metadata?.username || 'purseable').toLowerCase()
     const username = await generateUniqueUsername(usernameSeed)
 
     const displayName = user.user_metadata?.display_name || user.user_metadata?.full_name || usernameSeed

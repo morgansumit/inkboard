@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 /* ─── Design Tokens ─────────────────────────────────────── */
 :root {
@@ -298,12 +296,13 @@ body {
 .sidebar-logo {
   width: 48px;
   height: 48px;
-  border-radius: 50%;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-accent);
-  color: white;
+  background: white;
+  border: 3px solid #E94560;
+  color: #E94560;
   font-family: var(--font-serif);
   font-weight: 800;
   font-size: 24px;
@@ -374,7 +373,7 @@ body {
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid var(--color-border);
-  padding: 10px 16px;
+  padding: 0 16px;
   width: 100%;
   will-change: transform;
   transform: translateZ(0);

@@ -110,7 +110,7 @@ export default function LoginPage() {
             <div style={{ width: '100%', maxWidth: '400px' }}>
                 <div style={{ textAlign: 'center', marginBottom: '36px' }}>
                     <Link href="/" className="brand-wordmark" style={{ display: 'inline-block', marginBottom: '24px' }}>
-                        Ink<span>board</span>
+                        Purseable
                     </Link>
                     <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: '26px', fontWeight: 700, marginBottom: '8px' }}>
                         Welcome back

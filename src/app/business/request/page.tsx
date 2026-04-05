@@ -42,7 +42,7 @@ export default async function BusinessRequestPage() {
                 </Link>
 
                 <div className="business-request-header">
-                    <p className="eyebrow">Inkboard Ads</p>
+                    <p className="eyebrow">purseable Ads</p>
                     <h1>Apply for business tools</h1>
                     <p>
                         Business partners unlock sponsored posts, creator collaborations, and advanced targeting inside the Ads Center.

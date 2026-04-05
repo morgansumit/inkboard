@@ -1,0 +1,190 @@
+[     139ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[     436ms] [LOG] [Fast Refresh] done in 398ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    1209ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    1220ms] [LOG] %c%s%c [PostPage] Loading post: background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   a7ff2243-3a89-4677-833c-6c5348270875 @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    1221ms] [LOG] %c%s%c [findById] id: background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   a7ff2243-3a89-4677-833c-6c5348270875 normalized: a7ff2243-3a89-4677-833c-6c5348270875 @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    1221ms] [LOG] %c%s%c [findById] UUID detected - trying Supabase first for real user post background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    1221ms] [LOG] %c%s%c [findById] id: background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   a7ff2243-3a89-4677-833c-6c5348270875 normalized: a7ff2243-3a89-4677-833c-6c5348270875 @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    1221ms] [LOG] %c%s%c [findById] UUID detected - trying Supabase first for real user post background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    1226ms] [LOG] %c%s%c [findById] Found real user post in Supabase background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    1226ms] [LOG] %c%s%c [findById] Found real user post in Supabase background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    1227ms] [LOG] %c%s%c [PostPage] Found post: background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   yes @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    1251ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    2742ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    2780ms] [LOG] [Fast Refresh] done in 140ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   56493ms] [WARNING] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   64564ms] [LOG] %c%s%c [PostPage] Loading post: background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   p2 @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   64565ms] [LOG] %c%s%c [findById] id: background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   p2 normalized: p2 @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   64565ms] [LOG] %c%s%c [findById] Trying cache for content/API posts background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   64567ms] [LOG] %c%s%c [findById] id: background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   p2 normalized: p2 @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   64567ms] [LOG] %c%s%c [findById] Trying cache for content/API posts background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   64567ms] [LOG] %c%s%c [findById] getAll returned background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   12 posts @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   64567ms] [LOG] %c%s%c [findById] Found by normalized match in cache background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   64568ms] [LOG] %c%s%c [PostPage] Found post: background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   yes @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   64568ms] [LOG] %c%s%c [findById] getAll returned background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   12 posts @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   64568ms] [LOG] %c%s%c [findById] Found by normalized match in cache background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   74774ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostCard.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:228:51)
+[   74775ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostCard.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:228:51)
+[   74775ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostCard.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:228:51)
+[   74776ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostCard.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:228:51)
+[   74776ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostCard.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:228:51)
+[   74776ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostCard.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:228:51)
+[   74777ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostCard.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:228:51)
+[   74777ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostCard.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:228:51)
+[   74778ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostCard.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:228:51)
+[   74778ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostCard.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:228:51)
+[   74781ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostCard.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:228:51)
+[   74781ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostDetailClient.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:1360:51)
+[   74782ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getUser (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15246:24)
+    at async Comments.useEffect.checkUser (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:760:48)
+[   74783ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostCard.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:228:51)
+[   74784ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostCard.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:228:51)
+[   74784ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostCard.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:228:51)
+[   74784ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostCard.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:228:51)
+[   74784ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostCard.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:228:51)
+[   74784ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostCard.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:228:51)
+[   74785ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostCard.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:228:51)
+[   74785ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostCard.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:228:51)
+[   74785ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostCard.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:228:51)
+[   74786ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostCard.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:228:51)
+[   74786ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostCard.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:228:51)
+[   74786ms] NavigatorLockAcquireTimeoutError: Acquiring an exclusive Navigator LockManager lock "lock:sb-iosqlvqthdoxzvdwliat-auth-token" timed out waiting 10000ms
+    at SupabaseAuthClient.navigatorLock [as lock] (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:12773:19)
+    at async SupabaseAuthClient._acquireLock (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15106:20)
+    at async SupabaseAuthClient.getSession (http://localhost:3000/_next/static/chunks/79846_e08cd7e0._.js:15079:24)
+    at async PostDetailClient.useEffect.checkAuth (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_8764a190._.js:1360:51)
+[   75715ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   75755ms] [LOG] [Fast Refresh] done in 141ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  128051ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  128103ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  136791ms] [LOG] %c%s%c [PostPage] Loading post: background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   p6 @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  136791ms] [LOG] %c%s%c [findById] id: background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   p6 normalized: p6 @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  136791ms] [LOG] %c%s%c [findById] Trying cache for content/API posts background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  136797ms] [LOG] %c%s%c [findById] id: background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   p6 normalized: p6 @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  136797ms] [LOG] %c%s%c [findById] Trying cache for content/API posts background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  136797ms] [LOG] %c%s%c [findById] getAll returned background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   12 posts @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  136797ms] [LOG] %c%s%c [findById] Found by normalized match in cache background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  136798ms] [LOG] %c%s%c [PostPage] Found post: background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   yes @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  136798ms] [LOG] %c%s%c [findById] getAll returned background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   12 posts @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  136798ms] [LOG] %c%s%c [findById] Found by normalized match in cache background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  144566ms] [WARNING] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  171494ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  171551ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  174401ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  174408ms] [LOG] [Fast Refresh] done in 108ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  604652ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  604705ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  891679ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  891714ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  900244ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  900283ms] [LOG] [Fast Refresh] done in 139ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  985550ms] [LOG] %c%s%c [PostPage] Loading post: background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   p9-cycle-2 @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  985551ms] [LOG] %c%s%c [findById] id: background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   p9-cycle-2 normalized: p9 @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  985551ms] [LOG] %c%s%c [findById] Trying cache for content/API posts background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  985553ms] [LOG] %c%s%c [findById] id: background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   p9-cycle-2 normalized: p9 @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  985553ms] [LOG] %c%s%c [findById] Trying cache for content/API posts background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  985554ms] [LOG] %c%s%c [findById] getAll returned background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   12 posts @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  985554ms] [LOG] %c%s%c [findById] Found by normalized match in cache background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  985554ms] [LOG] %c%s%c [PostPage] Found post: background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   yes @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  985554ms] [LOG] %c%s%c [findById] getAll returned background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   12 posts @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  985554ms] [LOG] %c%s%c [findById] Found by normalized match in cache background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  985726ms] [WARNING] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  989399ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  989450ms] [LOG] [Fast Refresh] done in 152ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[ 1008620ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[ 1008664ms] [LOG] [Fast Refresh] done in 145ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297

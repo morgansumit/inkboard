@@ -1,0 +1,72 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - link "P" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]:
+        - link "Home" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+        - link "Explore" [ref=e11] [cursor=pointer]:
+          - /url: /explore
+          - img [ref=e13]
+    - generic [ref=e16]:
+      - banner [ref=e17]:
+        - generic [ref=e18]:
+          - link "purseable home" [ref=e19] [cursor=pointer]:
+            - /url: /
+            - img "Purseable" [ref=e20]
+          - generic [ref=e21]:
+            - img [ref=e22]
+            - textbox "Search posts, authors, tags…" [ref=e25]
+          - generic [ref=e26]:
+            - link "Log in" [ref=e27] [cursor=pointer]:
+              - /url: /login
+            - link "Sign up" [ref=e28] [cursor=pointer]:
+              - /url: /register
+      - main [ref=e29]:
+        - generic [ref=e30]:
+          - generic [ref=e32]:
+            - link "Inkboard" [ref=e33] [cursor=pointer]:
+              - /url: /
+            - heading "Create your account" [level=1] [ref=e34]
+            - paragraph [ref=e35]: Join Europe's home for long-form writing.
+            - button "Continue with Google" [ref=e37] [cursor=pointer]:
+              - img [ref=e38]
+              - text: Continue with Google
+            - generic [ref=e45]: or
+            - generic [ref=e47]:
+              - generic [ref=e48]:
+                - generic [ref=e49]: Email address
+                - textbox "you@example.com" [active] [ref=e50]: ojas@gmail.com
+              - generic [ref=e51]:
+                - generic [ref=e52]: Date of Birth
+                - textbox [ref=e53]
+              - generic [ref=e54]:
+                - generic [ref=e55]: Password
+                - generic [ref=e56]:
+                  - textbox "Min. 8 characters" [ref=e57]: Assasin@123
+                  - button [ref=e58] [cursor=pointer]:
+                    - img [ref=e59]
+              - button "Create Account" [ref=e62] [cursor=pointer]
+              - paragraph [ref=e63]:
+                - text: By creating an account you agree to our
+                - link "Terms of Service" [ref=e64] [cursor=pointer]:
+                  - /url: /terms
+                - text: and
+                - link "Privacy Policy" [ref=e65] [cursor=pointer]:
+                  - /url: /privacy
+                - text: . 🇪🇺 GDPR compliant.
+            - paragraph [ref=e66]:
+              - text: Already have an account?
+              - link "Log in" [ref=e67] [cursor=pointer]:
+                - /url: /login
+          - generic [ref=e69]:
+            - generic [ref=e70]:
+              - text: "\"The best stories"
+              - text: find you when you're
+              - text: ready to listen."
+            - generic [ref=e71]: — 12,000+ writers on purseable
+  - button "Open Next.js Dev Tools" [ref=e77] [cursor=pointer]:
+    - img [ref=e78]
+  - alert [ref=e81]

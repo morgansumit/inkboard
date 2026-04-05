@@ -7,26 +7,29 @@ let client: SupabaseClient | null = null;
 
 // Create a mock client that returns proper error responses when credentials missing
 const createMockClient = (): SupabaseClient => {
-    const createErrorResponse = (method: string) => ({
-      data: null,
-      error: { 
+    const errorObj = { 
         code: 'NO_CREDENTIALS', 
         message: 'Admin credentials not configured. Set SUPABASE_SERVICE_ROLE_KEY env var.',
-        details: `Called ${method}() on admin client without credentials`
-      }
-    });
-    
-    const chainableError = (method: string) => () => createErrorResponse(method);
+        details: 'Called on admin client without credentials'
+    };
+
+    // Fully chainable builder that always resolves to { data: null, error }
+    const chainable = (): any => {
+        const obj: any = { data: null, error: errorObj, count: null, status: 500, statusText: 'NO_CREDENTIALS' };
+        const self = () => obj;
+        // Every possible PostgREST method returns itself so chains never break
+        const methods = ['select','insert','upsert','update','delete','eq','neq','gt','gte','lt','lte',
+            'like','ilike','is','in','contains','containedBy','filter','not','or','match',
+            'order','limit','range','single','maybeSingle','csv','then','throwOnError','returns','head'];
+        for (const m of methods) {
+            obj[m] = (..._args: any[]) => chainable();
+        }
+        return obj;
+    };
 
     return {
-        from: () => ({
-            select: () => ({ ...createErrorResponse('select'), eq: chainableError('eq'), maybeSingle: chainableError('maybeSingle'), single: chainableError('single'), order: chainableError('order') }),
-            insert: () => ({ ...createErrorResponse('insert'), select: chainableError('select') }),
-            upsert: () => ({ ...createErrorResponse('upsert'), select: chainableError('select') }),
-            delete: () => ({ ...createErrorResponse('delete'), eq: chainableError('eq') }),
-            update: () => ({ ...createErrorResponse('update'), eq: chainableError('eq') }),
-        }),
-        rpc: () => createErrorResponse('rpc'),
+        from: () => chainable(),
+        rpc: () => chainable(),
         auth: {
             getUser: async () => ({ data: { user: null }, error: null }),
             getSession: async () => ({ data: { session: null }, error: null }),

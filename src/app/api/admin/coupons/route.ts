@@ -3,7 +3,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { createClient } from '@/lib/supabase/server';
 
-const COUPONS_FILE = path.join(process.cwd(), '.inkboard-cache', 'coupons.json');
+const COUPONS_FILE = path.join(process.cwd(), '.purseable-cache', 'coupons.json');
 
 interface Coupon {
     id: string;

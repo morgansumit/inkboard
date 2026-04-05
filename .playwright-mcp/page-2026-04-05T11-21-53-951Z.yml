@@ -1,0 +1,147 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - link "P" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]:
+        - link "Home" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+        - link "Explore" [ref=e11] [cursor=pointer]:
+          - /url: /explore
+          - img [ref=e13]
+        - link "Create" [ref=e165] [cursor=pointer]:
+          - /url: /compose
+          - img [ref=e167]
+        - link "Messages" [ref=e168] [cursor=pointer]:
+          - /url: /messages
+          - img [ref=e170]
+        - link "Alerts" [ref=e172] [cursor=pointer]:
+          - /url: /notifications
+          - img [ref=e174]
+        - link "Profile" [ref=e177] [cursor=pointer]:
+          - /url: /profile
+          - img [ref=e179]
+    - generic [ref=e16]:
+      - banner [ref=e17]:
+        - generic [ref=e18]:
+          - link "purseable home" [ref=e19] [cursor=pointer]:
+            - /url: /
+            - img "Purseable" [ref=e20]
+          - generic [ref=e21]:
+            - img [ref=e22]
+            - textbox "Search posts, authors, tags…" [ref=e25]
+          - generic [ref=e26]:
+            - link "Write" [ref=e182] [cursor=pointer]:
+              - /url: /compose
+              - img [ref=e183]
+              - text: Write
+            - button "Notifications" [ref=e187] [cursor=pointer]:
+              - img [ref=e188]
+            - button "Test User One Test User One testuser1@inkboard-test.com" [ref=e192] [cursor=pointer]:
+              - img "Test User One" [ref=e193]
+              - generic [ref=e194]:
+                - generic [ref=e195]: Test User One
+                - generic [ref=e196]: testuser1@inkboard-test.com
+      - main [ref=e29]:
+        - generic [ref=e30]:
+          - generic [ref=e31]:
+            - link "Exit" [ref=e32] [cursor=pointer]:
+              - /url: /
+              - img [ref=e33]
+              - text: Exit
+            - generic [ref=e36]: New Post
+            - generic [ref=e37]:
+              - button "Preview" [ref=e38] [cursor=pointer]:
+                - img [ref=e39]
+                - text: Preview
+              - button "Save Draft" [ref=e42] [cursor=pointer]
+              - button "Publish ✓" [disabled] [ref=e43] [cursor=pointer]
+          - generic [ref=e44]:
+            - generic [ref=e45]:
+              - generic [ref=e46]:
+                - generic [ref=e47]:
+                  - img [ref=e48]
+                  - text: Cover Image (REQUIRED) ⚠️
+                - generic [ref=e52]:
+                  - generic [ref=e53] [cursor=pointer]: Upload Image *
+                  - generic [ref=e54]: OR
+                  - textbox "Paste image URL... *" [ref=e55]
+                - generic [ref=e56]: ⚠️ Cover image is required to publish your post
+              - generic [ref=e57]:
+                - generic [ref=e58]:
+                  - img [ref=e59]
+                  - text: Video URL (YouTube, Vimeo, or direct video)
+                - textbox "https://youtube.com/watch?v=... or https://vimeo.com/..." [ref=e62]
+                - generic [ref=e63]: If video URL is provided, it will be shown as the main media on the card. Blog detail shows text only.
+              - textbox "Your post title…" [ref=e65]
+              - textbox "Subtitle or excerpt (optional)…" [ref=e67]
+              - generic [ref=e68]:
+                - generic [ref=e69]:
+                  - button "Bold" [ref=e70] [cursor=pointer]:
+                    - img [ref=e71]
+                  - button "Italic" [ref=e73] [cursor=pointer]:
+                    - img [ref=e74]
+                  - button "Underline" [ref=e76] [cursor=pointer]: U
+                  - button "H2" [ref=e78] [cursor=pointer]
+                  - button "H3" [ref=e79] [cursor=pointer]
+                  - button "Blockquote" [ref=e81] [cursor=pointer]:
+                    - img [ref=e82]
+                  - button "Code Block" [ref=e85] [cursor=pointer]:
+                    - img [ref=e86]
+                  - button "Insert Link" [ref=e89] [cursor=pointer]:
+                    - img [ref=e90]
+                  - button "Insert Image" [ref=e93] [cursor=pointer]:
+                    - img [ref=e94]
+                - generic [ref=e99]: "Tip: paste images or use the toolbar to format."
+              - generic [ref=e100]:
+                - generic [ref=e101]: Body (quick text)
+                - textbox "Write your post content here..." [ref=e102]
+                - generic [ref=e103]: We’ll publish the formatted version if you used the rich text area above.
+              - generic [ref=e104]:
+                - generic [ref=e105]: Tags (max 10, at least 1 required)
+                - generic [ref=e106]:
+                  - textbox "Add a tag…" [ref=e107]
+                  - button "Add" [ref=e108] [cursor=pointer]
+                - generic [ref=e109]:
+                  - button "+literature" [ref=e110] [cursor=pointer]
+                  - button "+travel" [ref=e111] [cursor=pointer]
+                  - button "+food" [ref=e112] [cursor=pointer]
+                  - button "+tech" [ref=e113] [cursor=pointer]
+                  - button "+philosophy" [ref=e114] [cursor=pointer]
+                  - button "+poetry" [ref=e115] [cursor=pointer]
+                  - button "+culture" [ref=e116] [cursor=pointer]
+                  - button "+politics" [ref=e117] [cursor=pointer]
+                  - button "+health" [ref=e118] [cursor=pointer]
+                  - button "+fiction" [ref=e119] [cursor=pointer]
+            - generic [ref=e121]:
+              - heading "Feed Preview" [level=3] [ref=e122]
+              - article [ref=e125] [cursor=pointer]:
+                - link "View Your Post Title" [ref=e126]:
+                  - /url: /post/preview
+                - img "Your Post Title" [ref=e128]
+                - generic [ref=e129]:
+                  - link "You" [ref=e130]:
+                    - /url: /u/you
+                    - img "You" [ref=e131]
+                  - link "You" [ref=e133]:
+                    - /url: /u/you
+                  - generic [ref=e134]:
+                    - img [ref=e135]
+                    - text: 1m
+                - generic [ref=e138]:
+                  - heading "Your Post Title" [level=2] [ref=e139]
+                  - paragraph [ref=e140]: Your post subtitle or excerpt
+                - generic [ref=e141]:
+                  - button "Like" [ref=e142]:
+                    - img [ref=e143]
+                    - text: "0"
+                  - button "Comments" [ref=e145]:
+                    - img [ref=e146]
+                    - text: "0"
+                  - button "Share" [ref=e148]:
+                    - img [ref=e149]
+              - paragraph [ref=e155]: ~1 min read
+  - button "Open Next.js Dev Tools" [ref=e161] [cursor=pointer]:
+    - img [ref=e162]
+  - alert [ref=e197]

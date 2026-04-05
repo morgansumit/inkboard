@@ -43,11 +43,89 @@ export async function GET(request: Request) {
     const viewerCountry = await getCountryFromRequest();
     console.log('[feed] Viewer country:', viewerCountry);
 
-    const allPosts = await postRepository.getAll();
+    // Fetch cached posts (content ingestion)
+    const cachedPosts = await postRepository.getAll();
+    
+    // Fetch real user posts from Supabase
+    let realUserPosts: any[] = [];
+    try {
+        const { createAnonClient } = await import('@/lib/supabase/anon');
+        const supabase = createAnonClient();
+        if (supabase) {
+            const { data: dbPosts, error } = await supabase
+                .from('posts')
+                .select(`
+                    *,
+                    author:users(id, username, display_name, bio, avatar_url, role, is_verified, is_business, created_at, follower_count, following_count)
+                `)
+                .eq('status', 'PUBLISHED')
+                .order('published_at', { ascending: false })
+                .limit(100);
+            
+            if (error) {
+                console.error('[feed] Supabase fetch error:', error);
+            } else if (dbPosts) {
+                // Transform DB posts to match Post type
+                realUserPosts = dbPosts.map((p: any) => ({
+                    id: p.id,
+                    title: p.title,
+                    subtitle: p.subtitle || '',
+                    content: typeof p.content === 'string' ? p.content : p.content?.html || '',
+                    cover_image_url: p.cover_image_url,
+                    cover_aspect_ratio: p.cover_aspect_ratio || '16:9',
+                    author_id: p.author_id,
+                    author: p.author ? {
+                        id: p.author.id,
+                        email: p.author.email || '',
+                        username: p.author.username || 'unknown',
+                        display_name: p.author.display_name || p.author.username || 'Unknown User',
+                        bio: p.author.bio || '',
+                        avatar_url: p.author.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${p.author.username || 'user'}`,
+                        location: p.author.location || '',
+                        role: p.author.role || 'USER',
+                        is_verified: p.author.is_verified || false,
+                        is_suspended: p.author.is_suspended || false,
+                        is_business: p.author.is_business || false,
+                        created_at: p.author.created_at,
+                        follower_count: p.author.follower_count || 0,
+                        following_count: p.author.following_count || 0,
+                        total_likes: p.author.total_likes || 0,
+                        post_count: p.author.post_count || 0,
+                    } : undefined,
+                    status: p.status,
+                    read_time_minutes: p.read_time_minutes || 1,
+                    engagement_score: p.engagement_score || 0,
+                    like_count: p.like_count || 0,
+                    comment_count: p.comment_count || 0,
+                    share_count: p.share_count || 0,
+                    is_trending: p.is_trending || false,
+                    source: p.source_platform || 'purseable',
+                    source_url: p.source_url,
+                    country_code: p.country_code || null,
+                    created_at: p.created_at,
+                    published_at: p.published_at,
+                    tags: [],
+                }));
+                console.log('[feed] Fetched', realUserPosts.length, 'real user posts from Supabase');
+            }
+        }
+    } catch (err) {
+        console.error('[feed] Failed to fetch real user posts:', err);
+    }
+    
+    // Merge cached and real user posts, removing duplicates by ID
+    const postMap = new Map();
+    [...realUserPosts, ...cachedPosts].forEach(p => {
+        if (!postMap.has(p.id)) {
+            postMap.set(p.id, p);
+        }
+    });
+    const allPosts = Array.from(postMap.values());
+    console.log('[feed] Total merged posts:', allPosts.length);
 
     const validPosts = allPosts.filter(p => {
         if (p.status !== 'PUBLISHED') return false;
-        if (p.source === 'guardian') return false;
+        if (p.source === 'guardian') return false; // Guardian posts removed
         if (p.id.includes('/')) return false;
         if (!p.content || p.content.trim().length === 0) return false;
         // Geoblocking: only show posts from viewer's country or global posts (no country set)

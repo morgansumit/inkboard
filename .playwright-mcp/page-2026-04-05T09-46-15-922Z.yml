@@ -1,0 +1,104 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - link "P" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]:
+        - link "Home" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+        - link "Explore" [ref=e11] [cursor=pointer]:
+          - /url: /explore
+          - img [ref=e13]
+        - link "Create" [ref=e117] [cursor=pointer]:
+          - /url: /compose
+          - img [ref=e119]
+        - link "Messages" [ref=e120] [cursor=pointer]:
+          - /url: /messages
+          - img [ref=e122]
+        - link "Alerts" [ref=e124] [cursor=pointer]:
+          - /url: /notifications
+          - img [ref=e126]
+        - link "Profile" [ref=e129] [cursor=pointer]:
+          - /url: /profile
+          - img [ref=e131]
+    - generic [ref=e16]:
+      - banner [ref=e17]:
+        - generic [ref=e18]:
+          - link "purseable home" [ref=e19] [cursor=pointer]:
+            - /url: /
+            - img "Purseable" [ref=e20]
+          - generic [ref=e21]:
+            - img [ref=e22]
+            - textbox "Search posts, authors, tags…" [ref=e25]
+          - generic [ref=e26]:
+            - link "Write" [ref=e134] [cursor=pointer]:
+              - /url: /compose
+              - img [ref=e135]
+              - text: Write
+            - button "Notifications" [ref=e139] [cursor=pointer]:
+              - img [ref=e140]
+            - button "ojas ojas ojas@gmail.com" [ref=e144] [cursor=pointer]:
+              - img "ojas" [ref=e145]
+              - generic [ref=e146]:
+                - generic [ref=e147]: ojas
+                - generic [ref=e148]: ojas@gmail.com
+      - main [ref=e29]:
+        - generic [ref=e30]:
+          - generic [ref=e31]:
+            - generic [ref=e32]:
+              - heading "Messages" [level=2] [ref=e33]
+              - generic [ref=e34]:
+                - button "More options" [ref=e35] [cursor=pointer]:
+                  - img [ref=e36]
+                - button "Close" [ref=e40] [cursor=pointer]:
+                  - img [ref=e41]
+            - button "New message" [active] [ref=e45] [cursor=pointer]:
+              - img [ref=e47]
+              - generic [ref=e50]: New message
+            - generic [ref=e51]: Messages
+            - generic [ref=e52]:
+              - button "Pinterest India Pinterest India Sent a Pin 4y" [ref=e54] [cursor=pointer]:
+                - img "Pinterest India" [ref=e56]
+                - generic [ref=e58]:
+                  - generic [ref=e59]: Pinterest India
+                  - generic [ref=e60]: Sent a Pin
+                - generic [ref=e61]: 4y
+              - generic [ref=e62]: Suggested
+              - button "4sure group 4sure group @joelwandjii" [ref=e64] [cursor=pointer]:
+                - img "4sure group" [ref=e66]
+                - generic [ref=e67]:
+                  - generic [ref=e68]: 4sure group
+                  - generic [ref=e69]: "@joelwandjii"
+              - button "C Cardlwise @cardlwise" [ref=e71] [cursor=pointer]:
+                - generic [ref=e73]: C
+                - generic [ref=e74]:
+                  - generic [ref=e75]: Cardlwise
+                  - generic [ref=e76]: "@cardlwise"
+              - button "I Invite your friends Connect to start chatting" [ref=e78] [cursor=pointer]:
+                - generic [ref=e80]: I
+                - generic [ref=e81]:
+                  - generic [ref=e82]: Invite your friends
+                  - generic [ref=e83]: Connect to start chatting
+          - generic [ref=e85]:
+            - generic [ref=e87]:
+              - textbox "Search your Pins" [ref=e88]
+              - img [ref=e89]
+            - heading "Your saved ideas" [level=1] [ref=e93]
+            - generic [ref=e94]:
+              - generic [ref=e95]:
+                - button "Pins" [ref=e96] [cursor=pointer]
+                - button "Boards" [ref=e97] [cursor=pointer]
+                - button "Collages" [ref=e98] [cursor=pointer]
+              - button "Group" [ref=e99] [cursor=pointer]:
+                - img [ref=e100]
+                - text: Group
+              - button "Create" [ref=e102] [cursor=pointer]
+            - generic [ref=e103]:
+              - img "Organize" [ref=e104]
+              - generic [ref=e105]: Organize your ideas
+              - paragraph [ref=e106]: Pins are sparks of inspiration. Boards are where they live. Create boards to organize your Pins your way.
+              - button "Create a board" [ref=e107] [cursor=pointer]
+  - button "Open Next.js Dev Tools" [ref=e113] [cursor=pointer]:
+    - img [ref=e114]
+  - alert [ref=e149]

@@ -221,7 +221,7 @@ export function PostCard({ post, index = 0 }: PostCardProps) {
                             }}
                             className="hide-mobile"
                         >
-                            via {post.source === 'devto' ? 'Dev.to' : post.source === 'hashnode' ? 'Hashnode' : post.source === 'wikinews' ? 'Wikinews' : 'The Guardian'}
+                            via {post.source === 'devto' ? 'Dev.to' : post.source === 'hashnode' ? 'Hashnode' : post.source === 'wikinews' ? 'Wikinews' : post.source || 'purseable'}
                         </Link>
                     )}
                     <div className="mobile-overlay-banner">
@@ -250,15 +250,7 @@ export function PostCard({ post, index = 0 }: PostCardProps) {
                             className="author-name"
                             style={{ textDecoration: 'none' }}
                         >
-                            {post.source
-                                ? (post.source === 'devto'
-                                    ? 'Dev.to'
-                                    : post.source === 'hashnode'
-                                        ? 'Hashnode'
-                                        : post.source === 'wikinews'
-                                            ? 'Wikinews'
-                                            : post.author?.display_name ?? 'Unknown')
-                                : post.author?.display_name ?? 'Unknown'}
+                            {post.author?.display_name ?? 'Unknown'}
                         </Link>
                     </div>
                     <div className="read-time" style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>

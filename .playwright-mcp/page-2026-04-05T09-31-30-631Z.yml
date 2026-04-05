@@ -1,0 +1,32 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - link "Purseable" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img "Purseable" [ref=e5]
+      - generic [ref=e6]:
+        - link "Home" [ref=e7] [cursor=pointer]:
+          - /url: /
+          - img [ref=e9]
+        - link "Explore" [ref=e12] [cursor=pointer]:
+          - /url: /explore
+          - img [ref=e14]
+    - generic [ref=e17]:
+      - banner [ref=e18]:
+        - generic [ref=e19]:
+          - link "purseable home" [ref=e20] [cursor=pointer]:
+            - /url: /
+            - img "Purseable" [ref=e21]
+          - generic [ref=e22]:
+            - img [ref=e23]
+            - textbox "Search posts, authors, tags…" [ref=e26]
+          - generic [ref=e27]:
+            - link "Log in" [ref=e28] [cursor=pointer]:
+              - /url: /login
+            - link "Sign up" [ref=e29] [cursor=pointer]:
+              - /url: /register
+      - main [ref=e30]:
+        - heading "Discover" [level=2] [ref=e33]
+  - button "Open Next.js Dev Tools" [ref=e176] [cursor=pointer]:
+    - img [ref=e177]
+  - alert [ref=e180]

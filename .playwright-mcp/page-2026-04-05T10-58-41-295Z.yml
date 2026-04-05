@@ -1,0 +1,990 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - link "P" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]:
+        - link "Home" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+        - link "Explore" [ref=e11] [cursor=pointer]:
+          - /url: /explore
+          - img [ref=e13]
+        - link "Create" [ref=e194] [cursor=pointer]:
+          - /url: /compose
+          - img [ref=e196]
+        - link "Messages" [ref=e197] [cursor=pointer]:
+          - /url: /messages
+          - img [ref=e199]
+        - link "Alerts" [ref=e201] [cursor=pointer]:
+          - /url: /notifications
+          - img [ref=e203]
+        - link "Profile" [ref=e206] [cursor=pointer]:
+          - /url: /profile
+          - img [ref=e208]
+    - generic [ref=e16]:
+      - banner [ref=e17]:
+        - generic [ref=e18]:
+          - link "purseable home" [ref=e19] [cursor=pointer]:
+            - /url: /
+            - img "Purseable" [ref=e20]
+          - generic [ref=e21]:
+            - img [ref=e22]
+            - textbox "Search posts, authors, tags…" [ref=e25]
+          - generic [ref=e26]:
+            - link "Write" [ref=e211] [cursor=pointer]:
+              - /url: /compose
+              - img [ref=e212]
+              - text: Write
+            - button "Notifications" [ref=e216] [cursor=pointer]:
+              - img [ref=e217]
+            - button "Test User One Test User One testuser1@inkboard-test.com" [ref=e221] [cursor=pointer]:
+              - img "Test User One" [ref=e222]
+              - generic [ref=e223]:
+                - generic [ref=e224]: Test User One
+                - generic [ref=e225]: testuser1@inkboard-test.com
+      - main [ref=e29]:
+        - generic [ref=e30]:
+          - generic [ref=e31]:
+            - button "✨ For You" [ref=e32] [cursor=pointer]
+            - button "📚 Literature" [ref=e33] [cursor=pointer]
+            - button "✈️ Travel" [ref=e34] [cursor=pointer]
+            - button "💻 Technology" [ref=e35] [cursor=pointer]
+            - button "🍽️ Food & Drink" [ref=e36] [cursor=pointer]
+            - button "🏛️ Politics" [ref=e37] [cursor=pointer]
+            - button "🧠 Philosophy" [ref=e38] [cursor=pointer]
+            - button "✍️ Poetry" [ref=e39] [cursor=pointer]
+            - button "🌿 Health & Wellness" [ref=e40] [cursor=pointer]
+            - button "📷 Photography" [ref=e41] [cursor=pointer]
+            - button "🎵 Music" [ref=e42] [cursor=pointer]
+            - button "🎬 Cinema" [ref=e43] [cursor=pointer]
+            - button "🔬 Science" [ref=e44] [cursor=pointer]
+          - generic [ref=e226]:
+            - generic [ref=e227]:
+              - img [ref=e228]
+              - heading "Trending Today" [level=2] [ref=e230]
+            - generic [ref=e231]:
+              - 'link "Formula One cancels Bahrain and Saudi Arabian Grands Prix amid Middle East conflict Formula One cancels Bahrain and Saudi Arabian Grands Prix amid Middle East conflict Wikinews contributor: IsmaelSandoval78" [ref=e232] [cursor=pointer]':
+                - /url: /post/3085500
+                - generic [ref=e233]:
+                  - img "Formula One cancels Bahrain and Saudi Arabian Grands Prix amid Middle East conflict" [ref=e235]
+                  - generic [ref=e236]:
+                    - paragraph [ref=e237]: Formula One cancels Bahrain and Saudi Arabian Grands Prix amid Middle East conflict
+                    - paragraph [ref=e238]: "Wikinews contributor: IsmaelSandoval78"
+              - link "Run Deepseek-R1 Locally with Ollama & Open WebUI in Docker — Access It Anywhere! Run Deepseek-R1 Locally with Ollama & Open WebUI in Docker — Access It Anywhere! Prakas Rana" [ref=e239] [cursor=pointer]:
+                - /url: /post/6799908f917408eea5f7e9df
+                - generic [ref=e240]:
+                  - img "Run Deepseek-R1 Locally with Ollama & Open WebUI in Docker — Access It Anywhere!" [ref=e242]
+                  - generic [ref=e243]:
+                    - paragraph [ref=e244]: Run Deepseek-R1 Locally with Ollama & Open WebUI in Docker — Access It Anywhere!
+                    - paragraph [ref=e245]: Prakas Rana
+              - link "The Latest JavaScript Security Vulnerabilities in NPM Packages The Latest JavaScript Security Vulnerabilities in NPM Packages Gabi Dobocan" [ref=e246] [cursor=pointer]:
+                - /url: /post/67a0b005e6c76c8e06618cc7
+                - generic [ref=e247]:
+                  - img "The Latest JavaScript Security Vulnerabilities in NPM Packages" [ref=e249]
+                  - generic [ref=e250]:
+                    - paragraph [ref=e251]: The Latest JavaScript Security Vulnerabilities in NPM Packages
+                    - paragraph [ref=e252]: Gabi Dobocan
+          - generic [ref=e45]:
+            - heading "Your Feed" [level=2] [ref=e46]
+            - generic [ref=e253]: 30 stories
+          - generic [ref=e254]:
+            - generic [ref=e255]:
+              - article [ref=e257] [cursor=pointer]:
+                - link "View Test Post by Real User - Ojas Dixit" [ref=e258]:
+                  - /url: /post/a7ff2243-3a89-4677-833c-6c5348270875
+                - generic [ref=e259]:
+                  - img "Test Post by Real User - Ojas Dixit" [ref=e260]
+                  - link "via The Guardian" [ref=e261]:
+                    - /url: /source/user
+                - generic [ref=e262]:
+                  - link "Test User One" [ref=e263]:
+                    - /url: /source/user
+                    - img "Test User One" [ref=e264]
+                  - link "Test User One" [ref=e266]:
+                    - /url: /source/user
+                  - generic [ref=e267]:
+                    - img [ref=e268]
+                    - text: 1m
+                - generic [ref=e271]:
+                  - heading "Test Post by Real User - Ojas Dixit" [level=2] [ref=e272]
+                  - paragraph [ref=e273]: Verifying that real user posts show the correct username
+                - generic [ref=e274]:
+                  - button "Like" [ref=e275]:
+                    - img [ref=e276]
+                    - text: "0"
+                  - button "Comments" [ref=e278]:
+                    - img [ref=e279]
+                    - text: "0"
+                  - button "Share" [ref=e281]:
+                    - img [ref=e282]
+              - article [ref=e289] [cursor=pointer]:
+                - link "View Fact" [ref=e290]:
+                  - /url: /post/e2196c1d-5cce-4242-9ce8-9092437a3d8f
+                - generic [ref=e291]:
+                  - img "Fact" [ref=e292]
+                  - link "via The Guardian" [ref=e293]:
+                    - /url: /source/Maya Rodriguez
+                - generic [ref=e294]:
+                  - link "User" [ref=e295]:
+                    - /url: /source/Maya Rodriguez
+                    - img "User" [ref=e296]
+                  - link "Unknown" [ref=e298]:
+                    - /url: /source/Maya Rodriguez
+                  - generic [ref=e299]:
+                    - img [ref=e300]
+                    - text: 6m
+                - heading "Fact" [level=2] [ref=e304]
+                - generic [ref=e305]:
+                  - button "Like" [ref=e306]:
+                    - img [ref=e307]
+                    - text: "0"
+                  - button "Comments" [ref=e309]:
+                    - img [ref=e310]
+                    - text: "0"
+                  - button "Share" [ref=e312]:
+                    - img [ref=e313]
+              - article [ref=e320] [cursor=pointer]:
+                - link "View Desa Bungko, Kotamobagu" [ref=e321]:
+                  - /url: /post/171d80c7-3c46-49ae-a6b4-2ea9c73ea3ff
+                - generic [ref=e322]:
+                  - img "Desa Bungko, Kotamobagu" [ref=e323]
+                  - link "via The Guardian" [ref=e324]:
+                    - /url: /source/Isabella Cruz
+                - generic [ref=e325]:
+                  - link "User" [ref=e326]:
+                    - /url: /source/Isabella Cruz
+                    - img "User" [ref=e327]
+                  - link "Unknown" [ref=e329]:
+                    - /url: /source/Isabella Cruz
+                  - generic [ref=e330]:
+                    - img [ref=e331]
+                    - text: 3m
+                - heading "Desa Bungko, Kotamobagu" [level=2] [ref=e335]
+                - generic [ref=e336]:
+                  - button "Like" [ref=e337]:
+                    - img [ref=e338]
+                    - text: "0"
+                  - button "Comments" [ref=e340]:
+                    - img [ref=e341]
+                    - text: "0"
+                  - button "Share" [ref=e343]:
+                    - img [ref=e344]
+              - article [ref=e351] [cursor=pointer]:
+                - link "View India Sends 2.5 Tons of Medical Aid to Kabul After Hospital Airstrike" [ref=e352]:
+                  - /url: /post/3085859
+                - generic [ref=e353]:
+                  - img "India Sends 2.5 Tons of Medical Aid to Kabul After Hospital Airstrike" [ref=e354]
+                  - link "via Wikinews" [ref=e355]:
+                    - /url: /source/wikinews
+                - generic [ref=e356]:
+                  - 'link "Wikinews contributor: Ericravii" [ref=e357]':
+                    - /url: /source/wikinews
+                    - 'img "Wikinews contributor: Ericravii" [ref=e358]'
+                  - 'link "Wikinews contributor: Ericravii" [ref=e360]':
+                    - /url: /source/wikinews
+                  - generic [ref=e361]:
+                    - img [ref=e362]
+                    - text: 5m
+                - generic [ref=e365]:
+                  - heading "India Sends 2.5 Tons of Medical Aid to Kabul After Hospital Airstrike" [level=2] [ref=e366]
+                  - link "#wikinews" [ref=e368]:
+                    - /url: /tag/wikinews
+                - generic [ref=e369]:
+                  - button "Like" [ref=e370]:
+                    - img [ref=e371]
+                    - text: "0"
+                  - button "Comments" [ref=e373]:
+                    - img [ref=e374]
+                    - text: "0"
+                  - button "Share" [ref=e376]:
+                    - img [ref=e377]
+              - article [ref=e384] [cursor=pointer]:
+                - link "View Wikimedia Foundation announces the closure of Wikinews" [ref=e385]:
+                  - /url: /post/3089159
+                - generic [ref=e386]:
+                  - img "Wikimedia Foundation announces the closure of Wikinews" [ref=e387]
+                  - link "via Wikinews" [ref=e388]:
+                    - /url: /source/wikinews
+                - generic [ref=e389]:
+                  - 'link "Wikinews contributor: Robloxguest3" [ref=e390]':
+                    - /url: /source/wikinews
+                    - 'img "Wikinews contributor: Robloxguest3" [ref=e391]'
+                  - 'link "Wikinews contributor: Robloxguest3" [ref=e393]':
+                    - /url: /source/wikinews
+                  - generic [ref=e394]:
+                    - img [ref=e395]
+                    - text: 5m
+                - generic [ref=e398]:
+                  - heading "Wikimedia Foundation announces the closure of Wikinews" [level=2] [ref=e399]
+                  - link "#wikinews" [ref=e401]:
+                    - /url: /tag/wikinews
+                - generic [ref=e402]:
+                  - button "Like" [ref=e403]:
+                    - img [ref=e404]
+                    - text: "0"
+                  - button "Comments" [ref=e406]:
+                    - img [ref=e407]
+                    - text: "0"
+                  - button "Share" [ref=e409]:
+                    - img [ref=e410]
+              - article [ref=e417] [cursor=pointer]:
+                - link "View What Text Area Popovers Taught Me About Browser APIs" [ref=e418]:
+                  - /url: /post/6799c5e2f5a1ae854db07138
+                - generic [ref=e419]:
+                  - img "What Text Area Popovers Taught Me About Browser APIs" [ref=e420]
+                  - link "via Hashnode" [ref=e421]:
+                    - /url: /source/hashnode
+                - generic [ref=e422]:
+                  - link "Rizel Scarlett" [ref=e423]:
+                    - /url: /source/hashnode
+                    - img "Rizel Scarlett" [ref=e424]
+                  - link "Rizel Scarlett" [ref=e426]:
+                    - /url: /source/hashnode
+                  - generic [ref=e427]:
+                    - img [ref=e428]
+                    - text: 5m
+                - generic [ref=e431]:
+                  - heading "What Text Area Popovers Taught Me About Browser APIs" [level=2] [ref=e432]
+                  - paragraph [ref=e433]: I recently went down several rabbit holes about building WYSIWYG editors and popovers. While on maternity leave, I finally have time to deeply explore random technical problems without deadlines - a rare opportunity. Thus far, I've focused on contrib...
+                  - generic [ref=e434]:
+                    - link "#Web Development" [ref=e435]:
+                      - /url: /tag/Web Development
+                    - link "#Browsers" [ref=e436]:
+                      - /url: /tag/Browsers
+                    - link "#JavaScript" [ref=e437]:
+                      - /url: /tag/JavaScript
+                    - generic [ref=e438]: "+2"
+                - generic [ref=e439]:
+                  - button "Like" [ref=e440]:
+                    - img [ref=e441]
+                    - text: "0"
+                  - button "Comments" [ref=e443]:
+                    - img [ref=e444]
+                    - text: "0"
+                  - button "Share" [ref=e446]:
+                    - img [ref=e447]
+            - generic [ref=e453]:
+              - article [ref=e455] [cursor=pointer]:
+                - link "View Real User Post Test - Ojas" [ref=e456]:
+                  - /url: /post/260d4729-d9b5-434d-9162-b6e340a3c13a
+                - generic [ref=e457]:
+                  - img "Real User Post Test - Ojas" [ref=e458]
+                  - link "via The Guardian" [ref=e459]:
+                    - /url: /source/user
+                - generic [ref=e460]:
+                  - link "User" [ref=e461]:
+                    - /url: /source/user
+                    - img "User" [ref=e462]
+                  - link "Unknown" [ref=e464]:
+                    - /url: /source/user
+                  - generic [ref=e465]:
+                    - img [ref=e466]
+                    - text: 1m
+                - generic [ref=e469]:
+                  - heading "Real User Post Test - Ojas" [level=2] [ref=e470]
+                  - paragraph [ref=e471]: Testing real user post creation
+                - generic [ref=e472]:
+                  - button "Like" [ref=e473]:
+                    - img [ref=e474]
+                    - text: "0"
+                  - button "Comments" [ref=e476]:
+                    - img [ref=e477]
+                    - text: "0"
+                  - button "Share" [ref=e479]:
+                    - img [ref=e480]
+              - article [ref=e487] [cursor=pointer]:
+                - link "View Seemingly nice teacher gets revenge on former student from 15 years ago" [ref=e488]:
+                  - /url: /post/b2117877-573e-4297-9fed-0d4bc7ca8645
+                - generic [ref=e489]:
+                  - img "Seemingly nice teacher gets revenge on former student from 15 years ago" [ref=e490]
+                  - link "via The Guardian" [ref=e491]:
+                    - /url: /source/Caleb Wright
+                - generic [ref=e492]:
+                  - link "User" [ref=e493]:
+                    - /url: /source/Caleb Wright
+                    - img "User" [ref=e494]
+                  - link "Unknown" [ref=e496]:
+                    - /url: /source/Caleb Wright
+                  - generic [ref=e497]:
+                    - img [ref=e498]
+                    - text: 4m
+                - heading "Seemingly nice teacher gets revenge on former student from 15 years ago" [level=2] [ref=e502]
+                - generic [ref=e503]:
+                  - button "Like" [ref=e504]:
+                    - img [ref=e505]
+                    - text: "0"
+                  - button "Comments" [ref=e507]:
+                    - img [ref=e508]
+                    - text: "0"
+                  - button "Share" [ref=e510]:
+                    - img [ref=e511]
+              - article [ref=e518] [cursor=pointer]:
+                - link "View Anderson hights" [ref=e519]:
+                  - /url: /post/627a0810-9317-440d-9746-c6c1995183d1
+                - generic [ref=e520]:
+                  - img "Anderson hights" [ref=e521]
+                  - link "via The Guardian" [ref=e522]:
+                    - /url: /source/Zoe Campbell
+                - generic [ref=e523]:
+                  - link "User" [ref=e524]:
+                    - /url: /source/Zoe Campbell
+                    - img "User" [ref=e525]
+                  - link "Unknown" [ref=e527]:
+                    - /url: /source/Zoe Campbell
+                  - generic [ref=e528]:
+                    - img [ref=e529]
+                    - text: 2m
+                - heading "Anderson hights" [level=2] [ref=e533]
+                - generic [ref=e534]:
+                  - button "Like" [ref=e535]:
+                    - img [ref=e536]
+                    - text: "0"
+                  - button "Comments" [ref=e538]:
+                    - img [ref=e539]
+                    - text: "0"
+                  - button "Share" [ref=e541]:
+                    - img [ref=e542]
+              - article [ref=e549] [cursor=pointer]:
+                - link "View Two Cuban bound aid ships went missing after leaving Mexico" [ref=e550]:
+                  - /url: /post/3087476
+                - generic [ref=e551]:
+                  - img "Two Cuban bound aid ships went missing after leaving Mexico" [ref=e552]
+                  - link "via Wikinews" [ref=e553]:
+                    - /url: /source/wikinews
+                - generic [ref=e554]:
+                  - 'link "Wikinews contributor: BigKrow" [ref=e555]':
+                    - /url: /source/wikinews
+                    - 'img "Wikinews contributor: BigKrow" [ref=e556]'
+                  - 'link "Wikinews contributor: BigKrow" [ref=e558]':
+                    - /url: /source/wikinews
+                  - generic [ref=e559]:
+                    - img [ref=e560]
+                    - text: 5m
+                - generic [ref=e563]:
+                  - heading "Two Cuban bound aid ships went missing after leaving Mexico" [level=2] [ref=e564]
+                  - link "#wikinews" [ref=e566]:
+                    - /url: /tag/wikinews
+                - generic [ref=e567]:
+                  - button "Like" [ref=e568]:
+                    - img [ref=e569]
+                    - text: "0"
+                  - button "Comments" [ref=e571]:
+                    - img [ref=e572]
+                    - text: "0"
+                  - button "Share" [ref=e574]:
+                    - img [ref=e575]
+              - article [ref=e582] [cursor=pointer]:
+                - link "View Don't be a ticket engineer." [ref=e583]:
+                  - /url: /post/678f4361d4ef1f6d7aca1174
+                - generic [ref=e584]:
+                  - img "Don't be a ticket engineer." [ref=e585]
+                  - link "via Hashnode" [ref=e586]:
+                    - /url: /source/hashnode
+                - generic [ref=e587]:
+                  - link "Alan Varghese" [ref=e588]:
+                    - /url: /source/hashnode
+                    - img "Alan Varghese" [ref=e589]
+                  - link "Alan Varghese" [ref=e591]:
+                    - /url: /source/hashnode
+                  - generic [ref=e592]:
+                    - img [ref=e593]
+                    - text: 5m
+                - generic [ref=e596]:
+                  - heading "Don't be a ticket engineer." [level=2] [ref=e597]
+                  - paragraph [ref=e598]: Imagine one day, you’re scrolling through your Jira tickets, and the latest ones are marked as resolved by AI. Why wouldn’t it be? If it had access to the code, understands the requirements, and has been trained on previous human input, it’s perfectl...
+                  - generic [ref=e599]:
+                    - link "#software development" [ref=e600]:
+                      - /url: /tag/software development
+                    - link "#AI" [ref=e601]:
+                      - /url: /tag/AI
+                    - link "#engineering" [ref=e602]:
+                      - /url: /tag/engineering
+                    - generic [ref=e603]: "+1"
+                - generic [ref=e604]:
+                  - button "Like" [ref=e605]:
+                    - img [ref=e606]
+                    - text: "0"
+                  - button "Comments" [ref=e608]:
+                    - img [ref=e609]
+                    - text: "0"
+                  - button "Share" [ref=e611]:
+                    - img [ref=e612]
+              - article [ref=e619] [cursor=pointer]:
+                - link "View Run Deepseek-R1 Locally with Ollama & Open WebUI in Docker — Access It Anywhere!" [ref=e620]:
+                  - /url: /post/6799908f917408eea5f7e9df
+                - generic [ref=e621]:
+                  - img "Run Deepseek-R1 Locally with Ollama & Open WebUI in Docker — Access It Anywhere!" [ref=e622]
+                  - generic [ref=e623]:
+                    - img [ref=e624]
+                    - text: Trending
+                  - link "via Hashnode" [ref=e626]:
+                    - /url: /source/hashnode
+                - generic [ref=e627]:
+                  - link "Prakas Rana" [ref=e628]:
+                    - /url: /source/hashnode
+                    - img "Prakas Rana" [ref=e629]
+                  - link "Prakas Rana" [ref=e631]:
+                    - /url: /source/hashnode
+                  - generic [ref=e632]:
+                    - img [ref=e633]
+                    - text: 3m
+                - generic [ref=e636]:
+                  - heading "Run Deepseek-R1 Locally with Ollama & Open WebUI in Docker — Access It Anywhere!" [level=2] [ref=e637]
+                  - paragraph [ref=e638]: "Introduction: The groundbreaking Chinese reasoning model, Deepseek-R1, has stunned the world with its exceptional performance across benchmarks. While its capabilities are exciting, some users may feel uneasy about running it directly through the off..."
+                - generic [ref=e639]:
+                  - button "Like" [ref=e640]:
+                    - img [ref=e641]
+                    - text: "0"
+                  - button "Comments" [ref=e643]:
+                    - img [ref=e644]
+                    - text: "0"
+                  - button "Share" [ref=e646]:
+                    - img [ref=e647]
+            - generic [ref=e653]:
+              - article [ref=e655] [cursor=pointer]:
+                - link "View Wikimedia Foundation announces the closure of Wikinews" [ref=e656]:
+                  - /url: /post/be2debc6-43e4-4127-a619-2660af28a926
+                - generic [ref=e657]:
+                  - img "Wikimedia Foundation announces the closure of Wikinews" [ref=e658]
+                  - link "via Wikinews" [ref=e659]:
+                    - /url: /source/wikinews
+                - generic [ref=e660]:
+                  - link "User" [ref=e661]:
+                    - /url: /source/wikinews
+                    - img "User" [ref=e662]
+                  - link "Unknown" [ref=e664]:
+                    - /url: /source/wikinews
+                  - generic [ref=e665]:
+                    - img [ref=e666]
+                    - text: 5m
+                - heading "Wikimedia Foundation announces the closure of Wikinews" [level=2] [ref=e670]
+                - generic [ref=e671]:
+                  - button "Like" [ref=e672]:
+                    - img [ref=e673]
+                    - text: "0"
+                  - button "Comments" [ref=e675]:
+                    - img [ref=e676]
+                    - text: "0"
+                  - button "Share" [ref=e678]:
+                    - img [ref=e679]
+              - article [ref=e686] [cursor=pointer]:
+                - link "View Growth of private label skincare manufacturing in the United States" [ref=e687]:
+                  - /url: /post/c9c3a402-baba-4914-8ed7-9dec75370c5d
+                - generic [ref=e688]:
+                  - img "Growth of private label skincare manufacturing in the United States" [ref=e689]
+                  - link "via The Guardian" [ref=e690]:
+                    - /url: /source/Owen Fischer
+                - generic [ref=e691]:
+                  - link "User" [ref=e692]:
+                    - /url: /source/Owen Fischer
+                    - img "User" [ref=e693]
+                  - link "Unknown" [ref=e695]:
+                    - /url: /source/Owen Fischer
+                  - generic [ref=e696]:
+                    - img [ref=e697]
+                    - text: 3m
+                - heading "Growth of private label skincare manufacturing in the United States" [level=2] [ref=e701]
+                - generic [ref=e702]:
+                  - button "Like" [ref=e703]:
+                    - img [ref=e704]
+                    - text: "0"
+                  - button "Comments" [ref=e706]:
+                    - img [ref=e707]
+                    - text: "0"
+                  - button "Share" [ref=e709]:
+                    - img [ref=e710]
+              - article [ref=e717] [cursor=pointer]:
+                - link "View Trump chief of staff Susie Wiles diagnosed with early stage breast cancer" [ref=e718]:
+                  - /url: /post/3084963
+                - generic [ref=e719]:
+                  - img "Trump chief of staff Susie Wiles diagnosed with early stage breast cancer" [ref=e720]
+                  - link "via Wikinews" [ref=e721]:
+                    - /url: /source/wikinews
+                - generic [ref=e722]:
+                  - 'link "Wikinews contributor: Lofi Gurl" [ref=e723]':
+                    - /url: /source/wikinews
+                    - 'img "Wikinews contributor: Lofi Gurl" [ref=e724]'
+                  - 'link "Wikinews contributor: Lofi Gurl" [ref=e726]':
+                    - /url: /source/wikinews
+                  - generic [ref=e727]:
+                    - img [ref=e728]
+                    - text: 6m
+                - generic [ref=e731]:
+                  - heading "Trump chief of staff Susie Wiles diagnosed with early stage breast cancer" [level=2] [ref=e732]
+                  - link "#wikinews" [ref=e734]:
+                    - /url: /tag/wikinews
+                - generic [ref=e735]:
+                  - button "Like" [ref=e736]:
+                    - img [ref=e737]
+                    - text: "0"
+                  - button "Comments" [ref=e739]:
+                    - img [ref=e740]
+                    - text: "0"
+                  - button "Share" [ref=e742]:
+                    - img [ref=e743]
+              - article [ref=e750] [cursor=pointer]:
+                - link "View A Night of Experimental Vocalists at Downtown Music Gallery" [ref=e751]:
+                  - /url: /post/3087517
+                - generic [ref=e752]:
+                  - img "A Night of Experimental Vocalists at Downtown Music Gallery" [ref=e753]
+                  - link "via Wikinews" [ref=e754]:
+                    - /url: /source/wikinews
+                - generic [ref=e755]:
+                  - 'link "Wikinews contributor: Tduk" [ref=e756]':
+                    - /url: /source/wikinews
+                    - 'img "Wikinews contributor: Tduk" [ref=e757]'
+                  - 'link "Wikinews contributor: Tduk" [ref=e759]':
+                    - /url: /source/wikinews
+                  - generic [ref=e760]:
+                    - img [ref=e761]
+                    - text: 18m
+                - generic [ref=e764]:
+                  - heading "A Night of Experimental Vocalists at Downtown Music Gallery" [level=2] [ref=e765]
+                  - link "#wikinews" [ref=e767]:
+                    - /url: /tag/wikinews
+                - generic [ref=e768]:
+                  - button "Like" [ref=e769]:
+                    - img [ref=e770]
+                    - text: "0"
+                  - button "Comments" [ref=e772]:
+                    - img [ref=e773]
+                    - text: "0"
+                  - button "Share" [ref=e775]:
+                    - img [ref=e776]
+              - article [ref=e783] [cursor=pointer]:
+                - link "View Automate Code Formatting with Prettier, ESLint, Husky, and lint-staged" [ref=e784]:
+                  - /url: /post/679387da937170dad8640a8a
+                - generic [ref=e785]:
+                  - img "Automate Code Formatting with Prettier, ESLint, Husky, and lint-staged" [ref=e786]
+                  - link "via Hashnode" [ref=e787]:
+                    - /url: /source/hashnode
+                - generic [ref=e788]:
+                  - link "Alyssa Holland" [ref=e789]:
+                    - /url: /source/hashnode
+                    - img "Alyssa Holland" [ref=e790]
+                  - link "Alyssa Holland" [ref=e792]:
+                    - /url: /source/hashnode
+                  - generic [ref=e793]:
+                    - img [ref=e794]
+                    - text: 8m
+                - generic [ref=e797]:
+                  - heading "Automate Code Formatting with Prettier, ESLint, Husky, and lint-staged" [level=2] [ref=e798]
+                  - paragraph [ref=e799]: Introduction Maintaining a formatted and tidy codebase is the ideal scenario for projects. However, ensuring that codebases adhere to these standards requires some work to make this a reality. In this article, I’ll describe the libraries and automati...
+                  - generic [ref=e800]:
+                    - link "#Developer" [ref=e801]:
+                      - /url: /tag/Developer
+                    - link "#Prettier" [ref=e802]:
+                      - /url: /tag/Prettier
+                    - link "#eslint" [ref=e803]:
+                      - /url: /tag/eslint
+                - generic [ref=e804]:
+                  - button "Like" [ref=e805]:
+                    - img [ref=e806]
+                    - text: "0"
+                  - button "Comments" [ref=e808]:
+                    - img [ref=e809]
+                    - text: "0"
+                  - button "Share" [ref=e811]:
+                    - img [ref=e812]
+              - article [ref=e819] [cursor=pointer]:
+                - link "View The Latest JavaScript Security Vulnerabilities in NPM Packages" [ref=e820]:
+                  - /url: /post/67a0b005e6c76c8e06618cc7
+                - generic [ref=e821]:
+                  - img "The Latest JavaScript Security Vulnerabilities in NPM Packages" [ref=e822]
+                  - generic [ref=e823]:
+                    - img [ref=e824]
+                    - text: Trending
+                  - link "via Hashnode" [ref=e826]:
+                    - /url: /source/hashnode
+                - generic [ref=e827]:
+                  - link "Gabi Dobocan" [ref=e828]:
+                    - /url: /source/hashnode
+                    - img "Gabi Dobocan" [ref=e829]
+                  - link "Gabi Dobocan" [ref=e831]:
+                    - /url: /source/hashnode
+                  - generic [ref=e832]:
+                    - img [ref=e833]
+                    - text: 4m
+                - generic [ref=e836]:
+                  - heading "The Latest JavaScript Security Vulnerabilities in NPM Packages" [level=2] [ref=e837]
+                  - paragraph [ref=e838]: The Latest JavaScript Security Vulnerabilities in NPM Packages Hello and welcome to another edition of our ongoing series on JavaScript security! This week, Sandworm Monitor has identified several high-risk vulnerabilities in a wide array of NPM pack...
+                - generic [ref=e839]:
+                  - button "Like" [ref=e840]:
+                    - img [ref=e841]
+                    - text: "0"
+                  - button "Comments" [ref=e843]:
+                    - img [ref=e844]
+                    - text: "0"
+                  - button "Share" [ref=e846]:
+                    - img [ref=e847]
+            - generic [ref=e853]:
+              - article [ref=e855] [cursor=pointer]:
+                - link "View Political edge tech" [ref=e856]:
+                  - /url: /post/f365e85a-f2a5-4f29-937c-9f3044c52b96
+                - generic [ref=e857]:
+                  - img "Political edge tech" [ref=e858]
+                  - link "via The Guardian" [ref=e859]:
+                    - /url: /source/Ryan O'Brien
+                - generic [ref=e860]:
+                  - link "User" [ref=e861]:
+                    - /url: /source/Ryan O'Brien
+                    - img "User" [ref=e862]
+                  - link "Unknown" [ref=e864]:
+                    - /url: /source/Ryan O'Brien
+                  - generic [ref=e865]:
+                    - img [ref=e866]
+                    - text: 2m
+                - heading "Political edge tech" [level=2] [ref=e870]
+                - generic [ref=e871]:
+                  - button "Like" [ref=e872]:
+                    - img [ref=e873]
+                    - text: "0"
+                  - button "Comments" [ref=e875]:
+                    - img [ref=e876]
+                    - text: "0"
+                  - button "Share" [ref=e878]:
+                    - img [ref=e879]
+              - article [ref=e886] [cursor=pointer]:
+                - link "View J" [ref=e887]:
+                  - /url: /post/d73ea02a-da4b-449a-a01a-211cd6f6084f
+                - generic [ref=e888]:
+                  - img "J" [ref=e889]
+                  - link "via The Guardian" [ref=e890]:
+                    - /url: /source/Matthew Singh
+                - generic [ref=e891]:
+                  - link "User" [ref=e892]:
+                    - /url: /source/Matthew Singh
+                    - img "User" [ref=e893]
+                  - link "Unknown" [ref=e895]:
+                    - /url: /source/Matthew Singh
+                  - generic [ref=e896]:
+                    - img [ref=e897]
+                    - text: 2m
+                - heading "J" [level=2] [ref=e901]
+                - generic [ref=e902]:
+                  - button "Like" [ref=e903]:
+                    - img [ref=e904]
+                    - text: "0"
+                  - button "Comments" [ref=e906]:
+                    - img [ref=e907]
+                    - text: "0"
+                  - button "Share" [ref=e909]:
+                    - img [ref=e910]
+              - article [ref=e917] [cursor=pointer]:
+                - link "View Formula One cancels Bahrain and Saudi Arabian Grands Prix amid Middle East conflict" [ref=e918]:
+                  - /url: /post/3085500
+                - generic [ref=e919]:
+                  - img "Formula One cancels Bahrain and Saudi Arabian Grands Prix amid Middle East conflict" [ref=e920]
+                  - generic [ref=e921]:
+                    - img [ref=e922]
+                    - text: Trending
+                  - link "via Wikinews" [ref=e924]:
+                    - /url: /source/wikinews
+                - generic [ref=e925]:
+                  - 'link "Wikinews contributor: IsmaelSandoval78" [ref=e926]':
+                    - /url: /source/wikinews
+                    - 'img "Wikinews contributor: IsmaelSandoval78" [ref=e927]'
+                  - 'link "Wikinews contributor: IsmaelSandoval78" [ref=e929]':
+                    - /url: /source/wikinews
+                  - generic [ref=e930]:
+                    - img [ref=e931]
+                    - text: 6m
+                - generic [ref=e934]:
+                  - heading "Formula One cancels Bahrain and Saudi Arabian Grands Prix amid Middle East conflict" [level=2] [ref=e935]
+                  - link "#wikinews" [ref=e937]:
+                    - /url: /tag/wikinews
+                - generic [ref=e938]:
+                  - button "Like" [ref=e939]:
+                    - img [ref=e940]
+                    - text: "0"
+                  - button "Comments" [ref=e942]:
+                    - img [ref=e943]
+                    - text: "0"
+                  - button "Share" [ref=e945]:
+                    - img [ref=e946]
+              - article [ref=e953] [cursor=pointer]:
+                - link "View Supreme Court of Finland convicts Päivi Räsänen and Juhana Pohjola of crimes against humanity" [ref=e954]:
+                  - /url: /post/3087531
+                - generic [ref=e955]:
+                  - img "Supreme Court of Finland convicts Päivi Räsänen and Juhana Pohjola of crimes against humanity" [ref=e956]
+                  - link "via Wikinews" [ref=e957]:
+                    - /url: /source/wikinews
+                - generic [ref=e958]:
+                  - 'link "Wikinews contributor: Justthefacts" [ref=e959]':
+                    - /url: /source/wikinews
+                    - 'img "Wikinews contributor: Justthefacts" [ref=e960]'
+                  - 'link "Wikinews contributor: Justthefacts" [ref=e962]':
+                    - /url: /source/wikinews
+                  - generic [ref=e963]:
+                    - img [ref=e964]
+                    - text: 2m
+                - generic [ref=e967]:
+                  - heading "Supreme Court of Finland convicts Päivi Räsänen and Juhana Pohjola of crimes against humanity" [level=2] [ref=e968]
+                  - link "#wikinews" [ref=e970]:
+                    - /url: /tag/wikinews
+                - generic [ref=e971]:
+                  - button "Like" [ref=e972]:
+                    - img [ref=e973]
+                    - text: "0"
+                  - button "Comments" [ref=e975]:
+                    - img [ref=e976]
+                    - text: "0"
+                  - button "Share" [ref=e978]:
+                    - img [ref=e979]
+              - article [ref=e986] [cursor=pointer]:
+                - link "View Adding Custom Rate Limiting to Your AWS Lambda API Using a Middleware" [ref=e987]:
+                  - /url: /post/6793af9c82c13659c5c7d2e4
+                - generic [ref=e988]:
+                  - img "Adding Custom Rate Limiting to Your AWS Lambda API Using a Middleware" [ref=e989]
+                  - link "via Hashnode" [ref=e990]:
+                    - /url: /source/hashnode
+                - generic [ref=e991]:
+                  - link "Florian Fuchs" [ref=e992]:
+                    - /url: /source/hashnode
+                    - img "Florian Fuchs" [ref=e993]
+                  - link "Florian Fuchs" [ref=e995]:
+                    - /url: /source/hashnode
+                  - generic [ref=e996]:
+                    - img [ref=e997]
+                    - text: 11m
+                - generic [ref=e1000]:
+                  - heading "Adding Custom Rate Limiting to Your AWS Lambda API Using a Middleware" [level=2] [ref=e1001]
+                  - paragraph [ref=e1002]: "Rate limiting an API or service is a common use case. But how can you do this for your AWS Lambda? API Gateway offers usage planes and quotas, so you can put a API in front of the lambda, but quotas have some downsides there: Usage plan throttling a..."
+                  - generic [ref=e1003]:
+                    - link "#AWS" [ref=e1004]:
+                      - /url: /tag/AWS
+                    - link "#GraphQL" [ref=e1005]:
+                      - /url: /tag/GraphQL
+                    - link "#ratelimit" [ref=e1006]:
+                      - /url: /tag/ratelimit
+                    - generic [ref=e1007]: "+1"
+                - generic [ref=e1008]:
+                  - button "Like" [ref=e1009]:
+                    - img [ref=e1010]
+                    - text: "0"
+                  - button "Comments" [ref=e1012]:
+                    - img [ref=e1013]
+                    - text: "0"
+                  - button "Share" [ref=e1015]:
+                    - img [ref=e1016]
+              - article [ref=e1023] [cursor=pointer]:
+                - 'link "View Beyond Lambda Functions: Mastering Serverless Development" [ref=e1024]':
+                  - /url: /post/67a201755d0d2beec4c82a7e
+                - generic [ref=e1025]:
+                  - 'img "Beyond Lambda Functions: Mastering Serverless Development" [ref=e1026]'
+                  - link "via Hashnode" [ref=e1027]:
+                    - /url: /source/hashnode
+                - generic [ref=e1028]:
+                  - link "Charles Allison" [ref=e1029]:
+                    - /url: /source/hashnode
+                    - img "Charles Allison" [ref=e1030]
+                  - link "Charles Allison" [ref=e1032]:
+                    - /url: /source/hashnode
+                  - generic [ref=e1033]:
+                    - img [ref=e1034]
+                    - text: 9m
+                - generic [ref=e1037]:
+                  - 'heading "Beyond Lambda Functions: Mastering Serverless Development" [level=2] [ref=e1038]'
+                  - paragraph [ref=e1039]: Introduction AWS Lambda service is a critical component of serverless applications. It is one of the compute services for FaaS on AWS. When you deploy your functions to the cloud, AWS Lambda service is responsible for the execution. Knowing how to wr...
+                  - generic [ref=e1040]:
+                    - link "#serverless" [ref=e1041]:
+                      - /url: /tag/serverless
+                    - link "#AWS" [ref=e1042]:
+                      - /url: /tag/AWS
+                    - link "#aws lambda" [ref=e1043]:
+                      - /url: /tag/aws lambda
+                - generic [ref=e1044]:
+                  - button "Like" [ref=e1045]:
+                    - img [ref=e1046]
+                    - text: "0"
+                  - button "Comments" [ref=e1048]:
+                    - img [ref=e1049]
+                    - text: "0"
+                  - button "Share" [ref=e1051]:
+                    - img [ref=e1052]
+            - generic [ref=e1058]:
+              - article [ref=e1060] [cursor=pointer]:
+                - link "View Believe" [ref=e1061]:
+                  - /url: /post/5ecd4e76-3749-4972-8136-8efe7a38b3da
+                - generic [ref=e1062]:
+                  - img "Believe" [ref=e1063]
+                  - link "via The Guardian" [ref=e1064]:
+                    - /url: /source/Grace Kim
+                - generic [ref=e1065]:
+                  - link "User" [ref=e1066]:
+                    - /url: /source/Grace Kim
+                    - img "User" [ref=e1067]
+                  - link "Unknown" [ref=e1069]:
+                    - /url: /source/Grace Kim
+                  - generic [ref=e1070]:
+                    - img [ref=e1071]
+                    - text: 6m
+                - heading "Believe" [level=2] [ref=e1075]
+                - generic [ref=e1076]:
+                  - button "Like" [ref=e1077]:
+                    - img [ref=e1078]
+                    - text: "0"
+                  - button "Comments" [ref=e1080]:
+                    - img [ref=e1081]
+                    - text: "0"
+                  - button "Share" [ref=e1083]:
+                    - img [ref=e1084]
+              - article [ref=e1091] [cursor=pointer]:
+                - link "View শিশুমেলা বিদ্যানিকেতন" [ref=e1092]:
+                  - /url: /post/efb7c70e-49e6-4030-9898-13919c693723
+                - generic [ref=e1093]:
+                  - img "শিশুমেলা বিদ্যানিকেতন" [ref=e1094]
+                  - link "via The Guardian" [ref=e1095]:
+                    - /url: /source/Benjamin Lee
+                - generic [ref=e1096]:
+                  - link "User" [ref=e1097]:
+                    - /url: /source/Benjamin Lee
+                    - img "User" [ref=e1098]
+                  - link "Unknown" [ref=e1100]:
+                    - /url: /source/Benjamin Lee
+                  - generic [ref=e1101]:
+                    - img [ref=e1102]
+                    - text: 2m
+                - heading "শিশুমেলা বিদ্যানিকেতন" [level=2] [ref=e1106]
+                - generic [ref=e1107]:
+                  - button "Like" [ref=e1108]:
+                    - img [ref=e1109]
+                    - text: "0"
+                  - button "Comments" [ref=e1111]:
+                    - img [ref=e1112]
+                    - text: "0"
+                  - button "Share" [ref=e1114]:
+                    - img [ref=e1115]
+              - article [ref=e1122] [cursor=pointer]:
+                - link "View AC/DC guitarist Stevie Young admitted to hospital in Buenos Aires, spokesperson says" [ref=e1123]:
+                  - /url: /post/3085725
+                - generic [ref=e1124]:
+                  - img "AC/DC guitarist Stevie Young admitted to hospital in Buenos Aires, spokesperson says" [ref=e1125]
+                  - link "via Wikinews" [ref=e1126]:
+                    - /url: /source/wikinews
+                - generic [ref=e1127]:
+                  - 'link "Wikinews contributor: Lofi Gurl" [ref=e1128]':
+                    - /url: /source/wikinews
+                    - 'img "Wikinews contributor: Lofi Gurl" [ref=e1129]'
+                  - 'link "Wikinews contributor: Lofi Gurl" [ref=e1131]':
+                    - /url: /source/wikinews
+                  - generic [ref=e1132]:
+                    - img [ref=e1133]
+                    - text: 6m
+                - generic [ref=e1136]:
+                  - heading "AC/DC guitarist Stevie Young admitted to hospital in Buenos Aires, spokesperson says" [level=2] [ref=e1137]
+                  - link "#wikinews" [ref=e1139]:
+                    - /url: /tag/wikinews
+                - generic [ref=e1140]:
+                  - button "Like" [ref=e1141]:
+                    - img [ref=e1142]
+                    - text: "0"
+                  - button "Comments" [ref=e1144]:
+                    - img [ref=e1145]
+                    - text: "0"
+                  - button "Share" [ref=e1147]:
+                    - img [ref=e1148]
+              - article [ref=e1155] [cursor=pointer]:
+                - link "View Wikinews closes after 21 years" [ref=e1156]:
+                  - /url: /post/3088290
+                - generic [ref=e1157]:
+                  - img "Wikinews closes after 21 years" [ref=e1158]
+                  - link "via Wikinews" [ref=e1159]:
+                    - /url: /source/wikinews
+                - generic [ref=e1160]:
+                  - 'link "Wikinews contributor: Koavf" [ref=e1161]':
+                    - /url: /source/wikinews
+                    - 'img "Wikinews contributor: Koavf" [ref=e1162]'
+                  - 'link "Wikinews contributor: Koavf" [ref=e1164]':
+                    - /url: /source/wikinews
+                  - generic [ref=e1165]:
+                    - img [ref=e1166]
+                    - text: 6m
+                - generic [ref=e1169]:
+                  - heading "Wikinews closes after 21 years" [level=2] [ref=e1170]
+                  - link "#wikinews" [ref=e1172]:
+                    - /url: /tag/wikinews
+                - generic [ref=e1173]:
+                  - button "Like" [ref=e1174]:
+                    - img [ref=e1175]
+                    - text: "0"
+                  - button "Comments" [ref=e1177]:
+                    - img [ref=e1178]
+                    - text: "0"
+                  - button "Share" [ref=e1180]:
+                    - img [ref=e1181]
+              - article [ref=e1188] [cursor=pointer]:
+                - 'link "View The OSI Model Simplified: A Practical Guide for DevOps Engineers" [ref=e1189]':
+                  - /url: /post/6796fde1cc43650602901d83
+                - generic [ref=e1190]:
+                  - 'img "The OSI Model Simplified: A Practical Guide for DevOps Engineers" [ref=e1191]'
+                  - link "via Hashnode" [ref=e1192]:
+                    - /url: /source/hashnode
+                - generic [ref=e1193]:
+                  - link "Chintan Boghara" [ref=e1194]:
+                    - /url: /source/hashnode
+                    - img "Chintan Boghara" [ref=e1195]
+                  - link "Chintan Boghara" [ref=e1197]:
+                    - /url: /source/hashnode
+                  - generic [ref=e1198]:
+                    - img [ref=e1199]
+                    - text: 4m
+                - generic [ref=e1202]:
+                  - 'heading "The OSI Model Simplified: A Practical Guide for DevOps Engineers" [level=2] [ref=e1203]'
+                  - paragraph [ref=e1204]: The OSI (Open Systems Interconnection) model explains how computers communicate over a network. It breaks down the process into seven layers, each with a specific role. Understanding the OSI model is crucial for DevOps engineers because it helps with...
+                  - generic [ref=e1205]:
+                    - link "#Devops" [ref=e1206]:
+                      - /url: /tag/Devops
+                    - link "#Cloud" [ref=e1207]:
+                      - /url: /tag/Cloud
+                    - link "#DevSecOps" [ref=e1208]:
+                      - /url: /tag/DevSecOps
+                    - generic [ref=e1209]: "+3"
+                - generic [ref=e1210]:
+                  - button "Like" [ref=e1211]:
+                    - img [ref=e1212]
+                    - text: "0"
+                  - button "Comments" [ref=e1214]:
+                    - img [ref=e1215]
+                    - text: "0"
+                  - button "Share" [ref=e1217]:
+                    - img [ref=e1218]
+              - article [ref=e1225] [cursor=pointer]:
+                - link "View Atomic Habits for Developers" [ref=e1226]:
+                  - /url: /post/67a94fa48279406740e8b379
+                - generic [ref=e1227]:
+                  - img "Atomic Habits for Developers" [ref=e1228]
+                  - link "via Hashnode" [ref=e1229]:
+                    - /url: /source/hashnode
+                - generic [ref=e1230]:
+                  - link "Victoria Lo" [ref=e1231]:
+                    - /url: /source/hashnode
+                    - img "Victoria Lo" [ref=e1232]
+                  - link "Victoria Lo" [ref=e1234]:
+                    - /url: /source/hashnode
+                  - generic [ref=e1235]:
+                    - img [ref=e1236]
+                    - text: 7m
+                - generic [ref=e1239]:
+                  - heading "Atomic Habits for Developers" [level=2] [ref=e1240]
+                  - paragraph [ref=e1241]: As a developer, your journey to mastery is often shaped by the small, consistent actions you take every day. Whether you're debugging code, learning a new framework, or optimizing a system, the key to continual growth lies in your habits. This weeken...
+                  - generic [ref=e1242]:
+                    - link "#Self Improvement" [ref=e1243]:
+                      - /url: "/tag/Self Improvement "
+                    - link "#Developer" [ref=e1244]:
+                      - /url: /tag/Developer
+                    - link "#Programming Tips" [ref=e1245]:
+                      - /url: /tag/Programming Tips
+                - generic [ref=e1246]:
+                  - button "Like" [ref=e1247]:
+                    - img [ref=e1248]
+                    - text: "0"
+                  - button "Comments" [ref=e1250]:
+                    - img [ref=e1251]
+                    - text: "0"
+                  - button "Share" [ref=e1253]:
+                    - img [ref=e1254]
+  - button "Open Next.js Dev Tools" [ref=e189] [cursor=pointer]:
+    - img [ref=e190]
+  - alert [ref=e193]

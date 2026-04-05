@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Copy, Check, Gift, Percent, ExternalLink, Tag } from 'lucide-react';
+import { MapPin, Copy, Check, Gift, Percent, ExternalLink, Tag } from 'lucide-react';
 import { MasonryFeed } from '@/components/MasonryFeed';
 import { createClient } from '@/lib/supabase/client';
 
@@ -43,6 +43,7 @@ export default function ExplorePage() {
     const [loading, setLoading] = useState(true);
     const [copiedId, setCopiedId] = useState<string | null>(null);
     const [activeCategory, setActiveCategory] = useState('All');
+    const [userLocation, setUserLocation] = useState<string | null>(null);
 
     const categories = ['All', 'Fashion', 'Food', 'Tech', 'Travel', 'Beauty', 'Health', 'Entertainment'];
 
@@ -50,16 +51,16 @@ export default function ExplorePage() {
         const fetchData = async () => {
             try {
                 const [postsRes, couponsRes] = await Promise.all([
-                    fetch('/api/feed?page=1'),
+                    fetch('/api/posts/nearby'),
                     fetch('/api/coupons'),
                 ]);
 
                 if (postsRes.ok) {
                     const postsData = await postsRes.json();
-                    const validPosts = (postsData.posts || [])
-                        .filter((p: any) => !p.is_ad && p.status === 'PUBLISHED')
-                        .slice(0, 16);
-                    setPosts(validPosts);
+                    setPosts(postsData.posts || []);
+                    if (postsData.user_city) {
+                        setUserLocation(postsData.user_city + (postsData.user_country ? `, ${postsData.user_country}` : ''));
+                    }
                     setLoadingPosts(false);
                 }
 
@@ -101,8 +102,13 @@ export default function ExplorePage() {
             <div style={{ maxWidth: '1380px', width: '90%', margin: '0 auto', padding: '24px 0 80px' }}>
                 <div style={{ textAlign: 'center', marginBottom: '24px' }}>
                     <div style={{ fontSize: '20px', fontWeight: 700, color: '#111' }}>{formatToday()}</div>
-                    <h1 style={{ fontSize: '32px', fontWeight: 900, margin: '6px 0 0', color: '#111' }}>Discover & Save</h1>
-                    <p style={{ color: '#666', marginTop: '8px' }}>Explore stories and exclusive deals</p>
+                    <h1 style={{ fontSize: '32px', fontWeight: 900, margin: '6px 0 0', color: '#111' }}>Nearby</h1>
+                    {userLocation && (
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', color: '#E94560', marginTop: '8px', fontSize: '14px', fontWeight: 600 }}>
+                            <MapPin size={16} /> {userLocation}
+                        </div>
+                    )}
+                    <p style={{ color: '#666', marginTop: '8px' }}>Stories from writers near you</p>
                 </div>
 
                 {coupons.length > 0 && (
@@ -170,10 +176,10 @@ export default function ExplorePage() {
                     </div>
                 )}
 
-                {/* Posts Section - Masonry Feed */}
+                {/* Posts Section - Nearby Stories */}
                 {posts.length > 0 && (
                     <div>
-                        <h2 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '16px', color: '#111' }}>Discover Stories</h2>
+                        <h2 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '16px', color: '#111' }}>Nearby Stories</h2>
                         <MasonryFeed isLoggedIn={false} />
                     </div>
                 )}

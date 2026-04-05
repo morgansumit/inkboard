@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Compass, Plus, Bell, MessageCircle, User, LogIn, UserPlus } from 'lucide-react';
+import { Home, MapPin, Plus, Bell, MessageCircle, User, LogIn, UserPlus } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 
 type NavItem = {
@@ -81,7 +81,7 @@ export function Sidebar() {
 
     const desktopItems: NavItem[] = [
         { href: '/', icon: <Home size={22} />, label: 'Home', public: true },
-        { href: '/explore', icon: <Compass size={22} />, label: 'Explore', public: true },
+        { href: '/explore', icon: <MapPin size={22} />, label: 'Nearby', public: true },
         { href: '/compose', icon: <Plus size={22} />, label: 'Create', public: false },
         { href: '/messages', icon: <MessageCircle size={22} />, label: 'Messages', public: false },
         { href: '/notifications', icon: <Bell size={22} />, label: 'Alerts', public: false },
@@ -90,7 +90,7 @@ export function Sidebar() {
 
     const mobileItemsAuthed: NavItem[] = [
         { href: '/', icon: <Home size={22} />, label: 'Home' },
-        { href: '/explore', icon: <Compass size={22} />, label: 'Explore' },
+        { href: '/explore', icon: <MapPin size={22} />, label: 'Nearby' },
         { href: '/compose', icon: <Plus size={26} />, label: 'Write', kind: 'write' },
         { href: '/notifications', icon: <Bell size={22} />, label: 'Alerts' },
         { href: '/profile', icon: <User size={22} />, label: 'Profile' },
@@ -98,7 +98,7 @@ export function Sidebar() {
 
     const mobileItemsGuest: NavItem[] = [
         { href: '/', icon: <Home size={22} />, label: 'Home' },
-        { href: '/explore', icon: <Compass size={22} />, label: 'Explore' },
+        { href: '/explore', icon: <MapPin size={22} />, label: 'Nearby' },
         { href: '/login', icon: <LogIn size={22} />, label: 'Log in' },
         { href: '/register', icon: <UserPlus size={22} />, label: 'Sign up' },
     ];

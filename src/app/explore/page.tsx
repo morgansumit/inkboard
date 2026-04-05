@@ -180,7 +180,7 @@ export default function ExplorePage() {
                 {posts.length > 0 && (
                     <div>
                         <h2 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '16px', color: '#111' }}>Nearby Stories</h2>
-                        <MasonryFeed isLoggedIn={false} />
+                        <MasonryFeed isLoggedIn={false} posts={posts} />
                     </div>
                 )}
 

@@ -151,12 +151,12 @@ function MasonryColumns({ items }: { items: Array<Post | FeedAd> }) {
 }
 
 // ─── Feed Inner ───────────────────────────────────────────────────────────────
-function FeedInner({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
+function FeedInner({ isLoggedIn = false, externalPosts }: { isLoggedIn?: boolean; externalPosts?: Post[] }) {
     const searchParams = useSearchParams();
     const currentTopic = searchParams.get('topic') || 'Top News';
 
-    const [posts, setPosts] = useState<Post[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [posts, setPosts] = useState<Post[]>(externalPosts || []);
+    const [loading, setLoading] = useState(!externalPosts);
     const [loadingMore, setLoadingMore] = useState(false);
     const [page, setPage] = useState(1);
     const [activeInterest, setActiveInterest] = useState<string | null>(null);
@@ -170,8 +170,14 @@ function FeedInner({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
         hasMore?: boolean;
     };
 
-    // Initial load from Edge Function & fetch ads
+    // Initial load from Edge Function & fetch ads (only if no external posts provided)
     useEffect(() => {
+        if (externalPosts) {
+            setPosts(externalPosts);
+            setLoading(false);
+            return;
+        }
+        
         setLoading(true);
         setPosts([]);
         fetch(`/api/feed?topic=${encodeURIComponent(currentTopic)}&page=1`)
@@ -191,7 +197,7 @@ function FeedInner({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
             .then(({ data }: { data: FeedAd[] | null }) => {
                 if (data) setAds(data);
             });
-    }, [currentTopic, supabase]);
+    }, [currentTopic, supabase, externalPosts]);
 
     // Infinite scroll via IntersectionObserver
     useEffect(() => {
@@ -366,14 +372,14 @@ function FeedInner({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
     );
 }
 
-export function MasonryFeed(props: { isLoggedIn?: boolean }) {
+export function MasonryFeed(props: { isLoggedIn?: boolean; posts?: Post[] }) {
     return (
         <Suspense fallback={
             <div className="masonry-grid" style={{ paddingTop: 0 }}>
                 {Array.from({ length: 12 }).map((_, i) => <PostCardSkeleton key={i} index={i} />)}
             </div>
         }>
-            <FeedInner {...props} />
+            <FeedInner {...props} externalPosts={props.posts} />
         </Suspense>
     );
 }

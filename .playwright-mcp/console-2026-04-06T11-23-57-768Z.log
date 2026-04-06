@@ -1,0 +1,16 @@
+[    1160ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    1196ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   16628ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/follows:0
+[   58467ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/follows:0
+[   59179ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/follows:0
+[   60516ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   60641ms] [LOG] [Fast Refresh] done in 227ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   60678ms] [WARNING] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   60774ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ http://localhost:3000/login:0
+[   65024ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   65028ms] [LOG] [Fast Refresh] done in 104ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   65325ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   65343ms] [WARNING] %c%s%c Using the user object as returned from supabase.auth.getSession() or from some supabase.auth.onAuthStateChange() events could be insecure! This value comes directly from the storage medium (usually cookies on the server) and may not be authentic. Use supabase.auth.getUser() instead which authenticates the data by contacting the Supabase Auth server. background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   65359ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   68596ms] [WARNING] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   71436ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/api/follows:0

@@ -1,56 +1,35 @@
 import { NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
+import { createAnonClient } from '@/lib/supabase/anon';
 
-const COUPONS_FILE = path.join(process.cwd(), '.purseable-cache', 'coupons.json');
-
-interface Coupon {
-    id: string;
-    title: string;
-    description: string;
-    code: string;
-    discount: string;
-    brand: string;
-    brandLogo?: string;
-    coverImage: string;
-    targetUrl: string;
-    category: string;
-    expiresAt?: string;
-    isActive: boolean;
-    clicks: number;
-    createdAt: string;
-}
-
-async function readCoupons(): Promise<Coupon[]> {
-    try {
-        const data = await fs.readFile(COUPONS_FILE, 'utf-8');
-        return JSON.parse(data);
-    } catch {
-        return [];
-    }
-}
+export const runtime = 'nodejs';
 
 // GET /api/coupons - Public endpoint for active coupons
 export async function GET(req: Request) {
     try {
         const { searchParams } = new URL(req.url);
         const category = searchParams.get('category');
-        
-        const coupons = await readCoupons();
-        
-        // Filter active and non-expired coupons
-        let activeCoupons = coupons.filter(c => {
-            if (!c.isActive) return false;
-            if (c.expiresAt && new Date(c.expiresAt) < new Date()) return false;
-            return true;
-        });
-        
-        // Filter by category if provided
+
+        const supabase = createAnonClient();
+        if (!supabase) return NextResponse.json({ coupons: [] });
+
+        let query = supabase
+            .from('coupons')
+            .select('*')
+            .eq('is_active', true)
+            .or('expires_at.is.null,expires_at.gt.' + new Date().toISOString())
+            .order('created_at', { ascending: false });
+
         if (category && category !== 'All') {
-            activeCoupons = activeCoupons.filter(c => c.category === category);
+            query = query.eq('category', category);
         }
-        
-        return NextResponse.json({ coupons: activeCoupons });
+
+        const { data, error } = await query;
+        if (error) {
+            console.error('[coupons] fetch error:', error);
+            return NextResponse.json({ coupons: [] });
+        }
+
+        return NextResponse.json({ coupons: data || [] });
     } catch (err) {
         console.error('Failed to fetch coupons:', err);
         return NextResponse.json({ coupons: [] });

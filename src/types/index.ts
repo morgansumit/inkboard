@@ -40,7 +40,6 @@ export interface Post {
     created_at: string;
     published_at?: string;
     source_url?: string;
-    source?: 'devto' | 'hashnode' | 'guardian' | 'wikinews';
     country_code?: string | null;
     video_url?: string | null;
 }

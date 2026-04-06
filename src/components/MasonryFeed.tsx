@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import Link from 'next/link';
 import { Flame, Megaphone } from 'lucide-react';
 import { PostCard } from './PostCard';
@@ -151,6 +151,14 @@ function MasonryColumns({ items }: { items: Array<Post | FeedAd> }) {
 }
 
 // ─── Feed Inner ───────────────────────────────────────────────────────────────
+const supabaseClientSingleton = (() => {
+    let client: ReturnType<typeof createClient> | null = null;
+    return () => {
+        if (!client) client = createClient();
+        return client;
+    };
+})();
+
 function FeedInner({ isLoggedIn = false, externalPosts }: { isLoggedIn?: boolean; externalPosts?: Post[] }) {
     const searchParams = useSearchParams();
     const currentTopic = searchParams.get('topic') || 'Top News';
@@ -163,7 +171,7 @@ function FeedInner({ isLoggedIn = false, externalPosts }: { isLoggedIn?: boolean
     const [hasMore, setHasMore] = useState(true);
     const [ads, setAds] = useState<FeedAd[]>([]);
     const loaderRef = useRef<HTMLDivElement>(null);
-    const supabase = createClient();
+    const supabase = supabaseClientSingleton();
 
     type FeedResponse = {
         posts?: Post[];
@@ -199,23 +207,7 @@ function FeedInner({ isLoggedIn = false, externalPosts }: { isLoggedIn?: boolean
             });
     }, [currentTopic, supabase, externalPosts]);
 
-    // Infinite scroll via IntersectionObserver
-    useEffect(() => {
-        if (!loaderRef.current || loading) return;
-        const observer = new IntersectionObserver(
-            entries => {
-                if (entries[0].isIntersecting && hasMore && !loadingMore) {
-                    loadMore();
-                }
-            },
-            { rootMargin: '4000px' }
-        );
-        observer.observe(loaderRef.current);
-        return () => observer.disconnect();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [loading, hasMore, loadingMore, posts]);
-
-    const loadMore = () => {
+    const loadMore = useCallback(() => {
         if (loadingMore || !hasMore) return;
         setLoadingMore(true);
         fetch(`/api/feed?topic=${encodeURIComponent(currentTopic)}&page=${page}`)
@@ -235,7 +227,22 @@ function FeedInner({ isLoggedIn = false, externalPosts }: { isLoggedIn?: boolean
                 setLoadingMore(false);
             })
             .catch(() => setLoadingMore(false));
-    };
+    }, [loadingMore, hasMore, currentTopic, page]);
+
+    // Infinite scroll via IntersectionObserver
+    useEffect(() => {
+        if (!loaderRef.current || loading) return;
+        const observer = new IntersectionObserver(
+            entries => {
+                if (entries[0].isIntersecting && hasMore && !loadingMore) {
+                    loadMore();
+                }
+            },
+            { rootMargin: '1500px' }
+        );
+        observer.observe(loaderRef.current);
+        return () => observer.disconnect();
+    }, [loading, hasMore, loadingMore, loadMore]);
 
     const displayPosts = activeInterest
         ? posts.filter(p => {

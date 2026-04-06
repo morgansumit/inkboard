@@ -46,7 +46,7 @@ export async function POST() {
                 comment_count: post.comment_count || 0,
                 share_count: post.share_count || 0,
                 is_trending: post.is_trending || false,
-                source_platform: post.source || 'purseable',
+                source_platform: 'user',
                 created_at: post.created_at,
                 published_at: post.published_at,
                 updated_at: post.published_at || post.created_at,

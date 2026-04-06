@@ -1,0 +1,98 @@
+- generic [ref=e1]:
+  - generic [active]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - navigation [ref=e7]:
+            - button "previous" [disabled] [ref=e8]:
+              - img "previous" [ref=e9]
+            - generic [ref=e11]:
+              - generic [ref=e12]: 1/
+              - text: "1"
+            - button "next" [disabled] [ref=e13]:
+              - img "next" [ref=e14]
+          - img
+        - generic [ref=e16]:
+          - link "Next.js 16.1.6 (stale) Turbopack" [ref=e17] [cursor=pointer]:
+            - /url: https://nextjs.org/docs/messages/version-staleness
+            - img [ref=e18]
+            - generic "There is a newer version (16.2.2) available, upgrade recommended!" [ref=e20]: Next.js 16.1.6 (stale)
+            - generic [ref=e21]: Turbopack
+          - img
+      - dialog "Runtime TypeError" [ref=e23]:
+        - generic [ref=e26]:
+          - generic [ref=e27]:
+            - generic [ref=e28]:
+              - generic [ref=e30]: Runtime TypeError
+              - generic [ref=e31]:
+                - button "Copy Error Info" [ref=e32] [cursor=pointer]:
+                  - img [ref=e33]
+                - button "No related documentation found" [disabled] [ref=e35]:
+                  - img [ref=e36]
+                - button "Attach Node.js inspector" [ref=e38] [cursor=pointer]:
+                  - img [ref=e39]
+            - generic [ref=e48]: Cannot read properties of undefined (reading 'length')
+          - generic [ref=e49]:
+            - generic [ref=e50]:
+              - paragraph [ref=e52]:
+                - img [ref=e54]
+                - generic [ref=e57]: ../../inkboard pursuable/inkboard/src/components/PostCard.tsx (227:32) @ PostCard
+                - button "Open in editor" [ref=e58] [cursor=pointer]:
+                  - img [ref=e60]
+              - generic [ref=e63]:
+                - generic [ref=e64]: 225 |
+                - generic [ref=e65]: "226 | {/* Tags */}"
+                - generic [ref=e66]: "> 227 | {post.tags.length > 0 && ("
+                - generic [ref=e67]: "| ^"
+                - generic [ref=e68]: "228 | <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px', marginTop: '8px', position: 'relative', zIndex: 20 }}>"
+                - generic [ref=e69]: "229 | {post.tags.slice(0, 3).map(tag => ("
+                - generic [ref=e70]: "230 | <Link key={tag.id} href={`/tag/${tag.name}`}"
+            - generic [ref=e71]:
+              - generic [ref=e72]:
+                - paragraph [ref=e73]:
+                  - text: Call Stack
+                  - generic [ref=e74]: "16"
+                - button "Show 11 ignore-listed frame(s)" [ref=e75] [cursor=pointer]:
+                  - text: Show 11 ignore-listed frame(s)
+                  - img [ref=e76]
+              - generic [ref=e78]:
+                - generic [ref=e79]:
+                  - text: PostCard
+                  - button "Open PostCard in editor" [ref=e80] [cursor=pointer]:
+                    - img [ref=e81]
+                - text: ../../inkboard pursuable/inkboard/src/components/PostCard.tsx (227:32)
+              - generic [ref=e83]:
+                - generic [ref=e84]:
+                  - text: <unknown>
+                  - button "Open <unknown> in editor" [ref=e85] [cursor=pointer]:
+                    - img [ref=e86]
+                - text: ../../inkboard pursuable/inkboard/src/app/u/[username]/ProfileClient.tsx (110:56)
+              - generic [ref=e88]:
+                - generic [ref=e89]: Array.map
+                - text: <anonymous>
+              - generic [ref=e90]:
+                - generic [ref=e91]:
+                  - text: ProfileClient
+                  - button "Open ProfileClient in editor" [ref=e92] [cursor=pointer]:
+                    - img [ref=e93]
+                - text: ../../inkboard pursuable/inkboard/src/app/u/[username]/ProfileClient.tsx (110:39)
+              - generic [ref=e95]:
+                - generic [ref=e96]:
+                  - text: UserProfilePage
+                  - button "Open UserProfilePage in editor" [ref=e97] [cursor=pointer]:
+                    - img [ref=e98]
+                - text: ../../inkboard pursuable/inkboard/src/app/u/[username]/page.tsx (80:12)
+        - generic [ref=e100]: "1"
+        - generic [ref=e101]: "2"
+    - generic [ref=e106] [cursor=pointer]:
+      - button "Open Next.js Dev Tools" [ref=e107]:
+        - img [ref=e108]
+      - generic [ref=e111]:
+        - button "Open issues overlay" [ref=e112]:
+          - generic [ref=e113]:
+            - generic [ref=e114]: "0"
+            - generic [ref=e115]: "1"
+          - generic [ref=e116]: Issue
+        - button "Collapse issues badge" [ref=e117]:
+          - img [ref=e118]
+  - 'heading "Application error: a client-side exception has occurred while loading localhost (see the browser console for more information)." [level=2] [ref=e122]'

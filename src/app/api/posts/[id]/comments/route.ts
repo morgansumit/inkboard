@@ -19,10 +19,7 @@ export async function GET(
 
     const { data: comments, error } = await supabase
       .from('post_comments')
-      .select(`
-        *,
-        author:profiles(id, username, display_name, avatar_url)
-      `)
+      .select('*')
       .eq('post_id', postId)
       .order('created_at', { ascending: true });
 
@@ -31,7 +28,25 @@ export async function GET(
       return NextResponse.json({ comments: [] });
     }
 
-    return NextResponse.json({ comments: comments || [] });
+    // Fetch user data for each comment
+    const userIds = [...new Set(comments?.map(c => c.user_id) || [])];
+    const { data: users } = userIds.length > 0 ? await supabase
+      .from('users')
+      .select('id, username, display_name, avatar_url')
+      .in('id', userIds) : { data: [] };
+
+    const userMap = (users || []).reduce((acc: Record<string, any>, user) => {
+      acc[user.id] = user;
+      return acc;
+    }, {});
+
+    // Attach user data to comments
+    const commentsWithAuthors = (comments || []).map(comment => ({
+      ...comment,
+      author: userMap[comment.user_id as string] || null
+    }));
+
+    return NextResponse.json({ comments: commentsWithAuthors });
 
   } catch (error) {
     console.error('[comments] API error:', error);
@@ -110,23 +125,14 @@ export async function POST(
       return NextResponse.json({ error: 'Failed to post comment' }, { status: 500 });
     }
 
-    // Update post comment count in cache
+    // Update post comment count in Supabase
     try {
-      const fs = require('fs/promises');
-      const path = require('path');
-      const cacheFile = path.join(process.cwd(), '.purseable-cache', 'posts.json');
-      
-      const cacheData = await fs.readFile(cacheFile, 'utf8');
-      const posts = JSON.parse(cacheData);
-      
-      const postIndex = posts.findIndex((p: any) => p.id === postId);
-      if (postIndex !== -1) {
-        posts[postIndex].comment_count = (posts[postIndex].comment_count || 0) + 1;
-        
-        await fs.writeFile(cacheFile, JSON.stringify(posts, null, 2));
-      }
-    } catch (cacheError) {
-      console.error('Failed to update cache:', cacheError);
+      await (await createClient())
+        .from('posts')
+        .update({ comment_count: (await (await createClient()).from('posts').select('comment_count').eq('id', postId).single()).data?.comment_count || 0 + 1 })
+        .eq('id', postId);
+    } catch (updateError) {
+      console.error('Failed to update comment count:', updateError);
     }
 
     // Return comment with author info
@@ -190,23 +196,20 @@ export async function DELETE(
       return NextResponse.json({ error: 'Failed to delete comment' }, { status: 500 });
     }
 
-    // Update post comment count in cache
+    // Update post comment count in Supabase (decrement)
     try {
-      const fs = require('fs/promises');
-      const path = require('path');
-      const cacheFile = path.join(process.cwd(), '.purseable-cache', 'posts.json');
+      const { data: currentPost } = await (await createClient())
+        .from('posts')
+        .select('comment_count')
+        .eq('id', postId)
+        .single();
       
-      const cacheData = await fs.readFile(cacheFile, 'utf8');
-      const posts = JSON.parse(cacheData);
-      
-      const postIndex = posts.findIndex((p: any) => p.id === postId);
-      if (postIndex !== -1) {
-        posts[postIndex].comment_count = Math.max(0, (posts[postIndex].comment_count || 0) - 1);
-        
-        await fs.writeFile(cacheFile, JSON.stringify(posts, null, 2));
-      }
-    } catch (cacheError) {
-      console.error('Failed to update cache:', cacheError);
+      await (await createClient())
+        .from('posts')
+        .update({ comment_count: Math.max(0, (currentPost?.comment_count || 0) - 1) })
+        .eq('id', postId);
+    } catch (updateError) {
+      console.error('Failed to update comment count:', updateError);
     }
 
     return NextResponse.json({ success: true });

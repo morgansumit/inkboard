@@ -21,12 +21,17 @@ type NavNotification = {
     actor_avatar_url?: string;
 };
 
-export function Navbar() {
+interface NavbarProps {
+    initialSession: any;
+}
+
+export function Navbar({ initialSession }: NavbarProps) {
     const pathname = usePathname();
     const router = useRouter();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userEmail, setUserEmail] = useState<string | null>(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(!!initialSession?.user);
+    const [userEmail, setUserEmail] = useState<string | null>(initialSession?.user?.email || null);
     const [currentUser, setCurrentUser] = useState<{ display_name: string; avatar_url: string; role: string; is_business: boolean } | null>(null);
+    const [isProfileLoading, setIsProfileLoading] = useState(!!initialSession?.user);
     const [searchQuery, setSearchQuery] = useState('');
     const [notifOpen, setNotifOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
@@ -45,6 +50,7 @@ export function Navbar() {
         const hydrateUser = async (userId: string | undefined) => {
             if (!userId) {
                 setCurrentUser(null);
+                setIsProfileLoading(false);
                 return;
             }
 
@@ -70,10 +76,11 @@ export function Navbar() {
 
             setCurrentUser({
                 display_name: profile?.display_name || 'Purseable User',
-                avatar_url: profile?.avatar_url || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=160&q=80',
+                avatar_url: profile?.avatar_url || '',
                 role: profile?.role || 'USER',
                 is_business: Boolean(profile?.is_business),
             });
+            setIsProfileLoading(false);
         };
 
         const loadNotifications = async (userId: string | undefined) => {
@@ -94,14 +101,12 @@ export function Navbar() {
             }
         };
 
-        const checkSession = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            setIsLoggedIn(!!session);
-            setUserEmail(session?.user?.email || null);
-            await hydrateUser(session?.user?.id);
-            await loadNotifications(session?.user?.id);
-        };
-        checkSession();
+        // If we have initial session, use it immediately
+        if (initialSession?.user) {
+            setIsProfileLoading(true);
+            hydrateUser(initialSession.user.id);
+            loadNotifications(initialSession.user.id);
+        }
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
             async (_event: any, session: any) => {
@@ -113,7 +118,7 @@ export function Navbar() {
         );
 
         return () => subscription.unsubscribe();
-    }, [supabase.auth]);
+    }, [supabase.auth, initialSession]);
 
     const unreadCount = notifications.filter(n => !n.is_read).length;
 
@@ -212,7 +217,9 @@ export function Navbar() {
                 {renderSearchForm('desktop-only')}
 
                 <div className="navbar-actions">
-                    {isLoggedIn ? (
+                    {isLoggedIn && isProfileLoading ? (
+                        <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'var(--color-surface)', animation: 'pulse 1.5s infinite' }} />
+                    ) : isLoggedIn && currentUser ? (
                         <>
                             {isAdmin && (
                                 <Link href="/admin" className="btn btn-secondary btn-sm hide-mobile">
@@ -283,9 +290,9 @@ export function Navbar() {
                                     className="profile-trigger"
                                     onClick={() => setProfileMenuOpen(!profileMenuOpen)}
                                 >
-                                    <img src={currentUser?.avatar_url || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=160&q=80'} alt={currentUser?.display_name || 'User'} className="avatar" />
+                                    <img src={currentUser.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${userEmail || 'user'}`} alt={currentUser.display_name} className="avatar" />
                                     <div className="profile-meta hide-mobile">
-                                        <span>{currentUser?.display_name || 'purseable User'}</span>
+                                        <span>{currentUser.display_name}</span>
                                         <small>{userEmail}</small>
                                     </div>
                                 </button>

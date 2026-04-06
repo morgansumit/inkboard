@@ -22,21 +22,11 @@ const POST_SELECT = `
   source_url,
   source_id,
   author_id,
-  external_sources ( id, slug, name, display_name, avatar_url, profile_url, metadata, created_at ),
+  video_url,
+  country_code,
   users:author_id ( id, email, username, display_name, bio, avatar_url, location, role, is_verified, is_suspended, is_business, created_at ),
   post_tags ( tags ( id, name, post_count ) )
 `;
-
-type ExternalSourceRow = {
-  id: string;
-  slug?: string;
-  name: string;
-  display_name?: string;
-  avatar_url?: string;
-  profile_url?: string;
-  metadata?: Record<string, unknown>;
-  created_at?: string;
-};
 
 type DbPost = {
   id: string;
@@ -55,11 +45,12 @@ type DbPost = {
   comment_count: number;
   share_count: number;
   is_trending: boolean;
-  source_platform?: Post['source'];
+  source_platform?: string;
   source_url?: string;
   source_id?: string;
   author_id?: string;
-  external_sources?: ExternalSourceRow | ExternalSourceRow[] | null;
+  video_url?: string | null;
+  country_code?: string | null;
   users?: DbUser | DbUser[] | null;
   post_tags?: { tags?: DbTag | DbTag[] | null }[] | null;
 };
@@ -95,31 +86,7 @@ function normalizeTag(tag?: DbTag | DbTag[] | null): DbTag[] {
   return Array.isArray(tag) ? (tag.filter(Boolean) as DbTag[]) : [tag];
 }
 
-function ensureUserFromSource(source: DbPost['external_sources'] | null): User {
-  const normalized = toSingle(source);
-  const display = normalized?.display_name || normalized?.name || 'External Source';
-  const slug = normalized?.slug || normalized?.id || 'external-source';
-  return {
-    id: normalized?.id || slug,
-    email: `${slug}@sources.purseable`,
-    username: slug,
-    display_name: display,
-    bio: normalized?.metadata && typeof normalized.metadata === 'object' && 'bio' in normalized.metadata ? String(normalized.metadata.bio) : normalized?.name || '',
-    avatar_url: normalized?.avatar_url,
-    location: '',
-    role: 'USER',
-    is_verified: true,
-    is_suspended: false,
-    is_business: true,
-    created_at: normalized?.created_at || new Date().toISOString(),
-    follower_count: 0,
-    following_count: 0,
-    total_likes: 0,
-    post_count: 0,
-  };
-}
-
-function ensureUser(record?: DbPost['users'], fallback?: DbPost['external_sources']): User {
+function ensureUser(record?: DbPost['users']): User {
   const normalizedRecord = toSingle(record);
   if (normalizedRecord) {
     return {
@@ -141,7 +108,15 @@ function ensureUser(record?: DbPost['users'], fallback?: DbPost['external_source
       post_count: 0,
     };
   }
-  return ensureUserFromSource(fallback ?? null);
+  return {
+    id: 'unknown',
+    email: '',
+    username: 'unknown',
+    display_name: 'Unknown Author',
+    created_at: new Date().toISOString(),
+    follower_count: 0,
+    following_count: 0,
+  };
 }
 
 function mapTags(rows?: { tags?: DbTag | DbTag[] | null }[] | null): Tag[] {
@@ -167,7 +142,7 @@ function extractContent(content: DbPost['content']): string | undefined {
 }
 
 function mapDbPost(row: DbPost): Post {
-  const author = ensureUser(row.users, row.external_sources);
+  const author = ensureUser(row.users);
   const authorId = row.author_id || row.source_id || author.id;
   return {
     id: row.id,
@@ -190,7 +165,8 @@ function mapDbPost(row: DbPost): Post {
     created_at: row.created_at,
     published_at: row.published_at,
     source_url: row.source_url,
-    source: row.source_platform,
+    video_url: row.video_url ?? null,
+    country_code: row.country_code ?? null,
   };
 }
 
@@ -236,6 +212,29 @@ export async function fetchMoreByAuthor(authorId: string, excludeId?: string, li
   const mapped = (data || []).map(mapDbPost);
   const filtered = excludeId ? mapped.filter(post => post.id !== excludeId) : mapped;
   return filtered.slice(0, limit);
+}
+
+export async function fetchUserPosts(
+  authorId: string,
+  options?: { countryCode?: string; isOwnProfile?: boolean }
+): Promise<Post[]> {
+  let query = supabaseAdmin
+    .from('posts')
+    .select(POST_SELECT)
+    .eq('author_id', authorId)
+    .eq('status', 'PUBLISHED');
+
+  if (!options?.isOwnProfile) {
+    if (options?.countryCode) {
+      query = query.or(`country_code.is.null,country_code.eq.${options.countryCode}`);
+    } else {
+      query = query.is('country_code', null);
+    }
+  }
+
+  const { data, error } = await query.order('published_at', { ascending: false });
+  if (error) throw error;
+  return (data || []).map(mapDbPost);
 }
 
 export async function fetchMoreBySource(sourceId: string, excludeId?: string, limit = 4) {

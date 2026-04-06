@@ -1,20 +1,36 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
+import { getSupabaseAdmin } from '@/lib/supabase/admin'
 
 export const runtime = 'nodejs'
 
 // Follow a user
 export async function POST(req: Request) {
+    console.log('[follows] POST request received');
+    
+    // Check if admin client is properly configured
+    const adminClient = getSupabaseAdmin();
+    const testResult = await adminClient.from('users').select('id').limit(1);
+    if (testResult.error?.code === 'NO_CREDENTIALS') {
+        console.error('[follows] Admin client not configured - missing SUPABASE_SERVICE_ROLE_KEY');
+        return NextResponse.json({ error: 'Server configuration error' }, { status: 500 })
+    }
+    
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
+    console.log('[follows] User:', user?.id);
+
     if (!user) {
+        console.log('[follows] Unauthorized');
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     const body = await req.json()
     const { userIdToFollow } = body
+
+    console.log('[follows] Request body:', { userIdToFollow });
 
     if (!userIdToFollow) {
         return NextResponse.json({ error: 'userIdToFollow is required' }, { status: 400 })
@@ -25,15 +41,22 @@ export async function POST(req: Request) {
     }
 
     try {
-        // Check if already following
-        const { data: existing } = await supabaseAdmin
+        console.log('[follows] Starting follow request', { userId: user.id, userIdToFollow });
+
+        // Check if already following — follows table has no 'id' column
+        const { data: existing, error: existingError } = await supabaseAdmin
             .from('follows')
-            .select('id')
+            .select('follower_id')
             .eq('follower_id', user.id)
             .eq('following_id', userIdToFollow)
-            .single()
+            .maybeSingle()
+
+        if (existingError) {
+            console.error('[follows] Error checking existing follow:', JSON.stringify(existingError));
+        }
 
         if (existing) {
+            console.log('[follows] Already following');
             return NextResponse.json({ error: 'Already following this user' }, { status: 400 })
         }
 
@@ -45,14 +68,13 @@ export async function POST(req: Request) {
                 following_id: userIdToFollow
             })
 
-        if (followError) throw followError
+        if (followError) {
+            console.error('[follows] Error inserting follow:', JSON.stringify(followError));
+            throw followError
+        }
 
-        // Update follower counts using database function
-        await supabaseAdmin.rpc('update_follower_counts', {
-            p_follower_id: user.id,
-            p_following_id: userIdToFollow
-        })
-
+        console.log('[follows] Follow inserted');
+        console.log('[follows] Follow successful');
         return NextResponse.json({
             success: true,
             message: 'Following user',
@@ -60,8 +82,14 @@ export async function POST(req: Request) {
         })
 
     } catch (err: unknown) {
-        const message = err instanceof Error ? err.message : 'Failed to follow user'
-        return NextResponse.json({ error: message }, { status: 500 })
+        const message = err instanceof Error ? err.message : (err as any)?.message || 'Failed to follow user'
+        console.error('[follows] Follow error:', JSON.stringify(err));
+        return NextResponse.json({ 
+            error: message,
+            raw: JSON.stringify(err),
+            userId: user.id,
+            userIdToFollow
+        }, { status: 500 })
     }
 }
 
@@ -82,6 +110,8 @@ export async function DELETE(req: Request) {
     }
 
     try {
+        console.log('[follows] Starting unfollow request', { userId: user.id, userIdToUnfollow });
+
         // Delete follow relationship
         const { error: deleteError } = await supabaseAdmin
             .from('follows')
@@ -89,14 +119,18 @@ export async function DELETE(req: Request) {
             .eq('follower_id', user.id)
             .eq('following_id', userIdToUnfollow)
 
-        if (deleteError) throw deleteError
+        if (deleteError) {
+            console.error('[follows] Error deleting follow:', deleteError);
+            throw deleteError
+        }
+
+        console.log('[follows] Follow deleted, updating counts');
 
         // Update follower counts
-        await supabaseAdmin.rpc('update_follower_counts_on_unfollow', {
-            p_follower_id: user.id,
-            p_following_id: userIdToUnfollow
-        })
+        await supabaseAdmin.rpc('decrement_following_count', { user_id: user.id });
+        await supabaseAdmin.rpc('decrement_follower_count', { user_id: userIdToUnfollow });
 
+        console.log('[follows] Unfollow successful');
         return NextResponse.json({
             success: true,
             message: 'Unfollowed user',
@@ -105,6 +139,7 @@ export async function DELETE(req: Request) {
 
     } catch (err: unknown) {
         const message = err instanceof Error ? err.message : 'Failed to unfollow user'
+        console.error('[follows] Unfollow error:', err);
         return NextResponse.json({ error: message }, { status: 500 })
     }
 }

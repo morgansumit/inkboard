@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Heart, MessageCircle, Share2, Flame, Clock, Play } from 'lucide-react';
@@ -77,54 +77,31 @@ interface PostCardProps {
 export function PostCard({ post, index = 0 }: PostCardProps) {
     const router = useRouter();
     const [liked, setLiked] = useState(false);
-    const [likeCount, setLikeCount] = useState(0);
-    const [commentCount, setCommentCount] = useState(0);
+    const [likeCount, setLikeCount] = useState(post.like_count || 0);
+    const [commentCount, setCommentCount] = useState(post.comment_count || 0);
     const [likeAnimating, setLikeAnimating] = useState(false);
-    const [engagementLoaded, setEngagementLoaded] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [authChecked, setAuthChecked] = useState(false);
 
-    // Use a pseudo-random aspect ratio based on the post ID so they are staggered
-    // like Pinterest, preventing symmetric 'rows' if images happen to be the same ratio.
     const dynamicPaddingBottom = getPseudoRandomRatio(post.id);
 
-    // Check authentication status
-    useEffect(() => {
-        const checkAuth = async () => {
-            const supabase = createClient();
-            const { data: { session } } = await supabase.auth.getSession();
-            setIsAuthenticated(!!session);
-        };
-        checkAuth();
-    }, []);
-
-    // Fetch engagement data from Supabase on mount
-    useEffect(() => {
-        const fetchEngagement = async () => {
-            try {
-                const response = await fetch(`/api/posts/${post.id}/engagement`);
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.success && data.engagement) {
-                        setLikeCount(data.engagement.like_count);
-                        setCommentCount(data.engagement.comment_count);
-                        setLiked(data.engagement.is_liked);
-                        setEngagementLoaded(true);
-                    }
-                }
-            } catch (error) {
-                console.error('Failed to fetch engagement data:', error);
-            }
-        };
-
-        fetchEngagement();
-    }, [post.id]);
+    // Lazy auth check — only when user interacts (likes)
+    const ensureAuth = async () => {
+        if (authChecked) return isAuthenticated;
+        const supabase = createClient();
+        const { data: { session } } = await supabase.auth.getSession();
+        const authed = !!session;
+        setIsAuthenticated(authed);
+        setAuthChecked(true);
+        return authed;
+    };
 
     const handleLike = async (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
         
-        // Check if user is authenticated
-        if (!isAuthenticated) {
+        const authed = await ensureAuth();
+        if (!authed) {
             router.push('/register');
             return;
         }
@@ -207,23 +184,6 @@ export function PostCard({ post, index = 0 }: PostCardProps) {
                             <Play size={32} color="white" fill="white" />
                         </div>
                     )}
-                    {post.source && !post.video_url && (
-                        <Link
-                            href={`/source/${post.source}`}
-                            onClick={e => e.stopPropagation()}
-                            style={{
-                                position: 'absolute', bottom: '12px', left: '12px',
-                                background: 'rgba(0,0,0,0.65)', color: '#fff',
-                                fontSize: '10px', padding: '3px 8px', borderRadius: '4px',
-                                fontWeight: 600, backdropFilter: 'blur(8px)',
-                                fontFamily: 'var(--font-ui)', textTransform: 'uppercase', letterSpacing: '0.5px',
-                                textDecoration: 'none', zIndex: 20,
-                            }}
-                            className="hide-mobile"
-                        >
-                            via {post.source === 'devto' ? 'Dev.to' : post.source === 'hashnode' ? 'Hashnode' : post.source === 'wikinews' ? 'Wikinews' : post.source || 'purseable'}
-                        </Link>
-                    )}
                     <div className="mobile-overlay-banner">
                         <h2 className="mobile-overlay-title">{post.title}</h2>
                         <div className="mobile-overlay-author">
@@ -235,7 +195,7 @@ export function PostCard({ post, index = 0 }: PostCardProps) {
                 {/* Author Row */}
                 <div className="author-row">
                     <Link
-                        href={post.source ? `/source/${post.source}` : post.author ? `/u/${post.author.username}` : '#'}
+                        href={post.author ? `/u/${post.author.username}` : '#'}
                         onClick={e => e.stopPropagation()}
                         style={{ textDecoration: 'none' }}
                     >
@@ -245,7 +205,7 @@ export function PostCard({ post, index = 0 }: PostCardProps) {
                     </Link>
                     <div style={{ flex: 1, overflow: 'hidden' }}>
                         <Link
-                            href={post.source ? `/source/${post.source}` : post.author ? `/u/${post.author.username}` : '#'}
+                            href={post.author ? `/u/${post.author.username}` : '#'}
                             onClick={e => e.stopPropagation()}
                             className="author-name"
                             style={{ textDecoration: 'none' }}
@@ -264,7 +224,7 @@ export function PostCard({ post, index = 0 }: PostCardProps) {
                     {post.subtitle && <p className="post-card-excerpt">{post.subtitle}</p>}
 
                     {/* Tags */}
-                    {post.tags.length > 0 && (
+                    {(post.tags?.length ?? 0) > 0 && (
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px', marginTop: '8px', position: 'relative', zIndex: 20 }}>
                             {post.tags.slice(0, 3).map(tag => (
                                 <Link key={tag.id} href={`/tag/${tag.name}`}
@@ -297,7 +257,15 @@ export function PostCard({ post, index = 0 }: PostCardProps) {
                         {formatNumber(likeCount || 0)}
                     </button>
 
-                    <button className="engagement-btn" aria-label="Comments">
+                    <button 
+                        className="engagement-btn" 
+                        aria-label="Comments"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            router.push(`/post/${post.id}#comments`);
+                        }}
+                    >
                         <MessageCircle size={14} />
                         {formatNumber(commentCount || 0)}
                     </button>

@@ -13,9 +13,10 @@ interface Props {
     posts: Post[]; 
     likedPosts: Post[]; 
     isOwnProfile?: boolean;
+    isFollowing?: boolean;
 }
 
-export function ProfileClient({ user, posts, likedPosts, isOwnProfile = false }: Props) {
+export function ProfileClient({ user, posts, likedPosts, isOwnProfile = false, isFollowing = false }: Props) {
     const [activeTab, setActiveTab] = useState<'pins' | 'boards' | 'collages'>('pins');
 
     const handleShare = () => {
@@ -62,7 +63,8 @@ export function ProfileClient({ user, posts, likedPosts, isOwnProfile = false }:
                             <FollowButton 
                                 targetUserId={user.id}
                                 showCounts={false}
-                                size="sm"
+                                initialIsFollowing={isFollowing}
+                                className="min-w-[100px]"
                             />
                         )}
                         <button onClick={handleShare} className="btn btn-ghost btn-sm" style={{ padding: '10px 14px', borderRadius: '20px' }}>

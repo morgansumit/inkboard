@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
-import { postRepository } from '@/lib/postRepository';
 import type { Post, Tag, User } from '@/types';
-import { MOCK_USERS } from '@/lib/mockData';
 import crypto from 'crypto';
 import { createAnonClient } from '@/lib/supabase/anon';
 import { createClient } from '@/lib/supabase/server';
@@ -29,10 +27,6 @@ function computeReadTimeMinutes(html: string): number {
     const text = html.replace(/<[^>]*>/g, ' ');
     const words = text.split(/\s+/).filter(Boolean).length;
     return Math.max(1, Math.ceil(words / 200));
-}
-
-function getFallbackAuthor(): User {
-    return MOCK_USERS[2] ?? MOCK_USERS[0];
 }
 
 async function getAuthenticatedAuthor(): Promise<{ user: User; authId: string } | null> {

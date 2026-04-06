@@ -41,7 +41,7 @@ export async function GET(req: Request) {
         // Check if current user follows target
         const { data: followData } = await supabaseAdmin
             .from('follows')
-            .select('id')
+            .select('follower_id')
             .eq('follower_id', user.id)
             .eq('following_id', targetUserId)
             .maybeSingle()

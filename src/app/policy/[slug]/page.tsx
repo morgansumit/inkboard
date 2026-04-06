@@ -11,7 +11,7 @@ interface Policy {
     title: string;
     content: string;
     description: string;
-    lastUpdated: string;
+    last_updated: string;
 }
 
 // Simple markdown to HTML converter
@@ -141,7 +141,7 @@ export default function PolicyPage() {
                             </div>
                             <p style={{ color: '#666', fontSize: '14px', margin: 0 }}>{policy.description}</p>
                             <p style={{ color: '#999', fontSize: '12px', marginTop: '8px' }}>
-                                Last updated: {new Date(policy.lastUpdated).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                                Last updated: {new Date(policy.last_updated).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                             </p>
                         </div>
 

@@ -6,6 +6,7 @@ import { Heart, MessageCircle, Share2, Flame, Clock, Calendar, Send, ChevronDown
 import type { Post, Comment } from '@/types';
 import { PostCard } from '@/components/PostCard';
 import { Comments } from '@/components/Comments';
+import FollowButton from '@/components/FollowButton';
 import { createClient } from '@/lib/supabase/client';
 // Sanitize HTML - on server just pass through, on client use native DOM
 // (isomorphic-dompurify crashes on Netlify due to jsdom ESM incompatibility)
@@ -40,6 +41,7 @@ interface Props {
     post: Post;
     comments: Comment[];
     morePosts: Post[];
+    isFollowingAuthor?: boolean;
 }
 
 function CommentItem({ comment, depth = 0 }: { comment: Comment; depth?: number }) {
@@ -79,12 +81,11 @@ function CommentItem({ comment, depth = 0 }: { comment: Comment; depth?: number 
     );
 }
 
-export function PostDetailClient({ post, comments, morePosts }: Props) {
+export function PostDetailClient({ post, comments, morePosts, isFollowingAuthor = false }: Props) {
     const router = useRouter();
     const [liked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
     const [commentCount, setCommentCount] = useState(0);
-    const [following, setFollowing] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     // Check authentication status
@@ -117,6 +118,18 @@ export function PostDetailClient({ post, comments, morePosts }: Props) {
 
         fetchEngagement();
     }, [post.id]);
+
+    // Scroll to comments section when URL has #comments hash
+    useEffect(() => {
+        if (window.location.hash === '#comments') {
+            const commentsSection = document.querySelector('.comments-section');
+            if (commentsSection) {
+                setTimeout(() => {
+                    commentsSection.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            }
+        }
+    }, []);
 
     const handleLike = async () => {
         // Check if user is authenticated
@@ -192,20 +205,12 @@ export function PostDetailClient({ post, comments, morePosts }: Props) {
 
                     {/* Author Byline */}
                     <div className="post-detail-author-row" style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '18px 0', borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)', marginBottom: '36px' }}>
-                        <Link href={post.source ? `/source/${post.source}` : post.author ? `/u/${post.author.username}` : '#'}>
+                        <Link href={post.author ? `/u/${post.author.username}` : '#'}>
                             <img src={post.author?.avatar_url || '/placeholder-avatar.png'} alt={post.author?.display_name ?? 'Author avatar'} className="avatar" style={{ width: '48px', height: '48px', border: '2px solid var(--color-border)' }} />
                         </Link>
                         <div style={{ flex: 1 }}>
-                            <Link href={post.source ? `/source/${post.source}` : post.author ? `/u/${post.author.username}` : '#'} className="author-name" style={{ fontSize: '15px', display: 'block' }}>
-                                {post.source
-                                    ? (post.source === 'devto'
-                                        ? 'Dev.to'
-                                        : post.source === 'hashnode'
-                                            ? 'Hashnode'
-                                            : post.source === 'wikinews'
-                                                ? 'Wikinews'
-                                                : post.author?.display_name ?? 'Unknown')
-                                    : post.author?.display_name ?? 'Unknown'}
+                            <Link href={post.author ? `/u/${post.author.username}` : '#'} className="author-name" style={{ fontSize: '15px', display: 'block' }}>
+                                {post.author?.display_name ?? 'Unknown'}
                             </Link>
                             <div className="post-detail-author-meta" style={{ display: 'flex', gap: '12px', marginTop: '3px' }}>
                                 <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--color-muted)', fontSize: '12px' }}>
@@ -218,33 +223,12 @@ export function PostDetailClient({ post, comments, morePosts }: Props) {
                                 )}
                             </div>
                         </div>
-                        <button
-                            onClick={() => setFollowing(!following)}
-                            className={`btn btn-sm ${following ? 'btn-ghost' : 'btn-secondary'}`}
-                            data-post-detail-follow-btn="true"
-                            style={{ border: following ? '1.5px solid var(--color-border)' : undefined }}
-                        >
-                            {following ? '✓ Following' : '+ Follow'}
-                        </button>
+                        <FollowButton 
+                            targetUserId={post.author?.id || ''} 
+                            initialIsFollowing={isFollowingAuthor}
+                            className="flex-1 min-w-[120px]"
+                        />
                     </div>
-
-                    {/* Attribution Bar (if ingested external content) */}
-                    {post.source && post.source_url && (
-                        <div className="post-detail-attribution" style={{ padding: '16px 20px', background: 'var(--color-surface)', borderRadius: '12px', border: '1px solid var(--color-border)', marginBottom: '32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <span className="post-detail-attribution-text" style={{ fontSize: '13px', color: 'var(--color-muted)', fontFamily: 'var(--font-ui)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                <span style={{ fontWeight: 600, color: 'var(--color-primary)' }}>
-                                    {post.source === 'devto' ? 'Dev.to' : post.source === 'hashnode' ? 'Hashnode' : post.source === 'wikinews' ? 'Wikinews' : 'The Guardian'}
-                                </span>
-                                <span>• Originally published externally</span>
-                                {post.source === 'wikinews' && (
-                                    <span>• CC BY</span>
-                                )}
-                            </span>
-                            <a href={post.source_url} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm post-detail-attribution-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                                Read Original ↗
-                            </a>
-                        </div>
-                    )}
 
                     {/* Article Content */}
                     <div className="prose">
@@ -329,20 +313,11 @@ const reading = (text) => {
                 </article>
             </div>
 
-            {/* More from author */}
+            {/* More like this */}
             {morePosts.length > 0 && (
                 <div className="more-from-section">
                     <div className="more-from-inner">
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
-                            <img src={post.author?.avatar_url || '/placeholder-avatar.png'} alt={post.author?.display_name ?? 'Author avatar'}
-                                className="avatar" style={{ width: '40px', height: '40px' }} />
-                            <div>
-                                <p style={{ fontFamily: 'var(--font-ui)', fontSize: '13px', color: 'var(--color-muted)' }}>More from</p>
-                                <Link href={post.author ? `/u/${post.author.username}` : '#'} className="author-name" style={{ fontSize: '16px' }}>
-                                    {post.author?.display_name ?? 'Unknown'}
-                                </Link>
-                            </div>
-                        </div>
+                        <h3 style={{ fontSize: '20px', fontWeight: 700, marginBottom: '24px' }}>More like this</h3>
                         <div className="more-from-grid">
                             {morePosts.map((p, i) => <PostCard key={p.id} post={p} index={i} />)}
                         </div>

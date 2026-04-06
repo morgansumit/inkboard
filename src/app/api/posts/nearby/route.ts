@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
+import { getCountryFromRequest } from '@/lib/geo';
 
 export async function GET(request: Request) {
     const supabase = await createClient();
@@ -50,10 +51,21 @@ export async function GET(request: Request) {
             content,
             status,
             created_at,
+            country_code,
             author:users!posts_author_id_fkey(id, username, display_name, avatar_url, city, country, location)
         `)
         .eq('status', 'PUBLISHED')
         .order('created_at', { ascending: false });
+    
+    // Geoblocking: detect viewer country
+    const viewerCountry = await getCountryFromRequest();
+    console.log('[nearby] Viewer country:', viewerCountry || 'null (showing global posts only)');
+    
+    if (viewerCountry) {
+        query = query.or(`country_code.is.null,country_code.eq.${viewerCountry}`);
+    } else {
+        query = query.is('country_code', null);
+    }
     
     // If we have a city, filter by users in that city
     if (userCity) {

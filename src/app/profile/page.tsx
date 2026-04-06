@@ -1,5 +1,3 @@
-import { MOCK_POSTS } from '@/lib/mockData';
-import { postRepository } from '@/lib/postRepository';
 import { ProfileClient } from '../u/[username]/ProfileClient';
 import { createClient } from '@/lib/supabase/server';
 
@@ -14,7 +12,6 @@ export default async function SelfProfilePage() {
         return <div>Please log in to view your profile</div>;
     }
     
-    // Fetch current user from Supabase
     const { data: user } = await supabase
         .from('users')
         .select('id, username, display_name, bio, avatar_url, location, follower_count, following_count, is_verified, is_business, created_at')
@@ -22,7 +19,6 @@ export default async function SelfProfilePage() {
         .single();
     
     if (!user) {
-        // User doesn't exist in database yet - create a basic profile
         const email = session.user.email || 'unknown@example.com';
         const username = email.split('@')[0];
         
@@ -45,14 +41,36 @@ export default async function SelfProfilePage() {
         );
     }
     
-    const allPosts = await postRepository.getAll();
-    const posts = allPosts.filter(p => p.author_id === user.id && p.status === 'PUBLISHED' && !p.source);
+    // Fetch user's posts directly from Supabase
+    const { data: posts } = await supabase
+        .from('posts')
+        .select('*')
+        .eq('author_id', user.id)
+        .eq('status', 'PUBLISHED')
+        .order('published_at', { ascending: false });
+
+    // Fetch user's liked posts
+    const { data: likedPostIds } = await supabase
+        .from('post_likes')
+        .select('post_id')
+        .eq('user_id', user.id)
+        .limit(6);
+
+    let likedPosts: any[] = [];
+    if (likedPostIds && likedPostIds.length > 0) {
+        const { data: liked } = await supabase
+            .from('posts')
+            .select('*')
+            .in('id', likedPostIds.map((l: { post_id: string }) => l.post_id))
+            .eq('status', 'PUBLISHED');
+        likedPosts = liked || [];
+    }
     
     return (
         <ProfileClient 
             user={user} 
-            posts={posts} 
-            likedPosts={MOCK_POSTS.filter(p => p.is_liked).slice(0, 6)} 
+            posts={posts || []} 
+            likedPosts={likedPosts} 
             isOwnProfile={true}
         />
     );

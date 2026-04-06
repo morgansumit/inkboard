@@ -8,7 +8,7 @@ import { BroadcastNotifications } from '@/components/BroadcastNotifications';
 import { createClient } from '@/lib/supabase/server';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://purseable.com'), // Replace with your actual domain later
+  metadataBase: new URL('https://purseable.com'),
   title: {
     default: 'Purseable — Discover Writing You Love',
     template: '%s | Purseable',
@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   description:
     'Purseable is a visually-driven social platform for writers, bloggers, and readers across Europe. Discover rich, long-form content in a beautiful masonry feed.',
   keywords: ['writing', 'blogging', 'literature', 'reading', 'Europe', 'content discovery'],
+  icons: {
+    icon: '/favicon.svg',
+  },
   openGraph: {
     type: 'website',
     siteName: 'Purseable',

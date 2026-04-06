@@ -119,7 +119,7 @@ function MasonryAdCard({ ad, index }: { ad: FeedAd, index: number }) {
     );
 }
 
-function MasonryColumns({ items }: { items: Array<Post | FeedAd> }) {
+function MasonryColumns({ items, currentUserId }: { items: Array<Post | FeedAd>; currentUserId?: string }) {
     const numCols = useColumnCount();
 
     // Build column arrays — each post goes to col = index % numCols
@@ -142,6 +142,7 @@ function MasonryColumns({ items }: { items: Array<Post | FeedAd> }) {
                             key={item.id}
                             post={item as Post}
                             index={index}
+                            currentUserId={currentUserId}
                         />;
                     })}
                 </div>
@@ -170,8 +171,18 @@ function FeedInner({ isLoggedIn = false, externalPosts }: { isLoggedIn?: boolean
     const [activeInterest, setActiveInterest] = useState<string | null>(null);
     const [hasMore, setHasMore] = useState(true);
     const [ads, setAds] = useState<FeedAd[]>([]);
+    const [currentUserId, setCurrentUserId] = useState<string | undefined>();
     const loaderRef = useRef<HTMLDivElement>(null);
     const supabase = supabaseClientSingleton();
+
+    // Get current user ID
+    useEffect(() => {
+        const getUser = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user) setCurrentUserId(user.id);
+        };
+        getUser();
+    }, [supabase]);
 
     type FeedResponse = {
         posts?: Post[];
@@ -350,7 +361,7 @@ function FeedInner({ isLoggedIn = false, externalPosts }: { isLoggedIn?: boolean
                     {Array.from({ length: 8 }).map((_, i) => <PostCardSkeleton key={i} index={i} />)}
                 </div>
             ) : (
-                <MasonryColumns items={feedItems} />
+                <MasonryColumns items={feedItems} currentUserId={currentUserId} />
             )}
 
             {/* Load More Skeletons — appended BELOW existing content, not replacing it */}

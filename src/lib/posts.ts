@@ -160,7 +160,6 @@ function mapDbPost(row: DbPost): Post {
     comment_count: row.comment_count,
     share_count: row.share_count,
     is_trending: row.is_trending,
-    is_liked: false,
     tags: mapTags(row.post_tags),
     created_at: row.created_at,
     published_at: row.published_at,

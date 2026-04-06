@@ -28,14 +28,14 @@ export interface Post {
     content?: string;
     cover_image_url: string;
     cover_aspect_ratio: '3:4' | '2:3' | '9:16' | '4:3' | '16:9' | '1:1';
-    status: 'DRAFT' | 'PUBLISHED' | 'REMOVED';
+    status: 'DRAFT' | 'PUBLISHED' | 'REMOVED' | 'ARCHIVED';
     read_time_minutes: number;
     engagement_score: number;
     like_count: number;
     comment_count: number;
     share_count: number;
     is_trending: boolean;
-    is_liked?: boolean;
+    is_archived?: boolean;
     tags: Tag[];
     created_at: string;
     published_at?: string;

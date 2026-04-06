@@ -1,8 +1,8 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Heart, MessageCircle, Share2, Flame, Clock, Play } from 'lucide-react';
+import { Heart, MessageCircle, Share2, Flame, Clock, Play, MoreVertical, Edit2, Trash2, Archive } from 'lucide-react';
 import type { Post } from '@/types';
 import { createClient } from '@/lib/supabase/client';
 import { parseVideoUrl } from '@/lib/video';
@@ -72,9 +72,12 @@ function getPseudoRandomRatio(id: string) {
 interface PostCardProps {
     post: Post;
     index?: number;
+    currentUserId?: string;
+    onDelete?: (id: string) => void;
+    onArchive?: (id: string, archived: boolean) => void;
 }
 
-export function PostCard({ post, index = 0 }: PostCardProps) {
+export function PostCard({ post, index = 0, currentUserId, onDelete, onArchive }: PostCardProps) {
     const router = useRouter();
     const [liked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(post.like_count || 0);
@@ -82,6 +85,10 @@ export function PostCard({ post, index = 0 }: PostCardProps) {
     const [likeAnimating, setLikeAnimating] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [authChecked, setAuthChecked] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
+    const [isAuthor, setIsAuthor] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [isArchiving, setIsArchiving] = useState(false);
 
     const dynamicPaddingBottom = getPseudoRandomRatio(post.id);
 
@@ -143,6 +150,78 @@ export function PostCard({ post, index = 0 }: PostCardProps) {
             navigator.share({ title: post.title, url: `/post/${post.id}` });
         } else {
             navigator.clipboard.writeText(`${window.location.origin}/post/${post.id}`);
+        }
+    };
+
+    // Check if current user is author
+    useEffect(() => {
+        const checkAuthor = async () => {
+            if (!currentUserId) {
+                const supabase = createClient();
+                const { data: { user } } = await supabase.auth.getUser();
+                if (user && post.author_id === user.id) {
+                    setIsAuthor(true);
+                }
+            } else if (post.author_id === currentUserId) {
+                setIsAuthor(true);
+            }
+        };
+        checkAuthor();
+    }, [currentUserId, post.author_id]);
+
+    const handleEdit = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        router.push(`/post/${post.id}/edit`);
+    };
+
+    const handleDelete = async (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!confirm('Are you sure you want to delete this post? This action cannot be undone.')) return;
+        
+        setIsDeleting(true);
+        try {
+            const res = await fetch(`/api/posts/${post.id}`, { method: 'DELETE' });
+            if (res.ok) {
+                onDelete?.(post.id);
+                router.refresh();
+            } else {
+                alert('Failed to delete post');
+            }
+        } catch (err) {
+            console.error('Delete error:', err);
+            alert('Failed to delete post');
+        } finally {
+            setIsDeleting(false);
+            setShowMenu(false);
+        }
+    };
+
+    const handleArchive = async (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const isArchived = post.status === 'ARCHIVED';
+        
+        setIsArchiving(true);
+        try {
+            const res = await fetch(`/api/posts/${post.id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: isArchived ? 'unarchive' : 'archive' }),
+            });
+            if (res.ok) {
+                onArchive?.(post.id, !isArchived);
+                router.refresh();
+            } else {
+                alert('Failed to archive post');
+            }
+        } catch (err) {
+            console.error('Archive error:', err);
+            alert('Failed to archive post');
+        } finally {
+            setIsArchiving(false);
+            setShowMenu(false);
         }
     };
 
@@ -270,9 +349,117 @@ export function PostCard({ post, index = 0 }: PostCardProps) {
                         {formatNumber(commentCount || 0)}
                     </button>
 
-                    <button className="engagement-btn" onClick={handleShare} aria-label="Share" style={{ marginLeft: 'auto' }}>
-                        <Share2 size={14} />
-                    </button>
+                    {isAuthor && (
+                        <div style={{ position: 'relative', marginLeft: 'auto' }}>
+                            <button
+                                className="engagement-btn"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    setShowMenu(!showMenu);
+                                }}
+                                aria-label="Post options"
+                                style={{ position: 'relative', zIndex: 30 }}
+                            >
+                                <MoreVertical size={14} />
+                            </button>
+                            
+                            {showMenu && (
+                                <div 
+                                    style={{ 
+                                        position: 'absolute', 
+                                        bottom: '100%', 
+                                        right: 0, 
+                                        background: 'white',
+                                        border: '1px solid var(--color-border)',
+                                        borderRadius: '8px',
+                                        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                                        padding: '4px',
+                                        minWidth: '140px',
+                                        zIndex: 40,
+                                        marginBottom: '4px'
+                                    }}
+                                >
+                                    <button
+                                        onClick={handleEdit}
+                                        disabled={isDeleting || isArchiving}
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '8px',
+                                            width: '100%',
+                                            padding: '8px 12px',
+                                            border: 'none',
+                                            background: 'none',
+                                            cursor: 'pointer',
+                                            fontSize: '13px',
+                                            textAlign: 'left',
+                                            borderRadius: '4px',
+                                            color: '#333'
+                                        }}
+                                        onMouseEnter={(e) => e.currentTarget.style.background = '#f5f5f5'}
+                                        onMouseLeave={(e) => e.currentTarget.style.background = 'none'}
+                                    >
+                                        <Edit2 size={14} />
+                                        Edit
+                                    </button>
+                                    <button
+                                        onClick={handleArchive}
+                                        disabled={isArchiving}
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '8px',
+                                            width: '100%',
+                                            padding: '8px 12px',
+                                            border: 'none',
+                                            background: 'none',
+                                            cursor: 'pointer',
+                                            fontSize: '13px',
+                                            textAlign: 'left',
+                                            borderRadius: '4px',
+                                            color: '#666'
+                                        }}
+                                        onMouseEnter={(e) => e.currentTarget.style.background = '#f5f5f5'}
+                                        onMouseLeave={(e) => e.currentTarget.style.background = 'none'}
+                                    >
+                                        <Archive size={14} />
+                                        {post.status === 'ARCHIVED' ? 'Unarchive' : 'Archive'}
+                                    </button>
+                                    <div style={{ borderTop: '1px solid #eee', margin: '4px 0' }} />
+                                    <button
+                                        onClick={handleDelete}
+                                        disabled={isDeleting}
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '8px',
+                                            width: '100%',
+                                            padding: '8px 12px',
+                                            border: 'none',
+                                            background: 'none',
+                                            cursor: 'pointer',
+                                            fontSize: '13px',
+                                            textAlign: 'left',
+                                            borderRadius: '4px',
+                                            color: '#e11d48'
+                                        }}
+                                        onMouseEnter={(e) => e.currentTarget.style.background = '#fef2f2'}
+                                        onMouseLeave={(e) => e.currentTarget.style.background = 'none'}
+                                    >
+                                        <Trash2 size={14} />
+                                        {isDeleting ? 'Deleting...' : 'Delete'}
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {!isAuthor && (
+                        <button className="engagement-btn" onClick={handleShare} aria-label="Share" style={{ marginLeft: 'auto' }}>
+                            <Share2 size={14} />
+                        </button>
+                    )}
                 </div>
             </article>
         </div>

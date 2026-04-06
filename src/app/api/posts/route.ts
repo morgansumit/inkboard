@@ -113,7 +113,6 @@ export async function POST(req: Request) {
             comment_count: 0,
             share_count: 0,
             is_trending: false,
-            is_liked: false,
             video_url: body.video_url || null,
             tags: body.tags.map(toTag),
             created_at: now,

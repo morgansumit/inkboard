@@ -24,15 +24,39 @@ export default function ComposePage() {
     const readTime = Math.max(1, Math.ceil(content.split(' ').length / 200));
 
     const uploadImage = async (file: File) => {
+        const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'djxv1usyv';
+        const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || 'ml_default';
+        
+        console.log('[uploadImage] Starting upload with:', { cloudName, uploadPreset, fileSize: file.size });
+        
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || 'ml_default');
-        const res = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'djxv1usyv'}/image/upload`, {
-            method: 'POST',
-            body: formData,
-        });
-        const data = await res.json();
-        return data.secure_url;
+        formData.append('upload_preset', uploadPreset);
+        
+        try {
+            const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+                method: 'POST',
+                body: formData,
+            });
+            
+            const data = await res.json();
+            console.log('[uploadImage] Cloudinary response:', data);
+            
+            if (!res.ok) {
+                console.error('[uploadImage] Upload failed:', data);
+                throw new Error(data.error?.message || data.message || 'Upload failed');
+            }
+            
+            if (!data.secure_url) {
+                throw new Error('No secure_url in response');
+            }
+            
+            console.log('[uploadImage] Upload successful:', data.secure_url);
+            return data.secure_url;
+        } catch (error) {
+            console.error('[uploadImage] Upload error:', error);
+            throw error;
+        }
     };
 
     const handlePublish = async () => {
@@ -77,13 +101,15 @@ export default function ComposePage() {
     const handleCoverUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
+        
         setIsUploadingCover(true);
         try {
             const url = await uploadImage(file);
             setCoverImage(url);
         } catch (error) {
             console.error('Error uploading image', error);
-            alert('Failed to upload image. Please try again.');
+            const errorMessage = error instanceof Error ? error.message : 'Failed to upload image. Please try again.';
+            alert(`Upload failed: ${errorMessage}. Please try pasting an image URL instead.`);
         } finally {
             setIsUploadingCover(false);
         }

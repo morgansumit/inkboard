@@ -66,8 +66,28 @@ export async function GET(request: Request) {
     const start = (page - 1) * perPage;
 
     // Detect viewer's country for geoblocking
-    const viewerCountry = await getCountryFromRequest();
-    console.log('[feed] Viewer country detected:', viewerCountry || 'null (showing global posts only)');
+    // First try to get from authenticated user's metadata, fallback to IP detection
+    let viewerCountry: string | null = null;
+    
+    try {
+        const { createClient } = await import('@/lib/supabase/server');
+        const supabase = await createClient();
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (user?.user_metadata?.country_code) {
+            viewerCountry = user.user_metadata.country_code;
+            console.log('[feed] Using user country from metadata:', viewerCountry);
+        } else {
+            viewerCountry = await getCountryFromRequest();
+            console.log('[feed] Using IP-detected country:', viewerCountry || 'null');
+        }
+    } catch (err) {
+        // If auth fails, fallback to IP detection
+        viewerCountry = await getCountryFromRequest();
+        console.log('[feed] Auth failed, using IP-detected country:', viewerCountry || 'null');
+    }
+
+    console.log('[feed] Final viewer country:', viewerCountry || 'null (showing global posts only)');
 
     // Direct Supabase query — no cache
     const { createAnonClient } = await import('@/lib/supabase/anon');

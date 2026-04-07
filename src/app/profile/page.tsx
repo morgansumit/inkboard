@@ -44,7 +44,10 @@ export default async function SelfProfilePage() {
     // Fetch user's posts directly from Supabase
     const { data: posts } = await supabase
         .from('posts')
-        .select('*')
+        .select(`
+            *,
+            author:users!posts_author_id_fkey(id, username, display_name, bio, avatar_url, location, role, is_verified, is_business, created_at, follower_count, following_count)
+        `)
         .eq('author_id', user.id)
         .eq('status', 'PUBLISHED')
         .order('published_at', { ascending: false });
@@ -60,7 +63,10 @@ export default async function SelfProfilePage() {
     if (likedPostIds && likedPostIds.length > 0) {
         const { data: liked } = await supabase
             .from('posts')
-            .select('*')
+            .select(`
+                *,
+                author:users!posts_author_id_fkey(id, username, display_name, bio, avatar_url, location, role, is_verified, is_business, created_at, follower_count, following_count)
+            `)
             .in('id', likedPostIds.map((l: { post_id: string }) => l.post_id))
             .eq('status', 'PUBLISHED');
         likedPosts = liked || [];

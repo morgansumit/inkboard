@@ -41,7 +41,28 @@ async function getAuthenticatedAuthor(): Promise<{ user: User; authId: string; c
             .eq('id', authUser.id)
             .maybeSingle();
 
-        const country_code = authUser.user_metadata?.country_code || null;
+        let country_code = authUser.user_metadata?.country_code || null;
+
+        // If user doesn't have country_code, detect it from IP and update metadata
+        if (!country_code) {
+            try {
+                const ipRes = await fetch('https://ipinfo.io/json');
+                const ipData = await ipRes.json();
+                country_code = ipData.country || null;
+                
+                if (country_code) {
+                    // Update user metadata with detected country
+                    await supabaseAdmin.auth.admin.updateUserById(authUser.id, {
+                        user_metadata: {
+                            ...authUser.user_metadata,
+                            country_code,
+                        },
+                    });
+                }
+            } catch (err) {
+                console.error('[posts] Could not detect country for user:', err);
+            }
+        }
 
         if (profile) {
             return {
@@ -94,11 +115,6 @@ export async function POST(req: Request) {
         const authenticated = await getAuthenticatedAuthor();
         if (!authenticated) {
             return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
-        }
-
-        // Require user to have a country_code set (from signup IP detection)
-        if (!authenticated.country_code) {
-            return NextResponse.json({ error: 'Country detection required. Please contact support to update your location.' }, { status: 403 });
         }
 
         const now = new Date().toISOString();

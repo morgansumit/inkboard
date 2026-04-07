@@ -71,16 +71,19 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
             .maybeSingle();
 
         if (!post) return { title: 'Post Not Found | purseable' };
-        return {
-            title: `${post.title} | purseable`,
-            description: post.subtitle,
+        const meta: Metadata = {
+            title: `${post.title || 'Post'} | purseable`,
+            description: post.subtitle || '',
             openGraph: {
-                title: post.title,
-                description: post.subtitle,
-                images: [post.cover_image_url],
+                title: post.title || 'Post',
+                description: post.subtitle || '',
                 type: 'article',
             },
         };
+        if (post.cover_image_url) {
+            meta.openGraph!.images = [post.cover_image_url];
+        }
+        return meta;
     } catch (error) {
         console.error('[PostPage] Metadata error:', error);
         return { title: 'Post | purseable' };
@@ -200,19 +203,23 @@ export default async function PostPage(props: { params: Promise<{ id: string }> 
         // Check if current user follows the post author and if they own the post
         let isFollowingAuthor = false;
         let isAuthor = false;
-        if (post.author?.id) {
-            const supabase = await createClient();
-            const { data: { user } } = await supabase.auth.getUser();
-            if (user) {
-                isAuthor = user.id === rawPost.author_id;
-                const { data: followData } = await supabase
-                    .from('follows')
-                    .select('follower_id')
-                    .eq('follower_id', user.id)
-                    .eq('following_id', post.author.id)
-                    .maybeSingle();
-                isFollowingAuthor = !!followData;
+        try {
+            if (post.author?.id) {
+                const followClient = await createClient();
+                const { data: { user: followUser } } = await followClient.auth.getUser();
+                if (followUser) {
+                    isAuthor = followUser.id === rawPost.author_id;
+                    const { data: followData } = await followClient
+                        .from('follows')
+                        .select('follower_id')
+                        .eq('follower_id', followUser.id)
+                        .eq('following_id', post.author.id)
+                        .maybeSingle();
+                    isFollowingAuthor = !!followData;
+                }
             }
+        } catch (err) {
+            console.error('[PostPage] Follow check error:', err);
         }
 
         return <PostDetailClient post={post} comments={comments} morePosts={morePosts} isFollowingAuthor={isFollowingAuthor} isAuthor={isAuthor} />;

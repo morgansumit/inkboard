@@ -71,8 +71,8 @@ export async function GET(request: Request) {
     
     try {
         const { createClient } = await import('@/lib/supabase/server');
-        const supabase = await createClient();
-        const { data: { user } } = await supabase.auth.getUser();
+        const authClient = await createClient();
+        const { data: { user } } = await authClient.auth.getUser();
         
         if (user?.user_metadata?.country_code) {
             viewerCountry = user.user_metadata.country_code;

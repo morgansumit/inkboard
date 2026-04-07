@@ -124,35 +124,28 @@ export default async function PostPage(props: { params: Promise<{ id: string }> 
 
         // Geoblocking
         if (post.country_code) {
-            // First try to get from authenticated user's metadata, fallback to IP detection
             let viewerCountry: string | null = null;
+            let geoAuthUser: any = null;
             
             try {
-                const supabase = await createClient();
-                const { data: { user } } = await supabase.auth.getUser();
+                const authClient = await createClient();
+                const { data: { user: authUser } } = await authClient.auth.getUser();
+                geoAuthUser = authUser;
                 
-                if (user?.user_metadata?.country_code) {
-                    viewerCountry = user.user_metadata.country_code;
-                    console.log('[PostPage] Using user country from metadata:', viewerCountry);
+                if (authUser?.user_metadata?.country_code) {
+                    viewerCountry = authUser.user_metadata.country_code;
                 } else {
                     viewerCountry = await getCountryFromRequest();
-                    console.log('[PostPage] Using IP-detected country:', viewerCountry || 'null');
                 }
             } catch (err) {
-                // If auth fails, fallback to IP detection
                 viewerCountry = await getCountryFromRequest();
-                console.log('[PostPage] Auth failed, using IP-detected country:', viewerCountry || 'null');
             }
 
             console.log('[PostPage] Post country:', post.country_code, 'Viewer country:', viewerCountry || 'null');
             
-            // Allow author to always see their own post
-            const supabase = await createClient();
-            const { data: { user } } = await supabase.auth.getUser();
-            const isAuthor = user?.id === post.author_id;
+            const isPostAuthor = geoAuthUser?.id === rawPost.author_id;
             
-            // Block if viewer country is null AND not author, OR doesn't match post's country AND not author
-            if (!isAuthor && (!viewerCountry || post.country_code !== viewerCountry)) {
+            if (!isPostAuthor && (!viewerCountry || post.country_code !== viewerCountry)) {
                 return (
                     <div style={{ padding: '48px', textAlign: 'center', maxWidth: '480px', margin: '0 auto' }}>
                         <div style={{ fontSize: '72px', marginBottom: '16px' }}>🌍</div>

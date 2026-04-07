@@ -222,15 +222,7 @@ export default async function PostPage(props: { params: Promise<{ id: string }> 
             console.error('[PostPage] Follow check error:', err);
         }
 
-        return (
-            <div style={{ padding: '48px' }}>
-                <h1>{post.title}</h1>
-                <p>Post loaded successfully. ID: {post.id}</p>
-                <p>Author: {post.author?.display_name || 'unknown'}</p>
-                <p>Country: {post.country_code || 'global'}</p>
-                <Link href="/">← Back to feed</Link>
-            </div>
-        );
+        return <PostDetailClient post={post} comments={comments} morePosts={morePosts} isFollowingAuthor={isFollowingAuthor} isAuthor={isAuthor} />;
     } catch (error) {
         console.error('[PostPage] Error:', error);
         return (

@@ -3,6 +3,17 @@ import { createAnonClient } from '@/lib/supabase/anon';
 
 export const runtime = 'nodejs';
 
+// Helper to replace purseable with centsably in policy content
+function transformPolicy(policy: any) {
+    if (!policy) return policy;
+    return {
+        ...policy,
+        title: policy.title?.replace(/purseable/gi, 'centsably'),
+        content: policy.content?.replace(/purseable/gi, 'centsably'),
+        description: policy.description?.replace(/purseable/gi, 'centsably'),
+    };
+}
+
 // GET /api/policies - Public endpoint for published policies
 export async function GET(req: Request) {
     try {
@@ -20,7 +31,7 @@ export async function GET(req: Request) {
                 .eq('is_published', true)
                 .single();
             if (error || !data) return NextResponse.json({ error: 'Policy not found' }, { status: 404 });
-            return NextResponse.json({ policy: data });
+            return NextResponse.json({ policy: transformPolicy(data) });
         }
 
         const { data, error } = await supabase
@@ -34,7 +45,7 @@ export async function GET(req: Request) {
             return NextResponse.json({ policies: [] });
         }
 
-        return NextResponse.json({ policies: data || [] });
+        return NextResponse.json({ policies: (data || []).map(transformPolicy) });
     } catch (err) {
         console.error('Failed to fetch policies:', err);
         return NextResponse.json({ policies: [] });

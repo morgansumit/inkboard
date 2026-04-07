@@ -21,6 +21,7 @@ export default function RegisterPage() {
 
         let ip_address = '';
         let location = '';
+        let country_code = '';
         let income_level = 'Medium';
         let os_family = 'Unknown';
         let device_type = 'Desktop';
@@ -47,6 +48,7 @@ export default function RegisterPage() {
             const ipData = await ipRes.json();
             ip_address = ipData.ip;
             location = `${ipData.city || ''}, ${ipData.country || ''}`.trim();
+            country_code = ipData.country || '';
             const zip = ipData.postal || '';
 
             // Zip & Country based heuristic for 'Very High' income targeting
@@ -58,6 +60,15 @@ export default function RegisterPage() {
             }
         } catch (err) {
             console.error('Could not fetch IP and Location', err);
+            setError('Could not detect your location. Please try again.');
+            setLoading(false);
+            return;
+        }
+
+        if (!country_code) {
+            setError('Could not detect your country. Please try again.');
+            setLoading(false);
+            return;
         }
 
         // Calculate Age Range from DOB
@@ -66,7 +77,7 @@ export default function RegisterPage() {
             const dobDate = new Date(dob);
             const age = new Date().getFullYear() - dobDate.getFullYear();
             if (age < 13) {
-                setError("You must be at least 13 years old to use purseable.");
+                setError("You must be at least 13 years old to use centsably.");
                 setLoading(false);
                 return;
             }
@@ -90,7 +101,8 @@ export default function RegisterPage() {
                     age_range,
                     income_level,
                     os_family,
-                    device_type
+                    device_type,
+                    country_code,
                 }
             }
         });

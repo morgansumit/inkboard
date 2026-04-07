@@ -4,11 +4,28 @@ import { supabaseAdmin } from '@/lib/supabase/admin'
 import { generateUniqueUsername } from '@/lib/admin/setup'
 
 function initialsAvatar(name: string) {
-    const seed = encodeURIComponent(name || 'purseable User')
+    const seed = encodeURIComponent(name || 'centsably User')
     return `https://api.dicebear.com/7.x/initials/svg?seed=${seed}`
 }
 
-export async function POST() {
+async function detectCountryFromRequest(req: Request): Promise<string | null> {
+    try {
+        // Get client IP from headers
+        const forwarded = req.headers.get('x-forwarded-for');
+        const ip = forwarded?.split(',')[0]?.trim() || req.headers.get('x-real-ip') || null;
+        
+        if (!ip) return null;
+        
+        const ipRes = await fetch(`https://ipinfo.io/${ip}/json`);
+        const ipData = await ipRes.json();
+        return ipData.country || null;
+    } catch (err) {
+        console.error('[users.sync] Could not detect country:', err);
+        return null;
+    }
+}
+
+export async function POST(req: Request) {
     const supabase = await createClient()
     const {
         data: { user },
@@ -21,6 +38,19 @@ export async function POST() {
 
     if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    // Detect and store country_code for OAuth users if not already set
+    if (!user.user_metadata?.country_code) {
+        const detectedCountry = await detectCountryFromRequest(req);
+        if (detectedCountry) {
+            await supabaseAdmin.auth.admin.updateUserById(user.id, {
+                user_metadata: {
+                    ...user.user_metadata,
+                    country_code: detectedCountry,
+                },
+            });
+        }
     }
 
     const { data: existing, error: fetchError } = await supabaseAdmin
@@ -38,7 +68,7 @@ export async function POST() {
         return NextResponse.json({ synced: true, id: existing.id })
     }
 
-    const usernameSeed = (user.email?.split('@')[0] || user.user_metadata?.username || 'purseable').toLowerCase()
+    const usernameSeed = (user.email?.split('@')[0] || user.user_metadata?.username || 'centsably').toLowerCase()
     const username = await generateUniqueUsername(usernameSeed)
 
     const displayName = user.user_metadata?.display_name || user.user_metadata?.full_name || usernameSeed

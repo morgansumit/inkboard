@@ -29,7 +29,7 @@ function computeReadTimeMinutes(html: string): number {
     return Math.max(1, Math.ceil(words / 200));
 }
 
-async function getAuthenticatedAuthor(): Promise<{ user: User; authId: string } | null> {
+async function getAuthenticatedAuthor(): Promise<{ user: User; authId: string; country_code: string | null } | null> {
     try {
         const supabase = await createClient();
         const { data: { user: authUser } } = await supabase.auth.getUser();
@@ -41,9 +41,12 @@ async function getAuthenticatedAuthor(): Promise<{ user: User; authId: string } 
             .eq('id', authUser.id)
             .maybeSingle();
 
+        const country_code = authUser.user_metadata?.country_code || null;
+
         if (profile) {
             return {
                 authId: authUser.id,
+                country_code,
                 user: {
                     id: profile.id,
                     username: profile.username,
@@ -65,6 +68,7 @@ async function getAuthenticatedAuthor(): Promise<{ user: User; authId: string } 
         const username = email.split('@')[0];
         return {
             authId: authUser.id,
+            country_code,
             user: {
                 id: authUser.id,
                 username,
@@ -92,9 +96,15 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
         }
 
+        // Require user to have a country_code set (from signup IP detection)
+        if (!authenticated.country_code) {
+            return NextResponse.json({ error: 'Country detection required. Please contact support to update your location.' }, { status: 403 });
+        }
+
         const now = new Date().toISOString();
         const author = authenticated.user;
         const authorId = authenticated.authId;
+        const countryCode = authenticated.country_code;
         const id = crypto.randomUUID();
 
         const post: Post = {
@@ -119,9 +129,7 @@ export async function POST(req: Request) {
             published_at: now,
         };
 
-        // Detect poster's country from IP for geoblocking
-        const countryCode = await getCountryFromRequest();
-        console.log('[posts] Detected country:', countryCode);
+        console.log('[posts] Using country_code from user profile:', countryCode);
 
         // Save to Supabase database ONLY (not cache) for real user posts
         const supabase = createAnonClient();

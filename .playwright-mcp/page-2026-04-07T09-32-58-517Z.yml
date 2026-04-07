@@ -1,0 +1,124 @@
+- generic [ref=e1]:
+  - main [ref=e4]:
+    - generic [ref=e5]:
+      - complementary [ref=e6]:
+        - generic [ref=e7]:
+          - generic [ref=e8]:
+            - img "Purseable" [ref=e9]
+            - generic [ref=e10]: Purseable
+          - generic [ref=e11]: Admin Panel
+        - button "Dashboard" [ref=e12] [cursor=pointer]:
+          - img [ref=e13]
+          - text: Dashboard
+        - button "Business Accounts" [ref=e20] [cursor=pointer]:
+          - img [ref=e21]
+          - text: Business Accounts
+        - button "Ads Management" [ref=e26] [cursor=pointer]:
+          - img [ref=e27]
+          - text: Ads Management
+        - button "Post Management" [active] [ref=e29] [cursor=pointer]:
+          - img [ref=e30]
+          - text: Post Management
+          - img [ref=e120]
+        - button "User Management" [ref=e33] [cursor=pointer]:
+          - img [ref=e34]
+          - text: User Management
+        - button "Reports" [ref=e39] [cursor=pointer]:
+          - img [ref=e40]
+          - text: Reports
+        - button "Geo Logs" [ref=e42] [cursor=pointer]:
+          - img [ref=e43]
+          - text: Geo Logs
+        - button "Broadcast Messages" [ref=e46] [cursor=pointer]:
+          - img [ref=e47]
+          - text: Broadcast Messages
+        - generic [ref=e50]:
+          - link "Coupons & Deals" [ref=e51] [cursor=pointer]:
+            - /url: /admin/coupons
+            - img [ref=e52]
+            - text: Coupons & Deals
+          - link "Legal Policies" [ref=e56] [cursor=pointer]:
+            - /url: /admin/policies
+            - img [ref=e57]
+            - text: Legal Policies
+          - button "Sign out" [ref=e59] [cursor=pointer]:
+            - img [ref=e60]
+            - text: Sign out
+          - link "Back to Site" [ref=e63] [cursor=pointer]:
+            - /url: /
+            - img [ref=e64]
+            - text: Back to Site
+      - main [ref=e66]:
+        - generic [ref=e67]:
+          - button "Refresh now" [ref=e68] [cursor=pointer]
+          - generic [ref=e103]: Cached at 3:02:43 PM (fresh)
+        - generic [ref=e69]:
+          - generic [ref=e122]:
+            - heading "Post Management" [level=2] [ref=e123]
+            - button "+ Create Post" [ref=e124] [cursor=pointer]
+          - table [ref=e125]:
+            - rowgroup [ref=e126]:
+              - row "Title Author Tags Country Status Likes Actions" [ref=e127]:
+                - columnheader "Title" [ref=e128]
+                - columnheader "Author" [ref=e129]
+                - columnheader "Tags" [ref=e130]
+                - columnheader "Country" [ref=e131]
+                - columnheader "Status" [ref=e132]
+                - columnheader "Likes" [ref=e133]
+                - columnheader "Actions" [ref=e134]
+            - rowgroup [ref=e135]:
+              - row "Nitesh Patel niteshpatel259 GB PUBLISHED ❤️ 0" [ref=e136]:
+                - cell "Nitesh Patel" [ref=e137]
+                - cell "niteshpatel259" [ref=e138]
+                - cell [ref=e139]
+                - cell "GB" [ref=e140]
+                - cell "PUBLISHED" [ref=e141]
+                - cell "❤️ 0" [ref=e142]
+                - cell [ref=e143]:
+                  - generic [ref=e144]:
+                    - link "View" [ref=e145] [cursor=pointer]:
+                      - /url: /post/008a24f1-e422-465f-aa0d-86937075a97c
+                      - img [ref=e146]
+                    - button "Remove" [ref=e149] [cursor=pointer]:
+                      - img [ref=e150]
+              - row "Test Post by Real User - Ojas Dixit Test User One Global REMOVED ❤️ 2" [ref=e153]:
+                - cell "Test Post by Real User - Ojas Dixit" [ref=e154]
+                - cell "Test User One" [ref=e155]
+                - cell [ref=e156]
+                - cell "Global" [ref=e157]
+                - cell "REMOVED" [ref=e158]
+                - cell "❤️ 2" [ref=e159]
+                - cell [ref=e160]:
+                  - generic [ref=e161]:
+                    - link "View" [ref=e162] [cursor=pointer]:
+                      - /url: /post/a7ff2243-3a89-4677-833c-6c5348270875
+                      - img [ref=e163]
+                    - button "Remove" [ref=e166] [cursor=pointer]:
+                      - img [ref=e167]
+              - row "Real User Post Test - Ojas ojas Global PUBLISHED ❤️ 1" [ref=e170]:
+                - cell "Real User Post Test - Ojas" [ref=e171]
+                - cell "ojas" [ref=e172]
+                - cell [ref=e173]
+                - cell "Global" [ref=e174]
+                - cell "PUBLISHED" [ref=e175]
+                - cell "❤️ 1" [ref=e176]
+                - cell [ref=e177]:
+                  - generic [ref=e178]:
+                    - link "View" [ref=e179] [cursor=pointer]:
+                      - /url: /post/260d4729-d9b5-434d-9162-b6e340a3c13a
+                      - img [ref=e180]
+                    - button "Remove" [ref=e183] [cursor=pointer]:
+                      - img [ref=e184]
+  - contentinfo [ref=e87]:
+    - generic [ref=e88]:
+      - generic [ref=e89]:
+        - link "Privacy Policy" [ref=e90] [cursor=pointer]:
+          - /url: /policy/privacy-policy
+        - link "Terms of Use" [ref=e91] [cursor=pointer]:
+          - /url: /policy/terms-of-use
+        - link "Cookie Policy" [ref=e92] [cursor=pointer]:
+          - /url: /policy/cookie-policy
+      - paragraph [ref=e93]: © 2026 Purseable. All rights reserved.
+  - button "Open Next.js Dev Tools" [ref=e99] [cursor=pointer]:
+    - img [ref=e100]
+  - alert [ref=e119]

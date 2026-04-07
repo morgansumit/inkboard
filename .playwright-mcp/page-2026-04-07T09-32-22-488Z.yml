@@ -1,0 +1,67 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - link "P" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]:
+        - link "Home" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+          - generic: Home
+        - link "Nearby" [ref=e11] [cursor=pointer]:
+          - /url: /explore
+          - img [ref=e13]
+          - generic: Nearby
+    - generic [ref=e16]:
+      - banner [ref=e17]:
+        - generic [ref=e18]:
+          - link "purseable home" [ref=e19] [cursor=pointer]:
+            - /url: /
+            - img "Purseable" [ref=e20]
+          - generic [ref=e21]:
+            - img [ref=e22]
+            - textbox "Search posts, authors, tags…" [ref=e25]
+      - main [ref=e28]:
+        - generic [ref=e30]:
+          - generic [ref=e31]:
+            - link "Purseable" [ref=e32] [cursor=pointer]:
+              - /url: /
+            - heading "Welcome back" [level=1] [ref=e33]
+            - paragraph [ref=e34]: Sign in to your account
+          - link "Continue with Google" [ref=e35] [cursor=pointer]:
+            - /url: /api/auth/google
+            - img [ref=e36]
+            - text: Continue with Google
+          - generic [ref=e43]: or
+          - generic [ref=e45]:
+            - generic [ref=e46]:
+              - generic [ref=e47]: Email
+              - textbox "you@example.com" [ref=e48]
+            - generic [ref=e49]:
+              - generic [ref=e50]:
+                - generic [ref=e51]: Password
+                - button "Forgot password?" [ref=e52] [cursor=pointer]
+              - generic [ref=e53]:
+                - textbox "Your password" [ref=e54]
+                - button [ref=e55] [cursor=pointer]:
+                  - img [ref=e56]
+            - generic [ref=e59]:
+              - checkbox "Remember this device" [ref=e60]
+              - generic [ref=e61]: Remember this device
+            - button "Log In" [ref=e62] [cursor=pointer]
+          - paragraph [ref=e63]:
+            - text: Don't have an account?
+            - link "Sign up free" [ref=e64] [cursor=pointer]:
+              - /url: /register
+  - contentinfo [ref=e65]:
+    - generic [ref=e66]:
+      - generic [ref=e67]:
+        - link "Privacy Policy" [ref=e68] [cursor=pointer]:
+          - /url: /policy/privacy-policy
+        - link "Terms of Use" [ref=e69] [cursor=pointer]:
+          - /url: /policy/terms-of-use
+        - link "Cookie Policy" [ref=e70] [cursor=pointer]:
+          - /url: /policy/cookie-policy
+      - paragraph [ref=e71]: © 2026 Purseable. All rights reserved.
+  - button "Open Next.js Dev Tools" [ref=e77] [cursor=pointer]:
+    - img [ref=e78]

@@ -28,8 +28,8 @@ export async function GET(
     // Check if user is the author
     const isAuthor = authUser?.id === post.author_id;
     
-    // If archived and not author, return 404
-    if (post.status === 'ARCHIVED' && !isAuthor) {
+    // If archived (DRAFT) and not author, return 404
+    if (post.status === 'DRAFT' && !isAuthor) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 });
     }
 
@@ -173,8 +173,8 @@ export async function PATCH(
       return NextResponse.json({ error: 'Not authorized to modify this post' }, { status: 403 });
     }
 
-    const newStatus = action === 'archive' ? 'ARCHIVED' : 
-                      (existingPost.status === 'ARCHIVED' ? 'PUBLISHED' : existingPost.status);
+    const newStatus = action === 'archive' ? 'DRAFT' :
+                      (existingPost.status === 'DRAFT' ? 'PUBLISHED' : existingPost.status);
 
     const { data: post, error } = await supabaseAdmin
       .from('posts')

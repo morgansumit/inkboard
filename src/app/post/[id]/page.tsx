@@ -179,12 +179,14 @@ export default async function PostPage(props: { params: Promise<{ id: string }> 
         }
         const comments: Comment[] = [];
 
-        // Check if current user follows the post author
+        // Check if current user follows the post author and if they own the post
         let isFollowingAuthor = false;
+        let isAuthor = false;
         if (post.author?.id) {
             const supabase = await createClient();
             const { data: { user } } = await supabase.auth.getUser();
             if (user) {
+                isAuthor = user.id === rawPost.author_id;
                 const { data: followData } = await supabase
                     .from('follows')
                     .select('follower_id')
@@ -195,7 +197,7 @@ export default async function PostPage(props: { params: Promise<{ id: string }> 
             }
         }
 
-        return <PostDetailClient post={post} comments={comments} morePosts={morePosts} isFollowingAuthor={isFollowingAuthor} />;
+        return <PostDetailClient post={post} comments={comments} morePosts={morePosts} isFollowingAuthor={isFollowingAuthor} isAuthor={isAuthor} />;
     } catch (error) {
         console.error('[PostPage] Error:', error);
         return (

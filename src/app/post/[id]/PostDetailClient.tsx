@@ -2,11 +2,12 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Heart, MessageCircle, Share2, Flame, Clock, Calendar, Send, ChevronDown } from 'lucide-react';
+import { Heart, MessageCircle, Share2, Flame, Clock, Calendar, Send, ChevronDown, Flag, Trash2, Archive, Edit3, MoreHorizontal } from 'lucide-react';
 import type { Post, Comment } from '@/types';
 import { PostCard } from '@/components/PostCard';
 import { Comments } from '@/components/Comments';
 import FollowButton from '@/components/FollowButton';
+import { ReportModal } from '@/components/ReportModal';
 import { createClient } from '@/lib/supabase/client';
 // Sanitize HTML - on server just pass through, on client use native DOM
 // (isomorphic-dompurify crashes on Netlify due to jsdom ESM incompatibility)
@@ -42,6 +43,7 @@ interface Props {
     comments: Comment[];
     morePosts: Post[];
     isFollowingAuthor?: boolean;
+    isAuthor?: boolean;
 }
 
 function CommentItem({ comment, depth = 0 }: { comment: Comment; depth?: number }) {
@@ -81,12 +83,17 @@ function CommentItem({ comment, depth = 0 }: { comment: Comment; depth?: number 
     );
 }
 
-export function PostDetailClient({ post, comments, morePosts, isFollowingAuthor = false }: Props) {
+export function PostDetailClient({ post, comments, morePosts, isFollowingAuthor = false, isAuthor = false }: Props) {
     const router = useRouter();
     const [liked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
     const [commentCount, setCommentCount] = useState(0);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [showReportModal, setShowReportModal] = useState(false);
+    const [showPostMenu, setShowPostMenu] = useState(false);
+    const [deleting, setDeleting] = useState(false);
+    const [archiving, setArchiving] = useState(false);
+    const [postStatus, setPostStatus] = useState(post.status);
 
     // Check authentication status
     useEffect(() => {
@@ -171,6 +178,48 @@ export function PostDetailClient({ post, comments, morePosts, isFollowingAuthor 
             navigator.share({ title: post.title, url: window.location.href });
         } else {
             navigator.clipboard.writeText(window.location.href);
+        }
+    };
+
+    const handleDelete = async () => {
+        if (!confirm('Are you sure you want to delete this post? This action cannot be undone.')) return;
+        setDeleting(true);
+        try {
+            const res = await fetch(`/api/posts/${post.id}`, { method: 'DELETE' });
+            if (res.ok) {
+                router.push('/');
+            } else {
+                const data = await res.json();
+                alert(data.error || 'Failed to delete post');
+            }
+        } catch {
+            alert('Failed to delete post');
+        } finally {
+            setDeleting(false);
+        }
+    };
+
+    const handleArchive = async () => {
+        const action = postStatus === 'DRAFT' ? 'unarchive' : 'archive';
+        setArchiving(true);
+        try {
+            const res = await fetch(`/api/posts/${post.id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action }),
+            });
+            if (res.ok) {
+                const data = await res.json();
+                setPostStatus(data.post.status);
+                setShowPostMenu(false);
+            } else {
+                const data = await res.json();
+                alert(data.error || 'Failed to update post');
+            }
+        } catch {
+            alert('Failed to update post');
+        } finally {
+            setArchiving(false);
         }
     };
 
@@ -306,6 +355,104 @@ const reading = (text) => {
                             }}>
                             <Share2 size={16} /> Share
                         </button>
+
+                        {/* Report button for non-authors */}
+                        {!isAuthor && isAuthenticated && (
+                            <button
+                                data-testid="report-button"
+                                onClick={() => setShowReportModal(true)}
+                                style={{
+                                    display: 'flex', alignItems: 'center', gap: '8px',
+                                    background: 'transparent', border: '1.5px solid var(--color-border)',
+                                    borderRadius: '24px', padding: '8px 16px',
+                                    color: 'var(--color-muted)', cursor: 'pointer',
+                                    fontFamily: 'var(--font-ui)', fontSize: '14px', fontWeight: 600,
+                                    transition: 'all 150ms',
+                                }}
+                            >
+                                <Flag size={16} />
+                            </button>
+                        )}
+
+                        {/* Author actions menu */}
+                        {isAuthor && (
+                            <div style={{ position: 'relative' }}>
+                                <button
+                                    data-testid="post-menu-button"
+                                    onClick={() => setShowPostMenu(!showPostMenu)}
+                                    style={{
+                                        display: 'flex', alignItems: 'center', gap: '6px',
+                                        background: 'transparent', border: '1.5px solid var(--color-border)',
+                                        borderRadius: '24px', padding: '8px 16px',
+                                        color: 'var(--color-muted)', cursor: 'pointer',
+                                        fontFamily: 'var(--font-ui)', fontSize: '14px', fontWeight: 600,
+                                    }}
+                                >
+                                    <MoreHorizontal size={16} />
+                                </button>
+                                {showPostMenu && (
+                                    <div
+                                        data-testid="post-menu-dropdown"
+                                        style={{
+                                            position: 'absolute', right: 0, top: '100%', marginTop: '8px',
+                                            background: 'white', borderRadius: '12px', padding: '6px',
+                                            boxShadow: '0 8px 30px rgba(0,0,0,0.12)', border: '1px solid #e5e5e5',
+                                            minWidth: '180px', zIndex: 50,
+                                        }}
+                                    >
+                                        <button
+                                            data-testid="edit-post-button"
+                                            onClick={() => router.push(`/post/${post.id}/edit`)}
+                                            style={{
+                                                display: 'flex', alignItems: 'center', gap: '10px',
+                                                width: '100%', padding: '10px 12px', border: 'none',
+                                                background: 'transparent', cursor: 'pointer', borderRadius: '8px',
+                                                fontSize: '14px', fontWeight: 500, textAlign: 'left',
+                                            }}
+                                            onMouseEnter={(e) => (e.currentTarget.style.background = '#f5f5f5')}
+                                            onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+                                        >
+                                            <Edit3 size={15} /> Edit Post
+                                        </button>
+                                        <button
+                                            data-testid="archive-post-button"
+                                            onClick={handleArchive}
+                                            disabled={archiving}
+                                            style={{
+                                                display: 'flex', alignItems: 'center', gap: '10px',
+                                                width: '100%', padding: '10px 12px', border: 'none',
+                                                background: 'transparent', cursor: 'pointer', borderRadius: '8px',
+                                                fontSize: '14px', fontWeight: 500, textAlign: 'left',
+                                                opacity: archiving ? 0.6 : 1,
+                                            }}
+                                            onMouseEnter={(e) => (e.currentTarget.style.background = '#f5f5f5')}
+                                            onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+                                        >
+                                            <Archive size={15} />
+                                            {archiving ? 'Updating...' : (postStatus === 'DRAFT' ? 'Unarchive Post' : 'Archive Post')}
+                                        </button>
+                                        <div style={{ height: '1px', background: '#e5e5e5', margin: '4px 0' }} />
+                                        <button
+                                            data-testid="delete-post-button"
+                                            onClick={handleDelete}
+                                            disabled={deleting}
+                                            style={{
+                                                display: 'flex', alignItems: 'center', gap: '10px',
+                                                width: '100%', padding: '10px 12px', border: 'none',
+                                                background: 'transparent', cursor: 'pointer', borderRadius: '8px',
+                                                fontSize: '14px', fontWeight: 500, textAlign: 'left',
+                                                color: '#DC2626', opacity: deleting ? 0.6 : 1,
+                                            }}
+                                            onMouseEnter={(e) => (e.currentTarget.style.background = '#FEF2F2')}
+                                            onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+                                        >
+                                            <Trash2 size={15} />
+                                            {deleting ? 'Deleting...' : 'Delete Post'}
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
 
                     {/* Comments Section */}
@@ -323,6 +470,11 @@ const reading = (text) => {
                         </div>
                     </div>
                 </div>
+            )}
+
+            {/* Report Modal */}
+            {showReportModal && (
+                <ReportModal postId={post.id} onClose={() => setShowReportModal(false)} />
             )}
         </div>
     );

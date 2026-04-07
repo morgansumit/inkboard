@@ -76,7 +76,11 @@ type DbAd = {
 
 type DbReport = {
     id?: string | number | null;
+    reporter_id?: string | null;
+    content_type?: string | null;
+    content_id?: string | null;
     reason?: string | null;
+    resolution_note?: string | null;
     type?: string | null;
     status?: string | null;
     created_at?: string | null;
@@ -234,6 +238,7 @@ export function AdminClient() {
     const [businessDrafts, setBusinessDrafts] = useState<Record<string, string>>({});
     const [broadcastForm, setBroadcastForm] = useState({ title: '', body: '', message_type: 'ANNOUNCEMENT' as const, priority: 'NORMAL' as const, scheduled_at: '', expires_at: '' });
     const [broadcastSubmitting, setBroadcastSubmitting] = useState(false);
+    const [reportActionPendingId, setReportActionPendingId] = useState<string | null>(null);
     
     // Admin post creation form state
     const [postForm, setPostForm] = useState({ 
@@ -247,6 +252,7 @@ export function AdminClient() {
     });
     const [postSubmitting, setPostSubmitting] = useState(false);
     const [showCreatePost, setShowCreatePost] = useState(false);
+    const [postRemovingId, setPostRemovingId] = useState<string | null>(null);
 
     const isMountedRef = useRef(true);
     const editingRef = useRef(false);
@@ -520,6 +526,8 @@ export function AdminClient() {
     }, [posts, activeView]);
 
     const handleMarkPostRemoved = async (id: string) => {
+        setPostRemovingId(id);
+        setError(null);
         try {
             const res = await fetch('/api/admin/posts/remove', {
                 method: 'POST',
@@ -534,8 +542,33 @@ export function AdminClient() {
         } catch (err: unknown) {
             setError(getErrorMessage(err));
             return;
+        } finally {
+            setPostRemovingId(null);
         }
         setPosts(prev => prev.map(p => (p.id === id ? { ...p, status: 'REMOVED' } : p)));
+    };
+
+    const handleReportAction = async (reportId: string, action: 'resolve' | 'dismiss') => {
+        setReportActionPendingId(reportId);
+        try {
+            const res = await fetch('/api/admin/reports', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: reportId, action }),
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                setError(data?.error || 'Failed to update report');
+                return;
+            }
+            setReports(prev => prev.map(r =>
+                String(r.id) === reportId ? { ...r, status: data.status } : r
+            ));
+        } catch (err: unknown) {
+            setError(getErrorMessage(err));
+        } finally {
+            setReportActionPendingId(null);
+        }
     };
 
     const loadBroadcasts = useCallback(async () => {
@@ -907,7 +940,27 @@ const handleUpdateBusinessStatus = async (id: string, userId: string, status: st
                                             <td style={{ padding: '12px 16px' }}>
                                                 <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                                                     <Link href={`/post/${post.id}`} title="View" style={{ color: 'var(--color-muted)', display: 'inline-flex' }}><Eye size={14} /></Link>
-                                                    <button title="Remove" onClick={() => handleMarkPostRemoved(post.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#DC2626', display: 'inline-flex' }}><Trash2 size={14} /></button>
+                                                    <button 
+                                                        title="Remove" 
+                                                        onClick={() => handleMarkPostRemoved(post.id)} 
+                                                        disabled={postRemovingId === post.id}
+                                                        style={{ 
+                                                            background: 'none', 
+                                                            border: 'none', 
+                                                            cursor: postRemovingId === post.id ? 'wait' : 'pointer', 
+                                                            color: '#DC2626', 
+                                                            display: 'inline-flex',
+                                                            opacity: postRemovingId === post.id ? 0.6 : 1,
+                                                            alignItems: 'center',
+                                                            gap: '4px'
+                                                        }}
+                                                    >
+                                                        {postRemovingId === post.id ? (
+                                                            <span style={{ fontSize: '10px', fontWeight: 600 }}>Removing...</span>
+                                                        ) : (
+                                                            <Trash2 size={14} />
+                                                        )}
+                                                    </button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -1103,25 +1156,123 @@ const handleUpdateBusinessStatus = async (id: string, userId: string, status: st
                         </div>
                     </div>
                 );
-            case 'reports':
+            case 'reports': {
+                const REASON_LABELS: Record<string, string> = {
+                    spam: 'Spam',
+                    nudity_sexual: 'Nudity or sexual activity',
+                    hate_speech: 'Hate speech or symbols',
+                    harassment_bullying: 'Bullying or harassment',
+                    violence: 'Violence or dangerous orgs',
+                    false_information: 'False information',
+                    intellectual_property: 'Intellectual property violation',
+                    scam_fraud: 'Scam or fraud',
+                    self_harm: 'Suicide or self-injury',
+                    other: 'Other',
+                };
+                const pendingReportsFiltered = reports.filter(r => String(r.status ?? '').toUpperCase() === 'PENDING');
+                const resolvedReportsFiltered = reports.filter(r => String(r.status ?? '').toUpperCase() !== 'PENDING');
                 return (
                     <div>
                         <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '22px', fontWeight: 700, marginBottom: '20px' }}>Reported Content Queue</h2>
                         {reports.length === 0 ? (
                             <p style={{ color: 'var(--color-muted)' }}>No reports found.</p>
                         ) : (
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                                {reports.map((report, idx) => (
-                                    <div key={String(report.id ?? idx)} style={{ background: 'var(--color-surface)', borderRadius: '12px', padding: '16px', boxShadow: 'var(--shadow-card)' }}>
-                                        <p style={{ fontWeight: 700, marginBottom: '6px' }}>{String(report.reason ?? report.type ?? 'Report')}</p>
-                                        <p style={{ fontSize: '13px', color: 'var(--color-muted)' }}>Status: {String(report.status ?? 'PENDING')}</p>
-                                        {'created_at' in report && <p style={{ fontSize: '12px', color: 'var(--color-muted)', marginTop: '4px' }}>{new Date(String(report.created_at)).toLocaleString()}</p>}
+                            <>
+                                {pendingReportsFiltered.length > 0 && (
+                                    <div style={{ marginBottom: '28px' }}>
+                                        <h3 style={{ fontSize: '15px', fontWeight: 700, marginBottom: '12px', color: '#DC2626' }}>
+                                            Pending ({pendingReportsFiltered.length})
+                                        </h3>
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                            {pendingReportsFiltered.map((report, idx) => {
+                                                const reasonKey = String(report.reason ?? '');
+                                                const reasonLabel = REASON_LABELS[reasonKey] || reasonKey || String(report.type ?? 'Report');
+                                                const isPending = reportActionPendingId === String(report.id);
+                                                return (
+                                                    <div key={String(report.id ?? idx)} data-testid={`report-item-${report.id}`} style={{ background: 'var(--color-surface)', borderRadius: '12px', padding: '18px 20px', boxShadow: 'var(--shadow-card)', borderLeft: '4px solid #DC2626' }}>
+                                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
+                                                            <div style={{ flex: 1 }}>
+                                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                                                                    <span style={{ display: 'inline-flex', alignItems: 'center', borderRadius: '999px', padding: '4px 10px', fontSize: '12px', fontWeight: 700, background: '#FEE2E2', color: '#991B1B' }}>
+                                                                        {reasonLabel}
+                                                                    </span>
+                                                                    <span style={{ fontSize: '12px', color: 'var(--color-muted)' }}>
+                                                                        {report.content_type === 'POST' ? 'Post' : report.content_type || 'Content'}
+                                                                    </span>
+                                                                </div>
+                                                                {report.resolution_note && (
+                                                                    <p style={{ fontSize: '13px', color: 'var(--color-primary)', marginBottom: '6px', lineHeight: 1.5 }}>
+                                                                        &ldquo;{String(report.resolution_note)}&rdquo;
+                                                                    </p>
+                                                                )}
+                                                                <div style={{ display: 'flex', gap: '12px', fontSize: '12px', color: 'var(--color-muted)' }}>
+                                                                    {report.content_id && (
+                                                                        <Link href={`/post/${report.content_id}`} style={{ color: 'var(--color-accent)', textDecoration: 'underline' }}>
+                                                                            View Post
+                                                                        </Link>
+                                                                    )}
+                                                                    {report.created_at && <span>{new Date(String(report.created_at)).toLocaleString()}</span>}
+                                                                </div>
+                                                            </div>
+                                                            <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
+                                                                <button
+                                                                    data-testid={`report-resolve-${report.id}`}
+                                                                    onClick={() => handleReportAction(String(report.id), 'resolve')}
+                                                                    disabled={isPending}
+                                                                    style={{ padding: '6px 14px', borderRadius: '8px', border: 'none', background: '#D1FAE5', color: '#065F46', fontSize: '12px', fontWeight: 700, cursor: 'pointer', opacity: isPending ? 0.6 : 1 }}
+                                                                >
+                                                                    {isPending ? 'Updating...' : 'Resolve'}
+                                                                </button>
+                                                                <button
+                                                                    data-testid={`report-dismiss-${report.id}`}
+                                                                    onClick={() => handleReportAction(String(report.id), 'dismiss')}
+                                                                    disabled={isPending}
+                                                                    style={{ padding: '6px 14px', borderRadius: '8px', border: '1px solid var(--color-border)', background: 'transparent', color: 'var(--color-muted)', fontSize: '12px', fontWeight: 700, cursor: 'pointer', opacity: isPending ? 0.6 : 1 }}
+                                                                >
+                                                                    Dismiss
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
                                     </div>
-                                ))}
-                            </div>
+                                )}
+                                {resolvedReportsFiltered.length > 0 && (
+                                    <div>
+                                        <h3 style={{ fontSize: '15px', fontWeight: 700, marginBottom: '12px', color: 'var(--color-muted)' }}>
+                                            Resolved / Dismissed ({resolvedReportsFiltered.length})
+                                        </h3>
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                            {resolvedReportsFiltered.map((report, idx) => {
+                                                const reasonKey = String(report.reason ?? '');
+                                                const reasonLabel = REASON_LABELS[reasonKey] || reasonKey || String(report.type ?? 'Report');
+                                                const statusUpper = String(report.status ?? '').toUpperCase();
+                                                return (
+                                                    <div key={String(report.id ?? idx)} style={{ background: 'var(--color-surface)', borderRadius: '12px', padding: '14px 18px', boxShadow: 'var(--shadow-card)', opacity: 0.7 }}>
+                                                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                                            <span style={{ fontSize: '13px', fontWeight: 600 }}>{reasonLabel}</span>
+                                                            <span style={{
+                                                                display: 'inline-flex', borderRadius: '999px', padding: '3px 8px', fontSize: '11px', fontWeight: 700,
+                                                                background: statusUpper === 'RESOLVED' ? '#D1FAE5' : '#E5E7EB',
+                                                                color: statusUpper === 'RESOLVED' ? '#065F46' : '#374151',
+                                                            }}>
+                                                                {statusUpper}
+                                                            </span>
+                                                            {report.created_at && <span style={{ fontSize: '12px', color: 'var(--color-muted)', marginLeft: 'auto' }}>{new Date(String(report.created_at)).toLocaleString()}</span>}
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                )}
+                            </>
                         )}
                     </div>
                 );
+            }
             case 'geologs':
                 return (
                     <div>

@@ -1,0 +1,75 @@
+- generic [ref=e1]:
+  - main [ref=e4]:
+    - generic [ref=e5]:
+      - complementary [ref=e6]:
+        - generic [ref=e7]:
+          - generic [ref=e8]:
+            - img "Purseable" [ref=e9]
+            - generic [ref=e10]: Purseable
+          - generic [ref=e11]: Admin Panel
+        - button "Dashboard" [ref=e12] [cursor=pointer]:
+          - img [ref=e13]
+          - text: Dashboard
+        - button "Business Accounts" [ref=e20] [cursor=pointer]:
+          - img [ref=e21]
+          - text: Business Accounts
+        - button "Ads Management" [ref=e26] [cursor=pointer]:
+          - img [ref=e27]
+          - text: Ads Management
+        - button "Post Management" [ref=e29] [cursor=pointer]:
+          - img [ref=e30]
+          - text: Post Management
+        - button "User Management" [ref=e33] [cursor=pointer]:
+          - img [ref=e34]
+          - text: User Management
+        - button "Reports" [active] [ref=e39] [cursor=pointer]:
+          - img [ref=e40]
+          - text: Reports
+          - img [ref=e103]
+        - button "Geo Logs" [ref=e42] [cursor=pointer]:
+          - img [ref=e43]
+          - text: Geo Logs
+        - button "Broadcast Messages" [ref=e46] [cursor=pointer]:
+          - img [ref=e47]
+          - text: Broadcast Messages
+        - generic [ref=e50]:
+          - link "Coupons & Deals" [ref=e51] [cursor=pointer]:
+            - /url: /admin/coupons
+            - img [ref=e52]
+            - text: Coupons & Deals
+          - link "Legal Policies" [ref=e56] [cursor=pointer]:
+            - /url: /admin/policies
+            - img [ref=e57]
+            - text: Legal Policies
+          - button "Sign out" [ref=e59] [cursor=pointer]:
+            - img [ref=e60]
+            - text: Sign out
+          - link "Back to Site" [ref=e63] [cursor=pointer]:
+            - /url: /
+            - img [ref=e64]
+            - text: Back to Site
+      - main [ref=e66]:
+        - generic [ref=e67]:
+          - button "Refresh now" [ref=e68] [cursor=pointer]
+          - generic [ref=e105]: Cached at 3:08:38 PM (fresh)
+        - generic [ref=e69]:
+          - heading "Reported Content Queue" [level=2] [ref=e106]
+          - generic [ref=e107]:
+            - heading "Resolved / Dismissed (1)" [level=3] [ref=e108]
+            - generic [ref=e111]:
+              - generic [ref=e112]: Spam
+              - generic [ref=e113]: RESOLVED
+              - generic [ref=e114]: 4/7/2026, 3:04:13 PM
+  - contentinfo [ref=e87]:
+    - generic [ref=e88]:
+      - generic [ref=e89]:
+        - link "Privacy Policy" [ref=e90] [cursor=pointer]:
+          - /url: /policy/privacy-policy
+        - link "Terms of Use" [ref=e91] [cursor=pointer]:
+          - /url: /policy/terms-of-use
+        - link "Cookie Policy" [ref=e92] [cursor=pointer]:
+          - /url: /policy/cookie-policy
+      - paragraph [ref=e93]: © 2026 Purseable. All rights reserved.
+  - button "Open Next.js Dev Tools" [ref=e99] [cursor=pointer]:
+    - img [ref=e100]
+  - alert [ref=e115]

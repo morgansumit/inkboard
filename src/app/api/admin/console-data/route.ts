@@ -167,7 +167,7 @@ async function refreshCache(): Promise<AdminConsoleData> {
 
     const reportsRes = await supabaseAdmin
         .from('reports')
-        .select('*')
+        .select('id, reporter_id, content_type, content_id, reason, status, created_at, resolution_note')
         .order('created_at', { ascending: false })
         .limit(200)
 

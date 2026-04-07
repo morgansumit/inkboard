@@ -1,0 +1,113 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - link "P" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]:
+        - link "Home" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+          - generic: Home
+        - link "Nearby" [ref=e11] [cursor=pointer]:
+          - /url: /explore
+          - img [ref=e13]
+          - generic: Nearby
+        - link "Create" [ref=e82] [cursor=pointer]:
+          - /url: /compose
+          - img [ref=e84]
+          - generic: Create
+        - link "Messages" [ref=e85] [cursor=pointer]:
+          - /url: /messages
+          - img [ref=e87]
+          - generic: Messages
+        - link "Alerts" [ref=e89] [cursor=pointer]:
+          - /url: /notifications
+          - img [ref=e91]
+          - generic: Alerts
+        - link "Profile" [ref=e94] [cursor=pointer]:
+          - /url: /profile
+          - img [ref=e96]
+          - generic: Profile
+    - generic [ref=e16]:
+      - banner [ref=e17]:
+        - generic [ref=e18]:
+          - link "purseable home" [ref=e19] [cursor=pointer]:
+            - /url: /
+            - img "Purseable" [ref=e20]
+          - generic [ref=e21]:
+            - img [ref=e22]
+            - textbox "Search posts, authors, tags…" [ref=e25]
+          - generic [ref=e26]:
+            - link "Admin Console" [ref=e117] [cursor=pointer]:
+              - /url: /admin
+              - img [ref=e118]
+              - text: Admin Console
+            - link "Write" [ref=e120] [cursor=pointer]:
+              - /url: /compose
+              - img [ref=e121]
+              - text: Write
+            - button "Notifications" [ref=e125] [cursor=pointer]:
+              - img [ref=e126]
+            - button "Inkboard Admin Inkboard Admin admin@inkboard.com" [ref=e130] [cursor=pointer]:
+              - img "Inkboard Admin" [ref=e131]
+              - generic [ref=e132]:
+                - generic [ref=e133]: Inkboard Admin
+                - generic [ref=e134]: admin@inkboard.com
+      - main [ref=e28]:
+        - generic [ref=e135]:
+          - generic [ref=e136]:
+            - button "✨ For You" [ref=e137] [cursor=pointer]
+            - button "📚 Literature" [ref=e138] [cursor=pointer]
+            - button "✈️ Travel" [ref=e139] [cursor=pointer]
+            - button "💻 Technology" [ref=e140] [cursor=pointer]
+            - button "🍽️ Food & Drink" [ref=e141] [cursor=pointer]
+            - button "🏛️ Politics" [ref=e142] [cursor=pointer]
+            - button "🧠 Philosophy" [ref=e143] [cursor=pointer]
+            - button "✍️ Poetry" [ref=e144] [cursor=pointer]
+            - button "🌿 Health & Wellness" [ref=e145] [cursor=pointer]
+            - button "📷 Photography" [ref=e146] [cursor=pointer]
+            - button "🎵 Music" [ref=e147] [cursor=pointer]
+            - button "🎬 Cinema" [ref=e148] [cursor=pointer]
+            - button "🔬 Science" [ref=e149] [cursor=pointer]
+          - generic [ref=e150]:
+            - heading "Your Feed" [level=2] [ref=e151]
+            - generic [ref=e152]: 1 stories
+          - article [ref=e156] [cursor=pointer]:
+            - link "View Real User Post Test - Ojas" [ref=e157]:
+              - /url: /post/260d4729-d9b5-434d-9162-b6e340a3c13a
+            - img "Real User Post Test - Ojas" [ref=e159]
+            - generic [ref=e160]:
+              - link "ojas" [ref=e161]:
+                - /url: /u/ojas
+                - img "ojas" [ref=e162]
+              - link "ojas" [ref=e164]:
+                - /url: /u/ojas
+              - generic [ref=e165]:
+                - img [ref=e166]
+                - text: 1m
+            - generic [ref=e169]:
+              - heading "Real User Post Test - Ojas" [level=2] [ref=e170]
+              - paragraph [ref=e171]: Testing real user post creation
+            - generic [ref=e172]:
+              - button "Like" [ref=e173]:
+                - img [ref=e174]
+                - text: "1"
+              - button "Comments" [ref=e176]:
+                - img [ref=e177]
+                - text: "2"
+              - button "Share" [ref=e179]:
+                - img [ref=e180]
+          - paragraph [ref=e187]: ✨ You've seen all the stories for now. Refresh for more.
+  - contentinfo [ref=e65]:
+    - generic [ref=e66]:
+      - generic [ref=e67]:
+        - link "Privacy Policy" [ref=e68] [cursor=pointer]:
+          - /url: /policy/privacy-policy
+        - link "Terms of Use" [ref=e69] [cursor=pointer]:
+          - /url: /policy/terms-of-use
+        - link "Cookie Policy" [ref=e70] [cursor=pointer]:
+          - /url: /policy/cookie-policy
+      - paragraph [ref=e71]: © 2026 Purseable. All rights reserved.
+  - button "Open Next.js Dev Tools" [ref=e77] [cursor=pointer]:
+    - img [ref=e78]
+  - alert [ref=e81]: purseable — Discover Writing You Love

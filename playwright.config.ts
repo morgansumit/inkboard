@@ -4,7 +4,7 @@ export default defineConfig({
     testDir: './tests',
     timeout: 60_000,
     use: {
-        baseURL: 'http://localhost:3000',
+        baseURL: 'http://localhost:3001',
         headless: true,
     },
     projects: [
@@ -15,7 +15,7 @@ export default defineConfig({
     ],
     webServer: {
         command: 'npm run dev',
-        port: 3000,
+        port: 3001,
         reuseExistingServer: true,
         timeout: 120_000,
     },

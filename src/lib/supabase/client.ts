@@ -4,7 +4,7 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 let browserClient: SupabaseClient | null = null
 
 // ── Profile cache helpers ──────────────────────────────────────────────
-const PROFILE_CACHE_KEY = 'purseable:user-profile'
+const PROFILE_CACHE_KEY = 'centsably:user-profile'
 const PROFILE_CACHE_TTL = 60 * 60 * 1000 // 1 hour
 
 export type CachedProfile = {
@@ -103,7 +103,7 @@ export function createClient() {
             },
             global: {
                 headers: {
-                    'x-client-info': 'purseable-web',
+                    'x-client-info': 'centsably-web',
                 },
             },
         })

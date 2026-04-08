@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: 'Not Available | purseable',
-    description: 'purseable is currently only available in Europe.',
+    title: 'Not Available | centsably',
+    description: 'centsably is currently only available in Europe.',
 };
 
 export default function GeoBlockPage() {
@@ -14,7 +14,7 @@ export default function GeoBlockPage() {
                     fontFamily: "'Playfair Display', serif",
                     fontSize: '32px', fontWeight: 800, marginBottom: '16px', color: 'white',
                 }}>
-                    purseable is only available in Europe
+                    centsably is only available in Europe
                 </h1>
                 <p style={{
                     fontFamily: "'Merriweather', Georgia, serif",

@@ -136,7 +136,7 @@ export default function OnboardingPage() {
                             disabled={saving}
                             style={{ textAlign: 'center', marginTop: '8px', opacity: saving ? 0.7 : 1, cursor: saving ? 'not-allowed' : 'pointer' }}
                         >
-                            {saving ? 'Saving...' : '🎉 Enter purseable'}
+                            {saving ? 'Saving...' : '🎉 Enter centsably'}
                         </button>
                         <Link href="/" style={{ textAlign: 'center', fontSize: '13px', color: 'var(--color-muted)', textDecoration: 'none' }}>
                             Skip for now

@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     try {
         const { id } = await params;
         const supabase = await getSupabase();
-        if (!supabase) return { title: 'Post | purseable' };
+        if (!supabase) return { title: 'Post | centsably' };
 
         const { data: post } = await supabase
             .from('posts')
@@ -66,9 +66,9 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
             .eq('id', id)
             .maybeSingle();
 
-        if (!post) return { title: 'Post Not Found | purseable' };
+        if (!post) return { title: 'Post Not Found | centsably' };
         const meta: Metadata = {
-            title: `${post.title || 'Post'} | purseable`,
+            title: `${post.title || 'Post'} | centsably`,
             description: post.subtitle || '',
             openGraph: {
                 title: post.title || 'Post',
@@ -82,7 +82,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
         return meta;
     } catch (error) {
         console.error('[PostPage] Metadata error:', error);
-        return { title: 'Post | purseable' };
+        return { title: 'Post | centsably' };
     }
 }
 

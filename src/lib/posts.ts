@@ -91,9 +91,9 @@ function ensureUser(record?: DbPost['users']): User {
   if (normalizedRecord) {
     return {
       id: normalizedRecord.id,
-      email: normalizedRecord.email || `${normalizedRecord.id}@purseable.local`,
+      email: normalizedRecord.email || `${normalizedRecord.id}@centsably.local`,
       username: normalizedRecord.username || normalizedRecord.id,
-      display_name: normalizedRecord.display_name || normalizedRecord.username || 'purseable Author',
+      display_name: normalizedRecord.display_name || normalizedRecord.username || 'centsably Author',
       bio: normalizedRecord.bio,
       avatar_url: normalizedRecord.avatar_url,
       location: normalizedRecord.location,

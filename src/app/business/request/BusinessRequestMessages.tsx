@@ -107,7 +107,7 @@ export default function BusinessRequestMessages({ businessRequestId }: Props) {
         <div className="business-request-form" style={{ marginTop: '18px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
                 <div>
-                    <h3 style={{ fontSize: '16px', fontWeight: 700 }}>Messages with purseable Ads</h3>
+                    <h3 style={{ fontSize: '16px', fontWeight: 700 }}>Messages with centsably Ads</h3>
                     <p className="form-legal" style={{ marginTop: '4px' }}>
                         Ask questions, discuss offers, and receive approval follow-ups here.
                     </p>
@@ -136,7 +136,7 @@ export default function BusinessRequestMessages({ businessRequestId }: Props) {
                                 {message.body}
                             </div>
                             <div className="form-legal" style={{ marginTop: '4px', textAlign: isAdminMessage ? 'left' : 'right' }}>
-                                {isAdminMessage ? 'purseable Admin' : 'You'} · {new Date(message.created_at).toLocaleString()}
+                                {isAdminMessage ? 'centsably Admin' : 'You'} · {new Date(message.created_at).toLocaleString()}
                             </div>
                         </div>
                     );

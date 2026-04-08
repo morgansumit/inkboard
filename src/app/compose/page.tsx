@@ -153,7 +153,7 @@ export default function ComposePage() {
             <div style={{ minHeight: '100vh', background: 'var(--color-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '16px', textAlign: 'center', padding: '40px' }}>
                 <div style={{ fontSize: '60px' }}>🎉</div>
                 <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: '32px', fontWeight: 800 }}>Your story is live!</h1>
-                <p style={{ color: 'var(--color-muted)', fontSize: '15px' }}>It's now appearing in the purseable feed for readers across Europe.</p>
+                <p style={{ color: 'var(--color-muted)', fontSize: '15px' }}>It's now appearing in the centsably feed for readers across Europe.</p>
                 <div style={{ display: 'flex', gap: '12px', marginTop: '8px' }}>
                     <a href="/post/p1" className="btn btn-primary">View your post →</a>
                     <a href="/compose" className="btn btn-secondary">Write another</a>
@@ -435,7 +435,7 @@ export default function ComposePage() {
                             Ready to publish?
                         </h2>
                         <p style={{ color: 'var(--color-muted)', fontSize: '14px', marginBottom: '24px' }}>
-                            Your post will immediately appear in the purseable feed across Europe.
+                            Your post will immediately appear in the centsably feed across Europe.
                         </p>
 
                         <div style={{ background: 'var(--color-bg)', borderRadius: '10px', padding: '16px', marginBottom: '20px' }}>

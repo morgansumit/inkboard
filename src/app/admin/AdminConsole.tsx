@@ -266,7 +266,7 @@ export function AdminClient() {
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
-        const storedView = window.localStorage.getItem('purseable:last-admin-view') as AdminView | null;
+        const storedView = window.localStorage.getItem('centsably:last-admin-view') as AdminView | null;
         const validViews = NAV.map(item => item.id);
         if (storedView && validViews.includes(storedView)) {
             setActiveView(storedView);
@@ -275,7 +275,7 @@ export function AdminClient() {
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
-        window.localStorage.setItem('purseable:last-admin-view', activeView);
+        window.localStorage.setItem('centsably:last-admin-view', activeView);
     }, [activeView]);
 
     useEffect(() => {
@@ -1503,7 +1503,7 @@ const handleUpdateBusinessStatus = async (id: string, userId: string, status: st
             <aside className="admin-sidebar">
                 <div style={{ padding: '0 24px 24px', borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: '8px' }}>
                     <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 800, fontSize: '22px', color: 'white' }}>
-                        Purseable
+                        Centsably
                     </div>
                     <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginTop: '4px', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
                         Admin Panel

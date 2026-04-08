@@ -3,14 +3,14 @@ import { createAnonClient } from '@/lib/supabase/anon';
 
 export const runtime = 'nodejs';
 
-// Helper to replace purseable with centsably in policy content
+// Helper to replace centsably with centsably in policy content
 function transformPolicy(policy: any) {
     if (!policy) return policy;
     return {
         ...policy,
-        title: policy.title?.replace(/purseable/gi, 'centsably'),
-        content: policy.content?.replace(/purseable/gi, 'centsably'),
-        description: policy.description?.replace(/purseable/gi, 'centsably'),
+        title: policy.title?.replace(/centsably/gi, 'centsably'),
+        content: policy.content?.replace(/centsably/gi, 'centsably'),
+        description: policy.description?.replace(/centsably/gi, 'centsably'),
     };
 }
 

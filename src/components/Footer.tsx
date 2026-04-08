@@ -61,7 +61,7 @@ export function Footer() {
                     fontSize: '12px',
                     margin: 0
                 }}>
-                    © {new Date().getFullYear()} Purseable. All rights reserved.
+                    © {new Date().getFullYear()} Centsably. All rights reserved.
                 </p>
             </div>
         </footer>

@@ -12,8 +12,8 @@ async function getSupabase() {
 export async function generateMetadata({ params }: { params: Promise<{ name: string }> }): Promise<Metadata> {
     const { name } = await params;
     return {
-        title: `#${name} — Stories & Articles | purseable`,
-        description: `Explore all posts tagged with "${name}" on purseable — Europe's platform for long-form writing.`,
+        title: `#${name} — Stories & Articles | centsably`,
+        description: `Explore all posts tagged with "${name}" on centsably — Europe's platform for long-form writing.`,
     };
 }
 

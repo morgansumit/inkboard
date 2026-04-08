@@ -11,7 +11,7 @@ interface AdminSetupClientProps {
 export function AdminSetupClient({ token, expiresAt }: AdminSetupClientProps) {
     const router = useRouter();
     const [email, setEmail] = useState('');
-    const [displayName, setDisplayName] = useState('purseable Admin');
+    const [displayName, setDisplayName] = useState('centsably Admin');
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
     const [error, setError] = useState<string | null>(null);
@@ -77,7 +77,7 @@ export function AdminSetupClient({ token, expiresAt }: AdminSetupClientProps) {
                     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                         <div>
                             <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '6px' }}>Admin email</label>
-                            <input className="input" type="email" placeholder="admin@purseable.eu" required value={email} onChange={e => setEmail(e.target.value)} />
+                            <input className="input" type="email" placeholder="admin@centsably.eu" required value={email} onChange={e => setEmail(e.target.value)} />
                         </div>
                         <div>
                             <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '6px' }}>Display name</label>

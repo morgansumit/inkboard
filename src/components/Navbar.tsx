@@ -116,7 +116,7 @@ export function Navbar({ initialSession }: NavbarProps) {
 
                 // Fallback profile
                 applyProfile({
-                    display_name: 'Purseable User',
+                    display_name: 'Centsably User',
                     avatar_url: `https://api.dicebear.com/7.x/initials/svg?seed=${email || 'user'}`,
                     role: 'USER',
                     is_business: false,
@@ -136,14 +136,14 @@ export function Navbar({ initialSession }: NavbarProps) {
         email: string | null,
     ) => {
         setCurrentUser({
-            display_name: profile.display_name || 'Purseable User',
+            display_name: profile.display_name || 'Centsably User',
             avatar_url: profile.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${email || 'user'}`,
             role: profile.role || 'USER',
             is_business: Boolean(profile.is_business),
         });
         cacheUserProfile({
             id: userId,
-            display_name: profile.display_name || 'Purseable User',
+            display_name: profile.display_name || 'Centsably User',
             avatar_url: profile.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${email || 'user'}`,
             role: profile.role || 'USER',
             is_business: Boolean(profile.is_business),
@@ -352,7 +352,7 @@ export function Navbar({ initialSession }: NavbarProps) {
         }
         // Always force-clear everything regardless of signOut result
         setProfileMenuOpen(false);
-        localStorage.removeItem('purseable:last-admin-view');
+        localStorage.removeItem('centsably:last-admin-view');
         clearCachedUserProfile();
         // Clear all supabase cookies
         document.cookie.split(';').forEach(cookie => {
@@ -399,8 +399,8 @@ export function Navbar({ initialSession }: NavbarProps) {
     return (
         <header className={`navbar-shell ${scrolled ? 'navbar-scrolled' : ''}`}>
             <div className="navbar-inner">
-                <Link href="/" className="navbar-brand" aria-label="purseable home" style={{ flexShrink: 0, marginRight: '80px' }}>
-                    <img src="/transparent-image.png" alt="Purseable" style={{ height: '56px', width: 'auto', display: 'block' }} />
+                <Link href="/" className="navbar-brand" aria-label="centsably home" style={{ flexShrink: 0, marginRight: '80px' }}>
+                    <img src="/transparent-image.png" alt="Centsably" style={{ height: '56px', width: 'auto', display: 'block' }} />
                 </Link>
 
                 {renderSearchForm('desktop-only')}

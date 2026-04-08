@@ -3,8 +3,8 @@ import { createClient } from '@/lib/supabase/server';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'purseable — Discover Writing You Love',
-  description: 'Discover beautifully written stories, essays, and blog posts from Europe\'s most talented writers on purseable.',
+  title: 'centsably — Discover Writing You Love',
+  description: 'Discover beautifully written stories, essays, and blog posts from Europe\'s most talented writers on centsably.',
 };
 
 export default async function HomePage() {

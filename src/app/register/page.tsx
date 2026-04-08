@@ -355,7 +355,7 @@ export default function RegisterPage() {
                         "The best stories<br />find you when you're<br />ready to listen."
                     </div>
                     <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-ui)' }}>
-                        — 12,000+ writers on purseable
+                        — 12,000+ writers on centsably
                     </div>
                 </div>
             </div>

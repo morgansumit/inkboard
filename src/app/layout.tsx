@@ -28,7 +28,9 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+  
+  console.log('[Layout] Session:', session?.user?.id || 'null', 'Error:', sessionError?.message || 'none');
   
   return (
     <html lang="en" suppressHydrationWarning>

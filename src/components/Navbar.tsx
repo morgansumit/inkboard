@@ -26,6 +26,7 @@ interface NavbarProps {
 }
 
 export function Navbar({ initialSession }: NavbarProps) {
+    console.log('[Navbar] initialSession:', initialSession?.user?.id || 'null', 'hasUser:', !!initialSession?.user);
     const pathname = usePathname();
     const router = useRouter();
     const [isLoggedIn, setIsLoggedIn] = useState(!!initialSession?.user);

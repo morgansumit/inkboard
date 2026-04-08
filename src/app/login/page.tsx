@@ -1,8 +1,8 @@
 'use client';
 import { useEffect, useMemo, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Info } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 
 export default function LoginPage() {
@@ -14,7 +14,9 @@ export default function LoginPage() {
     const [attempts, setAttempts] = useState(0);
 
     const [error, setError] = useState<string | null>(null);
+    const [infoMessage, setInfoMessage] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
+    const searchParams = useSearchParams();
     const [adminStatus, setAdminStatus] = useState({
         loading: true,
         hasAdmin: true,
@@ -51,6 +53,21 @@ export default function LoginPage() {
         };
         fetchStatus();
     }, []);
+
+    // Check for OAuth callback errors (e.g., account already exists with password)
+    useEffect(() => {
+        const errorParam = searchParams.get('error');
+        const providerParam = searchParams.get('provider');
+        
+        if (errorParam === 'account_exists') {
+            const provider = providerParam === 'google' ? 'Google' : 'Social';
+            setInfoMessage(
+                `An account with this email already exists using email/password login. Please log in with your email and password. You can link ${provider} to your account in settings after logging in.`
+            );
+        } else if (errorParam === 'auth_failed') {
+            setError('Authentication failed. Please try again.');
+        }
+    }, [searchParams]);
 
     const handleGenerateAdminLink = async () => {
         setAdminStatus(prev => ({ ...prev, generating: true, error: null }));
@@ -127,6 +144,17 @@ export default function LoginPage() {
                         fontFamily: 'var(--font-ui)',
                     }}>
                         ⚠️ Too many attempts. Please wait 15 minutes before trying again.
+                    </div>
+                )}
+
+                {infoMessage && (
+                    <div style={{
+                        background: '#EFF6FF', border: '1px solid #93C5FD', borderRadius: '8px',
+                        padding: '12px 16px', marginBottom: '20px', fontSize: '13px', color: '#1E40AF',
+                        fontFamily: 'var(--font-ui)',
+                    }}>
+                        <Info size={14} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
+                        {infoMessage}
                     </div>
                 )}
 

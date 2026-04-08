@@ -70,10 +70,12 @@ export interface Comment {
 
 export interface Notification {
     id: string;
+    user_id?: string;
     type: 'LIKE' | 'COMMENT' | 'REPLY' | 'FOLLOW' | 'TRENDING';
-    actor: User;
-    entity_type: 'POST' | 'COMMENT';
-    entity_id: string;
+    actor?: User;
+    actor_id?: string;
+    entity_type?: 'POST' | 'COMMENT' | 'USER';
+    entity_id?: string;
     is_read: boolean;
     created_at: string;
     post_title?: string;

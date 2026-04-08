@@ -1,20 +1,100 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Heart, MessageCircle, UserPlus, Flame, CheckCircle, ChevronRight, CornerDownRight } from 'lucide-react';
-import { MOCK_NOTIFICATIONS } from '@/lib/mockData';
+import { createClient } from '@/lib/supabase/client';
 import type { Notification } from '@/types';
 
 export default function NotificationsPage() {
-    const [notifs, setNotifs] = useState(MOCK_NOTIFICATIONS);
+    const [notifs, setNotifs] = useState<Notification[]>([]);
+    const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState<'all' | 'unread'>('all');
+    const supabase = createClient();
+
+    useEffect(() => {
+        let subscription: ReturnType<typeof supabase.channel> | null = null;
+        
+        const fetchNotifications = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                setLoading(false);
+                return;
+            }
+
+            const { data, error } = await supabase
+                .from('notifications')
+                .select(`
+                    *,
+                    actor:actor_id(id, username, display_name, avatar_url)
+                `)
+                .eq('user_id', session.user.id)
+                .order('created_at', { ascending: false })
+                .limit(50);
+
+            if (error) {
+                console.error('[Notifications] Failed to fetch:', error);
+            } else {
+                setNotifs(data || []);
+            }
+            setLoading(false);
+            
+            // Subscribe to realtime notifications
+            subscription = supabase
+                .channel(`notifications:${session.user.id}`)
+                .on('postgres_changes', 
+                    { event: 'INSERT', schema: 'public', table: 'notifications', filter: `user_id=eq.${session.user.id}` },
+                    (payload: { new: { id: string } }) => {
+                        console.log('[Notifications] New notification:', payload);
+                        // Fetch the new notification with actor details
+                        supabase
+                            .from('notifications')
+                            .select(`*, actor:actor_id(id, username, display_name, avatar_url)`)
+                            .eq('id', payload.new.id)
+                            .single()
+                            .then(({ data }: { data: Notification | null }) => {
+                                if (data) {
+                                    setNotifs(prev => [data, ...prev]);
+                                }
+                            });
+                    }
+                )
+                .subscribe();
+        };
+
+        fetchNotifications();
+        
+        return () => {
+            subscription?.unsubscribe();
+        };
+    }, [supabase]);
 
     const unreadCount = notifs.filter(n => !n.is_read).length;
-
     const displayNotifs = filter === 'unread' ? notifs.filter(n => !n.is_read) : notifs;
 
-    const markAllRead = () => {
-        setNotifs(notifs.map(n => ({ ...n, is_read: true })));
+    const markAllRead = async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) return;
+
+        const { error } = await supabase
+            .from('notifications')
+            .update({ is_read: true })
+            .eq('user_id', session.user.id)
+            .eq('is_read', false);
+
+        if (!error) {
+            setNotifs(notifs.map(n => ({ ...n, is_read: true })));
+        }
+    };
+
+    const markAsRead = async (id: string) => {
+        const { error } = await supabase
+            .from('notifications')
+            .update({ is_read: true })
+            .eq('id', id);
+
+        if (!error) {
+            setNotifs(notifs.map(n => n.id === id ? { ...n, is_read: true } : n));
+        }
     };
 
     const getIcon = (type: Notification['type']) => {
@@ -79,10 +159,17 @@ export default function NotificationsPage() {
                 </div>
 
                 {/* List */}
-                {displayNotifs.length > 0 ? (
+                {loading ? (
+                    <div style={{ textAlign: 'center', padding: '64px 0', color: 'var(--color-muted)' }}>
+                        <div className="btn-spinner" style={{ width: '32px', height: '32px', margin: '0 auto 16px' }} />
+                        <p style={{ fontFamily: 'var(--font-ui)', fontSize: '16px' }}>Loading notifications...</p>
+                    </div>
+                ) : displayNotifs.length > 0 ? (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                         {displayNotifs.map(notif => (
-                            <Link key={notif.id} href={notif.type === 'FOLLOW' ? `/u/${notif.actor.username}` : `/post/${notif.post_id}`} style={{ textDecoration: 'none' }}>
+                            <Link key={notif.id} 
+                                href={notif.type === 'FOLLOW' && notif.actor?.username ? `/u/${notif.actor.username}` : `/post/${notif.entity_id}`} 
+                                style={{ textDecoration: 'none' }}>
                                 <div style={{
                                     background: 'var(--color-surface)', borderRadius: '12px', padding: '16px 20px',
                                     display: 'flex', gap: '16px', alignItems: 'flex-start',
@@ -91,14 +178,16 @@ export default function NotificationsPage() {
                                 }}
                                     onClick={() => {
                                         if (!notif.is_read) {
-                                            setNotifs(notifs.map(n => n.id === notif.id ? { ...n, is_read: true } : n));
+                                            markAsRead(notif.id);
                                         }
                                     }}
                                     onMouseEnter={e => (e.currentTarget.style.transform = 'translateY(-2px)')}
                                     onMouseLeave={e => (e.currentTarget.style.transform = '')}>
 
                                     <div style={{ position: 'relative' }}>
-                                        <img src={notif.actor.avatar_url} alt={notif.actor.display_name} className="avatar" style={{ width: '44px', height: '44px' }} />
+                                        <img src={notif.actor?.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${notif.actor?.username || 'user'}`} 
+                                            alt={notif.actor?.display_name || 'User'} 
+                                            className="avatar" style={{ width: '44px', height: '44px' }} />
                                         <div style={{
                                             position: 'absolute', bottom: '-4px', right: '-4px', width: '24px', height: '24px',
                                             borderRadius: '50%', background: 'var(--color-surface)', display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -114,7 +203,9 @@ export default function NotificationsPage() {
                                             color: !notif.is_read ? 'var(--color-primary)' : 'var(--color-muted)',
                                             fontWeight: !notif.is_read ? 600 : 400,
                                         }}>
-                                            <strong style={{ color: 'var(--color-primary)', fontWeight: 700 }}>{notif.actor.display_name}</strong>{' '}
+                                            <strong style={{ color: 'var(--color-primary)', fontWeight: 700 }}>
+                                                {notif.actor?.display_name || notif.actor?.username || 'Someone'}
+                                            </strong>{' '}
                                             {getMessage(notif)}
                                         </p>
                                         <span style={{ fontSize: '12px', color: 'var(--color-muted)', marginTop: '4px', display: 'block' }}>

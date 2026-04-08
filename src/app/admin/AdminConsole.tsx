@@ -1492,11 +1492,10 @@ const handleUpdateBusinessStatus = async (id: string, userId: string, status: st
         <div className="admin-root-shell" style={{ display: 'flex', height: '100vh', background: 'var(--color-bg)', overflow: 'hidden' }}>
             <aside className="admin-sidebar">
                 <div style={{ padding: '0 24px 24px', borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: '8px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                        <img src="/transparent-image.png" alt="Purseable" style={{ height: '40px', width: 'auto' }} />
-                        <span style={{ color: 'white', fontSize: '18px', fontWeight: 700 }}>Purseable</span>
+                    <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 800, fontSize: '22px', color: 'white' }}>
+                        Purseable
                     </div>
-                    <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginTop: '8px', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                    <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginTop: '4px', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
                         Admin Panel
                     </div>
                 </div>

@@ -120,8 +120,20 @@ export function Navbar({ initialSession }: NavbarProps) {
             loadNotifications(initialSession.user.id);
         }
 
+        // Track if this is the first auth state change (initial hydration)
+        let isFirstAuthChange = true;
+        
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
             async (_event: any, session: any) => {
+                // Skip the first null session during hydration if we have initialSession
+                if (isFirstAuthChange) {
+                    isFirstAuthChange = false;
+                    if (!session && initialSession?.user) {
+                        console.log('[Navbar] Skipping initial null auth change, using initialSession');
+                        return;
+                    }
+                }
+                
                 setIsLoggedIn(!!session);
                 setUserEmail(session?.user?.email || null);
                 await hydrateUser(session?.user?.id);

@@ -24,55 +24,50 @@ export async function generateMetadata({ params }: { params: Promise<{ username:
 
 export default async function UserProfilePage({ params }: { params: Promise<{ username: string }> }) {
     const { username } = await params;
-    
+
+    // Round 1: session + user profile + country in parallel
     const supabase = await createClient();
-    const { data: { session } } = await supabase.auth.getSession();
-    const currentUserId = session?.user?.id;
-    const viewerCountry = await getCountryFromRequest();
-    
-    const { data: user } = await supabaseAdmin
-        .from('users')
-        .select('id, username, display_name, bio, avatar_url, location, follower_count, following_count, is_verified, is_business, created_at')
-        .eq('username', username)
-        .single();
-    
+    const [{ data: { session } }, { data: user }, viewerCountry] = await Promise.all([
+        supabase.auth.getSession(),
+        supabaseAdmin
+            .from('users')
+            .select('id, username, display_name, bio, avatar_url, location, follower_count, following_count, is_verified, is_business, created_at')
+            .eq('username', username)
+            .single(),
+        getCountryFromRequest(),
+    ]);
+
     if (!user) {
         return <div>User not found</div>;
     }
-    
+
+    const currentUserId = session?.user?.id;
     const isOwnProfile = currentUserId === user.id;
-    
-    const posts = await fetchUserPosts(user.id, { countryCode: viewerCountry ?? undefined, isOwnProfile });
 
-    // Fetch liked posts from Supabase
+    // Round 2: posts + liked IDs + follow status all in parallel
+    const [posts, likedIdsResult, followResult] = await Promise.all([
+        fetchUserPosts(user.id, { countryCode: viewerCountry ?? undefined, isOwnProfile }),
+        currentUserId
+            ? supabaseAdmin.from('post_likes').select('post_id').eq('user_id', user.id).limit(6)
+            : Promise.resolve({ data: null }),
+        currentUserId && !isOwnProfile
+            ? supabaseAdmin.from('follows').select('follower_id').eq('follower_id', currentUserId).eq('following_id', user.id).maybeSingle()
+            : Promise.resolve({ data: null }),
+    ]);
+
+    const isFollowing = !!followResult.data;
+
+    // Round 3: liked post details (depends on likedIds)
     let likedPosts: any[] = [];
-    if (currentUserId) {
-        const { data: likedIds } = await supabaseAdmin
-            .from('post_likes')
-            .select('post_id')
-            .eq('user_id', user.id)
-            .limit(6);
-        if (likedIds && likedIds.length > 0) {
-            const { data: liked } = await supabaseAdmin
-                .from('posts')
-                .select('*')
-                .in('id', likedIds.map((l: { post_id: string }) => l.post_id))
-                .eq('status', 'PUBLISHED');
-            likedPosts = liked || [];
-        }
+    const likedIds = likedIdsResult.data;
+    if (likedIds && likedIds.length > 0) {
+        const { data: liked } = await supabaseAdmin
+            .from('posts')
+            .select('*')
+            .in('id', likedIds.map((l: { post_id: string }) => l.post_id))
+            .eq('status', 'PUBLISHED');
+        likedPosts = liked || [];
     }
 
-    // Check if current user follows this profile user
-    let isFollowing = false;
-    if (currentUserId && !isOwnProfile) {
-        const { data: followData } = await supabaseAdmin
-            .from('follows')
-            .select('follower_id')
-            .eq('follower_id', currentUserId)
-            .eq('following_id', user.id)
-            .maybeSingle();
-        isFollowing = !!followData;
-    }
-    
     return <ProfileClient user={user} posts={posts || []} likedPosts={likedPosts} isOwnProfile={isOwnProfile} isFollowing={isFollowing} />;
 }

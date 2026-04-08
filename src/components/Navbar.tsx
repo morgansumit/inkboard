@@ -325,7 +325,19 @@ export function Navbar({ initialSession }: NavbarProps) {
         try {
             setLoggingOut(true);
             const supabase = createClient();
-            await supabase.auth.signOut({ scope: 'local' });
+            
+            // Sign out with timeout - don't let auth lock hang us
+            const signOutPromise = supabase.auth.signOut({ scope: 'local' });
+            const timeoutPromise = new Promise((_, reject) => 
+                setTimeout(() => reject(new Error('signout_timeout')), 3000)
+            );
+            
+            try {
+                await Promise.race([signOutPromise, timeoutPromise]);
+            } catch (timeoutErr) {
+                console.log('[navbar] Sign out timed out, forcing logout');
+            }
+            
             setProfileMenuOpen(false);
             localStorage.removeItem('purseable:last-admin-view');
             clearCachedUserProfile();

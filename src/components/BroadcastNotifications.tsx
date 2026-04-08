@@ -1,8 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { X, Megaphone, AlertCircle, Gift, Info } from 'lucide-react';
-import { createClient } from '@/lib/supabase/client';
+import { X, Megaphone, AlertCircle, Gift } from 'lucide-react';
 
 type Broadcast = {
     id: string;
@@ -19,28 +18,25 @@ type Broadcast = {
 };
 
 export function BroadcastNotifications() {
-    const supabase = createClient();
     const [broadcasts, setBroadcasts] = useState<Broadcast[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchBroadcasts = async () => {
             try {
-                const { data: { session } } = await supabase.auth.getSession();
-                if (!session) {
+                const res = await fetch('/api/broadcasts/my');
+                if (!res.ok) {
+                    // 401 = not logged in, just skip
                     setLoading(false);
                     return;
                 }
-
-                const res = await fetch('/api/broadcasts/my');
                 const data = await res.json();
-                if (!res.ok) throw new Error(data?.error || 'Failed to fetch broadcasts');
-                
+
                 // Filter out read/dismissed broadcasts
-                const activeBroadcasts = data.broadcasts?.filter((b: Broadcast) => 
+                const activeBroadcasts = data.broadcasts?.filter((b: Broadcast) =>
                     !b.read_at && !b.dismissed_at
                 ) || [];
-                
+
                 setBroadcasts(activeBroadcasts);
             } catch (err) {
                 console.error('[broadcasts] Failed to fetch:', err);
@@ -50,7 +46,7 @@ export function BroadcastNotifications() {
         };
 
         fetchBroadcasts();
-        
+
         // Poll for new broadcasts every 2 minutes
         const interval = setInterval(fetchBroadcasts, 2 * 60 * 1000);
         return () => clearInterval(interval);
@@ -63,7 +59,7 @@ export function BroadcastNotifications() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ broadcast_id: broadcastId, action: 'dismiss' }),
             });
-            
+
             setBroadcasts(prev => prev.filter(b => b.id !== broadcastId));
         } catch (err) {
             console.error('[broadcasts] Failed to dismiss:', err);
@@ -77,7 +73,7 @@ export function BroadcastNotifications() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ broadcast_id: broadcastId, action: 'read' }),
             });
-            
+
             setBroadcasts(prev => prev.filter(b => b.id !== broadcastId));
         } catch (err) {
             console.error('[broadcasts] Failed to mark as read:', err);
@@ -157,7 +153,7 @@ export function BroadcastNotifications() {
                             }}>
                                 {getIcon(broadcast.message_type)}
                             </div>
-                            
+
                             <div style={{ flex: 1, minWidth: 0 }}>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
                                     <h4 style={{ margin: 0, fontSize: '14px', fontWeight: 700, color: styles.color }}>
@@ -181,11 +177,11 @@ export function BroadcastNotifications() {
                                         <X size={14} />
                                     </button>
                                 </div>
-                                
+
                                 <p style={{ margin: '0 0 12px 0', fontSize: '13px', lineHeight: '1.4', color: styles.color }}>
                                     {broadcast.body}
                                 </p>
-                                
+
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                     <span style={{ fontSize: '11px', opacity: 0.7, color: styles.color }}>
                                         {new Date(broadcast.created_at).toLocaleDateString()}
@@ -220,7 +216,7 @@ export function BroadcastNotifications() {
                     </div>
                 );
             })}
-            
+
             <style jsx>{`
                 @keyframes slideIn {
                     from {

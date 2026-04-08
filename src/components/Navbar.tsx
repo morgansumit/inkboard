@@ -1,9 +1,16 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Search, Bell, PenSquare, LogOut, Shield } from 'lucide-react';
-import { createClient, resetClient } from '@/lib/supabase/client';
+import {
+    createClient,
+    resetClient,
+    cacheUserProfile,
+    getCachedUserProfile,
+    clearCachedUserProfile,
+    type CachedProfile,
+} from '@/lib/supabase/client';
 import { createPortal } from 'react-dom';
 
 const TOPICS = [
@@ -26,13 +33,31 @@ interface NavbarProps {
 }
 
 export function Navbar({ initialSession }: NavbarProps) {
-    console.log('[Navbar] initialSession:', initialSession?.user?.id || 'null', 'hasUser:', !!initialSession?.user);
     const pathname = usePathname();
     const router = useRouter();
-    const [isLoggedIn, setIsLoggedIn] = useState(!!initialSession?.user);
-    const [userEmail, setUserEmail] = useState<string | null>(initialSession?.user?.email || null);
-    const [currentUser, setCurrentUser] = useState<{ display_name: string; avatar_url: string; role: string; is_business: boolean } | null>(null);
-    const [isProfileLoading, setIsProfileLoading] = useState(!!initialSession?.user);
+
+    // ── Auth state: starts from cache or initialSession ────────────────
+    const cached = typeof window !== 'undefined' ? getCachedUserProfile() : null;
+    const hasSession = !!initialSession?.user;
+
+    // If we have cache, user is "ready" immediately. Otherwise wait for auth.
+    const [authReady, setAuthReady] = useState(!!cached || !hasSession);
+    const [isLoggedIn, setIsLoggedIn] = useState(!!cached || hasSession);
+    const [userEmail, setUserEmail] = useState<string | null>(
+        cached?.email || initialSession?.user?.email || null
+    );
+    const [currentUser, setCurrentUser] = useState<{
+        display_name: string;
+        avatar_url: string;
+        role: string;
+        is_business: boolean;
+    } | null>(cached ? {
+        display_name: cached.display_name,
+        avatar_url: cached.avatar_url,
+        role: cached.role,
+        is_business: cached.is_business,
+    } : null);
+
     const [searchQuery, setSearchQuery] = useState('');
     const [notifOpen, setNotifOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
@@ -40,118 +65,204 @@ export function Navbar({ initialSession }: NavbarProps) {
     const [loggingOut, setLoggingOut] = useState(false);
     const [profileMenuPos, setProfileMenuPos] = useState<{ top: number; right: number } | null>(null);
     const [notifications, setNotifications] = useState<NavNotification[]>([]);
-    const supabase = createClient();
+
     const profileMenuRef = useRef<HTMLDivElement | null>(null);
     const profileTriggerRef = useRef<HTMLButtonElement | null>(null);
     const profileMenuElRef = useRef<HTMLDivElement | null>(null);
+    const hydratedRef = useRef(false);
+
     const isAdmin = currentUser?.role === 'ADMIN';
     const isBusiness = Boolean(currentUser?.is_business);
 
-    useEffect(() => {
-        const hydrateUser = async (userId: string | undefined) => {
-            if (!userId) {
-                setCurrentUser(null);
-                setIsProfileLoading(false);
+    // ── Fetch profile from DB and cache it ─────────────────────────────
+    const hydrateUser = useCallback(async (userId: string, email: string | null) => {
+        if (!userId) return;
+        const supabase = createClient();
+
+        try {
+            const { data, error } = await supabase
+                .from('users')
+                .select('display_name, avatar_url, role, is_business')
+                .eq('id', userId)
+                .maybeSingle();
+
+            if (error) {
+                console.error('[Navbar] Profile fetch error:', error.message);
                 return;
             }
 
-            const fetchProfile = async () => {
-                const { data, error } = await supabase
-                    .from('users')
-                    .select('display_name, avatar_url, role, is_business')
-                    .eq('id', userId)
-                    .maybeSingle();
-                if (error) console.error('[Navbar] Profile fetch error:', error);
-                return data;
-            };
-
-            let profile = await fetchProfile();
-            console.log('[Navbar] Fetched profile for', userId, ':', profile);
-
-            if (!profile) {
-                console.log('[Navbar] No profile found, attempting sync...');
+            if (!data) {
+                // No profile in DB — try sync once
                 try {
                     const syncRes = await fetch('/api/users/sync', { method: 'POST' });
-                    console.log('[Navbar] Sync response:', syncRes.status);
-                    profile = await fetchProfile();
-                    console.log('[Navbar] Profile after sync:', profile);
-                } catch (err) {
-                    console.error('[Navbar] Failed to sync profile', err);
-                }
-            }
+                    if (syncRes.ok) {
+                        const { data: retryData } = await supabase
+                            .from('users')
+                            .select('display_name, avatar_url, role, is_business')
+                            .eq('id', userId)
+                            .maybeSingle();
+                        if (retryData) {
+                            applyProfile(retryData, userId, email);
+                            return;
+                        }
+                    }
+                } catch { /* sync failed, continue with fallback */ }
 
-            // Always set currentUser, even if profile is null (use defaults)
-            setCurrentUser({
-                display_name: profile?.display_name || 'Purseable User',
-                avatar_url: profile?.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${userEmail || 'user'}`,
-                role: profile?.role || 'USER',
-                is_business: Boolean(profile?.is_business),
-            });
-            setIsProfileLoading(false);
-            console.log('[Navbar] Set currentUser, loading done');
-        };
-
-        const loadNotifications = async (userId: string | undefined) => {
-            if (!userId) {
-                setNotifications([]);
+                // Fallback profile
+                applyProfile({
+                    display_name: 'Purseable User',
+                    avatar_url: `https://api.dicebear.com/7.x/initials/svg?seed=${email || 'user'}`,
+                    role: 'USER',
+                    is_business: false,
+                }, userId, email);
                 return;
             }
 
-            const { data, error } = await supabase
-                .from('notifications')
-                .select('*')
-                .eq('user_id', userId)
-                .order('created_at', { ascending: false })
-                .limit(20);
+            applyProfile(data, userId, email);
+        } catch (err) {
+            console.error('[Navbar] hydrateUser failed:', err);
+        }
+    }, []);
 
-            if (!error) {
-                setNotifications((data ?? []) as NavNotification[]);
-            }
-        };
+    const applyProfile = (
+        profile: { display_name: string; avatar_url: string; role: string; is_business: boolean },
+        userId: string,
+        email: string | null,
+    ) => {
+        setCurrentUser({
+            display_name: profile.display_name || 'Purseable User',
+            avatar_url: profile.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${email || 'user'}`,
+            role: profile.role || 'USER',
+            is_business: Boolean(profile.is_business),
+        });
+        cacheUserProfile({
+            id: userId,
+            display_name: profile.display_name || 'Purseable User',
+            avatar_url: profile.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${email || 'user'}`,
+            role: profile.role || 'USER',
+            is_business: Boolean(profile.is_business),
+            email,
+        });
+    };
 
-        // If we have initial session, use it immediately
-        if (initialSession?.user) {
-            setIsProfileLoading(true);
-            setUserEmail(initialSession.user.email || null);
-            hydrateUser(initialSession.user.id).catch(err => {
-                console.error('[Navbar] hydrateUser error:', err);
-                setIsProfileLoading(false);
+    // ── Load notifications ─────────────────────────────────────────────
+    const loadNotifications = useCallback(async (userId: string) => {
+        if (!userId) { setNotifications([]); return; }
+        const supabase = createClient();
+
+        const { data, error } = await supabase
+            .from('notifications')
+            .select(`*, actor:actor_id(display_name, avatar_url, username)`)
+            .eq('user_id', userId)
+            .order('created_at', { ascending: false })
+            .limit(20);
+
+        if (error) {
+            console.error('[Navbar] Failed to load notifications:', error);
+            return;
+        }
+
+        setNotifications((data ?? []).map((n: any) => ({
+            id: n.id,
+            type: n.type,
+            is_read: n.is_read,
+            created_at: n.created_at,
+            post_title: n.post_title,
+            actor_display_name: n.actor?.display_name || n.actor?.username || 'Someone',
+            actor_avatar_url: n.actor?.avatar_url,
+        })));
+    }, []);
+
+    // ── Main auth effect: wait for session, then load everything ───────
+    useEffect(() => {
+        const supabase = createClient();
+        let cancelled = false;
+
+        // If we had a cached profile, kick off a background refresh
+        if (cached && hasSession) {
+            setAuthReady(true);
+            hydrateUser(initialSession.user.id, initialSession.user.email || null);
+            loadNotifications(initialSession.user.id);
+        }
+        // If we have initialSession but no cache, hydrate now
+        else if (hasSession && !cached) {
+            hydrateUser(initialSession.user.id, initialSession.user.email || null).then(() => {
+                if (!cancelled) setAuthReady(true);
             });
             loadNotifications(initialSession.user.id);
         }
 
-        // Track if this is the first auth state change (initial hydration)
-        let isFirstAuthChange = true;
-        
+        // Listen for auth state changes (login, logout, token refresh)
+        let isFirst = true;
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
             async (_event: any, session: any) => {
-                // Skip the first null session during hydration if we have initialSession
-                if (isFirstAuthChange) {
-                    isFirstAuthChange = false;
-                    if (!session && initialSession?.user) {
-                        console.log('[Navbar] Skipping initial null auth change, using initialSession');
-                        return;
-                    }
+                if (cancelled) return;
+                // Skip the very first event if it's a spurious null during hydration
+                if (isFirst) {
+                    isFirst = false;
+                    if (!session && hasSession) return;
                 }
-                
-                setIsLoggedIn(!!session);
-                setUserEmail(session?.user?.email || null);
-                await hydrateUser(session?.user?.id);
-                await loadNotifications(session?.user?.id);
+
+                if (session?.user) {
+                    setIsLoggedIn(true);
+                    setUserEmail(session.user.email || null);
+                    if (!hydratedRef.current || _event === 'SIGNED_IN') {
+                        hydratedRef.current = true;
+                        await hydrateUser(session.user.id, session.user.email || null);
+                        await loadNotifications(session.user.id);
+                        if (!cancelled) setAuthReady(true);
+                    }
+                } else {
+                    setIsLoggedIn(false);
+                    setUserEmail(null);
+                    setCurrentUser(null);
+                    setNotifications([]);
+                    clearCachedUserProfile();
+                    if (!cancelled) setAuthReady(true);
+                }
             }
         );
 
-        return () => subscription.unsubscribe();
-    }, [supabase.auth, initialSession]);
+        // Safety: if nothing has resolved authReady in 4 seconds and we have
+        // initialSession, force-show with whatever we have
+        const safety = setTimeout(() => {
+            if (!cancelled) setAuthReady(true);
+        }, 4000);
+
+        return () => {
+            cancelled = true;
+            clearTimeout(safety);
+            subscription.unsubscribe();
+        };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const unreadCount = notifications.filter(n => !n.is_read).length;
 
+    const markAllNotificationsRead = async () => {
+        const userId = initialSession?.user?.id || cached?.id;
+        if (!userId) return;
+        const supabase = createClient();
+
+        const { error } = await supabase
+            .from('notifications')
+            .update({ is_read: true })
+            .eq('user_id', userId)
+            .eq('is_read', false);
+
+        if (!error) {
+            setNotifications(prev => prev.map(n => ({ ...n, is_read: true })));
+        }
+    };
+
+    // ── Scroll listener ────────────────────────────────────────────────
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 8);
         window.addEventListener('scroll', onScroll);
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
+    // ── Click-outside for profile menu ─────────────────────────────────
     useEffect(() => {
         if (!profileMenuOpen) return;
         const handleClick = (event: MouseEvent) => {
@@ -164,6 +275,7 @@ export function Navbar({ initialSession }: NavbarProps) {
         return () => document.removeEventListener('mousedown', handleClick);
     }, [profileMenuOpen]);
 
+    // ── Profile menu positioning ───────────────────────────────────────
     useEffect(() => {
         if (!profileMenuOpen) {
             setProfileMenuPos(null);
@@ -187,6 +299,7 @@ export function Navbar({ initialSession }: NavbarProps) {
         };
     }, [profileMenuOpen]);
 
+    // ── Handlers ───────────────────────────────────────────────────────
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
         if (searchQuery.trim()) window.location.href = `/search?q=${encodeURIComponent(searchQuery)}`;
@@ -196,18 +309,22 @@ export function Navbar({ initialSession }: NavbarProps) {
         if (loggingOut) return;
         try {
             setLoggingOut(true);
+            const supabase = createClient();
             await supabase.auth.signOut({ scope: 'local' });
             setProfileMenuOpen(false);
             localStorage.removeItem('purseable:last-admin-view');
+            clearCachedUserProfile();
             resetClient();
             window.location.href = '/login';
         } catch (err) {
             console.error('[navbar] sign out failed', err);
+            clearCachedUserProfile();
             resetClient();
             window.location.href = '/login';
         }
     };
 
+    // ── Render helpers ─────────────────────────────────────────────────
     const renderSearchForm = (extraClass: string) => (
         <form onSubmit={handleSearch} className={`navbar-search ${extraClass}`} style={{ position: 'relative' }}>
             <Search
@@ -231,6 +348,10 @@ export function Navbar({ initialSession }: NavbarProps) {
         return null;
     }
 
+    // ── Don't render auth-dependent UI until auth is ready ─────────────
+    const showLoggedIn = authReady && isLoggedIn && currentUser;
+    const showLoggedOut = authReady && !isLoggedIn;
+
     return (
         <header className={`navbar-shell ${scrolled ? 'navbar-scrolled' : ''}`}>
             <div className="navbar-inner">
@@ -241,9 +362,10 @@ export function Navbar({ initialSession }: NavbarProps) {
                 {renderSearchForm('desktop-only')}
 
                 <div className="navbar-actions">
-                    {isLoggedIn && isProfileLoading ? (
-                        <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'var(--color-surface)', animation: 'pulse 1.5s infinite' }} />
-                    ) : isLoggedIn ? (
+                    {!authReady ? (
+                        /* Show nothing until auth settles — just a small placeholder */
+                        <div style={{ width: '36px', height: '36px' }} />
+                    ) : showLoggedIn ? (
                         <>
                             {isAdmin && (
                                 <Link href="/admin" className="btn btn-secondary btn-sm hide-mobile">
@@ -271,7 +393,14 @@ export function Navbar({ initialSession }: NavbarProps) {
                                     <div className="notif-panel">
                                         <div className="notif-panel-header">
                                             <span>Notifications</span>
-                                            <button className="btn btn-ghost btn-sm">Mark all read</button>
+                                            {unreadCount > 0 && (
+                                                <button
+                                                    className="btn btn-ghost btn-sm"
+                                                    onClick={markAllNotificationsRead}
+                                                >
+                                                    Mark all read
+                                                </button>
+                                            )}
                                         </div>
                                         <div className="notif-panel-body">
                                             {notifications.map(n => (
@@ -357,7 +486,7 @@ export function Navbar({ initialSession }: NavbarProps) {
                                 )}
                             </div>
                         </>
-                    ) : (
+                    ) : showLoggedOut ? (
                         <>
                             <Link href="/login" className="btn btn-secondary btn-sm" style={{ whiteSpace: 'nowrap' }}>
                                 Log in
@@ -366,6 +495,9 @@ export function Navbar({ initialSession }: NavbarProps) {
                                 Sign up
                             </Link>
                         </>
+                    ) : (
+                        /* Waiting for auth — empty placeholder */
+                        <div style={{ width: '36px', height: '36px' }} />
                     )}
                 </div>
             </div>
@@ -374,4 +506,3 @@ export function Navbar({ initialSession }: NavbarProps) {
         </header>
     );
 }
-

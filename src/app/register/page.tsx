@@ -1,18 +1,37 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, MapPin } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
+import { detectCountryWithFallback, COUNTRY_NAMES } from '@/lib/countryDetection';
 
 export default function RegisterPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [dob, setDob] = useState('');
     const [showPw, setShowPw] = useState(false);
-    const [step, setStep] = useState<'form' | 'verify'>('form');
+    const [step, setStep] = useState<'form' | 'country' | 'verify'>('form');
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
+    const [detectedCountry, setDetectedCountry] = useState<string | null>(null);
+    const [selectedCountry, setSelectedCountry] = useState<string>('');
+    const [countrySource, setCountrySource] = useState<'ipinfo' | 'timezone' | 'none'>('none');
+    const [isCountryGuess, setIsCountryGuess] = useState(false);
     const supabase = createClient();
+
+    useEffect(() => {
+        // Detect country on mount
+        const detect = async () => {
+            const result = await detectCountryWithFallback();
+            if (result.country) {
+                setDetectedCountry(result.country);
+                setSelectedCountry(result.country);
+                setCountrySource(result.source);
+                setIsCountryGuess(result.isGuess);
+            }
+        };
+        detect();
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -21,7 +40,7 @@ export default function RegisterPage() {
 
         let ip_address = '';
         let location = '';
-        let country_code = '';
+        let country_code = detectedCountry || '';
         let income_level = 'Medium';
         let os_family = 'Unknown';
         let device_type = 'Desktop';
@@ -31,24 +50,27 @@ export default function RegisterPage() {
         if (/iPad|iPhone|iPod/.test(ua)) {
             os_family = 'iOS';
             device_type = 'Mobile';
-            income_level = 'High'; // Simple heuristic: Apple mobile users often grouped in higher tier
+            income_level = 'High';
         } else if (/Android/.test(ua)) {
             os_family = 'Android';
             device_type = 'Mobile';
         } else if (/Mac OS X/.test(ua)) {
             os_family = 'macOS';
-            income_level = 'High'; // Simple heuristic: Mac users
+            income_level = 'High';
         } else if (/Windows/.test(ua)) {
             os_family = 'Windows';
         }
 
+        // Try ipinfo for location details even if we have country from fallback
         try {
-            // Fetch geo location to infer more precise demographics
             const ipRes = await fetch('https://ipinfo.io/json');
             const ipData = await ipRes.json();
-            ip_address = ipData.ip;
+            ip_address = ipData.ip || '';
             location = `${ipData.city || ''}, ${ipData.country || ''}`.trim();
-            country_code = ipData.country || '';
+            // Use detected country from ipinfo if available
+            if (ipData.country && !country_code) {
+                country_code = ipData.country;
+            }
             const zip = ipData.postal || '';
 
             // Zip & Country based heuristic for 'Very High' income targeting
@@ -59,18 +81,28 @@ export default function RegisterPage() {
                 income_level = 'Very High';
             }
         } catch (err) {
-            console.error('Could not fetch IP and Location', err);
-            setError('Could not detect your location. Please try again.');
-            setLoading(false);
-            return;
+            console.log('Could not fetch IP details, using fallback:', err);
         }
 
+        // If still no country, show country picker
         if (!country_code) {
-            setError('Could not detect your country. Please try again.');
+            setStep('country');
             setLoading(false);
             return;
         }
 
+        // If country is a guess (from timezone), show confirmation
+        if (isCountryGuess) {
+            setStep('country');
+            setLoading(false);
+            return;
+        }
+
+        // Proceed with registration
+        await doSignup(country_code, ip_address, location, income_level, os_family, device_type);
+    };
+
+    const doSignup = async (country_code: string, ip_address: string, location: string, income_level: string, os_family: string, device_type: string) => {
         // Calculate Age Range from DOB
         let age_range = 'Unknown';
         if (dob) {
@@ -90,7 +122,7 @@ export default function RegisterPage() {
             else if (age >= 65) age_range = '65+';
         }
 
-        const { error } = await supabase.auth.signUp({
+        const { error: signupError } = await supabase.auth.signUp({
             email,
             password,
             options: {
@@ -107,12 +139,21 @@ export default function RegisterPage() {
             }
         });
 
-        if (error) {
-            setError(error.message);
+        if (signupError) {
+            setError(signupError.message);
             setLoading(false);
         } else {
             setStep('verify');
         }
+    };
+
+    const handleCountryConfirm = async () => {
+        if (!selectedCountry) {
+            setError('Please select your country');
+            return;
+        }
+        setLoading(true);
+        await doSignup(selectedCountry, '', '', 'Medium', 'Unknown', 'Desktop');
     };
 
     if (step === 'verify') {
@@ -136,6 +177,75 @@ export default function RegisterPage() {
                             Resend email
                         </button>
                     </p>
+                </div>
+            </div>
+        );
+    }
+
+    // Country picker step
+    if (step === 'country') {
+        return (
+            <div className="auth-page-outer" style={{ minHeight: '100vh', background: 'var(--color-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 20px' }}>
+                <div style={{ maxWidth: '440px', width: '100%' }}>
+                    <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+                        <div style={{ fontSize: '48px', marginBottom: '16px' }}>🌍</div>
+                        <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: '28px', fontWeight: 700, marginBottom: '8px' }}>
+                            {detectedCountry ? 'Confirm your country' : 'Select your country'}
+                        </h1>
+                        <p style={{ color: 'var(--color-muted)', fontSize: '14px' }}>
+                            {detectedCountry 
+                                ? `We detected you might be in ${COUNTRY_NAMES[detectedCountry] || detectedCountry}. Is this correct?`
+                                : "We couldn't detect your location automatically. Please select your country."}
+                        </p>
+                    </div>
+
+                    {error && (
+                        <div style={{
+                            background: '#FEF2F2', border: '1px solid #FCA5A5', borderRadius: '8px',
+                            padding: '12px 16px', marginBottom: '20px', fontSize: '13px', color: '#DC2626',
+                        }}>
+                            {error}
+                        </div>
+                    )}
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                        <div style={{ position: 'relative' }}>
+                            <MapPin size={20} style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--color-muted)' }} />
+                            <select
+                                value={selectedCountry}
+                                onChange={(e) => setSelectedCountry(e.target.value)}
+                                style={{
+                                    width: '100%', padding: '14px 16px 14px 48px', borderRadius: '10px',
+                                    border: '1px solid var(--color-border)', fontSize: '15px',
+                                    background: 'var(--color-surface)', color: 'var(--color-primary)',
+                                    cursor: 'pointer', appearance: 'none',
+                                }}
+                            >
+                                <option value="">Select a country...</option>
+                                {Object.entries(COUNTRY_NAMES).map(([code, name]) => (
+                                    <option key={code} value={code}>{name}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <button
+                            onClick={handleCountryConfirm}
+                            disabled={loading || !selectedCountry}
+                            className="btn btn-primary btn-lg"
+                            style={{ width: '100%', opacity: loading || !selectedCountry ? 0.6 : 1 }}
+                        >
+                            {loading ? 'Creating account...' : 'Continue'}
+                        </button>
+
+                        <button
+                            onClick={() => setStep('form')}
+                            disabled={loading}
+                            className="btn btn-ghost"
+                            style={{ width: '100%' }}
+                        >
+                            ← Back
+                        </button>
+                    </div>
                 </div>
             </div>
         );

@@ -74,6 +74,15 @@ export async function POST(req: Request) {
     const displayName = user.user_metadata?.display_name || user.user_metadata?.full_name || usernameSeed
     const avatar_url = user.user_metadata?.avatar_url || initialsAvatar(displayName)
 
+    // Get metadata fields
+    const country_code = user.user_metadata?.country_code || null;
+    const ip_address = user.user_metadata?.ip_address || null;
+    const location = user.user_metadata?.location || null;
+    const age_range = user.user_metadata?.age_range || null;
+    const income_level = user.user_metadata?.income_level || 'Medium';
+    const os_family = user.user_metadata?.os_family || 'Unknown';
+    const device_type = user.user_metadata?.device_type || 'Desktop';
+
     const profilePayload = {
         id: user.id,
         email: user.email,
@@ -85,6 +94,13 @@ export async function POST(req: Request) {
         is_business: false,
         is_suspended: false,
         created_at: new Date().toISOString(),
+        country_code,
+        ip_address,
+        location,
+        age_range,
+        income_level,
+        os_family,
+        device_type,
     }
 
     const { error: insertError, data } = await supabaseAdmin

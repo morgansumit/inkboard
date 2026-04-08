@@ -76,7 +76,22 @@ export async function GET(request: Request) {
         
         if (user?.user_metadata?.country_code) {
             viewerCountry = user.user_metadata.country_code;
-            console.log('[feed] Using user country from metadata:', viewerCountry);
+            console.log('[feed] Using user country from auth metadata:', viewerCountry);
+        } else if (user?.id) {
+            // Also check users table for country_code
+            const { data: userProfile } = await authClient
+                .from('users')
+                .select('country_code')
+                .eq('id', user.id)
+                .single();
+            
+            if (userProfile?.country_code) {
+                viewerCountry = userProfile.country_code;
+                console.log('[feed] Using user country from users table:', viewerCountry);
+            } else {
+                viewerCountry = await getCountryFromRequest();
+                console.log('[feed] Using IP-detected country:', viewerCountry || 'null');
+            }
         } else {
             viewerCountry = await getCountryFromRequest();
             console.log('[feed] Using IP-detected country:', viewerCountry || 'null');

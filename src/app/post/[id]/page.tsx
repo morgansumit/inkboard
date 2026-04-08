@@ -133,6 +133,15 @@ export default async function PostPage(props: { params: Promise<{ id: string }> 
                 
                 if (authUser?.user_metadata?.country_code) {
                     viewerCountry = authUser.user_metadata.country_code;
+                } else if (authUser?.id) {
+                    // Also check users table for country_code
+                    const { data: userProfile } = await authClient
+                        .from('users')
+                        .select('country_code')
+                        .eq('id', authUser.id)
+                        .single();
+                    
+                    viewerCountry = userProfile?.country_code || await getCountryFromRequest();
                 } else {
                     viewerCountry = await getCountryFromRequest();
                 }

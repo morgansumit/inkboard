@@ -14,7 +14,9 @@ export function SupabaseErrorHandler() {
                 errorMessage.includes('Invalid Refresh Token') ||
                 errorMessage.includes('Refresh Token Not Found') ||
                 errorMessage.includes('AuthApiError') ||
-                errorMessage.includes('refresh_token_not_found')
+                errorMessage.includes('refresh_token_not_found') ||
+                errorMessage.includes('LockManager lock') ||
+                errorMessage.includes('timed out waiting')
             ) {
                 // Silently ignore these errors
                 return;
@@ -33,7 +35,9 @@ export function SupabaseErrorHandler() {
                 errorMessage.includes('Invalid Refresh Token') ||
                 errorMessage.includes('Refresh Token Not Found') ||
                 errorMessage.includes('AuthApiError') ||
-                errorMessage.includes('refresh_token_not_found')
+                errorMessage.includes('refresh_token_not_found') ||
+                errorMessage.includes('LockManager lock') ||
+                errorMessage.includes('timed out waiting')
             ) {
                 event.preventDefault();
                 return;

@@ -28,8 +28,9 @@ export async function middleware(request: NextRequest) {
         },
     })
 
-    // Refresh the session — this keeps cookies in sync
-    await supabase.auth.getUser()
+    // Refresh session cookies — getSession() reads from cookie without a network call,
+    // keeping middleware near-instant for logged-in users.
+    await supabase.auth.getSession()
 
     return supabaseResponse
 }

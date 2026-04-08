@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Home, MapPin, Plus, Bell, MessageCircle, User, LogIn, UserPlus } from 'lucide-react';
 import { createClient, getCachedUserProfile } from '@/lib/supabase/client';
 
@@ -19,6 +19,7 @@ interface SidebarProps {
 
 export function Sidebar({ initialSession }: SidebarProps) {
     const pathname = usePathname();
+    const router = useRouter();
     // Start with initialSession state for instant render, then hydrate
     const hasSession = !!initialSession?.user;
     const [isLoggedIn, setIsLoggedIn] = useState(hasSession);
@@ -134,6 +135,7 @@ export function Sidebar({ initialSession }: SidebarProps) {
                             href={item.href}
                             title={item.label}
                             className={`sidebar-nav-item ${extraClass} ${isActive ? 'active' : ''} ${isPending ? 'pending' : ''}`}
+                            onMouseEnter={() => { if (!isActive) router.prefetch(item.href); }}
                             onClick={() => { if (!isActive) setPendingHref(item.href); }}
                         >
                             <span className="sidebar-icon">{item.icon}</span>

@@ -21,9 +21,9 @@ export default async function SelfProfilePage() {
     if (!user) {
         const email = session.user.email || 'unknown@example.com';
         const username = email.split('@')[0];
-        
+
         return (
-            <ProfileClient 
+            <ProfileClient
                 user={{
                     id: session.user.id,
                     username,
@@ -33,31 +33,31 @@ export default async function SelfProfilePage() {
                     follower_count: 0,
                     following_count: 0,
                     created_at: new Date().toISOString()
-                }} 
-                posts={[]} 
-                likedPosts={[]} 
+                }}
+                posts={[]}
+                likedPosts={[]}
                 isOwnProfile={true}
             />
         );
     }
-    
-    // Fetch user's posts directly from Supabase
-    const { data: posts } = await supabase
-        .from('posts')
-        .select(`
-            *,
-            author:users!posts_author_id_fkey(id, username, display_name, bio, avatar_url, location, role, is_verified, is_business, created_at, follower_count, following_count)
-        `)
-        .eq('author_id', user.id)
-        .eq('status', 'PUBLISHED')
-        .order('published_at', { ascending: false });
 
-    // Fetch user's liked posts
-    const { data: likedPostIds } = await supabase
-        .from('post_likes')
-        .select('post_id')
-        .eq('user_id', user.id)
-        .limit(6);
+    // Fetch posts and liked post IDs in parallel
+    const [{ data: posts }, { data: likedPostIds }] = await Promise.all([
+        supabase
+            .from('posts')
+            .select(`
+                *,
+                author:users!posts_author_id_fkey(id, username, display_name, bio, avatar_url, location, role, is_verified, is_business, created_at, follower_count, following_count)
+            `)
+            .eq('author_id', user.id)
+            .eq('status', 'PUBLISHED')
+            .order('published_at', { ascending: false }),
+        supabase
+            .from('post_likes')
+            .select('post_id')
+            .eq('user_id', user.id)
+            .limit(6),
+    ]);
 
     let likedPosts: any[] = [];
     if (likedPostIds && likedPostIds.length > 0) {

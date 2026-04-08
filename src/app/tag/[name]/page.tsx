@@ -25,29 +25,48 @@ export default async function TagPage({ params }: { params: Promise<{ name: stri
 
     let posts: any[] = [];
     if (supabase) {
-        // Build query with geoblocking
-        let query = supabase
-            .from('posts')
-            .select(`
-                *,
-                author:users!posts_author_id_fkey(id, username, display_name, avatar_url)
-            `)
-            .eq('status', 'PUBLISHED')
-            .not('author_id', 'is', null);
+        // First get the tag ID from the tag name
+        const { data: tagData } = await supabase
+            .from('tags')
+            .select('id')
+            .eq('name', decode)
+            .single();
 
-        // Apply geoblocking: show global posts OR posts from viewer's country
-        if (viewerCountry) {
-            query = query.or(`country_code.is.null,country_code.eq.${viewerCountry}`);
-        } else {
-            // On localhost, only show global posts
-            query = query.is('country_code', null);
+        if (tagData) {
+            // Get posts that have this tag
+            const { data: postTags } = await supabase
+                .from('post_tags')
+                .select('post_id')
+                .eq('tag_id', tagData.id);
+
+            if (postTags && postTags.length > 0) {
+                const postIds = postTags.map(pt => pt.post_id);
+                
+                // Build query with geoblocking
+                let query = supabase
+                    .from('posts')
+                    .select(`
+                        *,
+                        author:users!posts_author_id_fkey(id, username, display_name, avatar_url)
+                    `)
+                    .eq('status', 'PUBLISHED')
+                    .not('author_id', 'is', null)
+                    .in('id', postIds);
+
+                // Apply geoblocking: show global posts OR posts from viewer's country
+                if (viewerCountry) {
+                    query = query.or(`country_code.is.null,country_code.eq.${viewerCountry}`);
+                } else {
+                    // On localhost, only show global posts
+                    query = query.is('country_code', null);
+                }
+
+                const { data } = await query
+                    .order('engagement_score', { ascending: false })
+                    .limit(50);
+                posts = data || [];
+            }
         }
-
-        const { data } = await query
-            .or(`title.ilike.%${decode}%,subtitle.ilike.%${decode}%`)
-            .order('engagement_score', { ascending: false })
-            .limit(50);
-        posts = data || [];
     }
 
     return (

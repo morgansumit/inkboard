@@ -14,24 +14,11 @@ export default function RegisterPage() {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [detectedCountry, setDetectedCountry] = useState<string | null>(null);
-    const [selectedCountry, setSelectedCountry] = useState<string>('');
+    const [selectedCountry, setSelectedCountry] = useState<string>('AM'); // Default to Armenia
+    const [selectedCity, setSelectedCity] = useState<string>('');
     const [countrySource, setCountrySource] = useState<'ipinfo' | 'timezone' | 'none'>('none');
     const [isCountryGuess, setIsCountryGuess] = useState(false);
     const supabase = createClient();
-
-    useEffect(() => {
-        // Detect country on mount
-        const detect = async () => {
-            const result = await detectCountryWithFallback();
-            if (result.country) {
-                setDetectedCountry(result.country);
-                setSelectedCountry(result.country);
-                setCountrySource(result.source);
-                setIsCountryGuess(result.isGuess);
-            }
-        };
-        detect();
-    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -152,8 +139,13 @@ export default function RegisterPage() {
             setError('Please select your country');
             return;
         }
+        if (!selectedCity) {
+            setError('Please select your city');
+            return;
+        }
         setLoading(true);
-        await doSignup(selectedCountry, '', '', 'Medium', 'Unknown', 'Desktop');
+        const location = `${selectedCity}, ${COUNTRY_NAMES[selectedCountry] || selectedCountry}`;
+        await doSignup(selectedCountry, '', location, 'Medium', 'Unknown', 'Desktop');
     };
 
     if (step === 'verify') {
@@ -221,18 +213,31 @@ export default function RegisterPage() {
                                     cursor: 'pointer', appearance: 'none',
                                 }}
                             >
-                                <option value="">Select a country...</option>
                                 {Object.entries(COUNTRY_NAMES).map(([code, name]) => (
                                     <option key={code} value={code}>{name}</option>
                                 ))}
                             </select>
                         </div>
 
+                        <div>
+                            <input
+                                type="text"
+                                placeholder="Enter your city..."
+                                value={selectedCity}
+                                onChange={(e) => setSelectedCity(e.target.value)}
+                                style={{
+                                    width: '100%', padding: '14px 16px', borderRadius: '10px',
+                                    border: '1px solid var(--color-border)', fontSize: '15px',
+                                    background: 'var(--color-surface)', color: 'var(--color-primary)',
+                                }}
+                            />
+                        </div>
+
                         <button
                             onClick={handleCountryConfirm}
-                            disabled={loading || !selectedCountry}
+                            disabled={loading || !selectedCountry || !selectedCity}
                             className="btn btn-primary btn-lg"
-                            style={{ width: '100%', opacity: loading || !selectedCountry ? 0.6 : 1 }}
+                            style={{ width: '100%', opacity: loading || !selectedCountry || !selectedCity ? 0.6 : 1 }}
                         >
                             {loading ? 'Creating account...' : 'Continue'}
                         </button>

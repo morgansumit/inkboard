@@ -109,7 +109,7 @@ export async function POST(req: Request) {
 
     if (existing?.id) {
         // Backfill or correct geo/device data for existing users
-        const { data: existingRow } = await supabaseAdmin
+        const { data: existingRow, error: existingRowErr } = await supabaseAdmin
             .from('users')
             .select('country_code, ip_address, location, os_family, device_type')
             .eq('id', user.id)
@@ -124,12 +124,25 @@ export async function POST(req: Request) {
         if ((!existingRow?.os_family || existingRow.os_family === 'Unknown') && device.os_family !== 'Unknown') updates.os_family = device.os_family;
         if (!existingRow?.device_type && device.device_type) updates.device_type = device.device_type;
 
+        let updateResult = null;
         if (Object.keys(updates).length > 0) {
-            await supabaseAdmin.from('users').update(updates).eq('id', user.id);
-            console.log('[users.sync] Updated geo/device for existing user:', user.id, updates);
+            const { error: updateErr } = await supabaseAdmin.from('users').update(updates).eq('id', user.id);
+            updateResult = updateErr ? { error: updateErr.message } : { success: true };
         }
 
-        return NextResponse.json({ synced: true, id: existing.id })
+        // DEBUG: return full state so we can see what happened
+        return NextResponse.json({
+            synced: true,
+            id: existing.id,
+            _debug: {
+                geo,
+                device,
+                existingRow,
+                existingRowErr: existingRowErr?.message || null,
+                updates,
+                updateResult,
+            }
+        })
     }
 
     const usernameSeed = (user.email?.split('@')[0] || user.user_metadata?.username || 'centsably').toLowerCase()

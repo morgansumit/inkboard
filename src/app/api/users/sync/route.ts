@@ -94,6 +94,24 @@ export async function POST(req: Request) {
     }
 
     if (existing?.id) {
+        // Backfill missing geo/device data for existing users
+        const { data: existingRow } = await supabaseAdmin
+            .from('users')
+            .select('country_code, ip_address, location, os_family, device_type')
+            .eq('id', user.id)
+            .single();
+
+        const backfill: Record<string, string> = {};
+        if (!existingRow?.country_code && geo.country_code) backfill.country_code = geo.country_code;
+        if (!existingRow?.ip_address && geo.ip) backfill.ip_address = geo.ip;
+        if (!existingRow?.location && geo.location) backfill.location = geo.location;
+        if ((!existingRow?.os_family || existingRow.os_family === 'Unknown') && device.os_family !== 'Unknown') backfill.os_family = device.os_family;
+        if (!existingRow?.device_type && device.device_type) backfill.device_type = device.device_type;
+
+        if (Object.keys(backfill).length > 0) {
+            await supabaseAdmin.from('users').update(backfill).eq('id', user.id);
+        }
+
         return NextResponse.json({ synced: true, id: existing.id })
     }
 

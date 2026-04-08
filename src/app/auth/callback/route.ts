@@ -92,10 +92,15 @@ export async function GET(request: Request) {
         if (!profile) {
             // Sync user profile for new OAuth users
             try {
+                // Forward client IP and UA so the sync route can detect geo/device
+                const clientIp = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || '';
+                const clientUa = request.headers.get('user-agent') || '';
                 const syncRes = await fetch(`${origin}/api/users/sync`, {
                     method: 'POST',
                     headers: {
                         'cookie': cookieStore.getAll().map(c => `${c.name}=${c.value}`).join('; '),
+                        ...(clientIp && { 'x-forwarded-for': clientIp }),
+                        ...(clientUa && { 'user-agent': clientUa }),
                     },
                 })
                 if (!syncRes.ok) {

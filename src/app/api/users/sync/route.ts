@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 import { generateUniqueUsername } from '@/lib/admin/setup'
+import { getCountryFromRequest } from '@/lib/geo'
+import { headers } from 'next/headers'
 
 function initialsAvatar(name: string) {
     const seed = encodeURIComponent(name || 'centsably User')
@@ -14,21 +16,33 @@ type GeoInfo = {
     location: string | null;  // "City, CC"
 };
 
-async function detectGeoFromRequest(req: Request): Promise<GeoInfo> {
+async function detectGeo(): Promise<GeoInfo> {
     const empty: GeoInfo = { ip: null, country_code: null, location: null };
     try {
-        const forwarded = req.headers.get('x-forwarded-for');
-        const ip = forwarded?.split(',')[0]?.trim() || req.headers.get('x-real-ip') || null;
-        if (!ip || ip === '127.0.0.1' || ip === '::1') return empty;
+        const h = await headers();
+        const ip = h.get('x-nf-client-connection-ip')
+            || h.get('x-forwarded-for')?.split(',')[0]?.trim()
+            || h.get('x-real-ip')
+            || null;
 
-        const ipRes = await fetch(`https://ipinfo.io/${ip}/json`);
-        if (!ipRes.ok) return { ...empty, ip };
-        const d = await ipRes.json();
-        return {
-            ip,
-            country_code: d.country || null,
-            location: d.city && d.country ? `${d.city}, ${d.country}` : null,
-        };
+        // Use Netlify's x-country header (reliable) via shared geo utility
+        const country_code = await getCountryFromRequest();
+
+        // Build location string from ipinfo if we have a real IP
+        let location: string | null = null;
+        if (ip && ip !== '127.0.0.1' && ip !== '::1') {
+            try {
+                const ipRes = await fetch(`https://ipinfo.io/${ip}/json`, {
+                    signal: AbortSignal.timeout(2000),
+                });
+                if (ipRes.ok) {
+                    const d = await ipRes.json();
+                    if (d.city && d.country) location = `${d.city}, ${d.country}`;
+                }
+            } catch { /* ipinfo failed, continue with just country */ }
+        }
+
+        return { ip, country_code, location };
     } catch (err) {
         console.error('[users.sync] Geo detection failed:', err);
         return empty;
@@ -67,7 +81,7 @@ export async function POST(req: Request) {
     }
 
     // Detect geo + device info and store in user_metadata
-    const geo = await detectGeoFromRequest(req);
+    const geo = await detectGeo();
     const device = detectDevice(req);
     const metaUpdates: Record<string, string> = {};
     if (geo.country_code && !user.user_metadata?.country_code) metaUpdates.country_code = geo.country_code;
@@ -94,22 +108,25 @@ export async function POST(req: Request) {
     }
 
     if (existing?.id) {
-        // Backfill missing geo/device data for existing users
+        // Backfill or correct geo/device data for existing users
         const { data: existingRow } = await supabaseAdmin
             .from('users')
             .select('country_code, ip_address, location, os_family, device_type')
             .eq('id', user.id)
             .single();
 
-        const backfill: Record<string, string> = {};
-        if (!existingRow?.country_code && geo.country_code) backfill.country_code = geo.country_code;
-        if (!existingRow?.ip_address && geo.ip) backfill.ip_address = geo.ip;
-        if (!existingRow?.location && geo.location) backfill.location = geo.location;
-        if ((!existingRow?.os_family || existingRow.os_family === 'Unknown') && device.os_family !== 'Unknown') backfill.os_family = device.os_family;
-        if (!existingRow?.device_type && device.device_type) backfill.device_type = device.device_type;
+        const updates: Record<string, string> = {};
+        // Always update country_code if we have a reliable detection (from Netlify x-country header)
+        if (geo.country_code && existingRow?.country_code !== geo.country_code) updates.country_code = geo.country_code;
+        if (geo.ip && !existingRow?.ip_address) updates.ip_address = geo.ip;
+        // Update location if we have fresh data and it differs
+        if (geo.location && existingRow?.location !== geo.location) updates.location = geo.location;
+        if ((!existingRow?.os_family || existingRow.os_family === 'Unknown') && device.os_family !== 'Unknown') updates.os_family = device.os_family;
+        if (!existingRow?.device_type && device.device_type) updates.device_type = device.device_type;
 
-        if (Object.keys(backfill).length > 0) {
-            await supabaseAdmin.from('users').update(backfill).eq('id', user.id);
+        if (Object.keys(updates).length > 0) {
+            await supabaseAdmin.from('users').update(updates).eq('id', user.id);
+            console.log('[users.sync] Updated geo/device for existing user:', user.id, updates);
         }
 
         return NextResponse.json({ synced: true, id: existing.id })

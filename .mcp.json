@@ -1,17 +1,17 @@
 {
   "mcpServers": {
     "playwright": {
-      "command": "/usr/local/bin/npx",
+      "command": "/Users/admin/.nvm/versions/node/v18.20.8/bin/npx",
       "args": ["@playwright/mcp@latest"],
       "env": {
-        "PATH": "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+        "PATH": "/Users/admin/.nvm/versions/node/v18.20.8/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
       }
     },
     "supabase": {
-      "command": "/usr/local/bin/npx",
+      "command": "/Users/admin/.nvm/versions/node/v18.20.8/bin/npx",
       "args": ["-y", "@supabase/mcp-server-supabase@latest", "--access-token", "sbp_326545f09a42f516227ee1648ab003a194b90992"],
       "env": {
-        "PATH": "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+        "PATH": "/Users/admin/.nvm/versions/node/v18.20.8/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
       }
     }
   }

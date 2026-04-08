@@ -1,0 +1,3 @@
+[     746ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ https://centsably.com/login:0
+[    1204ms] [ERROR] Failed to load resource: the server responded with a status of 401 () @ https://centsably.com/api/broadcasts/my:0
+[   12999ms] [ERROR] Failed to load resource: the server responded with a status of 401 () @ https://centsably.com/api/broadcasts/my:0

@@ -13,9 +13,15 @@ type NavItem = {
     kind?: 'write';
 };
 
-export function Sidebar() {
+interface SidebarProps {
+    initialSession?: any;
+}
+
+export function Sidebar({ initialSession }: SidebarProps) {
     const pathname = usePathname();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    // Start with initialSession state for instant render, then hydrate
+    const hasSession = !!initialSession?.user;
+    const [isLoggedIn, setIsLoggedIn] = useState(hasSession);
     const [isMobile, setIsMobile] = useState(false);
     const supabase = createClient();
 

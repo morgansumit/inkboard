@@ -37,11 +37,21 @@ export function Navbar({ initialSession }: NavbarProps) {
     const router = useRouter();
 
     // ── Auth state ───────────────────────────────────────────────────────
-    // Start with server-safe defaults (no localStorage on server).
-    // Cache is applied in the first useEffect to avoid hydration mismatch.
+    // If we have initialSession, build an immediate profile so the navbar
+    // renders logged-in UI on the very first paint — no waiting for Supabase.
     const hasSession = !!initialSession?.user;
+    const meta = initialSession?.user?.user_metadata;
 
-    const [authReady, setAuthReady] = useState(!hasSession);
+    // Build an instant profile from the session (OAuth metadata or fallback)
+    const instantProfile = hasSession ? {
+        display_name: meta?.full_name || meta?.name || meta?.display_name || initialSession.user.email?.split('@')[0] || 'User',
+        avatar_url: meta?.avatar_url || meta?.picture || `https://api.dicebear.com/7.x/initials/svg?seed=${initialSession.user.email || 'user'}`,
+        role: 'USER' as string,
+        is_business: false,
+    } : null;
+
+    // Always start ready — we have either initialSession data or know user is logged out
+    const [authReady, setAuthReady] = useState(true);
     const [isLoggedIn, setIsLoggedIn] = useState(hasSession);
     const [userEmail, setUserEmail] = useState<string | null>(
         initialSession?.user?.email || null
@@ -51,7 +61,7 @@ export function Navbar({ initialSession }: NavbarProps) {
         avatar_url: string;
         role: string;
         is_business: boolean;
-    } | null>(null);
+    } | null>(instantProfile);
 
     const [searchQuery, setSearchQuery] = useState('');
     const [notifOpen, setNotifOpen] = useState(false);

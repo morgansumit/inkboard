@@ -60,7 +60,7 @@ export default function AdsDashboard() {
                 const { data: profileData, error: profileError } = await supabase
                     .from('users')
                     .select('is_business')
-                    .eq('id', session.user.id)
+                    .eq('id', authUser.id)
                     .single();
 
                 if (profileError) throw profileError;
@@ -70,7 +70,7 @@ export default function AdsDashboard() {
                     const { data, error } = await supabase
                         .from('ads')
                         .select('*')
-                        .eq('user_id', session.user.id)
+                        .eq('user_id', authUser.id)
                         .order('created_at', { ascending: false });
                     if (error) throw error;
                     if (data) setAds(data);
@@ -78,7 +78,7 @@ export default function AdsDashboard() {
                     void supabase
                         .from('business_requests')
                         .select('*')
-                        .eq('user_id', session.user.id)
+                        .eq('user_id', authUser.id)
                         .maybeSingle()
                         .then(({ data: request }: { data: BusinessRequestRow | null }) => {
                             if (request) setBusinessRequest(request);

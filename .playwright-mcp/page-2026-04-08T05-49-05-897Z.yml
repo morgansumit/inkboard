@@ -1,0 +1,52 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - link "P" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]:
+        - link "Home" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+          - generic: Home
+        - link "Nearby" [ref=e11] [cursor=pointer]:
+          - /url: /explore
+          - img [ref=e13]
+          - generic: Nearby
+    - generic [ref=e16]:
+      - banner [ref=e17]:
+        - generic [ref=e18]:
+          - link "purseable home" [ref=e19] [cursor=pointer]:
+            - /url: /
+            - img "Purseable" [ref=e20]
+          - generic [ref=e21]:
+            - img [ref=e22]
+            - textbox "Search posts, authors, tags…" [ref=e25]
+      - main [ref=e28]:
+        - generic [ref=e29]:
+          - generic [ref=e30]:
+            - button "✨ For You" [ref=e31] [cursor=pointer]
+            - button "📚 Literature" [ref=e32] [cursor=pointer]
+            - button "✈️ Travel" [ref=e33] [cursor=pointer]
+            - button "💻 Technology" [ref=e34] [cursor=pointer]
+            - button "🍽️ Food & Drink" [ref=e35] [cursor=pointer]
+            - button "🏛️ Politics" [ref=e36] [cursor=pointer]
+            - button "🧠 Philosophy" [ref=e37] [cursor=pointer]
+            - button "✍️ Poetry" [ref=e38] [cursor=pointer]
+            - button "🌿 Health & Wellness" [ref=e39] [cursor=pointer]
+            - button "📷 Photography" [ref=e40] [cursor=pointer]
+            - button "🎵 Music" [ref=e41] [cursor=pointer]
+            - button "🎬 Cinema" [ref=e42] [cursor=pointer]
+            - button "🔬 Science" [ref=e43] [cursor=pointer]
+          - heading "Your Feed" [level=2] [ref=e45]
+  - contentinfo [ref=e183]:
+    - generic [ref=e184]:
+      - generic [ref=e185]:
+        - link "Privacy Policy" [ref=e186] [cursor=pointer]:
+          - /url: /policy/privacy-policy
+        - link "Terms of Use" [ref=e187] [cursor=pointer]:
+          - /url: /policy/terms-of-use
+        - link "Cookie Policy" [ref=e188] [cursor=pointer]:
+          - /url: /policy/cookie-policy
+      - paragraph [ref=e189]: © 2026 Purseable. All rights reserved.
+  - button "Open Next.js Dev Tools" [ref=e195] [cursor=pointer]:
+    - img [ref=e196]

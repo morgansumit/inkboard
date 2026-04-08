@@ -38,7 +38,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <SupabaseErrorHandler />
         <BroadcastNotifications />
         <div style={{ display: 'flex', minHeight: '100svh', width: '100%' }}>
-          <Sidebar />
+          <Sidebar initialSession={session} />
           <div className="layout-main" style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
             <Navbar initialSession={session} />
             <main>{children}</main>

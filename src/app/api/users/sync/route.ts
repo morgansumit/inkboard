@@ -8,21 +8,47 @@ function initialsAvatar(name: string) {
     return `https://api.dicebear.com/7.x/initials/svg?seed=${seed}`
 }
 
-async function detectCountryFromRequest(req: Request): Promise<string | null> {
+type GeoInfo = {
+    ip: string | null;
+    country_code: string | null;
+    location: string | null;  // "City, CC"
+};
+
+async function detectGeoFromRequest(req: Request): Promise<GeoInfo> {
+    const empty: GeoInfo = { ip: null, country_code: null, location: null };
     try {
-        // Get client IP from headers
         const forwarded = req.headers.get('x-forwarded-for');
         const ip = forwarded?.split(',')[0]?.trim() || req.headers.get('x-real-ip') || null;
-        
-        if (!ip) return null;
-        
+        if (!ip || ip === '127.0.0.1' || ip === '::1') return empty;
+
         const ipRes = await fetch(`https://ipinfo.io/${ip}/json`);
-        const ipData = await ipRes.json();
-        return ipData.country || null;
+        if (!ipRes.ok) return { ...empty, ip };
+        const d = await ipRes.json();
+        return {
+            ip,
+            country_code: d.country || null,
+            location: d.city && d.country ? `${d.city}, ${d.country}` : null,
+        };
     } catch (err) {
-        console.error('[users.sync] Could not detect country:', err);
-        return null;
+        console.error('[users.sync] Geo detection failed:', err);
+        return empty;
     }
+}
+
+function detectDevice(req: Request): { os_family: string; device_type: string } {
+    const ua = (req.headers.get('user-agent') || '').toLowerCase();
+    let os_family = 'Unknown';
+    if (ua.includes('windows')) os_family = 'Windows';
+    else if (ua.includes('mac os') || ua.includes('macintosh')) os_family = 'macOS';
+    else if (ua.includes('linux') && !ua.includes('android')) os_family = 'Linux';
+    else if (ua.includes('android')) os_family = 'Android';
+    else if (ua.includes('iphone') || ua.includes('ipad')) os_family = 'iOS';
+
+    let device_type = 'Desktop';
+    if (ua.includes('mobile') || ua.includes('android') || ua.includes('iphone')) device_type = 'Mobile';
+    else if (ua.includes('tablet') || ua.includes('ipad')) device_type = 'Tablet';
+
+    return { os_family, device_type };
 }
 
 export async function POST(req: Request) {
@@ -40,17 +66,20 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // Detect and store country_code for OAuth users if not already set
-    if (!user.user_metadata?.country_code) {
-        const detectedCountry = await detectCountryFromRequest(req);
-        if (detectedCountry) {
-            await supabaseAdmin.auth.admin.updateUserById(user.id, {
-                user_metadata: {
-                    ...user.user_metadata,
-                    country_code: detectedCountry,
-                },
-            });
-        }
+    // Detect geo + device info and store in user_metadata
+    const geo = await detectGeoFromRequest(req);
+    const device = detectDevice(req);
+    const metaUpdates: Record<string, string> = {};
+    if (geo.country_code && !user.user_metadata?.country_code) metaUpdates.country_code = geo.country_code;
+    if (geo.ip && !user.user_metadata?.ip_address) metaUpdates.ip_address = geo.ip;
+    if (geo.location && !user.user_metadata?.location) metaUpdates.location = geo.location;
+    if (!user.user_metadata?.os_family || user.user_metadata.os_family === 'Unknown') metaUpdates.os_family = device.os_family;
+    if (!user.user_metadata?.device_type) metaUpdates.device_type = device.device_type;
+
+    if (Object.keys(metaUpdates).length > 0) {
+        await supabaseAdmin.auth.admin.updateUserById(user.id, {
+            user_metadata: { ...user.user_metadata, ...metaUpdates },
+        });
     }
 
     const { data: existing, error: fetchError } = await supabaseAdmin
@@ -74,14 +103,14 @@ export async function POST(req: Request) {
     const displayName = user.user_metadata?.display_name || user.user_metadata?.full_name || usernameSeed
     const avatar_url = user.user_metadata?.avatar_url || initialsAvatar(displayName)
 
-    // Get metadata fields
-    const country_code = user.user_metadata?.country_code || null;
-    const ip_address = user.user_metadata?.ip_address || null;
-    const location = user.user_metadata?.location || null;
+    // Merge freshly detected data with any existing metadata
+    const country_code = geo.country_code || user.user_metadata?.country_code || null;
+    const ip_address = geo.ip || user.user_metadata?.ip_address || null;
+    const location = geo.location || user.user_metadata?.location || null;
     const age_range = user.user_metadata?.age_range || null;
     const income_level = user.user_metadata?.income_level || 'Medium';
-    const os_family = user.user_metadata?.os_family || 'Unknown';
-    const device_type = user.user_metadata?.device_type || 'Desktop';
+    const os_family = device.os_family || user.user_metadata?.os_family || 'Unknown';
+    const device_type = device.device_type || user.user_metadata?.device_type || 'Desktop';
 
     const profilePayload = {
         id: user.id,

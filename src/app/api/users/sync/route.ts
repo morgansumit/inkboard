@@ -2,8 +2,6 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 import { generateUniqueUsername } from '@/lib/admin/setup'
-import { getCountryFromRequest } from '@/lib/geo'
-import { headers } from 'next/headers'
 
 function initialsAvatar(name: string) {
     const seed = encodeURIComponent(name || 'centsably User')
@@ -16,19 +14,25 @@ type GeoInfo = {
     location: string | null;  // "City, CC"
 };
 
-async function detectGeo(): Promise<GeoInfo> {
+async function detectGeoFromReq(req: Request): Promise<GeoInfo> {
     const empty: GeoInfo = { ip: null, country_code: null, location: null };
     try {
-        const h = await headers();
+        const h = req.headers;
+
+        // 1. Country: use Netlify's x-country header (most reliable)
+        let country_code: string | null = null;
+        const xCountry = h.get('x-country') || h.get('x-nf-country');
+        if (xCountry && xCountry.length === 2) {
+            country_code = xCountry.toUpperCase();
+        }
+
+        // 2. IP: use Netlify client connection IP or x-forwarded-for
         const ip = h.get('x-nf-client-connection-ip')
             || h.get('x-forwarded-for')?.split(',')[0]?.trim()
             || h.get('x-real-ip')
             || null;
 
-        // Use Netlify's x-country header (reliable) via shared geo utility
-        const country_code = await getCountryFromRequest();
-
-        // Build location string from ipinfo if we have a real IP
+        // 3. If no country from header, try ipinfo fallback
         let location: string | null = null;
         if (ip && ip !== '127.0.0.1' && ip !== '::1') {
             try {
@@ -37,9 +41,10 @@ async function detectGeo(): Promise<GeoInfo> {
                 });
                 if (ipRes.ok) {
                     const d = await ipRes.json();
+                    if (!country_code && d.country) country_code = d.country.toUpperCase();
                     if (d.city && d.country) location = `${d.city}, ${d.country}`;
                 }
-            } catch { /* ipinfo failed, continue with just country */ }
+            } catch { /* ipinfo failed */ }
         }
 
         return { ip, country_code, location };
@@ -81,7 +86,7 @@ export async function POST(req: Request) {
     }
 
     // Detect geo + device info and store in user_metadata
-    const geo = await detectGeo();
+    const geo = await detectGeoFromReq(req);
     const device = detectDevice(req);
     const metaUpdates: Record<string, string> = {};
     if (geo.country_code && !user.user_metadata?.country_code) metaUpdates.country_code = geo.country_code;
@@ -141,6 +146,12 @@ export async function POST(req: Request) {
                 existingRowErr: existingRowErr?.message || null,
                 updates,
                 updateResult,
+                rawHeaders: {
+                    'x-country': req.headers.get('x-country'),
+                    'x-nf-country': req.headers.get('x-nf-country'),
+                    'x-forwarded-for': req.headers.get('x-forwarded-for'),
+                    'x-nf-client-connection-ip': req.headers.get('x-nf-client-connection-ip'),
+                },
             }
         })
     }

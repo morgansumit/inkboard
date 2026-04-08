@@ -338,16 +338,33 @@ export function Navbar({ initialSession }: NavbarProps) {
                 console.log('[navbar] Sign out timed out, forcing logout');
             }
             
+            // Force clear all auth storage
             setProfileMenuOpen(false);
             localStorage.removeItem('purseable:last-admin-view');
             clearCachedUserProfile();
+            
+            // Clear Supabase session cookies
+            document.cookie.split(';').forEach(cookie => {
+                const [name] = cookie.split('=');
+                const trimmedName = name.trim();
+                if (trimmedName.includes('supabase') || trimmedName.includes('sb-')) {
+                    document.cookie = `${trimmedName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+                    document.cookie = `${trimmedName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname};`;
+                }
+            });
+            
+            // Clear all storage
+            sessionStorage.clear();
+            
             resetClient();
-            window.location.href = '/login';
+            
+            // Hard redirect to clear server state
+            window.location.replace('/login');
         } catch (err) {
             console.error('[navbar] sign out failed', err);
             clearCachedUserProfile();
             resetClient();
-            window.location.href = '/login';
+            window.location.replace('/login');
         }
     };
 

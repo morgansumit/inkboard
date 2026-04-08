@@ -219,11 +219,21 @@ export function Navbar({ initialSession }: NavbarProps) {
                 if (session?.user) {
                     setIsLoggedIn(true);
                     setUserEmail(session.user.email || null);
+                    // Immediately show a profile from session metadata so the
+                    // navbar renders logged-in UI without waiting for the DB call
+                    if (!currentUser) {
+                        const m = session.user.user_metadata || {};
+                        setCurrentUser({
+                            display_name: m.full_name || m.name || m.display_name || session.user.email?.split('@')[0] || 'User',
+                            avatar_url: m.avatar_url || m.picture || `https://api.dicebear.com/7.x/initials/svg?seed=${session.user.email || 'user'}`,
+                            role: 'USER',
+                            is_business: false,
+                        });
+                    }
                     if (!hydratedRef.current || _event === 'SIGNED_IN') {
                         hydratedRef.current = true;
-                        await hydrateUser(session.user.id, session.user.email || null);
-                        await loadNotifications(session.user.id);
-                        if (!cancelled) setAuthReady(true);
+                        hydrateUser(session.user.id, session.user.email || null);
+                        loadNotifications(session.user.id);
                     }
                 } else if (_event === 'SIGNED_OUT') {
                     setIsLoggedIn(false);

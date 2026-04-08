@@ -92,15 +92,20 @@ export async function GET(request: Request) {
         if (!profile) {
             // Sync user profile for new OAuth users
             try {
-                const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || origin
-                await fetch(`${siteUrl}/api/users/sync`, {
+                const syncRes = await fetch(`${origin}/api/users/sync`, {
                     method: 'POST',
                     headers: {
                         'cookie': cookieStore.getAll().map(c => `${c.name}=${c.value}`).join('; '),
                     },
                 })
-            } catch {
-                // sync failed, proceed anyway
+                if (!syncRes.ok) {
+                    const errData = await syncRes.json().catch(() => ({}))
+                    console.error('[auth/callback] User sync failed:', syncRes.status, errData)
+                } else {
+                    console.log('[auth/callback] User synced successfully')
+                }
+            } catch (err) {
+                console.error('[auth/callback] User sync error:', err)
             }
             return NextResponse.redirect(`${origin}/onboarding`)
         }

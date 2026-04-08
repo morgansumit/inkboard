@@ -55,32 +55,39 @@ export function Navbar({ initialSession }: NavbarProps) {
             }
 
             const fetchProfile = async () => {
-                const { data } = await supabase
+                const { data, error } = await supabase
                     .from('users')
                     .select('display_name, avatar_url, role, is_business')
                     .eq('id', userId)
                     .maybeSingle();
+                if (error) console.error('[Navbar] Profile fetch error:', error);
                 return data;
             };
 
             let profile = await fetchProfile();
+            console.log('[Navbar] Fetched profile for', userId, ':', profile);
 
             if (!profile) {
+                console.log('[Navbar] No profile found, attempting sync...');
                 try {
-                    await fetch('/api/users/sync', { method: 'POST' });
+                    const syncRes = await fetch('/api/users/sync', { method: 'POST' });
+                    console.log('[Navbar] Sync response:', syncRes.status);
                     profile = await fetchProfile();
+                    console.log('[Navbar] Profile after sync:', profile);
                 } catch (err) {
-                    console.error('Failed to sync profile', err);
+                    console.error('[Navbar] Failed to sync profile', err);
                 }
             }
 
+            // Always set currentUser, even if profile is null (use defaults)
             setCurrentUser({
                 display_name: profile?.display_name || 'Purseable User',
-                avatar_url: profile?.avatar_url || '',
+                avatar_url: profile?.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${userEmail || 'user'}`,
                 role: profile?.role || 'USER',
                 is_business: Boolean(profile?.is_business),
             });
             setIsProfileLoading(false);
+            console.log('[Navbar] Set currentUser, loading done');
         };
 
         const loadNotifications = async (userId: string | undefined) => {
@@ -104,7 +111,11 @@ export function Navbar({ initialSession }: NavbarProps) {
         // If we have initial session, use it immediately
         if (initialSession?.user) {
             setIsProfileLoading(true);
-            hydrateUser(initialSession.user.id);
+            setUserEmail(initialSession.user.email || null);
+            hydrateUser(initialSession.user.id).catch(err => {
+                console.error('[Navbar] hydrateUser error:', err);
+                setIsProfileLoading(false);
+            });
             loadNotifications(initialSession.user.id);
         }
 

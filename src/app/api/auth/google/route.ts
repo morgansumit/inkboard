@@ -3,7 +3,8 @@ import { NextResponse } from 'next/server'
 
 export async function GET(request: Request) {
     const supabase = await createClient()
-    const origin = process.env.NEXT_PUBLIC_SITE_URL || new URL(request.url).origin
+    // Use request origin to ensure correct domain (centsably.com)
+    const origin = new URL(request.url).origin
 
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',

@@ -23,7 +23,11 @@ export function Sidebar({ initialSession }: SidebarProps) {
     const hasSession = !!initialSession?.user;
     const [isLoggedIn, setIsLoggedIn] = useState(hasSession);
     const [isMobile, setIsMobile] = useState(false);
+    const [pendingHref, setPendingHref] = useState<string | null>(null);
     const supabase = createClient();
+
+    // Clear pending state when navigation completes
+    useEffect(() => { setPendingHref(null); }, [pathname]);
 
     useEffect(() => {
         // Check cache first for instant state, then listen for changes
@@ -122,13 +126,15 @@ export function Sidebar({ initialSession }: SidebarProps) {
             <div className={`sidebar-nav ${isMobile ? 'mobile-nav' : ''}`}>
                 {(isMobile ? (isLoggedIn ? mobileItemsAuthed : mobileItemsGuest) : desktopItems.filter(item => item.public || isLoggedIn)).map(item => {
                     const isActive = pathname === item.href;
+                    const isPending = pendingHref === item.href && !isActive;
                     const extraClass = item.kind === 'write' ? 'write-cta' : '';
                     return (
                         <Link
                             key={item.href}
                             href={item.href}
                             title={item.label}
-                            className={`sidebar-nav-item ${extraClass} ${isActive ? 'active' : ''}`}
+                            className={`sidebar-nav-item ${extraClass} ${isActive ? 'active' : ''} ${isPending ? 'pending' : ''}`}
+                            onClick={() => { if (!isActive) setPendingHref(item.href); }}
                         >
                             <span className="sidebar-icon">{item.icon}</span>
                             <span className="sidebar-label">{item.label}</span>

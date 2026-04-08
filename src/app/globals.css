@@ -361,6 +361,12 @@ body {
   color: var(--color-surface);
 }
 
+.sidebar-nav-item.pending {
+  background: var(--color-primary);
+  color: var(--color-surface);
+  opacity: 0.7;
+}
+
 .sidebar-icon {
   display: flex;
   align-items: center;
@@ -580,6 +586,12 @@ body {
 .profile-menu a:hover,
 .profile-menu button:hover {
   background: rgba(0, 0, 0, 0.04);
+}
+
+.profile-menu a.pending {
+  background: var(--color-primary);
+  color: var(--color-surface);
+  opacity: 0.8;
 }
 
 .profile-menu-logout {
@@ -844,6 +856,12 @@ body {
   .sidebar-nav-item.active {
     background: rgba(0, 0, 0, 0.05);
     color: var(--color-primary);
+  }
+
+  .sidebar-nav-item.pending {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--color-primary);
+    opacity: 0.7;
   }
 
   .sidebar-nav-item.write-cta {

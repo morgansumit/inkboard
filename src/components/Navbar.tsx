@@ -68,6 +68,7 @@ export function Navbar({ initialSession }: NavbarProps) {
     const [scrolled, setScrolled] = useState(false);
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
     const [loggingOut, setLoggingOut] = useState(false);
+    const [pendingHref, setPendingHref] = useState<string | null>(null);
     const [profileMenuPos, setProfileMenuPos] = useState<{ top: number; right: number } | null>(null);
     const [notifications, setNotifications] = useState<NavNotification[]>([]);
 
@@ -277,6 +278,9 @@ export function Navbar({ initialSession }: NavbarProps) {
             setNotifications(prev => prev.map(n => ({ ...n, is_read: true })));
         }
     };
+
+    // ── Clear pending nav on route change ────────────────────────────
+    useEffect(() => { setPendingHref(null); }, [pathname]);
 
     // ── Scroll listener ────────────────────────────────────────────────
     useEffect(() => {
@@ -497,17 +501,17 @@ export function Navbar({ initialSession }: NavbarProps) {
                                             className="profile-menu"
                                             style={{ position: 'fixed', top: profileMenuPos.top, right: profileMenuPos.right }}
                                         >
-                                            <Link href="/profile" onClick={() => setProfileMenuOpen(false)}>My profile</Link>
-                                            <Link href="/messages" onClick={() => setProfileMenuOpen(false)}>Messages</Link>
-                                            <Link href="/notifications" onClick={() => setProfileMenuOpen(false)}>Notifications</Link>
-                                            {isBusiness && <Link href="/ads" onClick={() => setProfileMenuOpen(false)}>Ads Center</Link>}
+                                            <Link href="/profile" className={pendingHref === '/profile' ? 'pending' : ''} onClick={() => { setPendingHref('/profile'); setProfileMenuOpen(false); }}>My profile</Link>
+                                            <Link href="/messages" className={pendingHref === '/messages' ? 'pending' : ''} onClick={() => { setPendingHref('/messages'); setProfileMenuOpen(false); }}>Messages</Link>
+                                            <Link href="/notifications" className={pendingHref === '/notifications' ? 'pending' : ''} onClick={() => { setPendingHref('/notifications'); setProfileMenuOpen(false); }}>Notifications</Link>
+                                            {isBusiness && <Link href="/ads" className={pendingHref === '/ads' ? 'pending' : ''} onClick={() => { setPendingHref('/ads'); setProfileMenuOpen(false); }}>Ads Center</Link>}
                                             {!isBusiness && (
-                                                <Link href="/business/request" onClick={() => setProfileMenuOpen(false)}>
+                                                <Link href="/business/request" className={pendingHref === '/business/request' ? 'pending' : ''} onClick={() => { setPendingHref('/business/request'); setProfileMenuOpen(false); }}>
                                                     Become a business partner
                                                 </Link>
                                             )}
-                                            {isAdmin && <Link href="/admin" onClick={() => setProfileMenuOpen(false)}><Shield size={14} style={{ marginRight: 6 }} />Admin Console</Link>}
-                                            <Link href="/settings" onClick={() => setProfileMenuOpen(false)}>Settings</Link>
+                                            {isAdmin && <Link href="/admin" className={pendingHref === '/admin' ? 'pending' : ''} onClick={() => { setPendingHref('/admin'); setProfileMenuOpen(false); }}><Shield size={14} style={{ marginRight: 6 }} />Admin Console</Link>}
+                                            <Link href="/settings" className={pendingHref === '/settings' ? 'pending' : ''} onClick={() => { setPendingHref('/settings'); setProfileMenuOpen(false); }}>Settings</Link>
                                             <button
                                                 className="profile-menu-logout"
                                                 disabled={loggingOut}

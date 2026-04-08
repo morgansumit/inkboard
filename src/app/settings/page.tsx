@@ -129,21 +129,31 @@ export default function SettingsPage() {
 
   const handleSignOut = async () => {
     if (loggingOut) return;
+    setLoggingOut(true);
     try {
-      setLoggingOut(true);
-      // Quick timeout to prevent hanging
-      const signOutPromise = supabase.auth.signOut();
-      const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Sign out timeout')), 3000)
+      const signOutPromise = supabase.auth.signOut({ scope: 'local' });
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('signout_timeout')), 2000)
       );
-      await Promise.race([signOutPromise, timeoutPromise]);
-      // Force redirect with window.location for reliability
-      window.location.href = '/login';
-    } catch (err) {
-      console.error('Sign out failed', err);
-      // Still redirect even if sign out fails
-      window.location.href = '/login';
+      try {
+        await Promise.race([signOutPromise, timeoutPromise]);
+      } catch {
+        // timeout or signOut error — proceed with forced cleanup
+      }
+    } catch {
+      // unexpected error — proceed with forced cleanup
     }
+    // Always force-clear everything
+    document.cookie.split(';').forEach(cookie => {
+      const [name] = cookie.split('=');
+      const t = name.trim();
+      if (t.includes('supabase') || t.includes('sb-')) {
+        document.cookie = `${t}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        document.cookie = `${t}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname};`;
+      }
+    });
+    sessionStorage.clear();
+    window.location.replace('/login');
   };
 
   const fieldRow = (label: string, field: keyof UserProfile, placeholder: string, maxLen?: number) => {

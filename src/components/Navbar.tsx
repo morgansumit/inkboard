@@ -322,21 +322,38 @@ export function Navbar({ initialSession }: NavbarProps) {
 
     const handleSignOut = async () => {
         if (loggingOut) return;
+        setLoggingOut(true);
         try {
-            setLoggingOut(true);
             const supabase = createClient();
-            await supabase.auth.signOut({ scope: 'local' });
-            setProfileMenuOpen(false);
-            localStorage.removeItem('purseable:last-admin-view');
-            clearCachedUserProfile();
-            resetClient();
-            window.location.href = '/login';
-        } catch (err) {
-            console.error('[navbar] sign out failed', err);
-            clearCachedUserProfile();
-            resetClient();
-            window.location.href = '/login';
+            // signOut can hang indefinitely on GoTrueClient auth lock — race with timeout
+            const signOutPromise = supabase.auth.signOut({ scope: 'local' });
+            const timeoutPromise = new Promise((_, reject) =>
+                setTimeout(() => reject(new Error('signout_timeout')), 2000)
+            );
+            try {
+                await Promise.race([signOutPromise, timeoutPromise]);
+            } catch {
+                // timeout or signOut error — proceed with forced cleanup
+            }
+        } catch {
+            // createClient or other unexpected error — proceed with forced cleanup
         }
+        // Always force-clear everything regardless of signOut result
+        setProfileMenuOpen(false);
+        localStorage.removeItem('purseable:last-admin-view');
+        clearCachedUserProfile();
+        // Clear all supabase cookies
+        document.cookie.split(';').forEach(cookie => {
+            const [name] = cookie.split('=');
+            const t = name.trim();
+            if (t.includes('supabase') || t.includes('sb-')) {
+                document.cookie = `${t}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+                document.cookie = `${t}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname};`;
+            }
+        });
+        sessionStorage.clear();
+        resetClient();
+        window.location.replace('/login');
     };
 
     // ── Render helpers ─────────────────────────────────────────────────

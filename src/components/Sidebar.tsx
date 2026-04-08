@@ -31,7 +31,9 @@ export function Sidebar({ initialSession }: SidebarProps) {
         if (cached) setIsLoggedIn(true);
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: any, session: any) => {
-            setIsLoggedIn(!!session);
+            // Don't let spurious null events override the server session
+            if (!session && hasSession && _event !== 'SIGNED_OUT') return;
+            setIsLoggedIn(_event === 'SIGNED_OUT' ? false : !!session);
         });
 
         return () => subscription.unsubscribe();

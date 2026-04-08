@@ -208,15 +208,13 @@ export function Navbar({ initialSession }: NavbarProps) {
         }
 
         // Listen for auth state changes (login, logout, token refresh)
-        let isFirst = true;
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
             async (_event: any, session: any) => {
                 if (cancelled) return;
-                // Skip the very first event if it's a spurious null during hydration
-                if (isFirst) {
-                    isFirst = false;
-                    if (!session && hasSession) return;
-                }
+
+                // If we already have a server session, ignore any null events
+                // from the client bootstrap — only trust explicit SIGNED_OUT
+                if (!session && hasSession && _event !== 'SIGNED_OUT') return;
 
                 if (session?.user) {
                     setIsLoggedIn(true);
@@ -227,7 +225,7 @@ export function Navbar({ initialSession }: NavbarProps) {
                         await loadNotifications(session.user.id);
                         if (!cancelled) setAuthReady(true);
                     }
-                } else {
+                } else if (_event === 'SIGNED_OUT') {
                     setIsLoggedIn(false);
                     setUserEmail(null);
                     setCurrentUser(null);

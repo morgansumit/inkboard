@@ -97,22 +97,21 @@ export function Navbar({ initialSession }: NavbarProps) {
                 return;
             }
 
+            // Always call sync in background to keep geo/device data up to date
+            fetch('/api/users/sync', { method: 'POST' }).catch(() => {});
+
             if (!data) {
-                // No profile in DB — try sync once
-                try {
-                    const syncRes = await fetch('/api/users/sync', { method: 'POST' });
-                    if (syncRes.ok) {
-                        const { data: retryData } = await supabase
-                            .from('users')
-                            .select('display_name, avatar_url, role, is_business')
-                            .eq('id', userId)
-                            .maybeSingle();
-                        if (retryData) {
-                            applyProfile(retryData, userId, email);
-                            return;
-                        }
-                    }
-                } catch { /* sync failed, continue with fallback */ }
+                // No profile in DB — wait briefly for sync to complete, then retry
+                await new Promise(r => setTimeout(r, 1000));
+                const { data: retryData } = await supabase
+                    .from('users')
+                    .select('display_name, avatar_url, role, is_business')
+                    .eq('id', userId)
+                    .maybeSingle();
+                if (retryData) {
+                    applyProfile(retryData, userId, email);
+                    return;
+                }
 
                 // Fallback profile
                 applyProfile({

@@ -1,0 +1,167 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e246] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e247]:
+      - img [ref=e248]
+    - generic [ref=e251]:
+      - button "Open issues overlay" [ref=e252]:
+        - generic [ref=e253]:
+          - generic [ref=e254]: "0"
+          - generic [ref=e255]: "1"
+        - generic [ref=e256]: Issue
+      - button "Collapse issues badge" [ref=e257]:
+        - img [ref=e258]
+  - generic [ref=e260]:
+    - complementary [ref=e261]:
+      - link "P" [ref=e262] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e263]:
+        - link "Home" [ref=e264] [cursor=pointer]:
+          - /url: /
+          - img [ref=e266]
+          - generic: Home
+        - link "Nearby" [ref=e269] [cursor=pointer]:
+          - /url: /explore
+          - img [ref=e271]
+          - generic: Nearby
+        - link "Create" [ref=e274] [cursor=pointer]:
+          - /url: /compose
+          - img [ref=e276]
+          - generic: Create
+        - link "Messages" [ref=e277] [cursor=pointer]:
+          - /url: /messages
+          - img [ref=e279]
+          - generic: Messages
+        - link "Alerts" [ref=e281] [cursor=pointer]:
+          - /url: /notifications
+          - img [ref=e283]
+          - generic: Alerts
+        - link "Profile" [ref=e286] [cursor=pointer]:
+          - /url: /profile
+          - img [ref=e288]
+          - generic: Profile
+    - generic [ref=e291]:
+      - banner [ref=e292]:
+        - generic [ref=e293]:
+          - link "purseable home" [ref=e294] [cursor=pointer]:
+            - /url: /
+            - img "Purseable" [ref=e295]
+          - generic [ref=e296]:
+            - img [ref=e297]
+            - textbox "Search posts, authors, tags…" [ref=e300]
+          - generic [ref=e301]:
+            - link "Write" [ref=e302] [cursor=pointer]:
+              - /url: /compose
+              - img [ref=e303]
+              - text: Write
+            - button "Notifications" [ref=e307] [cursor=pointer]:
+              - img [ref=e308]
+            - button "ojas ojas ojas@gmail.com" [ref=e312] [cursor=pointer]:
+              - img "ojas" [ref=e313]
+              - generic [ref=e314]:
+                - generic [ref=e315]: ojas
+                - generic [ref=e316]: ojas@gmail.com
+      - main [ref=e317]:
+        - generic [ref=e318]:
+          - generic [ref=e319]:
+            - button "✨ For You" [ref=e320] [cursor=pointer]
+            - button "📚 Literature" [ref=e321] [cursor=pointer]
+            - button "✈️ Travel" [ref=e322] [cursor=pointer]
+            - button "💻 Technology" [ref=e323] [cursor=pointer]
+            - button "🍽️ Food & Drink" [ref=e324] [cursor=pointer]
+            - button "🏛️ Politics" [ref=e325] [cursor=pointer]
+            - button "🧠 Philosophy" [ref=e326] [cursor=pointer]
+            - button "✍️ Poetry" [ref=e327] [cursor=pointer]
+            - button "🌿 Health & Wellness" [ref=e328] [cursor=pointer]
+            - button "📷 Photography" [ref=e329] [cursor=pointer]
+            - button "🎵 Music" [ref=e330] [cursor=pointer]
+            - button "🎬 Cinema" [ref=e331] [cursor=pointer]
+            - button "🔬 Science" [ref=e332] [cursor=pointer]
+          - generic [ref=e333]:
+            - heading "Your Feed" [level=2] [ref=e334]
+            - generic [ref=e335]: 3 stories
+          - generic [ref=e336]:
+            - article [ref=e339] [cursor=pointer]:
+              - link "View Test post 2" [ref=e340]:
+                - /url: /post/cdae1c71-8a19-42ec-8ddb-967e741bd371
+              - img "Test post 2" [ref=e342]
+              - generic [ref=e343]:
+                - link "ojas" [ref=e344]:
+                  - /url: /u/ojas
+                  - img "ojas" [ref=e345]
+                - link "ojas" [ref=e347]:
+                  - /url: /u/ojas
+                - generic [ref=e348]:
+                  - img [ref=e349]
+                  - text: 1m
+              - generic [ref=e352]:
+                - heading "Test post 2" [level=2] [ref=e353]
+                - paragraph [ref=e354]: second test post
+              - generic [ref=e355]:
+                - button "Like" [ref=e356]:
+                  - img [ref=e357]
+                  - text: "0"
+                - button "Comments" [ref=e359]:
+                  - img [ref=e360]
+                  - text: "0"
+                - button "Post options" [ref=e363]:
+                  - img [ref=e364]
+            - article [ref=e370] [cursor=pointer]:
+              - link "View This is a test post" [ref=e371]:
+                - /url: /post/032646f0-6694-414c-af5e-e39acf1ae2c0
+              - img "This is a test post" [ref=e373]
+              - generic [ref=e374]:
+                - link "ojas" [ref=e375]:
+                  - /url: /u/ojas
+                  - img "ojas" [ref=e376]
+                - link "ojas" [ref=e378]:
+                  - /url: /u/ojas
+                - generic [ref=e379]:
+                  - img [ref=e380]
+                  - text: 1m
+              - generic [ref=e383]:
+                - heading "This is a test post" [level=2] [ref=e384]
+                - paragraph [ref=e385]: Test post
+              - generic [ref=e386]:
+                - button "Like" [ref=e387]:
+                  - img [ref=e388]
+                  - text: "1"
+                - button "Comments" [ref=e390]:
+                  - img [ref=e391]
+                  - text: "0"
+                - button "Post options" [ref=e394]:
+                  - img [ref=e395]
+            - article [ref=e401] [cursor=pointer]:
+              - link "View Test Post by User Account" [ref=e402]:
+                - /url: /post/f3226a5f-3174-4c6f-afd5-424a6e8050d7
+              - img "Test Post by User Account" [ref=e404]
+              - generic [ref=e405]:
+                - link "testuser" [ref=e406]:
+                  - /url: /u/testuser
+                  - img "testuser" [ref=e407]
+                - link "testuser" [ref=e409]:
+                  - /url: /u/testuser
+                - generic [ref=e410]:
+                  - img [ref=e411]
+                  - text: 1m
+              - heading "Test Post by User Account" [level=2] [ref=e415]
+              - generic [ref=e416]:
+                - button "Like" [ref=e417]:
+                  - img [ref=e418]
+                  - text: "1"
+                - button "Comments" [ref=e420]:
+                  - img [ref=e421]
+                  - text: "0"
+                - button "Share" [ref=e423]:
+                  - img [ref=e424]
+          - paragraph [ref=e431]: ✨ You've seen all the stories for now. Refresh for more.
+  - contentinfo [ref=e432]:
+    - generic [ref=e433]:
+      - generic [ref=e434]:
+        - link "Privacy Policy" [ref=e435] [cursor=pointer]:
+          - /url: /policy/privacy-policy
+        - link "Terms of Use" [ref=e436] [cursor=pointer]:
+          - /url: /policy/terms-of-use
+        - link "Cookie Policy" [ref=e437] [cursor=pointer]:
+          - /url: /policy/cookie-policy
+      - paragraph [ref=e438]: © 2026 Purseable. All rights reserved.
+  - alert [ref=e439]

@@ -36,27 +36,22 @@ export function Navbar({ initialSession }: NavbarProps) {
     const pathname = usePathname();
     const router = useRouter();
 
-    // ── Auth state: starts from cache or initialSession ────────────────
-    const cached = typeof window !== 'undefined' ? getCachedUserProfile() : null;
+    // ── Auth state ───────────────────────────────────────────────────────
+    // Start with server-safe defaults (no localStorage on server).
+    // Cache is applied in the first useEffect to avoid hydration mismatch.
     const hasSession = !!initialSession?.user;
 
-    // If we have cache, user is "ready" immediately. Otherwise wait for auth.
-    const [authReady, setAuthReady] = useState(!!cached || !hasSession);
-    const [isLoggedIn, setIsLoggedIn] = useState(!!cached || hasSession);
+    const [authReady, setAuthReady] = useState(!hasSession);
+    const [isLoggedIn, setIsLoggedIn] = useState(hasSession);
     const [userEmail, setUserEmail] = useState<string | null>(
-        cached?.email || initialSession?.user?.email || null
+        initialSession?.user?.email || null
     );
     const [currentUser, setCurrentUser] = useState<{
         display_name: string;
         avatar_url: string;
         role: string;
         is_business: boolean;
-    } | null>(cached ? {
-        display_name: cached.display_name,
-        avatar_url: cached.avatar_url,
-        role: cached.role,
-        is_business: cached.is_business,
-    } : null);
+    } | null>(null);
 
     const [searchQuery, setSearchQuery] = useState('');
     const [notifOpen, setNotifOpen] = useState(false);
@@ -178,14 +173,24 @@ export function Navbar({ initialSession }: NavbarProps) {
         const supabase = createClient();
         let cancelled = false;
 
-        // If we had a cached profile, kick off a background refresh
+        // Read cache on the client (safe here — inside useEffect, after hydration)
+        const cached = getCachedUserProfile();
+
         if (cached && hasSession) {
+            // Cache hit — show profile instantly, refresh in background
+            setCurrentUser({
+                display_name: cached.display_name,
+                avatar_url: cached.avatar_url,
+                role: cached.role,
+                is_business: cached.is_business,
+            });
+            setUserEmail(cached.email || initialSession?.user?.email || null);
             setAuthReady(true);
+            // Background refresh
             hydrateUser(initialSession.user.id, initialSession.user.email || null);
             loadNotifications(initialSession.user.id);
-        }
-        // If we have initialSession but no cache, hydrate now
-        else if (hasSession && !cached) {
+        } else if (hasSession) {
+            // No cache — fetch profile, then mark ready
             hydrateUser(initialSession.user.id, initialSession.user.email || null).then(() => {
                 if (!cancelled) setAuthReady(true);
             });
@@ -240,7 +245,7 @@ export function Navbar({ initialSession }: NavbarProps) {
     const unreadCount = notifications.filter(n => !n.is_read).length;
 
     const markAllNotificationsRead = async () => {
-        const userId = initialSession?.user?.id || cached?.id;
+        const userId = initialSession?.user?.id || getCachedUserProfile()?.id;
         if (!userId) return;
         const supabase = createClient();
 

@@ -3,3 +3,150 @@
 [    1969ms] [LOG] %c%s%c [Layout] Session: background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   null Error: none @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
 [    1992ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
 [    2158ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/broadcasts/my:0
+[   36008ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   36125ms] [LOG] [Fast Refresh] done in 218ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   36494ms] [WARNING] %c%s%c Using the user object as returned from supabase.auth.getSession() or from some supabase.auth.onAuthStateChange() events could be insecure! This value comes directly from the storage medium (usually cookies on the server) and may not be authentic. Use supabase.auth.getUser() instead which authenticates the data by contacting the Supabase Auth server. background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   36494ms] [LOG] %c%s%c [Layout] Session: background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   f9d9a300-520c-4cd6-aa3e-1419a85fbe48 Error: none @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   36545ms] [WARNING] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   55719ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   55752ms] [WARNING] %c%s%c Using the user object as returned from supabase.auth.getSession() or from some supabase.auth.onAuthStateChange() events could be insecure! This value comes directly from the storage medium (usually cookies on the server) and may not be authentic. Use supabase.auth.getUser() instead which authenticates the data by contacting the Supabase Auth server. background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   55752ms] [LOG] %c%s%c [Layout] Session: background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   f9d9a300-520c-4cd6-aa3e-1419a85fbe48 Error: none @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   55780ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   56079ms] Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RedirectBoundary>
+      <RedirectErrorBoundary router={{...}}>
+        <Head>
+        <__next_root_layout_boundary__>
+          <SegmentViewNode type="layout" pagePath="/Desktop/i...">
+            <SegmentTrieNode>
+            <link>
+            <script>
+            <script>
+            <script>
+            <RootLayout>
+              <html lang="en" suppressHydrationWarning={true}>
+                <body>
+                  <SupabaseErrorHandler>
+                  <BroadcastNotifications>
+                  <div style={{display:"flex", ...}}>
+                    <Sidebar>
+                    <div className="layout-main" style={{flex:1, ...}}>
+                      <Navbar initialSession={{...}}>
+                        <header className={"navbar-s..."}>
+                          <div className="navbar-inner">
+                            <LinkComponent>
+                            <form>
+                            <div className="navbar-act...">
+                              <LinkComponent href="/compose" className="btn btn-pr...">
++                               <a
++                                 className="btn btn-primary btn-sm hide-mobile"
++                                 ref={function}
++                                 onClick={function onClick}
++                                 onMouseEnter={function onMouseEnter}
++                                 onTouchStart={function onTouchStart}
++                                 href="/compose"
++                               >
+-                               <div style={{width:"36px",height:"36px"}}>
+                              ...
+                          ...
+                      ...
+                  ...
+        ...
+
+    at throwOnHydrationMismatch (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:3348:56)
+    at beginWork (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:6775:918)
+    at runWithFiberInDEV (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:965:74)
+    at performUnitOfWork (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:9562:97)
+    at workLoopConcurrentByScheduler (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:9558:58)
+    at renderRootConcurrent (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:9541:71)
+    at performWorkOnRoot (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:9068:150)
+    at performWorkOnRootViaSchedulerTask (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:10230:9)
+    at MessagePort.performWorkUntilDeadline (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_28c51dd1._.js:2647:64)
+[   78870ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   78893ms] ReferenceError: cached is not defined
+    at Navbar.useEffect (http://localhost:3000/_next/static/chunks/Desktop_inkboard%20pursuable_inkboard_src_6827908a._.js?id=%255Bproject%255D%252FDesktop%252Finkboard+pursuable%252Finkboard%252Fsrc%252Fcomponents%252FNavbar.tsx+%255Bapp-client%255D+%2528ecmascript%2529:159:13)
+    at Object.react_stack_bottom_frame (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:14876:22)
+    at runWithFiberInDEV (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:965:74)
+    at commitHookEffectListMount (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:7266:167)
+    at commitHookPassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:7301:60)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8696:33)
+    at recursivelyTraversePassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8683:316)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8757:17)
+    at recursivelyTraversePassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8683:316)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8757:17)
+    at recursivelyTraversePassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8683:316)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8757:17)
+    at recursivelyTraversePassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8683:316)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8757:17)
+    at recursivelyTraversePassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8683:316)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8757:17)
+    at recursivelyTraversePassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8683:316)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8695:17)
+    at recursivelyTraversePassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8683:316)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8695:17)
+    at recursivelyTraversePassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8683:316)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8700:17)
+    at recursivelyTraversePassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8683:316)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8695:17)
+    at recursivelyTraversePassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8683:316)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8700:17)
+    at recursivelyTraversePassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8683:316)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8695:17)
+    at recursivelyTraversePassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8683:316)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8695:17)
+    at recursivelyTraversePassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8683:316)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8700:17)
+    at recursivelyTraversePassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8683:316)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8695:17)
+    at recursivelyTraversePassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8683:316)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8757:17)
+    at recursivelyTraversePassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8683:316)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8757:17)
+    at recursivelyTraversePassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8683:316)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8757:17)
+    at recursivelyTraversePassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8683:316)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8757:17)
+    at recursivelyTraversePassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8683:316)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8757:17)
+    at recursivelyTraversePassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8683:316)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8757:17)
+    at recursivelyTraversePassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8683:316)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8757:17)
+    at recursivelyTraversePassiveMountEffects (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8683:316)
+    at commitPassiveMountOnFiber (http://localhost:3000/_next/static/chunks/79846_next_dist_compiled_react-dom_66ee3ecc._.js:8695:17)
+[   78896ms] [LOG] [Fast Refresh] done in 75ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   89782ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   89788ms] [WARNING] [Fast Refresh] performing full reload because your application had an unrecoverable error @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   89859ms] [LOG] [Fast Refresh] done in 78ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   90740ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   90830ms] [LOG] [Fast Refresh] done in 192ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   91084ms] [ERROR] [Navbar] Profile fetch error: TypeError: Failed to fetch @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:3127
+[   91084ms] [ERROR] [Navbar] Profile fetch error: TypeError: Failed to fetch @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:3127
+[   91192ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   91208ms] [WARNING] %c%s%c Using the user object as returned from supabase.auth.getSession() or from some supabase.auth.onAuthStateChange() events could be insecure! This value comes directly from the storage medium (usually cookies on the server) and may not be authentic. Use supabase.auth.getUser() instead which authenticates the data by contacting the Supabase Auth server. background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   91208ms] [LOG] %c%s%c [Layout] Session: background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   f9d9a300-520c-4cd6-aa3e-1419a85fbe48 Error: none @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   91224ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  115270ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  115292ms] [LOG] [Fast Refresh] done in 68ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  142476ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  142630ms] [LOG] [Fast Refresh] done in 255ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  143157ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  143176ms] [WARNING] %c%s%c Using the user object as returned from supabase.auth.getSession() or from some supabase.auth.onAuthStateChange() events could be insecure! This value comes directly from the storage medium (usually cookies on the server) and may not be authentic. Use supabase.auth.getUser() instead which authenticates the data by contacting the Supabase Auth server. background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  143177ms] [LOG] %c%s%c [Layout] Session: background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   f9d9a300-520c-4cd6-aa3e-1419a85fbe48 Error: none @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  143194ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  170846ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  170862ms] [WARNING] %c%s%c Using the user object as returned from supabase.auth.getSession() or from some supabase.auth.onAuthStateChange() events could be insecure! This value comes directly from the storage medium (usually cookies on the server) and may not be authentic. Use supabase.auth.getUser() instead which authenticates the data by contacting the Supabase Auth server. background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  170862ms] [LOG] %c%s%c [Layout] Session: background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   f9d9a300-520c-4cd6-aa3e-1419a85fbe48 Error: none @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  170877ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297

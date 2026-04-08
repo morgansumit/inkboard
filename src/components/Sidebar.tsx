@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, MapPin, Plus, Bell, MessageCircle, User, LogIn, UserPlus } from 'lucide-react';
-import { createClient } from '@/lib/supabase/client';
+import { createClient, getCachedUserProfile } from '@/lib/supabase/client';
 
 type NavItem = {
     href: string;
@@ -20,18 +20,16 @@ export function Sidebar() {
     const supabase = createClient();
 
     useEffect(() => {
-        const checkSession = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            setIsLoggedIn(!!session);
-        };
-        checkSession();
+        // Check cache first for instant state, then listen for changes
+        const cached = getCachedUserProfile();
+        if (cached) setIsLoggedIn(true);
 
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((event: any, session: any) => {
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: any, session: any) => {
             setIsLoggedIn(!!session);
         });
 
         return () => subscription.unsubscribe();
-    }, [supabase.auth]);
+    }, []);
 
     useEffect(() => {
         const handleResize = () => {

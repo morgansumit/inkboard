@@ -1,0 +1,44 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - link "P" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]:
+        - link "Home" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+          - generic: Home
+        - link "Nearby" [ref=e11] [cursor=pointer]:
+          - /url: /explore
+          - img [ref=e13]
+          - generic: Nearby
+    - generic [ref=e16]:
+      - banner [ref=e17]:
+        - generic [ref=e18]:
+          - link "purseable home" [ref=e19] [cursor=pointer]:
+            - /url: /
+            - img "Purseable" [ref=e20]
+          - generic [ref=e21]:
+            - img [ref=e22]
+            - textbox "Search posts, authors, tags…" [ref=e25]
+      - main [ref=e28]:
+        - generic [ref=e30]:
+          - generic [ref=e32]:
+            - heading "Notifications" [level=1] [ref=e33]
+            - paragraph [ref=e34]: You have 0 unread notifications.
+          - generic [ref=e35]:
+            - button "all" [ref=e36] [cursor=pointer]
+            - button "unread" [ref=e37] [cursor=pointer]
+          - paragraph [ref=e40]: Loading notifications...
+  - contentinfo [ref=e41]:
+    - generic [ref=e42]:
+      - generic [ref=e43]:
+        - link "Privacy Policy" [ref=e44] [cursor=pointer]:
+          - /url: /policy/privacy-policy
+        - link "Terms of Use" [ref=e45] [cursor=pointer]:
+          - /url: /policy/terms-of-use
+        - link "Cookie Policy" [ref=e46] [cursor=pointer]:
+          - /url: /policy/cookie-policy
+      - paragraph [ref=e47]: © 2026 Purseable. All rights reserved.
+  - button "Open Next.js Dev Tools" [ref=e53] [cursor=pointer]:
+    - img [ref=e54]

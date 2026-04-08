@@ -47,16 +47,15 @@ export default function AdsDashboard() {
             setLoading(true);
             setError(null);
             try {
-                const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-                if (sessionError) throw sessionError;
+                const { data: { user: authUser }, error: authError } = await supabase.auth.getUser();
+                if (authError) throw authError;
 
-                const session = sessionData?.session;
-                if (!session) {
+                if (!authUser) {
                     setUser(null);
                     return;
                 }
 
-                setUser(session.user);
+                setUser(authUser as any);
 
                 const { data: profileData, error: profileError } = await supabase
                     .from('users')

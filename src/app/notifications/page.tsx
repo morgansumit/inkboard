@@ -13,10 +13,13 @@ export default function NotificationsPage() {
 
     useEffect(() => {
         let subscription: ReturnType<typeof supabase.channel> | null = null;
-        
-        const fetchNotifications = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (!session) {
+        let cancelled = false;
+
+        const init = async () => {
+            // Use getUser() instead of getSession() — it validates with the server
+            // and is less likely to cause lock contention
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user || cancelled) {
                 setLoading(false);
                 return;
             }
@@ -27,32 +30,30 @@ export default function NotificationsPage() {
                     *,
                     actor:actor_id(id, username, display_name, avatar_url)
                 `)
-                .eq('user_id', session.user.id)
+                .eq('user_id', user.id)
                 .order('created_at', { ascending: false })
                 .limit(50);
 
             if (error) {
                 console.error('[Notifications] Failed to fetch:', error);
-            } else {
+            } else if (!cancelled) {
                 setNotifs(data || []);
             }
-            setLoading(false);
-            
+            if (!cancelled) setLoading(false);
+
             // Subscribe to realtime notifications
             subscription = supabase
-                .channel(`notifications:${session.user.id}`)
-                .on('postgres_changes', 
-                    { event: 'INSERT', schema: 'public', table: 'notifications', filter: `user_id=eq.${session.user.id}` },
+                .channel(`notifications:${user.id}`)
+                .on('postgres_changes',
+                    { event: 'INSERT', schema: 'public', table: 'notifications', filter: `user_id=eq.${user.id}` },
                     (payload: { new: { id: string } }) => {
-                        console.log('[Notifications] New notification:', payload);
-                        // Fetch the new notification with actor details
                         supabase
                             .from('notifications')
                             .select(`*, actor:actor_id(id, username, display_name, avatar_url)`)
                             .eq('id', payload.new.id)
                             .single()
                             .then(({ data }: { data: Notification | null }) => {
-                                if (data) {
+                                if (data && !cancelled) {
                                     setNotifs(prev => [data, ...prev]);
                                 }
                             });
@@ -61,24 +62,25 @@ export default function NotificationsPage() {
                 .subscribe();
         };
 
-        fetchNotifications();
-        
+        init();
+
         return () => {
+            cancelled = true;
             subscription?.unsubscribe();
         };
-    }, [supabase]);
+    }, []);
 
     const unreadCount = notifs.filter(n => !n.is_read).length;
     const displayNotifs = filter === 'unread' ? notifs.filter(n => !n.is_read) : notifs;
 
     const markAllRead = async () => {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session) return;
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return;
 
         const { error } = await supabase
             .from('notifications')
             .update({ is_read: true })
-            .eq('user_id', session.user.id)
+            .eq('user_id', user.id)
             .eq('is_read', false);
 
         if (!error) {

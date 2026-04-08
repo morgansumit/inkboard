@@ -735,6 +735,55 @@ body {
 
   .navbar-shell .navbar-inner {
     flex-wrap: nowrap;
+    gap: 8px;
+  }
+
+  .navbar-brand {
+    flex-shrink: 0;
+  }
+
+  .navbar-brand img {
+    height: 40px !important;
+  }
+
+  .navbar-actions {
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  /* Compact buttons on mobile */
+  .navbar-actions .btn {
+    padding: 6px 10px !important;
+    font-size: 12px;
+    gap: 4px !important;
+  }
+
+  /* Hide text labels on mobile buttons, show only icons */
+  .navbar-actions .btn span,
+  .navbar-actions .btn .hide-mobile {
+    display: none !important;
+  }
+
+  /* Profile trigger compact on mobile */
+  .profile-trigger {
+    padding: 2px !important;
+    gap: 4px !important;
+  }
+
+  .navbar-profile .avatar {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .profile-meta {
+    display: none !important;
+  }
+
+  /* Notification panel full width on mobile */
+  .notif-panel {
+    width: calc(100vw - 24px) !important;
+    right: -12px !important;
+    max-width: none !important;
   }
 
   .navbar-search.mobile-only {

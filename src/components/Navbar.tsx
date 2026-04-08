@@ -325,46 +325,17 @@ export function Navbar({ initialSession }: NavbarProps) {
         try {
             setLoggingOut(true);
             const supabase = createClient();
-            
-            // Sign out with timeout - don't let auth lock hang us
-            const signOutPromise = supabase.auth.signOut({ scope: 'local' });
-            const timeoutPromise = new Promise((_, reject) => 
-                setTimeout(() => reject(new Error('signout_timeout')), 3000)
-            );
-            
-            try {
-                await Promise.race([signOutPromise, timeoutPromise]);
-            } catch (timeoutErr) {
-                console.log('[navbar] Sign out timed out, forcing logout');
-            }
-            
-            // Force clear all auth storage
+            await supabase.auth.signOut({ scope: 'local' });
             setProfileMenuOpen(false);
             localStorage.removeItem('purseable:last-admin-view');
             clearCachedUserProfile();
-            
-            // Clear Supabase session cookies
-            document.cookie.split(';').forEach(cookie => {
-                const [name] = cookie.split('=');
-                const trimmedName = name.trim();
-                if (trimmedName.includes('supabase') || trimmedName.includes('sb-')) {
-                    document.cookie = `${trimmedName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-                    document.cookie = `${trimmedName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname};`;
-                }
-            });
-            
-            // Clear all storage
-            sessionStorage.clear();
-            
             resetClient();
-            
-            // Hard redirect to clear server state
-            window.location.replace('/login');
+            window.location.href = '/login';
         } catch (err) {
             console.error('[navbar] sign out failed', err);
             clearCachedUserProfile();
             resetClient();
-            window.location.replace('/login');
+            window.location.href = '/login';
         }
     };
 

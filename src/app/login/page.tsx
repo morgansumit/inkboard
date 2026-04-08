@@ -115,8 +115,8 @@ export default function LoginPage() {
             setError(error.message);
             setLoading(false);
         } else {
-            // Hard redirect to ensure server sees the new session cookies
-            window.location.href = '/';
+            router.push('/');
+            router.refresh();
         }
     };
 

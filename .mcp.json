@@ -6,6 +6,13 @@
       "env": {
         "PATH": "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
       }
+    },
+    "supabase": {
+      "command": "/usr/local/bin/npx",
+      "args": ["-y", "@supabase/mcp-server-supabase@latest", "--access-token", "sbp_326545f09a42f516227ee1648ab003a194b90992"],
+      "env": {
+        "PATH": "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+      }
     }
   }
 }

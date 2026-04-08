@@ -231,7 +231,7 @@ export function Navbar({ initialSession }: NavbarProps) {
                 <div className="navbar-actions">
                     {isLoggedIn && isProfileLoading ? (
                         <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'var(--color-surface)', animation: 'pulse 1.5s infinite' }} />
-                    ) : isLoggedIn && currentUser ? (
+                    ) : isLoggedIn ? (
                         <>
                             {isAdmin && (
                                 <Link href="/admin" className="btn btn-secondary btn-sm hide-mobile">
@@ -302,9 +302,9 @@ export function Navbar({ initialSession }: NavbarProps) {
                                     className="profile-trigger"
                                     onClick={() => setProfileMenuOpen(!profileMenuOpen)}
                                 >
-                                    <img src={currentUser.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${userEmail || 'user'}`} alt={currentUser.display_name} className="avatar" />
+                                    <img src={currentUser?.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${userEmail || 'user'}`} alt={currentUser?.display_name || 'User'} className="avatar" />
                                     <div className="profile-meta hide-mobile">
-                                        <span>{currentUser.display_name}</span>
+                                        <span>{currentUser?.display_name || 'User'}</span>
                                         <small>{userEmail}</small>
                                     </div>
                                 </button>

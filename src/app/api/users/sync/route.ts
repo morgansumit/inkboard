@@ -26,9 +26,8 @@ async function detectGeoFromReq(req: Request): Promise<GeoInfo> {
             country_code = xCountry.toUpperCase();
         }
 
-        // 2. IP: use Netlify client connection IP or x-forwarded-for
-        const ip = h.get('x-nf-client-connection-ip')
-            || h.get('x-forwarded-for')?.split(',')[0]?.trim()
+        // 2. IP: use x-forwarded-for first entry (real client IP), NOT x-nf-client-connection-ip (Netlify proxy)
+        const ip = h.get('x-forwarded-for')?.split(',')[0]?.trim()
             || h.get('x-real-ip')
             || null;
 
@@ -89,7 +88,7 @@ export async function POST(req: Request) {
     const geo = await detectGeoFromReq(req);
     const device = detectDevice(req);
     const metaUpdates: Record<string, string> = {};
-    if (geo.country_code && !user.user_metadata?.country_code) metaUpdates.country_code = geo.country_code;
+    if (geo.country_code && user.user_metadata?.country_code !== geo.country_code) metaUpdates.country_code = geo.country_code;
     if (geo.ip && !user.user_metadata?.ip_address) metaUpdates.ip_address = geo.ip;
     if (geo.location && !user.user_metadata?.location) metaUpdates.location = geo.location;
     if (!user.user_metadata?.os_family || user.user_metadata.os_family === 'Unknown') metaUpdates.os_family = device.os_family;
@@ -129,31 +128,11 @@ export async function POST(req: Request) {
         if ((!existingRow?.os_family || existingRow.os_family === 'Unknown') && device.os_family !== 'Unknown') updates.os_family = device.os_family;
         if (!existingRow?.device_type && device.device_type) updates.device_type = device.device_type;
 
-        let updateResult = null;
         if (Object.keys(updates).length > 0) {
-            const { error: updateErr } = await supabaseAdmin.from('users').update(updates).eq('id', user.id);
-            updateResult = updateErr ? { error: updateErr.message } : { success: true };
+            await supabaseAdmin.from('users').update(updates).eq('id', user.id);
         }
 
-        // DEBUG: return full state so we can see what happened
-        return NextResponse.json({
-            synced: true,
-            id: existing.id,
-            _debug: {
-                geo,
-                device,
-                existingRow,
-                existingRowErr: existingRowErr?.message || null,
-                updates,
-                updateResult,
-                rawHeaders: {
-                    'x-country': req.headers.get('x-country'),
-                    'x-nf-country': req.headers.get('x-nf-country'),
-                    'x-forwarded-for': req.headers.get('x-forwarded-for'),
-                    'x-nf-client-connection-ip': req.headers.get('x-nf-client-connection-ip'),
-                },
-            }
-        })
+        return NextResponse.json({ synced: true, id: existing.id })
     }
 
     const usernameSeed = (user.email?.split('@')[0] || user.user_metadata?.username || 'centsably').toLowerCase()

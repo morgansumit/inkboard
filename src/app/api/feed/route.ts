@@ -74,20 +74,20 @@ export async function GET(request: Request) {
         const authClient = await createClient();
         const { data: { user } } = await authClient.auth.getUser();
         
-        if (user?.user_metadata?.country_code) {
-            viewerCountry = user.user_metadata.country_code;
-            console.log('[feed] Using user country from auth metadata:', viewerCountry);
-        } else if (user?.id) {
-            // Also check users table for country_code
+        if (user?.id) {
+            // Check users table first (kept up to date by sync route)
             const { data: userProfile } = await authClient
                 .from('users')
                 .select('country_code')
                 .eq('id', user.id)
                 .single();
-            
+
             if (userProfile?.country_code) {
                 viewerCountry = userProfile.country_code;
                 console.log('[feed] Using user country from users table:', viewerCountry);
+            } else if (user.user_metadata?.country_code) {
+                viewerCountry = user.user_metadata.country_code;
+                console.log('[feed] Using user country from auth metadata:', viewerCountry);
             } else {
                 viewerCountry = await getCountryFromRequest();
                 console.log('[feed] Using IP-detected country:', viewerCountry || 'null');

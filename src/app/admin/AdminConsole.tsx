@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { FunLoader } from '@/components/FunLoader';
 import { BarChart3, ChevronRight, Eye, FileText, Flag, Gift, Globe, LayoutDashboard, LogOut, Megaphone, Shield, Trash2, Users, type LucideIcon } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 
@@ -733,7 +734,7 @@ const handleUpdateBusinessStatus = async (id: string, userId: string, status: st
 
     const renderView = () => {
         if (loading) {
-            return <p style={{ color: 'var(--color-muted)' }}>Loading admin data…</p>;
+            return <FunLoader />;
         }
 
         switch (activeView) {
@@ -1090,7 +1091,7 @@ const handleUpdateBusinessStatus = async (id: string, userId: string, status: st
                                                     <p style={{ fontWeight: 700, fontSize: '13px' }}>Direct business thread</p>
                                                     <p style={{ fontSize: '12px', color: 'var(--color-muted)', marginTop: '2px' }}>Use this for offers, campaign questions, or approval follow-ups.</p>
                                                 </div>
-                                                {businessChatLoadingId === req.id && <span style={{ fontSize: '12px', color: 'var(--color-muted)' }}>Loading…</span>}
+                                                {businessChatLoadingId === req.id && <FunLoader size="sm" />}
                                             </div>
 
                                             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '240px', overflowY: 'auto', paddingRight: '4px' }}>

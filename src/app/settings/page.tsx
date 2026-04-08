@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { FunLoader } from '@/components/FunLoader';
 import { LogOut, User, Shield, Pencil, Check, X } from 'lucide-react';
 
 type UserProfile = {
@@ -240,7 +241,7 @@ export default function SettingsPage() {
         )}
 
         {loadingProfile ? (
-          <p style={{ color: 'var(--color-muted)', fontSize: '14px' }}>Loading profile...</p>
+          <FunLoader size="sm" />
         ) : profile ? (
           <div>
             {/* Avatar preview with upload */}

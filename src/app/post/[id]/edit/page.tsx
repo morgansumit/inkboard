@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { Bold, Italic, Link as LinkIcon, Quote, Code, Image, X, Eye, Video, ArrowLeft } from 'lucide-react';
 import { PostCard } from '@/components/PostCard';
+import { FunLoader } from '@/components/FunLoader';
 import type { Post } from '@/types';
 
 const TAGS_SUGGESTIONS = ['literature', 'travel', 'food', 'tech', 'philosophy', 'poetry', 'culture', 'politics', 'health', 'fiction'];
@@ -154,8 +155,8 @@ export default function EditPostPage() {
 
     if (loading) {
         return (
-            <div style={{ maxWidth: '900px', margin: '0 auto', padding: '80px 24px', textAlign: 'center' }}>
-                <p>Loading post...</p>
+            <div style={{ maxWidth: '900px', margin: '0 auto', padding: '80px 24px' }}>
+                <FunLoader />
             </div>
         );
     }

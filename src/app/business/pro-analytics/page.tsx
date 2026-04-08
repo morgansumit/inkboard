@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import { FunLoader } from '@/components/FunLoader';
 import Link from 'next/link';
 import { 
     Sparkles, 
@@ -111,10 +112,7 @@ export default function ProAnalyticsDashboard() {
 
     if (loading) {
         return (
-            <div style={{ padding: '40px', textAlign: 'center' }}>
-                <Sparkles size={32} className="spin" style={{ animation: 'pulse 1.5s ease-in-out infinite' }} />
-                <p style={{ marginTop: '16px', color: 'var(--color-muted)' }}>Loading Pro Insights...</p>
-            </div>
+            <FunLoader />
         );
     }
 

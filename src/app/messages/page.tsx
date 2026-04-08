@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { MailPlus, Search, Send, ArrowLeft, MessageCircle } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
+import { FunLoader } from '@/components/FunLoader';
 
 type OtherUser = {
   id: string;
@@ -221,7 +222,7 @@ export default function MessagesPage() {
 
         <div style={{ overflowY: 'auto', flex: 1, padding: '0 8px 16px' }}>
           {loadingConvs ? (
-            <div style={{ padding: '20px', textAlign: 'center', color: '#999', fontSize: '13px' }}>Loading...</div>
+            <FunLoader size="sm" />
           ) : conversations.length === 0 ? (
             <div style={{ padding: '20px', textAlign: 'center', color: '#999', fontSize: '13px' }}>
               No conversations yet. Click "New message" to start one.
@@ -336,7 +337,7 @@ export default function MessagesPage() {
             {/* Messages Area */}
             <div style={{ flex: 1, overflowY: 'auto', padding: '16px 20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {loadingMsgs ? (
-                <div style={{ textAlign: 'center', color: '#999', padding: '40px', fontSize: '13px' }}>Loading messages...</div>
+                <FunLoader />
               ) : messages.length === 0 ? (
                 <div style={{ textAlign: 'center', color: '#999', padding: '40px', fontSize: '13px' }}>
                   No messages yet. Say hello!

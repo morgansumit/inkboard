@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import { FunLoader } from '@/components/FunLoader';
 
 type BusinessMessage = {
     id: string;
@@ -111,7 +112,7 @@ export default function BusinessRequestMessages({ businessRequestId }: Props) {
                         Ask questions, discuss offers, and receive approval follow-ups here.
                     </p>
                 </div>
-                {loading && <span className="form-legal">Loading…</span>}
+                {loading && <FunLoader size="sm" />}
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxHeight: '280px', overflowY: 'auto', paddingRight: '4px' }}>

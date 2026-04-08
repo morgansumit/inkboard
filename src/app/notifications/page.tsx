@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Heart, MessageCircle, UserPlus, Flame, CheckCircle, ChevronRight, CornerDownRight } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
+import { FunLoader } from '@/components/FunLoader';
 import type { Notification } from '@/types';
 
 export default function NotificationsPage() {
@@ -16,9 +17,8 @@ export default function NotificationsPage() {
         let cancelled = false;
 
         const init = async () => {
-            // Use getUser() instead of getSession() — it validates with the server
-            // and is less likely to cause lock contention
-            const { data: { user } } = await supabase.auth.getUser();
+            const { data: { session } } = await supabase.auth.getSession();
+            const user = session?.user;
             if (!user || cancelled) {
                 setLoading(false);
                 return;
@@ -74,8 +74,9 @@ export default function NotificationsPage() {
     const displayNotifs = filter === 'unread' ? notifs.filter(n => !n.is_read) : notifs;
 
     const markAllRead = async () => {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) return;
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session?.user) return;
+        const user = session.user;
 
         const { error } = await supabase
             .from('notifications')
@@ -162,10 +163,7 @@ export default function NotificationsPage() {
 
                 {/* List */}
                 {loading ? (
-                    <div style={{ textAlign: 'center', padding: '64px 0', color: 'var(--color-muted)' }}>
-                        <div className="btn-spinner" style={{ width: '32px', height: '32px', margin: '0 auto 16px' }} />
-                        <p style={{ fontFamily: 'var(--font-ui)', fontSize: '16px' }}>Loading notifications...</p>
-                    </div>
+                    <FunLoader />
                 ) : displayNotifs.length > 0 ? (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                         {displayNotifs.map(notif => (

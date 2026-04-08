@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { BarChart3, TrendingUp, DollarSign, Target, Award, AlertCircle, Info } from 'lucide-react';
+import { FunLoader } from '@/components/FunLoader';
 
 interface AdAnalytics {
     id: string;
@@ -123,7 +124,7 @@ export default function AdvertiserAnalyticsDashboard() {
     };
 
     if (loading) {
-        return <div style={{ padding: '40px', textAlign: 'center' }}>Loading analytics...</div>;
+        return <FunLoader />;
     }
 
     if (ads.length === 0) {
@@ -235,7 +236,7 @@ export default function AdvertiserAnalyticsDashboard() {
                         </h2>
 
                         {auctionLoading ? (
-                            <p>Loading auction data...</p>
+                            <FunLoader size="sm" />
                         ) : auctionData ? (
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '20px' }}>
                                 <div>

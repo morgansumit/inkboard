@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import type { User } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase/client';
 import { Plus, BarChart2, CheckCircle, XCircle, Clock, Megaphone, DollarSign } from 'lucide-react';
+import { FunLoader } from '@/components/FunLoader';
 import Link from 'next/link';
 
 type AdRecord = {
@@ -120,11 +121,7 @@ export default function AdsDashboard() {
     };
 
     if (loading) {
-        return (
-            <div style={{ padding: '40px', color: 'var(--color-muted)', fontFamily: 'var(--font-ui)' }}>
-                Loading ads...
-            </div>
-        );
+        return <FunLoader />;
     }
 
     if (error) {

@@ -1,9 +1,11 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { UserPlus, UserMinus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { createClient } from '@/lib/supabase/client';
 
 interface FollowButtonProps {
   targetUserId: string;
@@ -22,12 +24,24 @@ export default function FollowButton({
   followingCount = 0,
   className,
 }: FollowButtonProps) {
+  const router = useRouter();
   const [isFollowing, setIsFollowing] = useState(initialIsFollowing);
   const [isLoading, setIsLoading] = useState(false);
-  const [counts, setCounts] = useState({ 
-    followers: followerCount, 
-    following: followingCount 
+  const [counts, setCounts] = useState({
+    followers: followerCount,
+    following: followingCount
   });
+  const authChecked = useRef(false);
+  const isAuthed = useRef(false);
+
+  const ensureAuth = async () => {
+    if (authChecked.current) return isAuthed.current;
+    const supabase = createClient();
+    const { data: { session } } = await supabase.auth.getSession();
+    authChecked.current = true;
+    isAuthed.current = !!session;
+    return isAuthed.current;
+  };
 
   // Check follow status on mount
   useEffect(() => {
@@ -51,6 +65,8 @@ export default function FollowButton({
 
   const handleFollow = useCallback(async () => {
     if (isLoading) return;
+    const authed = await ensureAuth();
+    if (!authed) { router.push('/register'); return; }
     setIsLoading(true);
 
     try {
@@ -77,6 +93,8 @@ export default function FollowButton({
 
   const handleUnfollow = useCallback(async () => {
     if (isLoading) return;
+    const authed = await ensureAuth();
+    if (!authed) { router.push('/register'); return; }
     setIsLoading(true);
 
     try {

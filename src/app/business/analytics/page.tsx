@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import { FunLoader } from '@/components/FunLoader';
 import Link from 'next/link';
 import { 
     BarChart3, 
@@ -182,10 +183,7 @@ export default function BusinessAnalyticsDashboard() {
 
     if (loading) {
         return (
-            <div style={{ padding: '40px', textAlign: 'center' }}>
-                <RefreshCw size={32} className="spin" style={{ animation: 'spin 1s linear infinite' }} />
-                <p style={{ marginTop: '16px', color: 'var(--color-muted)' }}>Loading analytics...</p>
-            </div>
+            <FunLoader />
         );
     }
 

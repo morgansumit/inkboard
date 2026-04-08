@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import { FunLoader } from '@/components/FunLoader';
 import Link from 'next/link';
 import { 
     Wallet, 
@@ -158,10 +159,7 @@ export default function BusinessWallet() {
 
     if (loading) {
         return (
-            <div style={{ padding: '40px', textAlign: 'center' }}>
-                <Wallet size={32} className="spin" style={{ animation: 'spin 1s linear infinite' }} />
-                <p style={{ marginTop: '16px', color: 'var(--color-muted)' }}>Loading wallet...</p>
-            </div>
+            <FunLoader />
         );
     }
 

@@ -6,6 +6,7 @@ import { Heart, MessageCircle, Share2, Flame, Clock, Play, MoreVertical, Edit2, 
 import type { Post } from '@/types';
 import { createClient } from '@/lib/supabase/client';
 import { parseVideoUrl } from '@/lib/video';
+import { cardImageUrl, avatarUrl } from '@/lib/cloudinary';
 
 const LOCAL_ASPECT_RATIO_PADDING: Record<string, string> = {
     '3:4': '133.3%',
@@ -241,11 +242,12 @@ export function PostCard({ post, index = 0, currentUserId, onDelete, onArchive }
                         // Cover image
                         <>
                             <img
-                                src={post.cover_image_url || 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&q=80'}
+                                src={cardImageUrl(post.cover_image_url) || 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&q=80'}
                                 alt={post.title}
                                 className="post-card-image"
                                 style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
                                 loading={index < 4 ? 'eager' : 'lazy'}
+                                decoding={index < 4 ? 'sync' : 'async'}
                             />
                             {post.is_trending && (
                                 <div className="trending-badge">
@@ -278,8 +280,9 @@ export function PostCard({ post, index = 0, currentUserId, onDelete, onArchive }
                         onClick={e => e.stopPropagation()}
                         style={{ textDecoration: 'none' }}
                     >
-                        <img src={post.author?.avatar_url || 'https://api.dicebear.com/7.x/initials/svg?seed=' + encodeURIComponent(post.author?.display_name || 'User')}
+                        <img src={avatarUrl(post.author?.avatar_url) || 'https://api.dicebear.com/7.x/initials/svg?seed=' + encodeURIComponent(post.author?.display_name || 'User')}
                             alt={post.author?.display_name || 'User'} className="avatar"
+                            loading="lazy" decoding="async"
                             style={{ width: '28px', height: '28px' }} />
                     </Link>
                     <div style={{ flex: 1, overflow: 'hidden' }}>

@@ -65,46 +65,42 @@ export async function GET(request: Request) {
 
     const start = (page - 1) * perPage;
 
-    // Detect viewer's country for geoblocking
-    // First try to get from authenticated user's metadata, fallback to IP detection
+    // Detect viewer's country for geoblocking.
+    // Run auth lookup + IP detection in parallel to avoid sequential latency
+    // (critical for UK/EU users where Supabase round-trips are ~200-300ms each).
     let viewerCountry: string | null = null;
-    
-    try {
-        const { createClient } = await import('@/lib/supabase/server');
-        const authClient = await createClient();
-        const { data: { user } } = await authClient.auth.getUser();
-        
-        if (user?.id) {
-            // Check users table first (kept up to date by sync route)
-            const { data: userProfile } = await authClient
-                .from('users')
-                .select('country_code')
-                .eq('id', user.id)
-                .single();
 
-            if (userProfile?.country_code) {
-                viewerCountry = userProfile.country_code;
-                console.log('[feed] Using user country from users table:', viewerCountry);
-            } else if (user.user_metadata?.country_code) {
-                viewerCountry = user.user_metadata.country_code;
-                console.log('[feed] Using user country from auth metadata:', viewerCountry);
-            } else {
-                viewerCountry = await getCountryFromRequest();
-                console.log('[feed] Using IP-detected country:', viewerCountry || 'null');
+    const [authCountry, ipCountry] = await Promise.all([
+        // Auth path: check users table then auth metadata
+        (async (): Promise<string | null> => {
+            try {
+                const { createClient } = await import('@/lib/supabase/server');
+                const authClient = await createClient();
+                const { data: { user } } = await authClient.auth.getUser();
+                if (!user?.id) return null;
+
+                // Combine auth metadata check + DB lookup into one shot:
+                // prefer DB (kept up to date by sync route)
+                const { data: userProfile } = await authClient
+                    .from('users')
+                    .select('country_code')
+                    .eq('id', user.id)
+                    .single();
+
+                return userProfile?.country_code
+                    || (user.user_metadata?.country_code as string | undefined)
+                    || null;
+            } catch {
+                return null;
             }
-        } else {
-            viewerCountry = await getCountryFromRequest();
-            console.log('[feed] Using IP-detected country:', viewerCountry || 'null');
-        }
-    } catch (err) {
-        // If auth fails, fallback to IP detection
-        viewerCountry = await getCountryFromRequest();
-        console.log('[feed] Auth failed, using IP-detected country:', viewerCountry || 'null');
-    }
+        })(),
+        // IP path: runs simultaneously, used only when auth path yields nothing
+        getCountryFromRequest().catch(() => null),
+    ]);
 
-    console.log('[feed] Final viewer country:', viewerCountry || 'null (showing global posts only)');
+    viewerCountry = authCountry || ipCountry;
 
-    // Direct Supabase query — no cache
+    // Run DB query + admin credential check in parallel
     const { createAnonClient } = await import('@/lib/supabase/anon');
     const supabase = createAnonClient();
 
@@ -132,7 +128,11 @@ export async function GET(request: Request) {
         query = query.is('country_code', null);
     }
 
-    const { data: dbPosts, error } = await query;
+    // Run posts query + admin credential check in parallel
+    const [{ data: dbPosts, error }, adminClient] = await Promise.all([
+        query,
+        getSupabaseAdmin().catch(() => null),
+    ]);
 
     if (error) {
         console.error('[feed] Supabase error:', error);
@@ -144,17 +144,11 @@ export async function GET(request: Request) {
     // Run ad auction and inject winning ads
     let feedItems: any[] = [...posts];
 
-    let hasAdminCredentials = false;
-    try {
-        const adminClient = await getSupabaseAdmin();
-        hasAdminCredentials = !!adminClient;
-    } catch {
-        hasAdminCredentials = false;
-    }
+    const hasAdminCredentials = !!adminClient;
 
-    if (hasAdminCredentials) {
+    if (hasAdminCredentials && adminClient) {
         try {
-            const supabaseAdmin = await getSupabaseAdmin();
+            const supabaseAdmin = adminClient;
             const serverClient = await createClient();
             const { data: { user } } = await serverClient.auth.getUser();
 

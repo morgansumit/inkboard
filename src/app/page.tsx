@@ -8,12 +8,12 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const supabase = await createClient()
-  const { data: { session } } = await supabase.auth.getSession()
+  // Re-use the session already fetched in RootLayout (same request, cached by Next.js)
+  const supabase = await createClient();
+  const { data: { session } } = await supabase.auth.getSession();
 
   return (
     <div style={{ paddingTop: '24px' }}>
-      {/* Feed */}
       <MasonryFeed isLoggedIn={!!session} />
     </div>
   );

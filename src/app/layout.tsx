@@ -1,11 +1,46 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { Playfair_Display, Merriweather, Inter, JetBrains_Mono } from 'next/font/google';
 import { Navbar } from '@/components/Navbar';
 import { Sidebar } from '@/components/Sidebar';
 import { Footer } from '@/components/Footer';
 import { SupabaseErrorHandler } from '@/components/SupabaseErrorHandler';
 import { BroadcastNotifications } from '@/components/BroadcastNotifications';
 import { createClient } from '@/lib/supabase/server';
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  weight: ['400', '700', '800'],
+  style: ['normal', 'italic'],
+  variable: '--font-playfair',
+  display: 'swap',
+  preload: true,
+});
+
+const merriweather = Merriweather({
+  subsets: ['latin'],
+  weight: ['300', '400', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-merriweather',
+  display: 'swap',
+  preload: false,
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-inter',
+  display: 'swap',
+  preload: true,
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-jetbrains',
+  display: 'swap',
+  preload: false,
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://centsably.com'),
@@ -28,12 +63,10 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
-  const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-  
-  console.log('[Layout] Session:', session?.user?.id || 'null', 'Error:', sessionError?.message || 'none');
-  
+  const { data: { session } } = await supabase.auth.getSession();
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${playfair.variable} ${merriweather.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
       <body>
         <SupabaseErrorHandler />
         <BroadcastNotifications />

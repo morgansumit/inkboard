@@ -120,6 +120,28 @@ export default function LoginPage() {
         }
     };
 
+    const handleForgotPassword = async () => {
+        if (!email) {
+            setError('Please enter your email address');
+            return;
+        }
+
+        setLoading(true);
+        setError(null);
+
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: `${window.location.origin}/auth/callback`,
+        });
+
+        if (error) {
+            setError(error.message);
+            setLoading(false);
+        } else {
+            setForgotSent(true);
+            setLoading(false);
+        }
+    };
+
     const locked = attempts >= 5;
 
     return (
@@ -232,14 +254,22 @@ export default function LoginPage() {
                             <div style={{ textAlign: 'center', padding: '20px 0' }}>
                                 <div style={{ fontSize: '40px', marginBottom: '12px' }}>📧</div>
                                 <p style={{ fontSize: '14px', color: 'var(--color-muted)' }}>
-                                    Check your inbox for a reset link.
+                                    Check your inbox for a reset link. If you don't see it, check your spam folder.
                                 </p>
                             </div>
                         ) : (
                             <>
+                                <p style={{ fontSize: '14px', color: 'var(--color-muted)', marginBottom: '14px' }}>
+                                    Enter your email and we'll send you a link to reset your password.
+                                </p>
                                 <input className="input" type="email" placeholder="Enter your email" value={email} onChange={e => setEmail(e.target.value)} style={{ marginBottom: '14px' }} />
-                                <button className="btn btn-primary" style={{ width: '100%' }} onClick={() => setForgotSent(true)}>
-                                    Send Reset Link
+                                <button 
+                                    className="btn btn-primary" 
+                                    style={{ width: '100%' }} 
+                                    onClick={handleForgotPassword}
+                                    disabled={!email || loading}
+                                >
+                                    {loading ? 'Sending...' : 'Send Reset Link'}
                                 </button>
                             </>
                         )}

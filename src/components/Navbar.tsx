@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Search, Bell, PenSquare, LogOut, Shield } from 'lucide-react';
+import { avatarUrl } from '@/lib/cloudinary';
 import {
     createClient,
     resetClient,
@@ -448,7 +449,7 @@ export function Navbar({ initialSession }: NavbarProps) {
                                         <div className="notif-panel-body">
                                             {notifications.map(n => (
                                                 <div key={n.id} className={`notif-item ${!n.is_read ? 'unread' : ''}`}>
-                                                    <img src={n.actor_avatar_url || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=160&q=80'} alt={n.actor_display_name || 'User'} className="avatar" style={{ width: '36px', height: '36px' }} />
+                                                    <img src={avatarUrl(n.actor_avatar_url) || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=160&q=80'} alt={n.actor_display_name || 'User'} className="avatar" loading="lazy" style={{ width: '36px', height: '36px' }} />
                                                     <div style={{ flex: 1 }}>
                                                         <p style={{ fontSize: '13px', lineHeight: '1.4' }}>
                                                             <strong>{n.actor_display_name || 'Someone'}</strong>
@@ -486,7 +487,7 @@ export function Navbar({ initialSession }: NavbarProps) {
                                     className="profile-trigger"
                                     onClick={() => setProfileMenuOpen(!profileMenuOpen)}
                                 >
-                                    <img src={currentUser?.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${userEmail || 'user'}`} alt={currentUser?.display_name || 'User'} className="avatar" />
+                                    <img src={avatarUrl(currentUser?.avatar_url) || `https://api.dicebear.com/7.x/initials/svg?seed=${userEmail || 'user'}`} alt={currentUser?.display_name || 'User'} className="avatar" />
                                     <div className="profile-meta hide-mobile">
                                         <span>{currentUser?.display_name || 'User'}</span>
                                         <small>{userEmail}</small>

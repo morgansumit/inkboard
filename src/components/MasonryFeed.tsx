@@ -9,6 +9,7 @@ import type { Post } from '@/types';
 import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { cardImageUrl } from '@/lib/cloudinary';
 
 const INTERESTS_STRIP = MOCK_INTERESTS.slice(0, 12);
 
@@ -100,7 +101,7 @@ function MasonryAdCard({ ad, index }: { ad: FeedAd, index: number }) {
                         return isVideo ? (
                             <video key={i} src={src} style={style} muted autoPlay loop playsInline />
                         ) : (
-                            <img key={i} src={src} alt={ad.title} className="post-card-image" style={style} />
+                            <img key={i} src={cardImageUrl(src)} alt={ad.title} className="post-card-image" loading="lazy" style={style} />
                         )
                     })}
                     <div className="mobile-overlay-banner" style={{ zIndex: 20 }}>
@@ -320,8 +321,8 @@ function FeedInner({ isLoggedIn = false, externalPosts }: { isLoggedIn?: boolean
                             <Link key={post.id} href={`/post/${post.id}`} style={{ textDecoration: 'none' }}>
                                 <div className="trending-card">
                                     <div style={{ height: '110px', overflow: 'hidden' }}>
-                                        <img src={post.cover_image_url} alt={post.title}
-                                            style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        <img src={cardImageUrl(post.cover_image_url)} alt={post.title}
+                                            loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                     </div>
                                     <div style={{ padding: '10px 12px 12px' }}>
                                         <p style={{

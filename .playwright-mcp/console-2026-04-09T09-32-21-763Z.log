@@ -1,0 +1,182 @@
+[   22877ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[   72864ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[   73442ms] [LOG] [Fast Refresh] done in 578ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[   73462ms] [LOG] [Fast Refresh] done in 599ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[   76315ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[   76664ms] [LOG] [Fast Refresh] done in 350ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[   82847ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[  113812ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  114211ms] [LOG] [Fast Refresh] done in 400ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  117527ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  118047ms] [LOG] [Fast Refresh] done in 521ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  118077ms] [WARNING] Image with src "/white_logo-removebg-preview.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio. @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[  205110ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  205652ms] [LOG] [Fast Refresh] done in 543ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  205852ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  207039ms] [LOG] [Fast Refresh] done in 1188ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  301697ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[  304558ms] [WARNING] Image with src "/white_logo-removebg-preview.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio. @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[  308463ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  308963ms] [LOG] [Fast Refresh] done in 500ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[  315486ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[  318295ms] [WARNING] Image with src "/white_logo-removebg-preview.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio. @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/shared/lib/utils/warn-once.js:15
+[  345580ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/api/active-move?device=desktop:0
+[  375584ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/api/active-move?device=desktop:0
+[  405594ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/api/active-move?device=desktop:0
+[  415601ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/api/active-move?device=desktop:0
+[  440607ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/api/active-move?device=desktop:0
+[  495611ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/api/active-move?device=desktop:0
+[  595616ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/api/active-move?device=desktop:0
+[  775622ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3001/api/active-move?device=desktop:0
+[  920505ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&h=800&w=1920:0
+[  920512ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://pure-website.s3.eu-west-2.amazonaws.com/Product+Benefits+Social+9X16.mp4:0
+[  920512ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://pure-website.s3.eu-west-2.amazonaws.com/Preparing+Pure+9X16.mp4:0
+[  920512ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://pure-website.s3.eu-west-2.amazonaws.com/Why+Pure+Works+Compressed.mp4:0
+[  920512ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://pure-website.s3.eu-west-2.amazonaws.com/Ugc+April+Video+-+Why+Pure+Works.mp4:0
+[  920513ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://pure-website.s3.eu-west-2.amazonaws.com/Fussy+Eater+Ugc(2).mp4:0
+[  920516ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://pure-website.s3.eu-west-2.amazonaws.com/Julian+Social+H265.mp4:0
+[  920599ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.datocms-assets.com/55536/1689943504-healthy-dog-food-subscription.jpg?auto=format&fit=crop&h=600&w=1000:0
+[  920599ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.purepetfood.com/_next/static/media/box-with-red-hearts.d6dbf870.png:0
+[  920599ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.purepetfood.com/_next/static/media/piggy-bank-pink.b9a77b6e.png:0
+[  920599ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.purepetfood.com/_next/static/media/bowl-with-white-scoop.1ea3ccfc.png:0
+[  920599ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.purepetfood.com/_next/static/media/droplet-blue.991caf56.png:0
+[  920599ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.purepetfood.com/_next/static/media/add-dog-yellow.d420b8ed.png:0
+[  920599ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.purepetfood.com/_next/static/media/naturally-tasty.90dfdb2e.png:0
+[  920660ms] Invalid or unexpected token
+[  920614ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.datocms-assets.com/55536/1686824798-good-for-gut-dog-food.jpg?auto=format&fit=crop&h=600&w=1000:0
+[  920614ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.datocms-assets.com/55536/1680101718-dragons-den-dog-food.jpg?auto=format&fit=crop&h=600&w=1000:0
+[  920615ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.datocms-assets.com/55536/1749463347-046-pure-pet-food-yorkshire-vet.jpg?auto=format&fit=crop&h=600&w=1000:0
+[  920617ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.purepetfood.com/_next/static/media/free-delivery-truck.6102579b.png:0
+[  920618ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.purepetfood.com/_next/static/media/bowl-with-yellow-scoop.5cef6df6.png:0
+[  921204ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[  929213ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3001/:0
+[  929643ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:29889
+[  929707ms] TypeError: __webpack_modules__[moduleId] is not a function
+    at Object.__webpack_require__ [as require] (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/.next/server/webpack-runtime.js:33:42)
+    at require (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:40:20064)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:108376)
+    at ea (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:108583)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:110813)
+    at Object._fromJSON (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:111370)
+    at JSON.parse (<anonymous>)
+    at ec (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:109078)
+    at eo (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:108123)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:115291)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:115308)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:115341)
+    at <unknown> (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:115358)
+    at t (file:///Users/admin/Desktop/claude code armen/pure-pet-clone/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:115581)
+[  929703ms] [LOG] [HMR] connected @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/websocket.js:38
+[  944723ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_next/webpack-hmr' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/websocket.js:63
+[  945726ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_next/webpack-hmr' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/websocket.js:63
+[  946728ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_next/webpack-hmr' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/websocket.js:63
+[  947731ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_next/webpack-hmr' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/websocket.js:63
+[  948733ms] [ERROR] WebSocket connection to 'ws://localhost:3001/_next/webpack-hmr' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/websocket.js:63
+[  953742ms] [LOG] [HMR] connected @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/websocket.js:38
+[  953767ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:221
+[  954589ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:221
+[  957854ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:221
+[  958110ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3001/_next/static/webpack/b0d3f3f582c71a69.webpack.hot-update.json:0
+[  958111ms] [WARNING] [Fast Refresh] performing full reload because your application had an unrecoverable error @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:349
+[  958282ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3001/_next/static/webpack/b0d3f3f582c71a69.webpack.hot-update.json:0
+[  958282ms] [WARNING] [Fast Refresh] performing full reload because your application had an unrecoverable error @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:349
+[  959914ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:221
+[  960771ms] [WARNING] [Fast Refresh] performing full reload
+
+Fast Refresh will perform a full reload when you edit a file that's imported by modules outside of the React rendering tree.
+You might have a file which exports a React component but also exports a value that is imported by a non-React component file.
+Consider migrating the non-React component export to a separate file and importing it into both files.
+
+It is also possible the parent component of the component you edited is a class component, which disables Fast Refresh.
+Fast Refresh requires at least one parent function component in your React tree. @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/hot-reloader-client.js:347
+[  960784ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&h=800&w=1920:0
+[  960790ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://pure-website.s3.eu-west-2.amazonaws.com/Product+Benefits+Social+9X16.mp4:0
+[  960790ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://pure-website.s3.eu-west-2.amazonaws.com/Preparing+Pure+9X16.mp4:0
+[  960790ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://pure-website.s3.eu-west-2.amazonaws.com/Why+Pure+Works+Compressed.mp4:0
+[  960790ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://pure-website.s3.eu-west-2.amazonaws.com/Ugc+April+Video+-+Why+Pure+Works.mp4:0
+[  960790ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://pure-website.s3.eu-west-2.amazonaws.com/Fussy+Eater+Ugc(2).mp4:0
+[  960793ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://pure-website.s3.eu-west-2.amazonaws.com/Julian+Social+H265.mp4:0
+[  960838ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.datocms-assets.com/55536/1689943504-healthy-dog-food-subscription.jpg?auto=format&fit=crop&h=600&w=1000:0
+[  960840ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.purepetfood.com/_next/static/media/piggy-bank-pink.b9a77b6e.png:0
+[  960840ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.purepetfood.com/_next/static/media/droplet-blue.991caf56.png:0
+[  960840ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.purepetfood.com/_next/static/media/box-with-red-hearts.d6dbf870.png:0
+[  960840ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.purepetfood.com/_next/static/media/naturally-tasty.90dfdb2e.png:0
+[  960841ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.purepetfood.com/_next/static/media/bowl-with-white-scoop.1ea3ccfc.png:0
+[  960841ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.purepetfood.com/_next/static/media/add-dog-yellow.d420b8ed.png:0
+[  960847ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.datocms-assets.com/55536/1680101718-dragons-den-dog-food.jpg?auto=format&fit=crop&h=600&w=1000:0
+[  960848ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.datocms-assets.com/55536/1686824798-good-for-gut-dog-food.jpg?auto=format&fit=crop&h=600&w=1000:0
+[  960848ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.datocms-assets.com/55536/1749463347-046-pure-pet-food-yorkshire-vet.jpg?auto=format&fit=crop&h=600&w=1000:0
+[  960851ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.purepetfood.com/_next/static/media/bowl-with-yellow-scoop.5cef6df6.png:0
+[  960851ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://www.purepetfood.com/_next/static/media/free-delivery-truck.6102579b.png:0
+[  961224ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[  961600ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/analytics_pixels?select=pixel_id&type=eq.Google+Tag+Manager&is_active=eq.true&limit=1:0
+[  961601ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/analytics_pixels?select=pixel_id&type=eq.Google+Tag+Manager&is_active=eq.true&limit=1:0
+[  961601ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/analytics_pixels?select=*&is_active=eq.true:0
+[  961601ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/products?select=id%2Cname%2Cslug%2Cshort_description%2Cprice%2Ccompare_at_price%2Cimages%2Cstatus&status=eq.active&order=created_at.asc&limit=8:0
+[  961601ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/products?select=id%2Cname%2Cslug%2Cshort_description%2Cprice%2Ccompare_at_price%2Cimages%2Cstatus&status=eq.active&order=created_at.desc&limit=4:0
+[  961602ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/analytics_pixels?select=*&is_active=eq.true:0
+[  961605ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/products?select=id%2Cname%2Cslug%2Cshort_description%2Cprice%2Ccompare_at_price%2Cimages%2Cstatus&status=eq.active&order=created_at.desc&limit=4:0
+[  961605ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/products?select=id%2Cname%2Cslug%2Cshort_description%2Cprice%2Ccompare_at_price%2Cimages%2Cstatus&status=eq.active&order=created_at.asc&limit=8:0
+[  961608ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/pages?select=id&slug=eq.seo-tracking&limit=1:0
+[  961609ms] [ERROR] Failed to load resource: net::ERR_INTERNET_DISCONNECTED @ https://dzhtpnskezkrtfinntbi.supabase.co/rest/v1/pages?select=id&slug=eq.seo-tracking&limit=1:0
+[  983411ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+[  987487ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[  988010ms] [LOG] [Fast Refresh] done in 524ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1673276ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 1674563ms] [LOG] [Fast Refresh] done in 1286ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1680643ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 1681849ms] [LOG] [Fast Refresh] done in 1206ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1691680ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 1692180ms] [LOG] [Fast Refresh] done in 500ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1697193ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 1697934ms] [LOG] [Fast Refresh] done in 740ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1712594ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 1713514ms] [LOG] [Fast Refresh] done in 921ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1757035ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 1757621ms] [LOG] [Fast Refresh] done in 587ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1775324ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 1776193ms] [LOG] [Fast Refresh] done in 869ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1781640ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 1782496ms] [LOG] [Fast Refresh] done in 856ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1789174ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 1789785ms] [LOG] [Fast Refresh] done in 610ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1813692ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 1814778ms] [LOG] [Fast Refresh] done in 1086ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1818746ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 1819393ms] [LOG] [Fast Refresh] done in 648ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1823399ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 1823862ms] [LOG] [Fast Refresh] done in 462ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1827849ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 1828390ms] [LOG] [Fast Refresh] done in 542ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1832054ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 1832487ms] [LOG] [Fast Refresh] done in 433ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1864829ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 1865752ms] [LOG] [Fast Refresh] done in 922ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1880314ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 1880684ms] [LOG] [Fast Refresh] done in 370ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1889893ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 1890199ms] [LOG] [Fast Refresh] done in 305ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1897269ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 1897615ms] [LOG] [Fast Refresh] done in 346ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1897686ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 1897915ms] [LOG] [Fast Refresh] done in 228ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1898140ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3001/auth/signup?_rsc=m4lqo#step-0:0
+[ 1902659ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 1902844ms] [LOG] [Fast Refresh] done in 184ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1902893ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 1904403ms] [LOG] [Fast Refresh] done in 1511ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1904741ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3001/auth/signup?_rsc=m4lqo#step-0:0
+[ 1922551ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 1922965ms] [LOG] [Fast Refresh] done in 415ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 1922978ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3001/auth/signup?_rsc=m4lqo#step-0:0
+[ 2005086ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 2005504ms] [LOG] [Fast Refresh] done in 417ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 2005515ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 2005630ms] [LOG] [Fast Refresh] done in 114ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 2006585ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:3001/auth/signup?_rsc=m4lqo#step-0:0
+[ 2013300ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 2013699ms] [LOG] [Fast Refresh] done in 398ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 2026465ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 2026820ms] [LOG] [Fast Refresh] done in 355ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[ 2043105ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[ 2043496ms] [LOG] [Fast Refresh] done in 392ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43

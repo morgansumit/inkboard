@@ -71,25 +71,26 @@ export async function GET(request: Request) {
     const adminClientPromise = getSupabaseAdmin().catch(() => null);
     const anonClientPromise = import('@/lib/supabase/anon').then(m => m.createAnonClient());
 
-    // Auth path: get user + their country in one shot.
-    // Returns both userId (reused for ad auction) and country.
+    // Auth path: read session from cookie (no network call) + look up country.
+    // getSession() reads the JWT locally — unlike getUser() which round-trips to
+    // Supabase and blocks for seconds with stale/expired cookies.
     const authPromise = (async (): Promise<{ country: string | null; userId: string | null }> => {
         try {
             const authClient = await createClient();
-            const { data: { user } } = await authClient.auth.getUser();
-            if (!user?.id) return { country: null, userId: null };
+            const { data: { session } } = await authClient.auth.getSession();
+            if (!session?.user?.id) return { country: null, userId: null };
 
             const { data: userProfile } = await authClient
                 .from('users')
                 .select('country_code')
-                .eq('id', user.id)
+                .eq('id', session.user.id)
                 .single();
 
             return {
                 country: userProfile?.country_code
-                    || (user.user_metadata?.country_code as string | undefined)
+                    || (session.user.user_metadata?.country_code as string | undefined)
                     || null,
-                userId: user.id,
+                userId: session.user.id,
             };
         } catch {
             return { country: null, userId: null };

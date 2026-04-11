@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { after } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { getCountryFromRequest } from '@/lib/geo';
 
@@ -65,44 +66,48 @@ export async function GET(request: Request) {
 
     const start = (page - 1) * perPage;
 
-    // Detect viewer's country for geoblocking.
-    // Run auth lookup + IP detection in parallel to avoid sequential latency
-    // (critical for UK/EU users where Supabase round-trips are ~200-300ms each).
-    let viewerCountry: string | null = null;
+    // ── Phase 1: Kick off ALL async work in parallel ─────────────────────
+    // Start admin + anon client imports immediately (don't wait for geo).
+    const adminClientPromise = getSupabaseAdmin().catch(() => null);
+    const anonClientPromise = import('@/lib/supabase/anon').then(m => m.createAnonClient());
 
-    const [authCountry, ipCountry] = await Promise.all([
-        // Auth path: check users table then auth metadata
-        (async (): Promise<string | null> => {
-            try {
-                const { createClient } = await import('@/lib/supabase/server');
-                const authClient = await createClient();
-                const { data: { user } } = await authClient.auth.getUser();
-                if (!user?.id) return null;
+    // Auth path: get user + their country in one shot.
+    // Returns both userId (reused for ad auction) and country.
+    const authPromise = (async (): Promise<{ country: string | null; userId: string | null }> => {
+        try {
+            const authClient = await createClient();
+            const { data: { user } } = await authClient.auth.getUser();
+            if (!user?.id) return { country: null, userId: null };
 
-                // Combine auth metadata check + DB lookup into one shot:
-                // prefer DB (kept up to date by sync route)
-                const { data: userProfile } = await authClient
-                    .from('users')
-                    .select('country_code')
-                    .eq('id', user.id)
-                    .single();
+            const { data: userProfile } = await authClient
+                .from('users')
+                .select('country_code')
+                .eq('id', user.id)
+                .single();
 
-                return userProfile?.country_code
+            return {
+                country: userProfile?.country_code
                     || (user.user_metadata?.country_code as string | undefined)
-                    || null;
-            } catch {
-                return null;
-            }
-        })(),
-        // IP path: runs simultaneously, used only when auth path yields nothing
-        getCountryFromRequest().catch(() => null),
+                    || null,
+                userId: user.id,
+            };
+        } catch {
+            return { country: null, userId: null };
+        }
+    })();
+
+    // IP path: runs simultaneously — near-instant on Vercel (reads x-vercel-ip-country header).
+    const ipCountryPromise = getCountryFromRequest().catch(() => null);
+
+    // ── Phase 2: Await geo + anon client, build query ────────────────────
+    const [authResult, ipCountry, supabase] = await Promise.all([
+        authPromise,
+        ipCountryPromise,
+        anonClientPromise,
     ]);
 
-    viewerCountry = authCountry || ipCountry;
-
-    // Run DB query + admin credential check in parallel
-    const { createAnonClient } = await import('@/lib/supabase/anon');
-    const supabase = createAnonClient();
+    const viewerCountry = authResult.country || ipCountry;
+    const userId = authResult.userId;
 
     if (!supabase) {
         return NextResponse.json({ posts: [], hasMore: false });
@@ -121,17 +126,16 @@ export async function GET(request: Request) {
 
     // Geoblocking filter
     if (viewerCountry) {
-        // If viewer country detected: show global posts (null) + posts from viewer's country
         query = query.or(`country_code.is.null,country_code.eq.${viewerCountry}`);
     } else {
-        // If viewer country not detected (localhost/dev): only show global posts
         query = query.is('country_code', null);
     }
 
-    // Run posts query + admin credential check in parallel
+    // ── Phase 3: Posts query + admin client resolve in parallel ───────────
+    // adminClientPromise was started in Phase 1, so it's likely already resolved.
     const [{ data: dbPosts, error }, adminClient] = await Promise.all([
         query,
-        getSupabaseAdmin().catch(() => null),
+        adminClientPromise,
     ]);
 
     if (error) {
@@ -141,25 +145,19 @@ export async function GET(request: Request) {
 
     const posts = (dbPosts || []).map(transformPost);
 
-    // Run ad auction and inject winning ads
+    // ── Ad auction ───────────────────────────────────────────────────────
     let feedItems: any[] = [...posts];
 
-    const hasAdminCredentials = !!adminClient;
-
-    if (hasAdminCredentials && adminClient) {
+    if (adminClient) {
         try {
-            const supabaseAdmin = adminClient;
-            const serverClient = await createClient();
-            const { data: { user } } = await serverClient.auth.getUser();
-
             const availableSlots = Math.min(
                 AD_SLOT_POSITIONS.length,
                 Math.floor(posts.length / 4)
             );
 
             if (availableSlots > 0) {
-                const { data: auctionResults, error: auctionError } = await supabaseAdmin.rpc('run_ad_auction', {
-                    p_user_id: user?.id || null,
+                const { data: auctionResults, error: auctionError } = await adminClient.rpc('run_ad_auction', {
+                    p_user_id: userId,
                     p_available_slots: availableSlots,
                     p_feed_session_id: feedSessionId,
                     p_viewer_country: viewerCountry
@@ -169,7 +167,7 @@ export async function GET(request: Request) {
                     const advertiserFrequency: Record<string, number[]> = {};
                     const winningAdIds = auctionResults.map((r: any) => r.ad_id);
 
-                    const { data: adsData } = await supabaseAdmin
+                    const { data: adsData } = await adminClient
                         .from('ads')
                         .select('id, title, description, target_url, image_url, image_urls, status, user_id, max_cpc, quality_score, ad_rank, actual_cpc_charged, category')
                         .in('id', winningAdIds)
@@ -180,6 +178,13 @@ export async function GET(request: Request) {
                         return acc;
                     }, {});
 
+                    // Collect auction wins to record AFTER response is sent
+                    const auctionWins: Array<{
+                        p_ad_id: string; p_user_id: string | null; p_position: number;
+                        p_ad_rank: number; p_actual_cpc: number; p_effective_bid: number;
+                        p_quality_score: number; p_feed_session_id: string;
+                    }> = [];
+
                     for (const result of auctionResults) {
                         const ad = adsById[result.ad_id];
                         if (!ad) continue;
@@ -189,15 +194,16 @@ export async function GET(request: Request) {
 
                         if (result.position - lastSlot < ADVERTISER_FREQUENCY_CAP) continue;
 
-                        await supabaseAdmin.rpc('record_auction_win', {
+                        // Queue the win for deferred recording instead of blocking here
+                        auctionWins.push({
                             p_ad_id: result.ad_id,
-                            p_user_id: user?.id || null,
+                            p_user_id: userId,
                             p_position: result.position,
                             p_ad_rank: result.ad_rank,
                             p_actual_cpc: result.actual_cpc,
                             p_effective_bid: result.effective_bid,
                             p_quality_score: result.quality_score,
-                            p_feed_session_id: feedSessionId
+                            p_feed_session_id: feedSessionId,
                         });
 
                         advertiserFrequency[ad.user_id] = [...advertiserSlots, result.position];
@@ -215,6 +221,20 @@ export async function GET(request: Request) {
                                 _isSponsored: true
                             });
                         }
+                    }
+
+                    // ── Defer auction win recording to AFTER the response is sent ──
+                    // This saves N × ~200ms of sequential RPC calls from blocking the user.
+                    if (auctionWins.length > 0) {
+                        after(async () => {
+                            try {
+                                await Promise.all(
+                                    auctionWins.map(win => adminClient.rpc('record_auction_win', win))
+                                );
+                            } catch (err) {
+                                console.error('[feed] deferred auction recording failed:', err);
+                            }
+                        });
                     }
                 }
             }

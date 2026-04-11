@@ -139,7 +139,7 @@ export async function POST(req: Request) {
     const username = await generateUniqueUsername(usernameSeed)
 
     const displayName = user.user_metadata?.display_name || user.user_metadata?.full_name || usernameSeed
-    const avatar_url = user.user_metadata?.avatar_url || initialsAvatar(displayName)
+    const avatar_url = initialsAvatar(displayName)
 
     // Merge freshly detected data with any existing metadata
     const country_code = geo.country_code || user.user_metadata?.country_code || null;

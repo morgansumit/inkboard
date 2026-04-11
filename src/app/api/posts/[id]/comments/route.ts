@@ -97,7 +97,7 @@ export async function POST(
           id: user.id,
           username: user.email?.split('@')[0] || 'user',
           display_name: user.user_metadata?.display_name || user.email?.split('@')[0] || 'User',
-          avatar_url: user.user_metadata?.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${user.email?.split('@')[0] || 'User'}`
+          avatar_url: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user.user_metadata?.display_name || user.email?.split('@')[0] || 'User')}`
         })
         .select('username, display_name, avatar_url')
         .single();

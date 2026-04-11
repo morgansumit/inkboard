@@ -1,0 +1,49 @@
+[    1028ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    1130ms] [WARNING] %c%s%c Using the user object as returned from supabase.auth.getSession() or from some supabase.auth.onAuthStateChange() events could be insecure! This value comes directly from the storage medium (usually cookies on the server) and may not be authentic. Use supabase.auth.getUser() instead which authenticates the data by contacting the Supabase Auth server. background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    1150ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    1410ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[    1411ms] [LOG] [Fast Refresh] done in 102ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   25165ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   25281ms] [LOG] [Fast Refresh] done in 217ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   78330ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   78625ms] [LOG] [Fast Refresh] done in 192ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[   78798ms] [WARNING] %c%s%c Using the user object as returned from supabase.auth.getSession() or from some supabase.auth.onAuthStateChange() events could be insecure! This value comes directly from the storage medium (usually cookies on the server) and may not be authentic. Use supabase.auth.getUser() instead which authenticates the data by contacting the Supabase Auth server. background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server   @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  220623ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  220638ms] [LOG] [Fast Refresh] done in 63ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  226740ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  226755ms] [LOG] [Fast Refresh] done in 66ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  256768ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  256847ms] [LOG] [Fast Refresh] done in 181ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  257480ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  257501ms] [LOG] [Fast Refresh] done in 122ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  257773ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  257792ms] [LOG] [Fast Refresh] done in 119ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  390517ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  390532ms] [LOG] [Fast Refresh] done in 63ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  392768ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  392782ms] [LOG] [Fast Refresh] done in 67ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  445203ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  445305ms] [LOG] [Fast Refresh] done in 203ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  446843ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  446944ms] [LOG] [Fast Refresh] done in 201ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  470159ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  470186ms] [LOG] [Fast Refresh] done in 63ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  512122ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  512150ms] [LOG] [Fast Refresh] done in 70ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  544037ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  544054ms] [LOG] [Fast Refresh] done in 63ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  601891ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  602024ms] [LOG] [Fast Refresh] done in 233ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  608757ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  608858ms] [LOG] [Fast Refresh] done in 162ms @ http://localhost:3000/_next/static/chunks/79846_next_dist_6d76e5e4._.js:2297
+[  635939ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=MsoF96bQUn_NBo5Oq1I6k' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/79846_next_dist_client_4bcedf17._.js:10878
+[  636942ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=MsoF96bQUn_NBo5Oq1I6k' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/79846_next_dist_client_4bcedf17._.js:10878
+[  637944ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=MsoF96bQUn_NBo5Oq1I6k' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/79846_next_dist_client_4bcedf17._.js:10878
+[  638947ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=MsoF96bQUn_NBo5Oq1I6k' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/79846_next_dist_client_4bcedf17._.js:10878
+[  639951ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=MsoF96bQUn_NBo5Oq1I6k' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/79846_next_dist_client_4bcedf17._.js:10878
+[  644955ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=MsoF96bQUn_NBo5Oq1I6k' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/79846_next_dist_client_4bcedf17._.js:10878
+[  649967ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=MsoF96bQUn_NBo5Oq1I6k' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/79846_next_dist_client_4bcedf17._.js:10878
+[  654988ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=MsoF96bQUn_NBo5Oq1I6k' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/79846_next_dist_client_4bcedf17._.js:10878
+[  660002ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=MsoF96bQUn_NBo5Oq1I6k' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/79846_next_dist_client_4bcedf17._.js:10878
+[  665057ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=MsoF96bQUn_NBo5Oq1I6k' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/79846_next_dist_client_4bcedf17._.js:10878
+[  670151ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=MsoF96bQUn_NBo5Oq1I6k' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/79846_next_dist_client_4bcedf17._.js:10878

@@ -408,6 +408,8 @@ body {
   -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid var(--color-border);
   padding: 0 16px;
+  height: 56px;
+  overflow: hidden;
   width: 100%;
   will-change: transform;
   transform: translateZ(0);
@@ -420,7 +422,8 @@ body {
   gap: 16px;
   max-width: 1200px;
   margin: 0 auto;
-  flex-wrap: wrap;
+  height: 100%;
+  flex-wrap: nowrap;
 }
 
 .navbar-brand {

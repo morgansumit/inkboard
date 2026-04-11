@@ -33,7 +33,7 @@ export async function getCountryFromRequest(): Promise<string | null> {
 
         if (ip && ip !== '127.0.0.1' && ip !== '::1') {
             const res = await fetch(`https://ipinfo.io/${ip}/json`, {
-                signal: AbortSignal.timeout(2000),
+                signal: AbortSignal.timeout(500),
             });
             if (res.ok) {
                 const data = await res.json();

@@ -46,7 +46,7 @@ export function Navbar({ initialSession }: NavbarProps) {
     // Build an instant profile from the session (OAuth metadata or fallback)
     const instantProfile = hasSession ? {
         display_name: meta?.full_name || meta?.name || meta?.display_name || initialSession.user.email?.split('@')[0] || 'User',
-        avatar_url: meta?.avatar_url || meta?.picture || `https://api.dicebear.com/7.x/initials/svg?seed=${initialSession.user.email || 'user'}`,
+        avatar_url: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(meta?.full_name || meta?.name || meta?.display_name || initialSession.user.email?.split('@')[0] || 'user')}`,
         role: 'USER' as string,
         is_business: false,
     } : null;
@@ -226,7 +226,7 @@ export function Navbar({ initialSession }: NavbarProps) {
                         const m = session.user.user_metadata || {};
                         setCurrentUser({
                             display_name: m.full_name || m.name || m.display_name || session.user.email?.split('@')[0] || 'User',
-                            avatar_url: m.avatar_url || m.picture || `https://api.dicebear.com/7.x/initials/svg?seed=${session.user.email || 'user'}`,
+                            avatar_url: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(m.full_name || m.name || m.display_name || session.user.email?.split('@')[0] || 'user')}`,
                             role: 'USER',
                             is_business: false,
                         });
@@ -400,7 +400,7 @@ export function Navbar({ initialSession }: NavbarProps) {
         <header className={`navbar-shell ${scrolled ? 'navbar-scrolled' : ''}`}>
             <div className="navbar-inner">
                 <Link href="/" className="navbar-brand" aria-label="centsably home" style={{ flexShrink: 0, marginRight: '80px' }}>
-                    <img src="/transparent-image.png" alt="Centsably" style={{ height: '56px', width: 'auto', display: 'block' }} />
+                    <img src="/transparent-image.png" alt="Centsably" style={{ height: '112px', width: 'auto', display: 'block' }} />
                 </Link>
 
                 {renderSearchForm('desktop-only')}
@@ -449,7 +449,7 @@ export function Navbar({ initialSession }: NavbarProps) {
                                         <div className="notif-panel-body">
                                             {notifications.map(n => (
                                                 <div key={n.id} className={`notif-item ${!n.is_read ? 'unread' : ''}`}>
-                                                    <img src={avatarUrl(n.actor_avatar_url) || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=160&q=80'} alt={n.actor_display_name || 'User'} className="avatar" loading="lazy" style={{ width: '36px', height: '36px' }} />
+                                                    <img src={avatarUrl(n.actor_avatar_url) || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(n.actor_display_name || 'User')}`} alt={n.actor_display_name || 'User'} className="avatar" loading="lazy" style={{ width: '36px', height: '36px' }} onError={e => { e.currentTarget.onerror = null; e.currentTarget.src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(n.actor_display_name || 'User')}`; }} />
                                                     <div style={{ flex: 1 }}>
                                                         <p style={{ fontSize: '13px', lineHeight: '1.4' }}>
                                                             <strong>{n.actor_display_name || 'Someone'}</strong>
@@ -487,7 +487,7 @@ export function Navbar({ initialSession }: NavbarProps) {
                                     className="profile-trigger"
                                     onClick={() => setProfileMenuOpen(!profileMenuOpen)}
                                 >
-                                    <img src={avatarUrl(currentUser?.avatar_url) || `https://api.dicebear.com/7.x/initials/svg?seed=${userEmail || 'user'}`} alt={currentUser?.display_name || 'User'} className="avatar" />
+                                    <img src={avatarUrl(currentUser?.avatar_url) || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(currentUser?.display_name || userEmail || 'user')}`} alt={currentUser?.display_name || 'User'} className="avatar" onError={e => { e.currentTarget.onerror = null; e.currentTarget.src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(currentUser?.display_name || userEmail || 'user')}`; }} />
                                     <div className="profile-meta hide-mobile">
                                         <span>{currentUser?.display_name || 'User'}</span>
                                         <small>{userEmail}</small>

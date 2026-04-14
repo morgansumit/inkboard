@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { Playfair_Display, Merriweather, Inter, JetBrains_Mono } from 'next/font/google';
+import { Playfair_Display, Merriweather, Inter, JetBrains_Mono, Nunito } from 'next/font/google';
+import { SplashScreen } from '@/components/SplashScreen';
 import { Navbar } from '@/components/Navbar';
 import { Sidebar } from '@/components/Sidebar';
 import { Footer } from '@/components/Footer';
@@ -42,6 +43,14 @@ const jetbrainsMono = JetBrains_Mono({
   preload: false,
 });
 
+const nunito = Nunito({
+  subsets: ['latin'],
+  weight: ['900'],
+  variable: '--font-nunito',
+  display: 'swap',
+  preload: true,
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://centsably.com'),
   title: {
@@ -66,8 +75,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { data: { session } } = await supabase.auth.getSession();
 
   return (
-    <html lang="en" suppressHydrationWarning className={`${playfair.variable} ${merriweather.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${playfair.variable} ${merriweather.variable} ${inter.variable} ${jetbrainsMono.variable} ${nunito.variable}`}>
       <body>
+        <SplashScreen />
         <SupabaseErrorHandler />
         <BroadcastNotifications />
         <div style={{ display: 'flex', minHeight: '100svh', width: '100%' }}>

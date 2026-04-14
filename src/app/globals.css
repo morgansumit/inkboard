@@ -408,7 +408,7 @@ body {
   -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid var(--color-border);
   padding: 0 16px;
-  height: 56px;
+  height: 76px;
   overflow: hidden;
   width: 100%;
   will-change: transform;
@@ -738,7 +738,9 @@ body {
     right: 0;
     z-index: 200;
     width: 100%;
-    padding: 8px 12px;
+    padding: 6px 12px;
+    height: auto;
+    overflow: visible;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     background: var(--color-bg);
@@ -756,7 +758,8 @@ body {
   }
 
   .navbar-brand img {
-    height: 40px !important;
+    height: 80px !important;
+    margin: -10px 0 !important;
   }
 
   .navbar-actions {
@@ -800,7 +803,11 @@ body {
   }
 
   .navbar-search.mobile-only {
-    margin-top: 6px;
+    margin-top: 4px;
+  }
+
+  .navbar-search.mobile-only .input {
+    padding: 7px 14px;
   }
 
   .sidebar {
@@ -891,7 +898,7 @@ body {
 
   .layout-main {
     margin-left: 0;
-    padding-top: calc(110px + env(safe-area-inset-top));
+    padding-top: calc(116px + env(safe-area-inset-top));
     padding-bottom: calc(96px + env(safe-area-inset-bottom) + var(--mobile-bottom-gap, 0px));
   }
 

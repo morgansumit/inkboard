@@ -13,7 +13,7 @@ export default async function HomePage() {
   const { data: { session } } = await supabase.auth.getSession();
 
   return (
-    <div style={{ paddingTop: '24px' }}>
+    <div style={{ paddingTop: '0px' }}>
       <MasonryFeed isLoggedIn={!!session} />
     </div>
   );

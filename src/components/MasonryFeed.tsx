@@ -161,7 +161,7 @@ const supabaseClientSingleton = (() => {
     };
 })();
 
-function FeedInner({ isLoggedIn = false, externalPosts }: { isLoggedIn?: boolean; externalPosts?: Post[] }) {
+function FeedInner({ isLoggedIn: isLoggedInProp = false, externalPosts }: { isLoggedIn?: boolean; externalPosts?: Post[] }) {
     const searchParams = useSearchParams();
     const currentTopic = searchParams.get('topic') || 'Top News';
 
@@ -171,18 +171,19 @@ function FeedInner({ isLoggedIn = false, externalPosts }: { isLoggedIn?: boolean
     const [page, setPage] = useState(1);
     const [activeInterest, setActiveInterest] = useState<string | null>(null);
     const [hasMore, setHasMore] = useState(true);
-    const [ads, setAds] = useState<FeedAd[]>([]);
+    const [isLoggedIn, setIsLoggedIn] = useState(isLoggedInProp);
     const [currentUserId, setCurrentUserId] = useState<string | undefined>();
     const loaderRef = useRef<HTMLDivElement>(null);
     const supabase = supabaseClientSingleton();
 
-    // Get current user ID
+    // Detect auth client-side — getSession() reads from the cookie without a network call.
     useEffect(() => {
-        const getUser = async () => {
-            const { data: { user } } = await supabase.auth.getUser();
-            if (user) setCurrentUserId(user.id);
-        };
-        getUser();
+        supabase.auth.getSession().then(({ data: { session } }: { data: { session: any } }) => {
+            if (session?.user) {
+                setIsLoggedIn(true);
+                setCurrentUserId(session.user.id);
+            }
+        });
     }, [supabase]);
 
     type FeedResponse = {
@@ -190,14 +191,14 @@ function FeedInner({ isLoggedIn = false, externalPosts }: { isLoggedIn?: boolean
         hasMore?: boolean;
     };
 
-    // Initial load from Edge Function & fetch ads (only if no external posts provided)
+    // Initial load from feed API (ads are already injected server-side by the auction)
     useEffect(() => {
         if (externalPosts) {
             setPosts(externalPosts);
             setLoading(false);
             return;
         }
-        
+
         setLoading(true);
         setPosts([]);
         fetch(`/api/feed?topic=${encodeURIComponent(currentTopic)}&page=1`)
@@ -209,15 +210,7 @@ function FeedInner({ isLoggedIn = false, externalPosts }: { isLoggedIn?: boolean
                 setLoading(false);
             })
             .catch(() => setLoading(false));
-
-        supabase.from('ads')
-            .select('*')
-            .in('status', ['APPROVED', 'ACTIVE'])
-            .limit(5)
-            .then(({ data }: { data: FeedAd[] | null }) => {
-                if (data) setAds(data);
-            });
-    }, [currentTopic, supabase, externalPosts]);
+    }, [currentTopic, externalPosts]);
 
     const loadMore = useCallback(() => {
         if (loadingMore || !hasMore) return;
@@ -264,22 +257,8 @@ function FeedInner({ isLoggedIn = false, externalPosts }: { isLoggedIn?: boolean
         })
         : posts;
 
-    const feedItems = useMemo(() => {
-        const items: Array<Post | FeedAd> = [...displayPosts];
-        if (ads.length > 0) {
-            let adCounter = 0;
-            // Inject an ad every 6 items (index 4, 11, etc.)
-            for (let i = 4; i < items.length; i += 7) {
-                if (adCounter < ads.length) {
-                    items.splice(i, 0, ads[adCounter]);
-                    adCounter++;
-                } else {
-                    break;
-                }
-            }
-        }
-        return items;
-    }, [displayPosts, ads]);
+    // Ads are already injected at auction-determined positions by the feed API
+    const feedItems = useMemo(() => [...displayPosts] as Array<Post | FeedAd>, [displayPosts]);
 
     const trendingPosts = displayPosts.filter(p => p.is_trending).slice(0, 6);
 
@@ -391,7 +370,7 @@ function FeedInner({ isLoggedIn = false, externalPosts }: { isLoggedIn?: boolean
     );
 }
 
-export function MasonryFeed(props: { isLoggedIn?: boolean; posts?: Post[] }) {
+export function MasonryFeed(props: { isLoggedIn?: boolean; posts?: Post[] } = {}) {
     return (
         <Suspense fallback={
             <div className="masonry-grid" style={{ paddingTop: 0 }}>

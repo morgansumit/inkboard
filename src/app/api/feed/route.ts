@@ -71,25 +71,16 @@ export async function GET(request: Request) {
     const adminClientPromise = getSupabaseAdmin().catch(() => null);
     const anonClientPromise = import('@/lib/supabase/anon').then(m => m.createAnonClient());
 
-    // Auth path: read session from cookie (no network call) + look up country.
-    // getSession() reads the JWT locally — unlike getUser() which round-trips to
-    // Supabase and blocks for seconds with stale/expired cookies.
+    // Auth path: read session from cookie only — no DB round-trip on the critical path.
+    // Country comes from JWT metadata first, then IP header below (both near-instant).
+    // A sequential DB query here would block all auth users by 200–500ms vs. incognito.
     const authPromise = (async (): Promise<{ country: string | null; userId: string | null }> => {
         try {
             const authClient = await createClient();
             const { data: { session } } = await authClient.auth.getSession();
             if (!session?.user?.id) return { country: null, userId: null };
-
-            const { data: userProfile } = await authClient
-                .from('users')
-                .select('country_code')
-                .eq('id', session.user.id)
-                .single();
-
             return {
-                country: userProfile?.country_code
-                    || (session.user.user_metadata?.country_code as string | undefined)
-                    || null,
+                country: (session.user.user_metadata?.country_code as string | undefined) ?? null,
                 userId: session.user.id,
             };
         } catch {

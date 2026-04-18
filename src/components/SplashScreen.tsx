@@ -19,13 +19,13 @@ export function SplashScreen() {
 
   useEffect(() => {
     // React has hydrated — the app is loaded. Let the bounce finish, then exit.
-    const t = setTimeout(() => setPhase('exiting'), 1500);
+    const t = setTimeout(() => setPhase('exiting'), 900);
     return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
     if (phase === 'exiting') {
-      const t = setTimeout(() => setPhase('done'), 850);
+      const t = setTimeout(() => setPhase('done'), 600);
       return () => clearTimeout(t);
     }
   }, [phase]);
